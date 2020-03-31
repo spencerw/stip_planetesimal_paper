@@ -20,7 +20,7 @@ Abstract goes here
 
 \section{Introduction} \label{sec:intro}
 
-Intro text goes here \citep{2019MNRAS.489.2159W}
+Intro text goes here \citep{Wallace2019}
 
 \begin{figure}
     \includegraphics[width=0.5\columnwidth]{figures/test.png}
@@ -55,7 +55,7 @@ The number density of planetesimals is set by
 	\sigma = \pi s^{2} \left( 1 + \frac{v_{esc}^{2}}{v^{2}} \right)
 \end{equation}
 
-\noindent where $s$ is the radius of a planetesimal and $v_{esc}$ is the escape velocity from the surface of a planetesimal. Finally, $v$ is given by
+\noindent where $s$ is the radius of a planetesimal and $v_{esc}$ is the escape velocity from the surface of a planetesimal. Finally, $v$ is given by (cite Lissauer 1993)
 
 \begin{equation}
 	v = \sqrt{\left<  e^{2} \right>^{1/2} + \left< i^{2} \right>^{1/2}} v_{k}
@@ -90,6 +90,40 @@ Note that this has a different dependence on $r$ than the collision timescale. T
 \end{equation}
 
 The relaxation time drops relative to the collision timescale with distance.
+
+\subsection{Isolation Mass}
+
+The isolation mass of a planetary embryo, which represents the largest mass that a body can attain by accreting adjacent planetesimals in the disk, is given by
+
+\begin{equation}
+    M_{iso} = 2 \pi a \left( 2 \Delta a \right) \Sigma
+\end{equation}
+
+\noindent where $a$ is the semimajor axis of the embryo and $\Delta a$ is the maximum encounter distance that results in accretion. $\Delta a$ scales with the Hill radius of the growing body, which also depends on the isolation mass.
+
+\begin{equation}
+    \Delta a = \tilde{b} R_{h} = \tilde{b} \left( \frac{M_{iso}}{3 M_{*}} \right)^{1/3} a
+\end{equation}
+
+The constant $\tilde{b}$ can be determined by requiring that adjacent protoplanets do not enter each other's Hill spheres. This is equivalent to requiring that the Jacobi energy of these bodies be negative such that \citep{Hayashi1977}
+
+\begin{equation}
+    E_{J} = \frac{1}{2} \left( \tilde{e}^{2} + \tilde{i}^{2} \right) - \frac{3}{8} \tilde{b}^{2} + \frac{9}{2}  \geq 0
+\end{equation}
+
+\noindent where $\tilde{e}$ and  $\tilde{i}$ is the eccentricity and inclination of a protoplanet in Hill units and $\tilde{b}$ is the separation between adjacent protoplanets, also in Hill units. Solving for $\tilde{b}$ gives
+
+\begin{equation}
+    \tilde{b} = \frac{2}{\sqrt{3}} \left( 9 + \tilde{e}^{2} + \tilde{i}^{2} \right)^{1/2}
+\end{equation}
+
+Finally, combining the above equations and solving for $M_{iso}$ gives
+
+\begin{equation}
+    M_{iso} = \frac{8}{\sqrt{3}} \pi^{3/2} \tilde{b}^{3/2} \Sigma^{3/2} \left( 3 M_{*} \right)^{-1/2} a^{3}
+\end{equation}
+
+Most importantly, the isolation mass depends on the eccentricities and inclinations of the planetary embryos. At large orbital periods, these quantities are damped by dynamical friction (note that this also heats the planetesimal population and makes the timescale to reach the isolation mass extremely long). At short period, however, $\tilde{e}$ and  $\tilde{i}$ can be nonzero.
 
 \section{Summary and Discussion} \label{sec:discuss}
 
