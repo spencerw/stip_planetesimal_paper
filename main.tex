@@ -67,7 +67,13 @@ The number density of planetesimals is set by
 	t_{coll} \sim A^{-1} r^{\alpha + 1/2}
 \end{equation}
 
-\noindent Note that a surface density profile with $\alpha < -1$ produces a collision timescale that scales more steeply than the orbital timescale. In this case, an N-body simulation will get more computationally expensive with orbital distance because the time step size scales with the orbital timescale.
+Note that a surface density profile with $\alpha < -1$ produces a collision timescale that scales more steeply than the orbital timescale. In this case, an N-body simulation will get more computationally expensive with orbital distance because the time step size scales with the orbital timescale.
+
+In terms of encounter velocity, gravitational focusing is the only thing that effects collision timescale. This is because number density of planetesimals $n$ scales with $v^{-1}$, which cancels with the other $v$ term. This leaves us with $t_{coll} \sim v^{2}$ or, in terms of the rms eccentricity (assuming the rms inclination is coupled to the eccentricity)
+
+\begin{equation}
+    t_{coll} \sim \left< e^{2} \right>^{1/2}
+\end{equation}
 
 \subsection{Relaxation Timescale}
 
@@ -86,10 +92,18 @@ The relaxation timescale is given by (citation)
 Note that this has a different dependence on $r$ than the collision timescale. Taking the ratio of these two timescales gives
 
 \begin{equation}
-\frac{t_{relax}}{t_{coll}} \sim r^{-1}
+    \frac{t_{relax}}{t_{coll}} \sim r^{-1}
 \end{equation}
 
 The relaxation time drops relative to the collision timescale with distance.
+
+In terms of encounter velocity, the relaxation time scales as $t_{relax} \sim v^{4}$. Taking the ratio of the scaling for the collision and relaxation time with rms eccentricity gives (because there is a geometric term in the collision cross section, the ratio of these two timescales still goes as $v^{4}$)
+
+\begin{equation}
+    \frac{t_{relax}}{t_{coll}} \sim \left< e^{2} \right>
+\end{equation}
+
+Therefore, a dynamically hot disk will have a better chance of inhibiting oligarchic growth. All planetesimal disks will tend toward this state because gravitational stirring is most effective in a cold disk. So long as gas drag does not strongly damp things, this condition could be met. Why doesn't this happen for Kokubo + Ida simulations?
 
 \subsection{Isolation Mass}
 
