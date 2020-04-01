@@ -67,7 +67,13 @@ The number density of planetesimals is set by
 	t_{coll} \sim A^{-1} r^{\alpha + 1/2}
 \end{equation}
 
-Note that a surface density profile with $\alpha < -1$ produces a collision timescale that scales more steeply than the orbital timescale. In this case, an N-body simulation will get more computationally expensive with orbital distance because the time step size scales with the orbital timescale.
+Note that a surface density profile with $\alpha < -1$ produces a collision timescale that scales more steeply than the orbital timescale. In this case, an N-body simulation will get more computationally expensive with orbital distance because the time step size scales with the orbital timescale. Extremely close to the star, the encounter velocity becomes comparable to the mutual escape velocity and the collision cross section is nearly geometric. In this case, the scaling is slightly different
+
+\begin{equation}
+    t_{coll} \sim A^{-1} r^{\alpha + 3/2}
+\end{equation}
+
+\noindent and the collision time stays constant for a flat ($\alpha = 0$) surface density profile.
 
 In terms of encounter velocity, gravitational focusing is the only thing that effects collision timescale. This is because number density of planetesimals $n$ scales with $v^{-1}$, which cancels with the other $v$ term. This leaves us with $t_{coll} \sim v^{2}$ or, in terms of the rms eccentricity (assuming the rms inclination is coupled to the eccentricity)
 
