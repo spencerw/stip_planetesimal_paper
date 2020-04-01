@@ -153,13 +153,20 @@ The constant $\tilde{b}$ can be determined by requiring that adjacent protoplane
     \tilde{b} = \frac{2}{\sqrt{3}} \left( 9 + \tilde{e}^{2} + \tilde{i}^{2} \right)^{1/2}
 \end{equation}
 
-Finally, combining the above equations and solving for $M_{iso}$ gives
+If the growing protoplanets stay on circular orbits, $\tilde{b} \approx 2 \sqrt{3}$ and the above equations can be combined to solve for the isolation mass, which gives
 
 \begin{equation}
-    M_{iso} = \frac{8}{\sqrt{3}} \pi^{3/2} \tilde{b}^{3/2} \Sigma^{3/2} \left( 3 M_{*} \right)^{-1/2} a^{3}
+    M_{iso} = \frac{8}{\sqrt{3}} \left(2 \pi \Sigma \right)^{3/2} 3^{3/4} \left( 3 M_{*} \right)^{-1/2} a^{3}
 \end{equation}
 
-Most importantly, the isolation mass depends on the eccentricities and inclinations of the planetary embryos. At large orbital periods, these quantities are damped by dynamical friction (note that this also heats the planetesimal population and makes the timescale to reach the isolation mass extremely long). At short period, however, $\tilde{e}$ and  $\tilde{i}$ can be nonzero.
+At short orbital periods where oligarchic growth may not operate, $\tilde{b}$ also depends on $\tilde{e}$ and $\tilde{h}$, which are functions of the eccentricity and inclination of the planetesimals, along with the final isolation mass of the embryos. $M_{iso}$ must be solved for numerically, which is shown in figure \ref{fig:m_iso} as a function of orbital period and the initial rms Hill eccentricity of the planetesimals.  As expected, the isolation mass grows at larger orbital periods, as embryos have access to a wider region of the disk. With a sufficiently hot planetesimal population, the isolation mass also grows. These results imply that if oligarchic growth does not operate, embryos will form fewer and larger. It is also plausible that the total mass in embryos will be larger, as a dynamically hot planetesimal population that is difficult to accrete will not form.
+
+\begin{figure}
+    \begin{center}
+    \includegraphics[width=0.5\columnwidth]{figures/m_iso.png}
+    \caption{Caption goes here.\label{fig:m_iso}}
+    \end{center}
+\end{figure}
 
 \section{Summary and Discussion} \label{sec:discuss}
 

@@ -13,7 +13,7 @@ from astropy.constants import G
 simT = u.year/(2*np.pi)
 simV = u.AU / simT
 
-from scipy import stats
+from scipy import stats, optimize
 
 import sys
 sys.path.insert(0, '../OrbitTools/')
@@ -118,6 +118,35 @@ def plot_trel_tcoll_eq_gf():
 	axes.set_ylabel(r'Equilibirum $\left< \tilde{e}^{2} \right>^{1/2}$')
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
+def plot_m_iso():
+	file_str = 'figures/m_iso.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	m_iso_vals = np.empty((len(a_vals_au), len(e_h_vals)))
+	for idx in range(len(a_vals)):
+	    for idx1 in range(len(e_h_vals)):
+	        def func(x):
+	            Sigma = surf_den(a_vals_au[idx], sigma1, f_disk, z, alpha)
+	            e_std = e_i(e_h_vals[idx1])
+	            i_std = e_std/2
+	            return np.log10(4*np.pi*a_vals[idx]**2*Sigma*2/np.sqrt(3)*(10**x/(3*m_central))**(1/3)* \
+	                            np.sqrt(9 + (10**x/(3*m_central))**(-2/3)*(e_std**2 + i_std**2))) - x
+	        m_iso_vals[idx][idx1] = 10**optimize.root(func, 25).x
+
+	from matplotlib import cm
+	fig, axes = plt.subplots(figsize=(8,8))
+	cmap = mpl.cm.get_cmap('jet', 10)
+	cax = axes.pcolormesh(t_orbit, e_h_vals, np.flipud(np.rot90(m_iso_vals)), \
+	                      norm=mpl.colors.LogNorm(), cmap=cmap)
+	cb = fig.colorbar(cax)
+	cb.set_label('Isolation Mass [g]')
+	axes.set_xlabel(r'Orbital Period [d]')
+	axes.set_ylabel(r'$\left< \tilde{e}^{2} \right>^{1/2}$')
+	axes.set_xscale('log')
+	axes.set_yscale('log')
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
 def make_plot():
 	file_str = 'figures/test.' + fmt
 	if not clobber and os.path.exists(file_str):
@@ -134,3 +163,4 @@ def make_plot():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 plot_trel_tcoll_eq_gf()
+plot_m_iso()
