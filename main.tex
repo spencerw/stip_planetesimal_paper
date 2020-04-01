@@ -22,11 +22,6 @@ Abstract goes here
 
 Intro text goes here \citep{Wallace2019}
 
-\begin{figure}
-    \includegraphics[width=0.5\columnwidth]{figures/test.png}
-    \caption{Caption goes here.\label{fig:test}}
-\end{figure}
-
 \section{Collision and Relaxation Timescale}
 
 The motivation for this project comes from the realization that the collision timescale and the relaxation time (which sets the timescales for things like viscous stirring and dynamical friction (cite ida 1993)) do not scale proportionately with orbital period. At sufficiently long orbital periods, the relaxation time is shorter than the collision time. This means that as planetesimals grow, the velocity distribution of bodies reacts to the changing mass distribution, which alters the growth mode. When this condition is met, oligarchic growth can commence (cite ki 1998), which keeps the planetary embryos on circular orbits and restricts their growth.
@@ -67,13 +62,7 @@ The number density of planetesimals is set by
 	t_{coll} \sim A^{-1} r^{\alpha + 1/2}
 \end{equation}
 
-Note that a surface density profile with $\alpha < -1$ produces a collision timescale that scales more steeply than the orbital timescale. In this case, an N-body simulation will get more computationally expensive with orbital distance because the time step size scales with the orbital timescale. Extremely close to the star, the encounter velocity becomes comparable to the mutual escape velocity and the collision cross section is nearly geometric. In this case, the scaling is slightly different
-
-\begin{equation}
-    t_{coll} \sim A^{-1} r^{\alpha + 3/2}
-\end{equation}
-
-\noindent and the collision time stays constant for a flat ($\alpha = 0$) surface density profile.
+Note that a surface density profile with $\alpha < -1$ produces a collision timescale that scales more steeply than the orbital timescale. In this case, an N-body simulation will get more computationally expensive with orbital distance because the time step size scales with the orbital timescale.
 
 In terms of encounter velocity, gravitational focusing is the only thing that effects collision timescale. This is because number density of planetesimals $n$ scales with $v^{-1}$, which cancels with the other $v$ term. This leaves us with $t_{coll} \sim v^{2}$ or, in terms of the rms eccentricity (assuming the rms inclination is coupled to the eccentricity)
 
@@ -110,6 +99,33 @@ In terms of encounter velocity, the relaxation time scales as $t_{relax} \sim v^
 \end{equation}
 
 Therefore, a dynamically hot disk will have a better chance of inhibiting oligarchic growth. All planetesimal disks will tend toward this state because gravitational stirring is most effective in a cold disk. So long as gas drag does not strongly damp things, this condition could be met. Why doesn't this happen for Kokubo + Ida simulations?
+
+Figure \ref{fig:time_eq_gf} shows the Hill eccentricity required for these two timescales to be equal as a function of orbital period (solid lines). Regions above the curves represent parameter combinations in which the relaxation timescale is longer. This is assuming that the planetesimals have an internal bulk density of 2 g cm$^{-3}$ and their collision cross section is enhanced by a factor of $f_{pl}$ to make the computation faster.
+
+\begin{figure}
+    \begin{center}
+    \includegraphics[width=0.5\columnwidth]{figures/time_eq_gf.png}
+    \caption{Caption goes here.\label{fig:time_eq_gf}}
+    \end{center}
+\end{figure}
+
+\subsection{Inhibition of Gravitational Focusing}
+
+The scaling relations derived above assume that the collision cross section scales as $v^{-2}$ or linearly with $r$. This is only true when the planetesimal encounter velocity is small compared to the mutual escape velocity of two planetesimals. Close to the star, this condition is violated because the encounter velocity grows with the Keplerian velocity. The minimum orbital distance at which gravitational focusing is effective can be derived by equating the encounter velocity with the mutual escape velocity
+
+\begin{equation}
+    r_{gf} \geq \frac{3 M_{*} \left< e^{2} \right> s}{4 m}
+\end{equation}
+
+Another way to think of this effect is that the gravitational capture radius of a planetesimal decreases with encounter velocity. $r_{gf}$ is the orbital distance at which the capture radius is smaller than the geometric cross section of a planetesimal.  In this case, the collision timescale instead scales as 
+
+\begin{equation}
+    t_{coll} \sim A^{-1} r^{\alpha + 3/2}
+\end{equation}
+
+\noindent and the number of timesteps required to resolve a collision stays constant with $r$ for a flat ($\alpha = 0$) surface density profile.
+
+Figure \ref{fig:time_eq_gf} also shows the minimum Hill eccentricity required to suppress gravitational focusing at a given orbital period for different values of $f_{pl}$ (dashed lines). Comparing with the solid curves, it is nearly always the case that a disk sufficiently hot enough to cause the relaxation time to exceed the collision timescale will also suppress gravitational focusing.
 
 \subsection{Isolation Mass}
 
