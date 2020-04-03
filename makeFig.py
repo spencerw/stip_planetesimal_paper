@@ -36,9 +36,9 @@ def lnLam(b1, b2):
     return quad(lambda x: 1/x, b1, b2)[0]
 
 sigma1 = 6
-f_disk = 1
+f_disk = 0.13
 h = 1
-alpha = 1
+alpha = 3/2
 
 # Values for M stars from Backus + Quinn 2016
 q = 0.59
@@ -60,12 +60,12 @@ def e_i(e_h):
 def e_h(e):
     return e*(mp/(3*m_central))**(-1/3)
 
-a_vals_au = np.logspace(-2, 0.5)
-e_h_vals = np.logspace(0, 2)
+t_orbit_d = np.logspace(0, 3)
+t_orbit = (t_orbit_d*u.d).to(u.s).value
+a_vals = pt.sma(t_orbit, m_central)
+a_vals_au = (a_vals*u.cm).to(u.AU).value
 
-a_vals = (a_vals_au*u.AU).to(u.cm).value
-t_orbit = pt.t_orb(a_vals, m_central)
-t_orbit_d = (t_orbit*u.s).to(u.d).value
+e_h_vals = np.logspace(0, 2)
 
 sigma_pl = pt.sigma_pl(alpha, sigma1, a_vals_au, f_disk)
 
@@ -77,47 +77,28 @@ def plot_trel_tcoll_eq_gf():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	t_relax_vals = np.empty((len(a_vals_au), len(e_h_vals)))
-	t_coll_vals = np.empty((len(a_vals_au), len(e_h_vals)))
-	t_eq_e_vals = np.empty((len(f_pl), len(a_vals_au)))
+	def func(x, sigma_pl, a_val, f_pl_val):
+	    i_std = 10**x/2
+	    vk = np.sqrt(G.cgs.value*m_central/a_val)
+	    v = np.sqrt((10**x)**2 + i_std**2)*vk
+	    vesc = np.sqrt(G.cgs.value*mp/Rp)
+	    bmin = 2*G.cgs.value*mp/v**2
+	    bmax = a_val
+	    lnLamVal = lnLam(bmin, bmax)
+	    
+	    return np.log10((v**4*(f_pl_val*Rp)**2*(1 + vesc**2/v**2))/(G.cgs.value**2*mp**2*lnLamVal))
 
-	for f_pl_idx in range(len(f_pl)):
-	    for idx in range(len(a_vals)):
-	        for idx1 in range(len(e_h_vals)):
-	            e_std = e_i(e_h_vals[idx1])
-	            i_std = e_std/2
-	            omega = np.sqrt(G.cgs.value*m_central/a_vals[idx]**3)
-	            vk = np.sqrt(G.cgs.value*m_central/a_vals[idx])
-	            sigma = np.sqrt(e_std**2 + i_std**2)*vk
-	            n = sigma_pl[idx]*omega/(2*mp*sigma)
-
-	            bmin = 2*G.cgs.value*mp/sigma**2
-	            bmax = a_vals[idx]
-	            lnLamVal = lnLam(bmin, bmax)
-	            t_relax = sigma**3/(n*np.pi*G.cgs.value**2*mp**2*lnLamVal)
-	            t_relax_vals[idx][idx1] = t_relax
-
-	            vesc = np.sqrt(G.cgs.value*mp/Rp)
-	            theta = vesc/sigma
-	            cross = np.pi*(Rp*f_pl[f_pl_idx])**2*(1 + theta**2)
-	            t_coll_vals[idx][idx1] = 1/(n*cross*sigma)
-
-	        first_ind = np.where(t_relax_vals[idx] > t_coll_vals[idx])[0]
-	        if len(first_ind) > 0:
-	            t_eq_e_vals[f_pl_idx][idx] = e_i(e_h_vals[first_ind][0])
-	        else:
-	            t_eq_e_vals[f_pl_idx][idx] = np.inf
-
+	e_cross_vals = np.zeros((len(f_pl), len(a_vals_au)))
 	e_gf_vals = np.empty((len(f_pl), len(a_vals)))
-
 	for f_pl_idx in range(len(f_pl)):
 	    for idx in range(len(a_vals)):
+	        e_cross_vals[f_pl_idx][idx] = 10**optimize.root(func, -3.0, args=(sigma_pl[idx], a_vals[idx], f_pl[f_pl_idx])).x
 	        e_gf_vals[f_pl_idx][idx] = np.sqrt(4*mp*a_vals[idx]/(3*m_central*(f_pl[f_pl_idx]*Rp)))
 
 	fig, axes = plt.subplots(figsize=(8,8))
 	for idx, val in enumerate(f_pl):
 	    c = next(axes._get_lines.prop_cycler)['color']
-	    axes.plot(t_orbit_d, t_eq_e_vals[idx], label=r'f$_{pl}$ = ' + str(int(val)), linestyle='-', color=c)
+	    axes.plot(t_orbit_d, e_cross_vals[idx], label=r'f$_{pl}$ = ' + str(int(val)), linestyle='-', color=c)
 	    axes.plot(t_orbit_d, e_gf_vals[idx], linestyle='--', color=c)
 	axes.legend()
 	axes.set_xscale('log')
@@ -142,7 +123,8 @@ def plot_m_iso():
 	m_iso_vals = np.empty((len(a_vals_au), len(e_h_vals)))
 	for idx in range(len(a_vals)):
 	    for idx1 in range(len(e_h_vals)):
-	        m_iso_vals[idx][idx1] = 10**optimize.root(func, 20, args=(e_i(e_h_vals[idx1]), sigma_pl[idx], a_vals[idx])).x
+	        m_iso_vals[idx][idx1] = 10**optimize.root(func, 20, args=(e_i(e_h_vals[idx1]), \
+	        	                                                      sigma_pl[idx], a_vals[idx])).x
 
 	e_eq_vals = np.empty((len(dust_to_gas), len(t_orbit)))
 	for idx in range(len(dust_to_gas)):
@@ -153,7 +135,7 @@ def plot_m_iso():
 
 	from matplotlib import cm
 	fig, axes = plt.subplots(figsize=(8,8))
-	cmap = mpl.cm.get_cmap('jet', 10)
+	cmap = mpl.cm.get_cmap('inferno_r', 10)
 	cax = axes.pcolormesh(t_orbit_d, e_i(e_h_vals), np.flipud(np.rot90(m_iso_vals)), \
 	                      norm=mpl.colors.LogNorm(), cmap=cmap)
 	for idx in range(len(dust_to_gas)):
@@ -216,6 +198,6 @@ def make_plot():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-#plot_trel_tcoll_eq_gf()
+plot_trel_tcoll_eq_gf()
 plot_m_iso()
-#plot_gasdrag()
+plot_gasdrag()
