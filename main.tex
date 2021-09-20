@@ -10,170 +10,57 @@
 \author{Spencer C. Wallace}
 \affiliation{Astronomy Department, University of Washington, Seattle, WA 98195}
 
-
 \author{Thomas R. Quinn}
 \affiliation{Astronomy Department, University of Washington, Seattle, WA 98195}
 
 \begin{abstract}
-Abstract goes here
+Formation models in which terrestrial bodies grow via the pairwise accretion of planetesimals have been reasonably successful at reproducing the general properties of the solar system, including small body populations. However, planetesimal accretion has not yet been fully explored in the context of more exotic terrestrial systems, particularly those that host short-period planets. In this work, we use direct N-body simulations to explore and understand the growth of planetary embryos from planetesimals in disks extending down to $\simeq$ 1 day orbital periods. We show that planetesimal accretion becomes nearly 100 percent efficient at short orbital periods, leading to embryo masses that are roughly twice as large as the classical isolation mass. For rocky bodies, the physical size of the object begins to occupy a significant fraction of its Hill sphere at orbital periods less than about 50 days. In this regime, most close encounters result in collisions, rather than scattering, and the system cannot bifurcate into a collection of dynamically hot planetesimals and dynamically cold oligarchs, like is seen in most models. The highly efficient accretion seen at short orbital periods implies that systems of tightly-packed inner planets should be almost completely devoid of any residual small bodies. We demonstrate the robustness of our results to assumptions about the initial disk model, and also investigate how far material can radially mix across the accretion boundary.
 \end{abstract}
+
+%\begin{list}
+%\item Explain $\alpha$ controls importance of scattering vs accretion
+%\item Also mention $\beta$. Introduces another relevant size scale, but we seem to get runaway growth no matter how large or small this is (is this true?)
+%\item Show full disk vhi f6 and f4 simulations. Boundary of efficient accretion moves with density of bodies. Roughly lies where $\alpha = 0.1$.
+%\item Eccentricities reach v = vesc regardless of alpha. Show narrow annulus simulations in which embryo 'cools' in planetesimal disk with varying $\alpha$.
+%\item Show collision tree plot for full disk vhi f6. Do planetesimals move around much? How does motion of condensation fronts (due to pre-MS evolution of M stars) affect this?
+%\item What about fragmentation?
+%\item Planetesimals get completely consumed in inner disk. May have implications for planetesimal driven migration (outward, counteract type I migration)?
+%\item Embryos form first in the inner disk. What are the implications of this? Might make outward planetesimal driven migration easier
+%\end{list}
 
 \section{Introduction} \label{sec:intro}
 
+Planetesimal accretion is one of a number of stages in which micron-sized solids from the protostellar nebula coalesce to eventually build terrestrial planets. In the earliest stages, aerodynamic forces dominate the growth and evolution of the solids. Millimeter-sized bodies grow through adhesive pairwise collisions and stay well-coupled to the surrounding gas. Beyond this size, however, a number of growth barriers present themselves. Most notably, larger solids orbit the central star at Keplerian speeds as they decouple from the gas, which orbits at a sub-keplerian speed due to radial pressure support. This leads the solids to feel a headwind, which is maximally effective at sapping away angular momentum for objects around 1 meter in size. At this size, the timescale for the growing solids to fall onto the star is catastrophically short and leads to what is known as the drift barrier. In addition, two-body collisions between mm- to cm-sized bodies tend to result in bouncing or destruction, rather than continued growth. For these reasons, a number of mechanisms have been proposed which facilitate fast growth from mm to km sizes by locally concentrating solids. Dust traps, streaming instability, pebble piles...etc.
+
+Beyond kilometer scales, gravity begins to dominate and aerodynamic gas drag plays a smaller and smaller role. During this phase, collision cross sections are enhanced as gravitational focusing (safronov citation) acts to bend the trajectories of bodies undergoing close encounters. Large bodies are most effective at focusing the trajectories of nearby planetesimals, leading to a period of runaway growth (citations to wetherill, kokubo+ida, barnes). Eventually, the largest bodies (known as oligarchs) dynamically heat the surrounding planetesimals, severely limiting further growth (cite kokubo+ida). The end result of this phase is a bimodal population of dynamically cold oligarchs, surrounded by dynamically hot, difficult to accrete residual planetesimals. Lines of evidence suggest that the asteroid belt, kuiper belt and the oort cloud are largely composed of the leftovers of this stage of planet formation. (Mention more specific evidence, morbidelli 09 paper, CAIs?)
+
+Although gas drag has a minimal influence on the Moon to Mars-sized oligarchs, it is enough to prevent these largest bodies from perturbing each other onto crossing orbits. Simulations show that evaporation of the gas disk is required to allow instability to trigger a phase of giant impacts (Mention that disk fraction decay timescale roughly matches timing of giant impacts in SS). It is during this phase that oligarchs collide to form Earth-sized planets (chambers wetherill 1998, raymond 2006).
+
+N body simulations allow us to work back to the planetesimal accretion phase. No one has applied this model to the in situ formation of STIPs yet. Does runaway and oligarchic growth still operate?
+
+Outline of paper
+
 Intro text goes here \citep{Wallace2019}
 
-\section{Collision and Relaxation Timescale}
+\section{Overview of Planetesimal Accretion}
 
-The motivation for this project comes from the realization that the collision timescale and the relaxation time (which sets the timescales for things like viscous stirring and dynamical friction (cite ida 1993)) do not scale proportionately with orbital period. At sufficiently long orbital periods, the relaxation time is shorter than the collision time. This means that as planetesimals grow, the velocity distribution of bodies reacts to the changing mass distribution, which alters the growth mode. When this condition is met, oligarchic growth can commence (cite ki 1998), which keeps the planetary embryos on circular orbits and restricts their growth.
+\section{Methods}
 
-Because these two timescales scale differently with orbital period (or equivalently semimajor axis), they should eventually cross as one gets close enough to the host star. In regions where the collision timescale is shorter than the growth time, the embryos will maintain eccentric orbits as they grow, which greatly widens their feeding zones. Because they do not settle onto circular orbits, the timescale for orbital instability, which marks the beginning of the final planet-forming phase, should be much shorter.
+\subsection{The Code}
 
-\subsection{Collision Timescale}
+\subsection{Initial Conditions}
 
-The timescale for collisions is set by
+\section{Results}
 
-\begin{equation}
-	t_{coll} = \frac{1}{n \sigma v}
-\end{equation}
+\subsection{Narrow Annulus}
 
-\noindent where $n$ is the number density of planetesimals, $\sigma$ is the cross section for collisions and $v$ is the typical encounter velocity between planetesimals. 
+\subsection{Full Disk}
 
-The number density of planetesimals is set by
+\section{Simplifying Assumptions}
 
-\begin{equation}
-    n = \frac{\Sigma \Omega}{2 m v}
-\end{equation}
+\subsection{Collision Cross Section}
 
-\noindent where $\Sigma$ is the surface density of solids in the disk, $\Omega$ is the orbital frequency and $m$ is the mass of a planetesimal. For our purposes, we will assume that the surface density profile follows a power law such that $\Sigma = A r^{-\alpha}$. Planetesimals are typically large enough to exert a significant gravitational pull on each other, which enhances the collision cross section beyond its geometric value
-
-\begin{equation}
-	\sigma = \pi s^{2} \left( 1 + \frac{v_{esc}^{2}}{v^{2}} \right)
-\end{equation}
-
-\noindent where $s$ is the radius of a planetesimal and $v_{esc}$ is the escape velocity from the surface of a planetesimal. Finally, $v$ is given by (cite Lissauer 1993)
-
-\begin{equation}
-	v = \sqrt{\left<  e^{2} \right>^{1/2} + \left< i^{2} \right>^{1/2}} v_{k}
-\end{equation}
-
-\noindent For simplicity, we will assume that the rms eccentricity and inclination of the planetesimals does not vary with orbital distance. Putting this all together, the collision timescale scales with the orbital distance and the surface density profile parameters ($A$, $\alpha$) like
-
-\begin{equation}
-	t_{coll} \sim A^{-1} r^{\alpha + 1/2}
-\end{equation}
-
-Note that a surface density profile with $\alpha < -1$ produces a collision timescale that scales more steeply than the orbital timescale. In this case, an N-body simulation will get more computationally expensive with orbital distance because the time step size scales with the orbital timescale.
-
-In terms of encounter velocity, gravitational focusing is the only thing that effects collision timescale. This is because number density of planetesimals $n$ scales with $v^{-1}$, which cancels with the other $v$ term. This leaves us with $t_{coll} \sim v^{2}$ or, in terms of the rms eccentricity (assuming the rms inclination is coupled to the eccentricity)
-
-\begin{equation}
-    t_{coll} \sim \left< e^{2} \right>^{1/2}
-\end{equation}
-
-\subsection{Relaxation Timescale}
-
-The relaxation timescale is given by (citation)
-
-\begin{equation}
-    t_{relax} = \frac{v^3}{n \pi G^{2} m^{2} \ln \lambda}
-\end{equation}
-
-\noindent where $G$ is the gravitational constant and $\ln \lambda$ is the Coulomb logarithm. Using the same assumptions as above, the relaxation time scales with orbital distance and the surface density profile parameters as
-
-\begin{equation}
-    t_{relax} \sim A^{-1} r^{\alpha - 1/2}
-\end{equation}
-
-Note that this has a different dependence on $r$ than the collision timescale. Taking the ratio of these two timescales gives
-
-\begin{equation}
-    \frac{t_{relax}}{t_{coll}} \sim r^{-1}
-\end{equation}
-
-The relaxation time drops relative to the collision timescale with distance.
-
-In terms of encounter velocity, the relaxation time scales as $t_{relax} \sim v^{4}$. Taking the ratio of the scaling for the collision and relaxation time with rms eccentricity gives (because there is a geometric term in the collision cross section, the ratio of these two timescales still goes as $v^{4}$)
-
-\begin{equation}
-    \frac{t_{relax}}{t_{coll}} \sim \left< e^{2} \right>
-\end{equation}
-
-Therefore, a dynamically hot disk will have a better chance of inhibiting oligarchic growth. All planetesimal disks will tend toward this state because gravitational stirring is most effective in a cold disk. So long as gas drag does not strongly damp things, this condition could be met. Why doesn't this happen for Kokubo + Ida simulations?
-
-Figure \ref{fig:time_eq_gf} shows the Hill eccentricity required for these two timescales to be equal as a function of orbital period (solid lines). Regions above the curves represent parameter combinations in which the relaxation timescale is longer. This is assuming that the planetesimals have an internal bulk density of 2 g cm$^{-3}$ and their collision cross section is enhanced by a factor of $f_{pl}$ to make the computation faster.
-
-\begin{figure}
-    \begin{center}
-    \includegraphics[width=0.4\columnwidth]{figures/time_eq_gf.png}
-    \caption{Caption goes here.\label{fig:time_eq_gf}}
-    \end{center}
-\end{figure}
-
-\subsection{Inhibition of Gravitational Focusing}
-
-The scaling relations derived above assume that the collision cross section scales as $v^{-2}$ or linearly with $r$. This is only true when the planetesimal encounter velocity is small compared to the mutual escape velocity of two planetesimals. Close to the star, this condition is violated because the encounter velocity grows with the Keplerian velocity. The minimum orbital distance at which gravitational focusing is effective can be derived by equating the encounter velocity with the mutual escape velocity
-
-\begin{equation}
-    r_{gf} \geq \frac{3 M_{*} \left< e^{2} \right> s}{4 m}
-\end{equation}
-
-Another way to think of this effect is that the gravitational capture radius of a planetesimal decreases with encounter velocity. $r_{gf}$ is the orbital distance at which the capture radius is smaller than the geometric cross section of a planetesimal.  In this case, the collision timescale instead scales as 
-
-\begin{equation}
-    t_{coll} \sim A^{-1} r^{\alpha + 3/2}
-\end{equation}
-
-\noindent and the number of timesteps required to resolve a collision stays constant with $r$ for a flat ($\alpha = 0$) surface density profile.
-
-Figure \ref{fig:time_eq_gf} also shows the minimum Hill eccentricity required to suppress gravitational focusing at a given orbital period for different values of $f_{pl}$ (dashed lines). Comparing with the solid curves, it is nearly always the case that a disk sufficiently hot enough to cause the relaxation time to exceed the collision timescale will also suppress gravitational focusing.
-
-\subsection{Isolation Mass}
-
-The isolation mass of a planetary embryo, which represents the largest mass that a body can attain by accreting adjacent planetesimals in the disk, is given by
-
-\begin{equation}
-    M_{iso} = 2 \pi a \left( 2 \Delta a \right) \Sigma
-\end{equation}
-
-\noindent where $a$ is the semimajor axis of the embryo and $\Delta a$ is the maximum encounter distance that results in accretion. $\Delta a$ scales with the Hill radius of the growing body, which also depends on the isolation mass.
-
-\begin{equation}
-    \Delta a = \tilde{b} R_{h} = \tilde{b} \left( \frac{M_{iso}}{3 M_{*}} \right)^{1/3} a
-\end{equation}
-
-The constant $\tilde{b}$ can be determined by requiring that adjacent protoplanets do not enter each other's Hill spheres. This is equivalent to requiring that the Jacobi energy of these bodies be negative such that \citep{Hayashi1977}
-
-\begin{equation}
-    E_{J} = \frac{1}{2} \left( \tilde{e}^{2} + \tilde{i}^{2} \right) - \frac{3}{8} \tilde{b}^{2} + \frac{9}{2}  \geq 0
-\end{equation}
-
-\noindent where $\tilde{e}$ and  $\tilde{i}$ is the eccentricity and inclination of a protoplanet in Hill units and $\tilde{b}$ is the separation between adjacent protoplanets, also in Hill units. Solving for $\tilde{b}$ gives
-
-\begin{equation}
-    \tilde{b} = \frac{2}{\sqrt{3}} \left( 9 + \tilde{e}^{2} + \tilde{i}^{2} \right)^{1/2}
-\end{equation}
-
-If the growing protoplanets stay on circular orbits, $\tilde{b} \approx 2 \sqrt{3}$ and the above equations can be combined to solve for the isolation mass, which gives
-
-\begin{equation}
-    M_{iso} = \frac{8}{\sqrt{3}} \left(2 \pi \Sigma \right)^{3/2} 3^{3/4} \left( 3 M_{*} \right)^{-1/2} a^{3}
-\end{equation}
-
-At short orbital periods where oligarchic growth may not operate, $\tilde{b}$ also depends on $\tilde{e}$ and $\tilde{h}$, which are functions of the eccentricity and inclination of the planetesimals, along with the final isolation mass of the embryos. $M_{iso}$ must be solved for numerically, which is shown in figure \ref{fig:m_iso} as a function of orbital period and the initial rms Hill eccentricity of the planetesimals. The white curves show the equilibrium values of the eccentricity for a dust of gas ratio of 0.5, 0.1 and 0.01 (top to bottom). As expected, the isolation mass grows at larger orbital periods, as embryos have access to a wider region of the disk. With a sufficiently hot planetesimal population, the isolation mass also grows. These results imply that if oligarchic growth does not operate, embryos will form fewer and larger. It is also plausible that the total mass in embryos will be larger, as a dynamically hot planetesimal population that is difficult to accrete will not form.
-
-\begin{figure}
-    \begin{center}
-    \includegraphics[width=0.4\columnwidth]{figures/m_iso.png}
-    \caption{Caption goes here.\label{fig:m_iso}}
-    \end{center}
-\end{figure}
-
-\begin{figure}
-    \begin{center}
-    \includegraphics[width=0.8\columnwidth]{figures/gasdrag.png}
-    \caption{Caption goes here.\label{fig:gasdrag}}
-    \end{center}
-\end{figure}
+\subsection{Collision Model}
 
 \section{Summary and Discussion} \label{sec:discuss}
 
