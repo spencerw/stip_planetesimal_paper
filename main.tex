@@ -42,25 +42,23 @@ Given the difficult question of whether to treat the solar system as an outlier,
 
 To date, a large body of work exists that has attempted to reproduce the architectures of STIPs, starting from planetary embryos (cite some examples). However, the runaway and oligarchic growth phases, which precede the assembly of the embryos, are assumed to be ubiquitous. Given that the timescales for accretion and gravitational scattering scale differently with encounter velocity, which itself scales with orbital period, it is not entirely clear that planetary embryos should form in the same way close to the star as they do at much longer, more thoroughly studied orbital periods. In this paper, we use direct N-body simulations to explore the outcome of the planetesimal accretion stage at orbital periods shorter than 100 days. In particular, we seek to understand what the orbital and mass distributions of the embryos and residual planetesimals look like, and to assess whether the initial conditions used by late-stage simulations of STIP assembly are reasonable.
 
-Outline of paper
+In section \ref{sec:theory} we provide an overview of the theory behind planetesimal accretion and argue that assumptions to derive the well-known modes of growth are only valid at sufficiently long orbital periods. We then motivate the need for N-body simulations to study this problem and describe the code used, along with how our initial conditions were constructed in section \ref{sec:methods}. In section \ref{sec:results}, we present parameter study of planetesimal accretion using a series of simulations of narrow annuli at various orbital periods. We also present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
 
-Intro text goes here \citep{Wallace2019}
+\section{Overview of Planetesimal Accretion}\label{sec:theory}
 
-\section{Overview of Planetesimal Accretion}
-
-\section{Methods}
+\section{Methods}\label{sec:methods}
 
 \subsection{The Code}
 
 \subsection{Initial Conditions}
 
-\section{Results}
+\section{Results}\label{sec:results}
 
 \subsection{Narrow Annulus}
 
 \subsection{Full Disk}
 
-\section{Simplifying Assumptions}
+\section{Simplifying Assumptions}\label{sec:assump}
 
 \subsection{Collision Cross Section}
 
