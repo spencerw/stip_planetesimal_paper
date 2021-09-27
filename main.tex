@@ -14,7 +14,7 @@
 \affiliation{Astronomy Department, University of Washington, Seattle, WA 98195}
 
 \begin{abstract}
-Formation models in which terrestrial bodies grow via the pairwise accretion of planetesimals have been reasonably successful at reproducing the general properties of the solar system, including small body populations. However, planetesimal accretion has not yet been fully explored in the context of more exotic terrestrial systems, particularly those that host short-period planets. In this work, we use direct N-body simulations to explore and understand the growth of planetary embryos from planetesimals in disks extending down to $\simeq$ 1 day orbital periods. We show that planetesimal accretion becomes nearly 100 percent efficient at short orbital periods, leading to embryo masses that are roughly twice as large as the classical isolation mass. For rocky bodies, the physical size of the object begins to occupy a significant fraction of its Hill sphere at orbital periods less than about 50 days. In this regime, most close encounters result in collisions, rather than scattering, and the system cannot bifurcate into a collection of dynamically hot planetesimals and dynamically cold oligarchs, like is seen in most models. The highly efficient accretion seen at short orbital periods implies that systems of tightly-packed inner planets should be almost completely devoid of any residual small bodies. We demonstrate the robustness of our results to assumptions about the initial disk model, and also investigate how far material can radially mix across the accretion boundary.
+Formation models in which terrestrial bodies grow via the pairwise accretion of planetesimals have been reasonably successful at reproducing the general properties of the solar system, including small body populations. However, planetesimal accretion has not yet been fully explored in the context of more exotic terrestrial systems, particularly those that host short-period planets. In this work, we use direct N-body simulations to explore and understand the growth of planetary embryos from planetesimals in disks extending down to $\simeq$ 1 day orbital periods. We show that planetesimal accretion becomes nearly 100 percent efficient at short orbital periods, leading to embryo masses that are roughly twice as large as the classical isolation mass. For rocky bodies, the physical size of the object begins to occupy a significant fraction of its Hill sphere at orbital periods less than about 50 days. In this regime, most close encounters result in collisions, rather than scattering, and the system cannot bifurcate into a collection of dynamically hot planetesimals and dynamically cold oligarchs, like is seen in previous work. The highly efficient accretion seen at short orbital periods implies that systems of tightly-packed inner planets should be almost completely devoid of any residual small bodies. We demonstrate the robustness of our results to assumptions about the initial disk model, and also investigate how far material can radially mix across the accretion boundary.
 \end{abstract}
 
 %\begin{list}
@@ -42,9 +42,22 @@ Given the difficult question of whether to treat the solar system as an outlier,
 
 To date, a large body of work exists that has attempted to reproduce the architectures of STIPs, starting from planetary embryos (cite some examples). However, the runaway and oligarchic growth phases, which precede the assembly of the embryos, are assumed to be ubiquitous. Given that the timescales for accretion and gravitational scattering scale differently with encounter velocity, which itself scales with orbital period, it is not entirely clear that planetary embryos should form in the same way close to the star as they do at much longer, more thoroughly studied orbital periods. In this paper, we use direct N-body simulations to explore the outcome of the planetesimal accretion stage at orbital periods shorter than 100 days. In particular, we seek to understand what the orbital and mass distributions of the embryos and residual planetesimals look like, and to assess whether the initial conditions used by late-stage simulations of STIP assembly are reasonable.
 
-In section \ref{sec:theory} we provide an overview of the theory behind planetesimal accretion and argue that assumptions to derive the well-known modes of growth are only valid at sufficiently long orbital periods. We then motivate the need for N-body simulations to study this problem and describe the code used, along with how our initial conditions were constructed in section \ref{sec:methods}. In section \ref{sec:results}, we present parameter study of planetesimal accretion using a series of simulations of narrow annuli at various orbital periods. We also present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
+In section \ref{sec:theory} we provide an overview of the theory behind planetesimal accretion and show that assumptions used to derive the well-known modes of growth are only valid at sufficiently long orbital periods. We then motivate the need for N-body simulations to study this problem and describe the code used, along with how our initial conditions were constructed in section \ref{sec:methods}. In section \ref{sec:results}, we present parameter study of planetesimal accretion using a series of simulations of narrow annuli at various orbital periods. We also present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
 
 \section{Overview of Planetesimal Accretion}\label{sec:theory}
+
+% analytic conditions for runaway and orderly growth
+% not clear what happens as gravitational focusing factor approaches 1
+
+% mass and velocity distributions both evolve, two-body relaxation time works to describe velocity evolution when dispersion dominated
+% if relaxation time shorter than collision time, oligarchic growth operates
+% but what happens if these timescales are flipped? not clear, because the timescales themselves depend on mass and velocity, which both evolve with time
+
+% a cleaner formalism: compare planetesimal size to hill and gravitational radius (alpha, beta)
+% alpha does not evolve with time, beta will tend towards 1
+
+% motivation for n-body simulations: what do masses and orbital properties of embryos look like as we change alpha and beta?
+% at short period, alpha and beta are large
 
 \section{Methods}\label{sec:methods}
 
@@ -56,13 +69,30 @@ In section \ref{sec:theory} we provide an overview of the theory behind planetes
 
 \subsection{Narrow Annulus}
 
+% show 4 panel plot of period-e distribution for large, small alpha and beta
+% show that runaway growth still operates for large beta
+
 \subsection{Full Disk}
+
+% show period-e distribution
+% show show period-mass distribution, with isolation mass curve overlaid
+% show plot of period vs alpha, mass. drop in embryo mass occurs where alpha = 0.1
+% also plot period vs sigma/Sigma and mass with alpha=0.1 location marked. residual planetesimal population missing interior to alpha=0.1
+
+\section{Radial Transport of Material}
+
+% from how far do embryos accumulate material
+% do embryos migrate at all? might need to run a simulation without gas to demonstrate whether this is due to PDM
 
 \section{Simplifying Assumptions}\label{sec:assump}
 
 \subsection{Collision Cross Section}
 
+% compare f=4 and f=6 disk. show that the mass transition moves inwards by the correct amount as alpha changes
+
 \subsection{Collision Model}
+
+% show alpha, beta study again with bounce vs merge model
 
 \section{Summary and Discussion} \label{sec:discuss}
 
