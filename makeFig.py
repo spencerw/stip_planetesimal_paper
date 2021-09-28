@@ -15,10 +15,7 @@ simT = u.year/(2*np.pi)
 simV = u.AU / simT
 
 from scipy import stats, optimize
-
-import sys
-sys.path.insert(0, '../OrbitTools/')
-import OrbitTools
+import KeplerOrbit as ko
 
 mpl.rcParams.update({'font.size': 18, 'font.family': 'STIXGeneral', 'mathtext.fontset': 'stix',
                             'image.cmap': 'viridis'})
@@ -38,7 +35,7 @@ def lnLam(b1, b2):
 sigma1 = 6
 f_disk = 0.13
 h = 1
-alpha = 3/2
+alpha = 1
 
 # Values for M stars from Backus + Quinn 2016
 q = 0.59
@@ -71,6 +68,42 @@ sigma_pl = pt.sigma_pl(alpha, sigma1, a_vals_au, f_disk)
 
 omega = np.sqrt(G.cgs.value*m_central/a_vals**3)
 vk = np.sqrt(G.cgs.value*m_central/a_vals)
+
+# Input in sim units, output in days
+def p_orbit(sma, m_central):
+	return (2*np.pi*np.sqrt(sma**3/m_central)*simT).to(u.d).value
+
+def plot_alpha_beta():
+	file_str = 'figures/alpha_beta.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+		
+	def subplot(ax, prefix, title):
+		mcen = 1
+		ih = True
+		if prefix == 'disk4000':
+			ih = False
+		snap0 = pb.load('data/'+prefix+'.ic')
+		pl0 = ko.orb_params(snap0, isHelio=ih, mCentral=mcen)
+		snap = pb.load('data/'+prefix+'.end')
+		pl = ko.orb_params(snap, isHelio=ih, mCentral=mcen)
+		ax.scatter(p_orbit(pl0['a'], mcen), pl0['e'], s=pl0['mass']/np.max(pl['mass'])*100)
+		ax.scatter(p_orbit(pl['a'], mcen), pl['e'], s=pl['mass']/np.max(pl['mass'])*100)
+		ax.set_xlabel('Orbital Period [d]')
+		ax.set_ylabel('Eccentricity')
+		ax.set_title(title)
+
+	fig, ax = plt.subplots(figsize=(16,16), nrows=2, ncols=2, sharex=True, sharey=True)
+	subplot(ax[0][0], 'ki_fluffy_cold', r'Large $\alpha$, Small $\beta$')
+	subplot(ax[0][1], 'ki_fluffy_superhot', r'Large $\alpha$, Large $\beta$')
+	subplot(ax[1][0], 'disk4000', r'Small $\alpha$, Small $\beta$')
+	subplot(ax[1][1], 'ki_superhot', r'Small $\alpha$, Large $\beta$')
+
+	ax[1][1].set_yscale('log')
+	ax[1][1].set_xlim(330, 400)
+	ax[1][1].set_ylim(1e-5, 0.3)
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 def plot_trel_tcoll_eq_gf():
 	file_str = 'figures/time_eq_gf.' + fmt
@@ -136,10 +169,12 @@ def plot_m_iso():
 	from matplotlib import cm
 	fig, axes = plt.subplots(figsize=(8,8))
 	cmap = mpl.cm.get_cmap('inferno_r', 10)
+	levels = np.logspace(np.log10(np.min(m_iso_vals)), np.log10(np.max(m_iso_vals)), 11)
+	axes.contour(t_orbit_d, e_i(e_h_vals), np.flipud(np.rot90(m_iso_vals)), levels, colors='white')
 	cax = axes.pcolormesh(t_orbit_d, e_i(e_h_vals), np.flipud(np.rot90(m_iso_vals)), \
 	                      norm=mpl.colors.LogNorm(), cmap=cmap)
 	for idx in range(len(dust_to_gas)):
-		axes.plot(t_orbit_d, e_eq_vals[idx], color='white')
+		axes.plot(t_orbit_d, e_eq_vals[idx], color='red')
 	cb = fig.colorbar(cax)
 	cb.set_label('Isolation Mass [g]')
 	axes.set_xlabel(r'Orbital Period [d]')
@@ -198,6 +233,4 @@ def make_plot():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-plot_trel_tcoll_eq_gf()
-plot_m_iso()
-plot_gasdrag()
+plot_alpha_beta()
