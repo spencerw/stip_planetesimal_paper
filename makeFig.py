@@ -27,47 +27,24 @@ clobber = True
 fmt = 'png'
 s = 0.005
 
-from scipy.integrate import quad
+num_bins = 50
+mCentral = 0.08
 
-def lnLam(b1, b2):
-    return quad(lambda x: 1/x, b1, b2)[0]
+bins = np.linspace(0.01, 0.3, num_bins)
+snap = pb.load('data/fullDiskVHi.ic')
+plVHiIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+p_vhi_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins)
 
-sigma1 = 6
-f_disk = 0.13
-h = 1
-alpha = 1
+snap = pb.load('data/fullDiskVHi.258000')
+plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+p_vhi = pb.analysis.profile.Profile(plVHi.d, bins=bins)
 
-# Values for M stars from Backus + Quinn 2016
-q = 0.59
-T0 = 130
-mu = 2.34 # Hayashi 1981
+perIC = 2*np.pi*np.sqrt((plVHiIC['a']*u.AU).to(u.cm)**3/(G.cgs*(mCentral*u.M_sun).to(u.g))).to(u.d)
+prof_perIC = 2*np.pi*np.sqrt((p_vhi_ic['rbins']*u.AU).to(u.cm)**3/(G.cgs*(mCentral*u.M_sun).to(u.g))).to(u.d)
+per = 2*np.pi*np.sqrt((plVHi['a']*u.AU).to(u.cm)**3/(G.cgs*(mCentral*u.M_sun).to(u.g))).to(u.d)
 
-C_D = 1
-dust_to_gas = [0.01, 0.1, 0.5]
-
-rhop = 2
-m_central = (0.13*u.M_sun).to(u.g).value
-Rp = (50*u.km).to(u.cm).value
-mp = 4/3*np.pi*Rp**3*rhop
-f_pl = [1., 3., 6.]
-
-def e_i(e_h):
-    return e_h*(mp/(3*m_central))**(1/3)
-
-def e_h(e):
-    return e*(mp/(3*m_central))**(-1/3)
-
-t_orbit_d = np.logspace(0, 3)
-t_orbit = (t_orbit_d*u.d).to(u.s).value
-a_vals = pt.sma(t_orbit, m_central)
-a_vals_au = (a_vals*u.cm).to(u.AU).value
-
-e_h_vals = np.logspace(0, 2)
-
-sigma_pl = pt.sigma_pl(alpha, sigma1, a_vals_au, f_disk)
-
-omega = np.sqrt(G.cgs.value*m_central/a_vals**3)
-vk = np.sqrt(G.cgs.value*m_central/a_vals)
+p_min, p_max = -5, 100
+e_min, e_max = 1e-3, 1
 
 # Input in sim units, output in days
 def p_orbit(sma, m_central):
@@ -77,7 +54,7 @@ def plot_alpha_beta():
 	file_str = 'figures/alpha_beta.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
-		
+
 	def subplot(ax, prefix, title):
 		mcen = 1
 		ih = True
@@ -103,134 +80,119 @@ def plot_alpha_beta():
 	ax[1][1].set_xlim(330, 400)
 	ax[1][1].set_ylim(1e-5, 0.3)
 
+	plt.tight_layout()
+
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-def plot_trel_tcoll_eq_gf():
-	file_str = 'figures/time_eq_gf.' + fmt
+def plot_alpha_beta_evo():
+	file_str = 'figures/alpha_beta_evo.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
 
-	def func(x, sigma_pl, a_val, f_pl_val):
-	    i_std = 10**x/2
-	    vk = np.sqrt(G.cgs.value*m_central/a_val)
-	    v = np.sqrt((10**x)**2 + i_std**2)*vk
-	    vesc = np.sqrt(G.cgs.value*mp/Rp)
-	    bmin = 2*G.cgs.value*mp/v**2
-	    bmax = a_val
-	    lnLamVal = lnLam(bmin, bmax)
-	    
-	    return np.log10((v**4*(f_pl_val*Rp)**2*(1 + vesc**2/v**2))/(G.cgs.value**2*mp**2*lnLamVal))
-
-	e_cross_vals = np.zeros((len(f_pl), len(a_vals_au)))
-	e_gf_vals = np.empty((len(f_pl), len(a_vals)))
-	for f_pl_idx in range(len(f_pl)):
-	    for idx in range(len(a_vals)):
-	        e_cross_vals[f_pl_idx][idx] = 10**optimize.root(func, -3.0, args=(sigma_pl[idx], a_vals[idx], f_pl[f_pl_idx])).x
-	        e_gf_vals[f_pl_idx][idx] = np.sqrt(4*mp*a_vals[idx]/(3*m_central*(f_pl[f_pl_idx]*Rp)))
-
 	fig, axes = plt.subplots(figsize=(8,8))
-	for idx, val in enumerate(f_pl):
-	    c = next(axes._get_lines.prop_cycler)['color']
-	    axes.plot(t_orbit_d, e_cross_vals[idx], label=r'f$_{pl}$ = ' + str(int(val)), linestyle='-', color=c)
-	    axes.plot(t_orbit_d, e_gf_vals[idx], linestyle='--', color=c)
+
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy_cold.txt')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Small $\beta$')
+
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy_superhot.txt')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Large $\beta$')
+
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/disk4000.txt')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Small $\beta$')
+
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_superhot.txt')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Large $\beta$')
+
+	axes.set_xlabel('Time Steps')
+	axes.set_ylabel(r'M / $\langle$ m $\rangle$')
 	axes.legend()
-	axes.set_xscale('log')
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_fulldisk_e_m():
+	file_str = 'figures/fulldisk_e_m.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	fig, ax = plt.subplots(figsize=(16,16), nrows=2, sharex=True)
+
+	axes = ax[0]
+	xbins = np.linspace(p_min, p_max, num=num_bins)
+	ybins = np.logspace(np.log10(e_min), np.log10(e_max), num=num_bins)
+	H, xedges, yedges = np.histogram2d(perIC.value, plVHiIC['e'], bins=(xbins, ybins))
+	binsX = 0.5*(xedges[1:] + xedges[:-1])
+	binsY = 0.5*(yedges[1:] + yedges[:-1])
+	l = np.logspace(np.log10(30), np.log10(np.max(H)), 10)
+	c = axes.contour(binsX, binsY, np.flipud(np.rot90(H)), colors='black', linewidths=0.2, levels=l)
+
+	axes.scatter(per.value, plVHi['e'], s=0.005*plVHi['mass']/np.min(plVHi['mass']))
+	axes.set_ylabel('Eccentricity')
+	axes.set_xlim(p_min, p_max)
+	axes.set_ylim(e_min, e_max)
 	axes.set_yscale('log')
-	axes.set_xlabel(r'Orbital Period [d]')
-	axes.set_ylabel(r'Equilibirum $\left< e^{2} \right>^{1/2}$')
-	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-def plot_m_iso():
-	file_str = 'figures/m_iso.' + fmt
-	if not clobber and os.path.exists(file_str):
-		return
+	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	a_vals = (p_vhi_ic['rbins']*u.AU).to(u.cm).value
+	btilde = 2*np.sqrt(3)
+	mCentral_g = (mCentral*u.M_sun).to(u.g).value
+	m_iso_vhi = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentral_g))
+	btilde = 10
+	m_iso_vhi1 = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentral_g))
 
-	def func(x, e_std, sigma_pl, a_val):
-	    i_std = e_std/2
-	    
-	    etilde, itilde = e_std*(10**x/(3*m_central))**(-1/3), i_std*(10**x/(3*m_central))**(-1/3)
-	    btilde = 2/np.sqrt(3)*np.sqrt(9 + etilde**2 + itilde**2)
-	    
-	    return np.log10(4*np.pi*a_val**2*btilde*sigma_pl*(10**x/(3*m_central))**(1/3)) - x
-
-	m_iso_vals = np.empty((len(a_vals_au), len(e_h_vals)))
-	for idx in range(len(a_vals)):
-	    for idx1 in range(len(e_h_vals)):
-	        m_iso_vals[idx][idx1] = 10**optimize.root(func, 20, args=(e_i(e_h_vals[idx1]), \
-	        	                                                      sigma_pl[idx], a_vals[idx])).x
-
-	e_eq_vals = np.empty((len(dust_to_gas), len(t_orbit)))
-	for idx in range(len(dust_to_gas)):
-		cs = pt.soundspeed(T0, mu, q, a_vals_au)
-		vgas = pt.v_gas((m_central*u.g).to(u.M_sun).value, a_vals, cs, q)
-		rhogas = pt.rho_gas(cs, omega, sigma_pl, dust_to_gas[idx])
-		e_eq_vals[idx] = pt.e_eq(omega, sigma_pl, mp, Rp, C_D, vk, rhogas, vgas)
-
-	from matplotlib import cm
-	fig, axes = plt.subplots(figsize=(8,8))
-	cmap = mpl.cm.get_cmap('inferno_r', 10)
-	levels = np.logspace(np.log10(np.min(m_iso_vals)), np.log10(np.max(m_iso_vals)), 11)
-	axes.contour(t_orbit_d, e_i(e_h_vals), np.flipud(np.rot90(m_iso_vals)), levels, colors='white')
-	cax = axes.pcolormesh(t_orbit_d, e_i(e_h_vals), np.flipud(np.rot90(m_iso_vals)), \
-	                      norm=mpl.colors.LogNorm(), cmap=cmap)
-	for idx in range(len(dust_to_gas)):
-		axes.plot(t_orbit_d, e_eq_vals[idx], color='red')
-	cb = fig.colorbar(cax)
-	cb.set_label('Isolation Mass [g]')
-	axes.set_xlabel(r'Orbital Period [d]')
-	axes.set_ylabel(r'$\left< e^{2} \right>^{1/2}$')
-	axes.set_xscale('log')
+	axes = ax[1]
+	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value)
 	axes.set_yscale('log')
-	axes.set_xlim(np.min(t_orbit_d), np.max(t_orbit_d))
-	axes.set_ylim(np.min(e_i(e_h_vals)), np.max(e_i(e_h_vals)))
+	axes.plot(prof_perIC, m_iso_vhi)
+	axes.plot(prof_perIC, m_iso_vhi1)
+	axes.set_xlim(p_min, p_max)
+	axes.set_ylim(1e25, 1e28)
+	axes.set_ylabel('Mass [g]')
+	axes.set_xlabel('Orbital Period [d]')
+	axes.axvline(60, ls='--')
+
+	plt.tight_layout()
+
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-def plot_gasdrag():
-	file_str = 'figures/gasdrag.' + fmt
+def plot_alpha_pl_frac():
+	file_str = 'figures/alpha_pl_frac.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
 
-	t_stop_vals = np.empty((len(dust_to_gas), len(t_orbit)))
-	t_drift_vals = np.empty((len(dust_to_gas), len(t_orbit)))
+	fig, axes = plt.subplots(figsize=(8,4))
 
-	for idx in range(len(dust_to_gas)):
-	    cs = pt.soundspeed(T0, mu, q, a_vals_au)
-	    vgas = pt.v_gas((m_central*u.g).to(u.M_sun).value, a_vals, cs, q)
-	    rhogas = pt.rho_gas(cs, omega, sigma_pl, dust_to_gas[idx])
-	    e_std = pt.e_eq(omega, sigma_pl, mp, Rp, C_D, vk, rhogas, vgas)
-	    t_stop = pt.t_stop(mp, Rp, C_D, rhogas, vgas)
-	    t_stop_vals[idx] = t_stop
-	    vr = 2*vgas/((t_stop*omega)+(1/(t_stop*omega)))
-	    t_drift_vals[idx] = a_vals/vr
+	mask1 = plVHi['mass'] < 10*np.min(plVHi['mass'])
+	mask2 = plVHi['mass'] > 0
 
-	fig, axes = plt.subplots(figsize=(16,8), nrows=1, ncols=2)
-	for idx in range(len(dust_to_gas)):
-	    axes[0].plot(t_orbit_d, t_stop_vals[idx]/t_orbit, label='d/g = '+str(dust_to_gas[idx]))
-	    axes[1].plot(t_orbit_d, t_drift_vals[idx]/t_orbit)
-	axes[0].set_xscale('log')
-	axes[0].set_yscale('log')
-	axes[0].set_xlabel('Orbital Period [d]')
-	axes[1].set_xlabel('Orbital Period [d]')
-	axes[0].set_ylabel('Stopping Time [orbits]')
-	axes[1].set_ylabel('Radial Drift Time [orbits]')
-	axes[1].set_xscale('log')
-	axes[1].set_yscale('log')
-	axes[0].legend()
-	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+	bins1 = np.linspace(0.01, 0.3, 15)
 
-def make_plot():
-	file_str = 'figures/test.' + fmt
-	if not clobber and os.path.exists(file_str):
-		return
+	p_vhi_m1 = pb.analysis.profile.Profile(plVHi[mask1], bins=bins1)
+	p_vhi_m2 = pb.analysis.profile.Profile(plVHi[mask2], bins=bins1)
 
-	xmodel = np.linspace(0, 10)
-	ymodel = np.cos(xmodel)
+	prof_per1 = 2*np.pi*np.sqrt((p_vhi_m1['rbins']*u.AU).to(u.cm)**3/(G.cgs*(mCentral*u.M_sun).to(u.g))).to(u.d)
 
-	fig, axes = plt.subplots(figsize=(8,8))
-	axes.plot(xmodel, ymodel)
-	axes.set_xlabel('X')
-	axes.set_ylabel('Y')
+	fig, axes = plt.subplots(figsize=(16,8))
+	m0 = (np.min(plVHiIC['mass'])*u.M_sun).to(u.g).value
+	rho = 3
+	f = 6
+	r0 = (3*m0/(4*np.pi*rho))**(1/3)
+	alpha = (r0*u.cm*f).to(u.AU).value/(p_vhi_ic['a']*((m0*u.g).to(u.M_sun).value/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha)
+	axes.set_ylim(5e-2, 1)
+	axes.set_xlim(p_min, p_max)
+	axes.set_ylabel(r'$\alpha$')
+	axes.set_xlabel('Orbital Period [d]')
+
+	ax = axes.twinx()
+	ax.plot(prof_per1, (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2))
+	ax.set_ylabel(r'$\sigma$ / $\Sigma$')
+	ax.set_ylim(0, 1)
+
+	axes.axvline(60, ls='--')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-plot_alpha_beta()
+#plot_alpha_beta()
+#plot_alpha_beta_evo()
+plot_fulldisk_e_m()
+plot_alpha_pl_frac()
