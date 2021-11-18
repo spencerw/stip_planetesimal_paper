@@ -6,6 +6,7 @@ import pandas as pd
 import pynbody as pb
 import natsort as ns
 import glob as gl
+import re
 import os
 import profileTools as pt
 
@@ -49,6 +50,59 @@ e_min, e_max = 1e-3, 1
 # Input in sim units, output in days
 def p_orbit(sma, m_central):
 	return (2*np.pi*np.sqrt(sma**3/m_central)*simT).to(u.d).value
+
+def plot_timescales():
+	file_str = 'figures/timescales.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	# r in AU
+	def surf_den(r):
+		sigma0 = 10 # g/cm^2
+		alpha = 3/2
+		return (sigma0*(r)**(-alpha)).value*u.g/u.cm**2
+
+	rhop = 3*u.g/u.cm**3
+	rp = (100*u.km).to(u.cm) # Timescale ratio is independent of size at fixed density
+	mp = 4/3*np.pi*rhop*rp**3
+
+	mstar = (1*u.M_sun).to(u.g)
+	p_bins = (np.logspace(-4, 0)*u.yr).to(u.s)
+	r_bins = ((p_bins/(2*np.pi))**2*G.cgs*mstar)**(1/3)
+
+	def timescale_ratio(eh):
+		Sigma = surf_den(r_bins.to(u.AU))
+
+		vk = np.sqrt(G.cgs*mstar/r_bins)
+		lnLam = 5
+		omega = 2*np.pi/p_bins
+		vesc = np.sqrt(G.cgs*mp/rp)
+
+		# Dispersion dominated boundary
+		ecc = eh*(mp/(3*mstar))**(1/3)
+		inc = ecc/2
+		sigma = np.sqrt(5/8*ecc**2 + inc**2)*vk
+
+		n = Sigma*omega/(2*mp*sigma)
+		theta = vesc/sigma
+		cross = np.pi*rp**2*(1 + theta**2)
+		t_coll_vals = 1/(n*cross*sigma)
+		t_relax_vals = sigma**3/(n*np.pi*G.cgs**2*mp**2*lnLam)
+
+		return t_relax_vals/t_coll_vals
+
+	fig, axes = plt.subplots(figsize=(8,8))
+	ehvals = [16, 8, 4, 2, 1]
+	for eh in ehvals:
+		axes.plot(p_bins.to(u.d), timescale_ratio(eh), label=r'e$_{h}$ = '+str(eh))
+	axes.axhline(1, ls='--')
+	axes.legend()
+	axes.set_xscale('log')
+	axes.set_yscale('log')
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel(r't$_{relax}$/t$_{coll}$')
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 def plot_alpha_beta():
 	file_str = 'figures/alpha_beta.' + fmt
@@ -192,7 +246,50 @@ def plot_alpha_pl_frac():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
+def plot_pl_frac_time():
+	file_str = 'figures/pl_frac_time.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	files = gl.glob1('data/', 'fullDiskVHi1.[0-9]*[0-9]')
+	files = ns.natsorted(files)
+
+	pbins = (np.linspace(1, 100, 10)*u.d).value
+	bins1 = ((((pbins*u.d).to(u.s)/(2*np.pi))**2*G.cgs*(mCentral*u.M_sun).to(u.g))**(1/3)).to(u.AU).value
+
+	files_sub = files
+
+	prof_arr = np.zeros((len(bins1)-1, len(files_sub)))
+	time_arr = np.zeros(len(files_sub))
+
+	for idx, f in enumerate(files_sub):
+		snap = pb.load('data/'+f)
+		plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+		mask1 = plVHi['mass'] < 10*np.min(plVHi['mass'])
+		mask2 = plVHi['mass'] > 0
+		p_vhi_m1 = pb.analysis.profile.Profile(plVHi[mask1], bins=bins1)
+		p_vhi_m2 = pb.analysis.profile.Profile(plVHi[mask2], bins=bins1)
+
+		time_arr[idx] = snap.properties['time'].in_units('yr')
+		prof_arr[:,idx] = (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+
+	fig, axes = plt.subplots(figsize=(8,4))
+
+	for idx in range(len(bins1[:-1])):
+		if pbins[idx] < 60:
+			ls = '--'
+		else:
+			ls = '-'
+		axes.plot(time_arr, prof_arr[idx], color='black', linestyle=ls)
+
+	axes.set_ylabel(r'$\Sigma$/$\sigma$')
+	axes.set_xlabel('Time [yr]')
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
-plot_fulldisk_e_m()
-plot_alpha_pl_frac()
+#plot_fulldisk_e_m()
+#plot_alpha_pl_frac()
+#plot_pl_frac_time()

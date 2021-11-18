@@ -1,4 +1,4 @@
-\documentclass[onecolumn]{aastex63}
+\documentclass[twocolumn]{aastex63}
 \usepackage{natbib}
 %\definecolor{orcidlogocol}{HTML}{A6CE39}
 \bibliographystyle{aasjournal}
@@ -45,6 +45,35 @@ To date, a large body of work exists that has attempted to reproduce the archite
 In section \ref{sec:theory} we provide an overview of the theory behind planetesimal accretion and show that assumptions used to derive the well-known modes of growth are only valid at sufficiently long orbital periods. We then motivate the need for N-body simulations to study this problem and describe the code used, along with how our initial conditions were constructed in section \ref{sec:methods}. In section \ref{sec:results}, we present parameter study of planetesimal accretion using a series of simulations of narrow annuli at various orbital periods. We also present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
 
 \section{Overview of Planetesimal Accretion}\label{sec:theory}
+
+We begin our analysis by considering a disk of equal planetesimals with radius $s$, mass $m_{pl}$ and surface density $\Sigma_{pl}$. The collision rate in the vicinity of an orbit defined by Keplerian frequency $\Omega$ can be written as $n \Gamma v$, where $n = \Sigma_{pl} \Omega / 2 m_{pl} v$, $\Gamma$ is the effective collision cross section and $v$ is the typical encounter velocity between planetesimals. Assuming that every collision results in a perfect merger, the growth rate of a planetesimal is given by
+
+\begin{equation}\label{eq:growth}
+	\frac{dM}{dt} = \frac{\Sigma \Omega}{2 m_{pl}} \Gamma.
+\end{equation}
+
+In the case where the collision cross section $\Gamma$ depends only on the physical size of the planetesimals, the growth scales linearly with mass and the mass distribution is expected to evolve in an `orderly' fashion. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \Gamma_{geo} \left( 1 + v_{esc}^2 / v^2 \right)$, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
+
+In the limit that $v_{esc} \gg v$, it can be shown that $M \propto M^{4/3}$, which implies a runaway scenario, in which growth accelerates with mass. This mode of growth was confirmed with N-body simulations by \citet{kokubo96} and appears necessary to construct protoplanets within the lifetime of a protoplanetary disk. Due to the velocity dependence of the gravitational focusing effect, it isn't clear how ubiquitous this mode of growth is. In particular, encounter velocities at short orbital periods will be rather large (because $v \sim v_{k}$) and the $v_{esc} \gg v$ condition may not always be satisfied. The effect that a dynamically hot disk has on runway growth will be examined in detail in section \ref{sec:results}.
+
+An important feature is missing from the model described above, which limits its applicability at late times. Encounters between planetesimals that do not result in a collision play a crucial role over long timescales. These close encounters act to convert energy from Keplerian shear into random motion. Over time, this gravitational stirring effect will raise the typical encounter velocities between bodies and diminish the effectiveness of gravitational focusing. With a spectrum of masses, these velocity differences become even more pronounced because as system drifts towards a state of quasi-equilibrium where $v \sim m^{1/2}$. For a system of equal mass bodies in which encounters are driven by random motions rather than Keplerian shear (dispersion dominated), the timescale for gravitational stirring is described by the two-body relaxation time \citep{ida93}
+
+\begin{equation}\label{eq:relax}
+	t_{relax} = \frac{v^3}{n \pi G^2 m_{pl} ln \Lambda},
+\end{equation}
+
+\noindent where $ln \Lambda$ is the Coulomb logarithm. As mentioned above, the system will tend toward a state of energy equipartition for a non-uniform mass distribution. \citet{kokubo98} showed that runaway growth is actually self-limiting. As the runaway bodies grow larger, they become more effective at heating the remaining planetesimals, which diminishes the effectiveness of gravitational focusing and throttles the growth rate. Around the time that the massive runaway bodies make up about 50 percent of the solid surface density (citation), a period of less vigorous `oligarchic' growth commences, in which the few largest bodies continue to accrete planetesimals at similar rates.
+
+The picture described above relies upon an important factor, which is that the mass distribution evolves slow enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the growth timescale. For typical conditions near the terrestrial planet forming region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, this condition can easily be violated at shorter orbital periods.
+
+In figure \ref{fig:timescales}, we show ratio between the relaxation and collision timescale for a population of equal-mass planetesimals as a function of orbital period. Here, the encounter velocity is described by $v = \left( 5/8 \left< e^2 \right>^{1/2} + \left< i^2 \right>^{1/2} \right)^{1/2} v_{k}$, where $\left< e^2 \right>^{1/2}$ and $\left< i^2 \right>^{1/2}$ are the eccentricity and inclination dispersions of the planetesimal disk and $v_{k}$ is the Keplerian velocity. For simplicity, we assume that $\left< e^2 \right>^{1/2} = 2\left< i^2 \right>{1/2}$ \citep{ida93a} and that the eccentricity dispersion is constant with orbital period. The eccentricity dispersion is described in units scaled by the Hill factor $m_{pl}/ 3 M_{star}$ such that $e_{h} = 1$ corresponds to the boundary between shear and dispersion dominated encounters. The horizontal dashed line indicates where $t_{relax} = t_{coll}$. The timescale criterion for oligarchic growth is only satisfied in regions where the disk is sufficiently dynamically cold and the orbital period is sufficiently long. In section \ref{sec:results} we will explore the behavior and outcome of planetesimal accretion in regions where this criterion is \textit{not} satisfied.
+
+\begin{figure}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{figures/timescales.png}
+    \caption{The ratio between the two-body relaxation and collision timescale for a population of equal-mass planetesimals. Only in regions where $t_{relax} \ll t_{coll}$ can the velocity distribution respond to changes in the mass of the bodies such that oligarchic growth can operate. This condition is no longer satisfied for a dynamically hot disk at sufficiently short orbital periods.\label{fig:timescales}}
+\end{center}
+\end{figure}
 
 % analytic conditions for runaway and orderly growth
 % not clear what happens as gravitational focusing factor approaches 1
@@ -104,10 +133,13 @@ In section \ref{sec:theory} we provide an overview of the theory behind planetes
 
 % show period-e distribution
 % show show period-mass distribution, with isolation mass curve overlaid
+% what about 'maximum planetary mass' from Schlichting 2014?
 % show plot of period vs alpha, mass. drop in embryo mass occurs where alpha = 0.1
 % also plot period vs sigma/Sigma and mass with alpha=0.1 location marked. residual planetesimal population missing interior to alpha=0.1
 
 % is there a clever, succinct way to show the evolution of sigma/Sigma in each period bin? to demonstrate that the accretion boundary is static
+
+% does the accretion boundary always fall somewhere within the PPD, or can it lie inside the magnetic truncation radius sometimes? how does this depend on spectral type? (this is complicated, depends on radius + magnetic field strength of star, plus accretion rate of PPD)
 
 \section{Radial Transport of Material}
 
@@ -127,6 +159,8 @@ In section \ref{sec:theory} we provide an overview of the theory behind planetes
 How to reconcile our concerns with the results of \citet{wallace17}?
 
 \section{Summary and Discussion} \label{sec:discuss}
+
+As was pointed out in \citet{clement20},  late stage initial conditions with a uniform distribution of embryos is not accurate. Evolution happens in the inner part of the disk first, so bodies will be more massive there.
 
 Summary and discussion text goes here
 
