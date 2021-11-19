@@ -46,7 +46,9 @@ In section \ref{sec:theory} we provide an overview of the theory behind planetes
 
 \section{Overview of Planetesimal Accretion}\label{sec:theory}
 
-We begin our analysis by considering a disk of equal planetesimals with radius $s$, mass $m_{pl}$ and surface density $\Sigma_{pl}$. The collision rate in the vicinity of an orbit defined by Keplerian frequency $\Omega$ can be written as $n \Gamma v$, where $n = \Sigma_{pl} \Omega / 2 m_{pl} v$, $\Gamma$ is the effective collision cross section and $v$ is the typical encounter velocity between planetesimals. Assuming that every collision results in a perfect merger, the growth rate of a planetesimal is given by
+\subsection{Oligarchic and Runaway Growth}
+
+We begin our analysis by considering a disk of equal planetesimals with radius $r_{pl}$, mass $m_{pl}$ and surface density $\Sigma_{pl}$. The collision rate in the vicinity of an orbit defined by Keplerian frequency $\Omega$ can be written as $n \Gamma v$, where $n = \Sigma_{pl} \Omega / 2 m_{pl} v$, $\Gamma$ is the effective collision cross section and $v$ is the typical encounter velocity between planetesimals. Assuming that every collision results in a perfect merger, the growth rate of a planetesimal is given by
 
 \begin{equation}\label{eq:growth}
 	\frac{dM}{dt} = \frac{\Sigma \Omega}{2 m_{pl}} \Gamma.
@@ -66,7 +68,7 @@ An important feature is missing from the model described above, which limits its
 
 The picture described above relies upon an important factor, which is that the mass distribution evolves slow enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the growth timescale. For typical conditions near the terrestrial planet forming region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, this condition can easily be violated at shorter orbital periods.
 
-In figure \ref{fig:timescales}, we show ratio between the relaxation and collision timescale for a population of equal-mass planetesimals as a function of orbital period. Here, the encounter velocity is described by $v = \left( 5/8 \left< e^2 \right>^{1/2} + \left< i^2 \right>^{1/2} \right)^{1/2} v_{k}$, where $\left< e^2 \right>^{1/2}$ and $\left< i^2 \right>^{1/2}$ are the eccentricity and inclination dispersions of the planetesimal disk and $v_{k}$ is the Keplerian velocity. For simplicity, we assume that $\left< e^2 \right>^{1/2} = 2\left< i^2 \right>{1/2}$ \citep{ida93a} and that the eccentricity dispersion is constant with orbital period. The eccentricity dispersion is described in units scaled by the Hill factor $m_{pl}/ 3 M_{star}$ such that $e_{h} = 1$ corresponds to the boundary between shear and dispersion dominated encounters. The horizontal dashed line indicates where $t_{relax} = t_{coll}$. The timescale criterion for oligarchic growth is only satisfied in regions where the disk is sufficiently dynamically cold and the orbital period is sufficiently long. In section \ref{sec:results} we will explore the behavior and outcome of planetesimal accretion in regions where this criterion is \textit{not} satisfied.
+In figure \ref{fig:timescales}, we show ratio between the relaxation and collision timescale for a population of equal-mass planetesimals as a function of orbital period. Here, the encounter velocity is described by $v = \left( 5/8 \left< e^2 \right>^{1/2} + \left< i^2 \right>^{1/2} \right)^{1/2} v_{k}$, where $\left< e^2 \right>^{1/2}$ and $\left< i^2 \right>^{1/2}$ are the eccentricity and inclination dispersions of the planetesimal disk and $v_{k}$ is the Keplerian velocity. For simplicity, we assume that $\left< e^2 \right>^{1/2} = 2\left< i^2 \right>{1/2}$ \citep{ida93a} and that the eccentricity dispersion is constant with orbital period. The eccentricity dispersion is described in units scaled by the Hill factor $m_{pl}/ 3 M_{star}$ such that $e_{h} = 1$ corresponds to the boundary between shear and dispersion dominated encounters. The horizontal dashed line indicates where $t_{relax} = t_{coll}$. The timescale criterion for oligarchic growth is only satisfied in regions where the disk is sufficiently dynamically cold and the orbital period is sufficiently long. In section \ref{sec:results} we will explore the behavior and outcome of planetesimal accretion in regions where this criterion is \textit{not} satisfied. 
 
 \begin{figure}
 \begin{center}
@@ -74,6 +76,22 @@ In figure \ref{fig:timescales}, we show ratio between the relaxation and collisi
     \caption{The ratio between the two-body relaxation and collision timescale for a population of equal-mass planetesimals. Only in regions where $t_{relax} \ll t_{coll}$ can the velocity distribution respond to changes in the mass of the bodies such that oligarchic growth can operate. This condition is no longer satisfied for a dynamically hot disk at sufficiently short orbital periods.\label{fig:timescales}}
 \end{center}
 \end{figure}
+
+\subsection{Planetesimal Size and Extent of Hill Sphere}
+
+In the formalism described above, the mass and velocity distribution of the bodies are both a function of time. Due to the interdependence of these quantities, it is not clear whether the timescales for gravitational scattering and growth will remain proportional as the oligarchs develop. In the case of many studies of planetesimal accretion in the solar system (cite examples), the $t_{relax} \ll t_{coll}$ condition must remain true, otherwise runaway growth would have continued until all of the planetesimals were consumed. However, it isn't immediately clear what will happen if the system begins in a state where $t_{coll} \ll t_{relax}$.
+
+An insight into the expected behavior in this regime can be gained by defining the dimensionless parameter $\alpha$, which is the ratio between the physical size of a body and it's Hill radius
+
+\begin{equation}\label{eq:alpha}
+	\alpha = \frac{r_{pl}}{r_{h}} = \frac{1}{a} \left( \frac{9 M_{*}}{4 \pi \rho_{pl}} \right)^{1/3},
+\end{equation}
+
+\noindent where $a$ is the semimajor axis of the body and $\rho_{pl}$ is its bulk density. Assuming a fixed bulk density as bodies collide and grow, and that no large-scale migration occurs, the scaling of both $r_{pl}$ and $r_{h}$ with $m_{pl}^{1/3}$ means that $\alpha$ will be constant with time. For a composition of ice and rock, $\alpha$ is small for any populated region of the solar system ($\alpha \sim 10^{-2}$ for Earth and $\alpha \sim 10^{-4}$ in the Kuiper belt). As one moves close to the star $\alpha$ becomes larger than 1, which implies that the physical extent of a body exceeds its Hill sphere. (also mention that hill sphere size independent of velocity for small eccentricity)
+
+The size of $\alpha$ controls the relative importance of gravitational scattering and collisions in driving the evolution of the planetesimal disk. In the case that $\alpha$ is small, most close encounters will result in a gravitational interaction only, moving the system toward a state of relaxation. If, however, the Hill sphere is largely filled by the body itself, these same encounters will instead drive evolution of the masses. Because $\alpha$ is independent of time, the innermost region of the planetesimal disk, where collisions dominate over scattering events, should remain that way.
+
+Need a transition to next section here.
 
 % analytic conditions for runaway and orderly growth
 % not clear what happens as gravitational focusing factor approaches 1
@@ -88,20 +106,33 @@ In figure \ref{fig:timescales}, we show ratio between the relaxation and collisi
 % motivation for n-body simulations: what do masses and orbital properties of embryos look like as we change alpha and beta?
 % at short period, alpha and beta are large
 
-\section{Methods}\label{sec:methods}
+\section{Numerical Methods}\label{sec:methods}
 
-\subsection{The Code}
+We use the tree-based N-body code {\sc ChaNGa} \footnote{A public version of {\sc ChaNGa} can be downloaded from \url{http://www-hpcc.astro.washington.edu/tools/ChaNGa.html}} to model the gravitational and collisional evolution of planetesimals at short orbital periods (where $\alpha$ is large). {\sc ChaNGa} is written using the {\sc CHARM++} parallel programming language and has been shown to perform well on up to half a million processors \citep{menon15} and can follow the evolution of gravitationally interacting swarms of up to billions of particles. Using a modified Barnes-Hut tree with hexadecapole expansions of the moments to approximate forces, {\sc ChaNGa} integrates the equations of motion using a kick-drift-kick leapfrog scheme. For all of the simulations presented in this paper, we use a node opening criteria of $\theta_{BH}$ = 0.7. Additional information about the code is available in \citep{jetley08}.
 
-\subsection{Initial Conditions}
+Using the neighbor-finding algorithm in {\sc ChaNGa}, originally designed for SPH calculations, we have recently implemented a solid body collision module in the code.This work is largely based on the solid-body collision implementation in {\sc PKDGRAV}, which is described in \citet{richardson94} and \citet{richardson00}. To summarize, imminent collisions are detected during the `drift' phase by extrapolating positions of bodies forward in time, using the velocity calculated at the opening `kick'. For each body, any neighboring particles which fall within a search ball of radius $fill in later$ are tested for an imminent collision. In the case that a collision is detected, the particles are merged into a single larger body, which is given the center of mass position and velocity of the two children. Resolving a collision can produce another imminent collision, so collisions are handled one-by-one and another full collision check is run after the previous event is resolved. For a more detailed description of the collision module in {\sc ChaNGa}, see \citep{wallace19}. (mention grav stepping here as well, since its used for all simulations)
 
-\section{Results}\label{sec:results}
+\section{Narrow Annulus Simulations}\label{sec:narrow}
 
-\subsection{Narrow Annulus}
+We begin by exploring a parameter study of planetesimal accretion, motivated by two questions raised in section \ref{sec:theory}. 1. Does runaway growth still operate when the condition that $v \ll v_{esc}$ is not satisfied? 2. How does planetesimal accretion proceed when $\alpha$ is no longer small?
+
+To answer these questions, we run a series of simulations in which a narrow annulus of planetesimals orbits a star. The values of $\alpha$ and $\beta = v / v_{esc}$ are varied individually. 4000 planetesimals with individual masses of $5 \times 10^{23}$ g are placed with semimajor axes randomly drawn between 0.95 and 1.05 AU about a 1 $M_{\odot}$ star. The argument of perihelion $\omega$, longitude of ascending node $\Omega$, and mean anomaly M for each body is drawn from a uniform distribution $\in [0, 2 \pi)$. The inclination dispersion $\left< i^{2} \right>^{1/2}$ is chosen to be half the eccentricity dispersion $\left< e^{2} \right>^{1/2}$ \citep{ida93a}.
+
+In the `nominal' case, we give the bodies a bulk density of 3 g cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, where $e_{h} = e a/r_{h}$ (define this in the previous section instead) which corresponds to $\alpha = 3.6 \times 10^{-2}$ and $\beta = 3.4 \times 10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by a factor of $\sim$ 7100, which produces $\alpha = 1$. To vary $\beta$, the eccentricity dispersion is increased. For the high-$\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$.
+% Should I choose beta = 1 instead? I did beta >> 1 to see if inelastic mergers will cool things off. Havent decided if that's important here
+
+In all cases, the simulations are evolved with a base timestep of 1.7 days, which corresponds to 3\% of an orbital dynamical time $\sqrt{a^3/G M_{*}}$. Due to the vastly differing growth timescales in each case, a simulation is stopped when the growth of the most massive body flattens out. In figure \ref{fig:alpha_beta}, we show the a-e distribution of bodies in the initial (blue) and final (orange) snapshots from each of the 4 simulations. The size of the points indicates the relative masses of the bodies. Only in the case of small $\alpha$ does a residual population of dynamically hot planetesimals develop. The lack of high eccentricity planetesimals in the large $\alpha$ case suggests that most encounters instead result in accretion. In the case of large $\beta$, the protoplanets and remaining planetesimals end up in a dynamically cool state, compared to the initial conditions. Here, the only mechanism that can remove energy are the merger events which result in an inelastic collision. 
+
+%If we run a cooler version of the high-beta simulations (so that the masses can evolve further), does the high alpha case end up cooler? If so, that would be a second indication that 'collisions are driving the dynamics at high alpha'.
+
+To investigate whether any of these planetesimal disks underwent runaway growth, we examine the time evolution of the maximum and mean masses in each simulation. The ratio $m_{max}/\left< m \right>$ is plotted in figure \ref{fig:alpha_beta_evo}. On this plot, a positive slope indicates that the growth rate is accelerating with mass, which is evident in all four cases. Even with large $\beta$, runaway growth still appears to operate for some duration of time.
+
+\section{Full Disk Simulation}\label{sec:fulldisk}
 
 \begin{figure*}
 \begin{center}
     \includegraphics[width=\textwidth]{figures/alpha_beta.png}
-    \caption{Caption goes here.\label{fig:alpha_beta}}
+    \caption{The initial (blue) and final (orange) states of the simulations described in section \ref{sec:narrow}. Relative masses of the bodies are indicated by point size. In the case of large $\alpha$, almost no residual planetesimal population remains. Regardless of the choice of $\beta$, the protoplanets that form attain similar eccentricities. \label{fig:alpha_beta}}
 \end{center}
 \end{figure*}
 
@@ -114,8 +145,6 @@ In figure \ref{fig:timescales}, we show ratio between the relaxation and collisi
 
 % show 4 panel plot of period-e distribution for large, small alpha and beta
 % show that runaway growth still operates for large beta
-
-\subsection{Full Disk}
 
 \begin{figure*}
 \begin{center}

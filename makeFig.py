@@ -118,9 +118,9 @@ def plot_alpha_beta():
 		pl0 = ko.orb_params(snap0, isHelio=ih, mCentral=mcen)
 		snap = pb.load('data/'+prefix+'.end')
 		pl = ko.orb_params(snap, isHelio=ih, mCentral=mcen)
-		ax.scatter(p_orbit(pl0['a'], mcen), pl0['e'], s=pl0['mass']/np.max(pl['mass'])*100)
-		ax.scatter(p_orbit(pl['a'], mcen), pl['e'], s=pl['mass']/np.max(pl['mass'])*100)
-		ax.set_xlabel('Orbital Period [d]')
+		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*100)
+		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*100)
+		ax.set_xlabel('Semimajor Axis [AU3]')
 		ax.set_ylabel('Eccentricity')
 		ax.set_title(title)
 
@@ -131,7 +131,7 @@ def plot_alpha_beta():
 	subplot(ax[1][1], 'ki_superhot', r'Small $\alpha$, Large $\beta$')
 
 	ax[1][1].set_yscale('log')
-	ax[1][1].set_xlim(330, 400)
+	ax[1][1].set_xlim(0.9, 1.1)
 	ax[1][1].set_ylim(1e-5, 0.3)
 
 	plt.tight_layout()
@@ -288,7 +288,7 @@ def plot_pl_frac_time():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 plot_timescales()
-#plot_alpha_beta()
+plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
