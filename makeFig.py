@@ -120,7 +120,7 @@ def plot_alpha_beta():
 		pl = ko.orb_params(snap, isHelio=ih, mCentral=mcen)
 		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*100)
 		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*100)
-		ax.set_xlabel('Semimajor Axis [AU3]')
+		ax.set_xlabel('Semimajor Axis [AU]')
 		ax.set_ylabel('Eccentricity')
 		ax.set_title(title)
 

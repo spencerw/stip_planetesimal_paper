@@ -120,14 +120,21 @@ To answer these questions, we run a series of simulations in which a narrow annu
 
 In the `nominal' case, we give the bodies a bulk density of 3 g cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, where $e_{h} = e a/r_{h}$ (define this in the previous section instead) which corresponds to $\alpha = 3.6 \times 10^{-2}$ and $\beta = 3.4 \times 10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by a factor of $\sim$ 7100, which produces $\alpha = 1$. To vary $\beta$, the eccentricity dispersion is increased. For the high-$\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$.
 % Should I choose beta = 1 instead? I did beta >> 1 to see if inelastic mergers will cool things off. Havent decided if that's important here
+% Another concern: using too large of a beta makes the apo-peri distances larger than the width of the annulus
 
 In all cases, the simulations are evolved with a base timestep of 1.7 days, which corresponds to 3\% of an orbital dynamical time $\sqrt{a^3/G M_{*}}$. Due to the vastly differing growth timescales in each case, a simulation is stopped when the growth of the most massive body flattens out. In figure \ref{fig:alpha_beta}, we show the a-e distribution of bodies in the initial (blue) and final (orange) snapshots from each of the 4 simulations. The size of the points indicates the relative masses of the bodies. Only in the case of small $\alpha$ does a residual population of dynamically hot planetesimals develop. The lack of high eccentricity planetesimals in the large $\alpha$ case suggests that most encounters instead result in accretion. In the case of large $\beta$, the protoplanets and remaining planetesimals end up in a dynamically cool state, compared to the initial conditions. Here, the only mechanism that can remove energy are the merger events which result in an inelastic collision. 
 
 %If we run a cooler version of the high-beta simulations (so that the masses can evolve further), does the high alpha case end up cooler? If so, that would be a second indication that 'collisions are driving the dynamics at high alpha'.
 
-To investigate whether any of these planetesimal disks underwent runaway growth, we examine the time evolution of the maximum and mean masses in each simulation. The ratio $m_{max}/\left< m \right>$ is plotted in figure \ref{fig:alpha_beta_evo}. On this plot, a positive slope indicates that the growth rate is accelerating with mass, which is evident in all four cases. Even with large $\beta$, runaway growth still appears to operate for some duration of time.
+To investigate whether any of these planetesimal disks underwent runaway growth, we examine the time evolution of the maximum and mean masses in each simulation. The ratio $m_{max}/\left< m \right>$ is plotted in figure \ref{fig:alpha_beta_evo}. On this plot, a positive slope indicates that the growth rate is accelerating with mass, which is evident in all four cases. Even with a large value of $\beta$, runaway growth still appears to operate for some duration of time.
+
+Most importantly, these results suggest that the value of $\alpha$, which is a function of only the initial conditions, controls the qualitative outcome of accretion. For most regions in a planet-forming disk, $\alpha$ is small and frequent gravitational encounters between the growing bodies allows oligarchic growth to operate. At shorter orbital periods, the Hill sphere shrinks and it appears as if the gravitational encounters play a less significant role. In this regime, it appears that runaway growth still commences, but the enhanced role that collisions play means that nearly all of the planetesimals are swept up by the forming protoplanets, rather than being scattered onto high eccentricity orbits, where they remain as a remnant of the early stages of planet formation \citep{kokubo98, kokubo00}.
 
 \section{Full Disk Simulation}\label{sec:fulldisk}
+
+Motivated by the apparent dependence of accretion modes on $\alpha$, we next investigate whether this highly efficient, non-oligarchic growth mode should be expected to operate in nature. Given the dearth of short period terrestrial planets observed around M stars (citation), we model a series of much wider disks, which span from 1 to 100 days in orbital period orbiting a star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this corresponds to $\alpha \in (0.7, 0.05)$. By modeling a fuller range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and what effect the accretion boundary itself has on the resulting protoplanet distribution.
+
+More stuff about initial conditions, timestepping issues, gas drag
 
 \begin{figure*}
 \begin{center}
@@ -184,6 +191,10 @@ To investigate whether any of these planetesimal disks underwent runaway growth,
 \subsection{Collision Model}
 
 % show alpha, beta study again with bounce vs merge model
+% mergers still happen for 'lo' simulations but not 'hi'
+% this is because the eccentricity dispersion is significantly higher in the 'hi' case
+% mostly because stirring rate increases with surface density
+% criteria should get less restrictive as larger bodies grow, what if we turn on bounces partway thru growth process?
 
 How to reconcile our concerns with the results of \citet{wallace17}?
 
