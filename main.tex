@@ -126,7 +126,9 @@ We begin by presenting a parameter study of planetesimal accretion, motivated by
 
 To answer these questions, we run a series of simulations in which a narrow annulus of planetesimals orbits a star. The values of $\alpha$ and $\beta$ are varied individually. 4000 planetesimals with individual masses of $5 \times 10^{23}$ g are placed with semimajor axes randomly drawn between 0.95 and 1.05 AU about a 1 $M_{\odot}$ star. The argument of perihelion $\omega$, longitude of ascending node $\Omega$, and mean anomaly M for each body is drawn from a uniform distribution $\in [0, 2 \pi)$. The inclination dispersion $\left< i^{2} \right>^{1/2}$ is chosen to be half the eccentricity dispersion $\left< e^{2} \right>^{1/2}$ \citep{ida93a}.
 
+% Mention Rayleigh distribution
 In the `nominal' case, we give the bodies a bulk density of 3 g cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, where $e_{h} = e a/r_{h}$ (define this in the previous section instead) which corresponds to $\alpha = 3.6 \times 10^{-2}$ and $\beta = 3.4 \times 10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by a factor of $\sim$ 7100, which produces $\alpha = 1$. To vary $\beta$, the eccentricity dispersion is increased. For the high-$\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$.
+% Important note: need to use f=6 for the low alpha case, otherwise the simulation takes forever. Do these alpha values reflect the artifically enhanced collision cross section im using?
 % Should I choose beta = 1 instead? I did beta >> 1 to see if inelastic mergers will cool things off. Havent decided if that's important here
 % Another concern: using too large of a beta makes the apo-peri distances larger than the width of the annulus
 
@@ -156,7 +158,9 @@ fdLo                & 1                                                         
 
 \section{Full Disk Simulation}\label{sec:fulldisk}
 
-Motivated by the apparent dependence of accretion modes on $\alpha$, we next investigate whether this highly efficient, non-oligarchic growth mode should be expected to operate in nature. Given the dearth of short period terrestrial planets observed around M stars (citation), we model a series of much wider disks, which span from 1 to 100 days in orbital period orbiting a late-type M star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this orbital period range corresponds to $\alpha \in (0.7, 0.05)$. By simultaneously modeling a broad range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and also explore how the oligarchic/non-oligarchic accretion boundary affects the resulting distribution of protoplanets.
+\subsection{Initial Conditions}
+
+Motivated by the apparent dependence of accretion modes on $\alpha$, we next investigate whether this highly efficient, non-oligarchic growth mode should be expected to operate in a typical planet-forming disk. Given the dearth of short period terrestrial planets observed around M stars (citation), we model a series of wide planetesimal disks, which span from 1 to 100 days in orbital period orbiting a late-type M star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this orbital period range corresponds to $\alpha \in (0.7, 0.05)$. By simultaneously modeling a broad range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and also explore how the oligarchic/non-oligarchic accretion boundary affects the resulting distribution of protoplanets.
 
 Four wide disk simulations are run in total (see table \ref{tab:sims}). In each case, the solid surface density follows a power law profile
 
@@ -164,7 +168,35 @@ Four wide disk simulations are run in total (see table \ref{tab:sims}). In each 
 	\Sigma(r) = \left( \frac{M_{*}}{M_{\odot}} \right) A \Sigma_{mmsn} \left( \frac{r}{1 AU} \right)^{-\alpha},
 \end{equation}
 
-\noindent where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g cm$^{-2}$ is surface density of the minimum-mass solar nebula \citep{hayashi81} at 1 AU, and $A$ is an enhancement factor. In the first case (fdHi), we model a disk that follows the surface density 
+\noindent where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g cm$^{-2}$ is surface density of the minimum-mass solar nebula \citep{hayashi81} at 1 AU, and $A$ is an enhancement factor. In the first case (fdHi), we model a disk that follows a MMSN power law slope, with the overall normalization enhanced by a factor of 100. This choice of parameters for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of the solids profile.
+
+In all cases, the eccentricities and inclinations of the bodies are randomly drawn from a Rayleigh distribution, with $\left< e^{2} \right>^{1/2} = 2\left<i^{2} \right>^{1/2} = e_{eq}$. The value of $e_{eq}$ is chosen such that the timescales for viscous stirring and aerodynamic gas drag on the planetesimals are in equilibrium. The viscous stirring timescale is given by \citet{ida93} as
+
+\begin{equation}\label{eq:vs_timescale}
+    \tau_{vs}  = \frac{\left< e^2 \right>}{d \left< e^2 \right> / dt} \approx \frac{1}{40}\left(\frac{\Omega^{2} a^{3}}{2 G m_{pl}}\right)^{2} \frac{4 m_{pl} \langle e^{2} \rangle^{2}}{\Sigma a^{2} \Omega},
+\end{equation}
+
+\noindent where $\Omega$, $a$ and $e$ are the orbital frequencies, semimajor axes and eccentricities of the individual planetesimals. In the Stokes regime, the gas drag timescale is given by \citet{adachi76} as
+
+\begin{equation}\label{eq:ts_stokes}
+    t_{s} = \frac{2 m_{pl}}{C_{D} \pi r_{pl}^{2} \rho_{g} v_{g}},
+\end{equation}
+
+\noindent where $C_{D}$ is a drag coefficient of order unity, $\rho_{g}$ is the local gas volume density and $v_{g}$ is the headwind velocity of the gas experienced by the planetesimal. The local gas volume density is given by
+
+\begin{equation}\label{eq:rho_gas}
+	\rho_{g} = \frac{\Sigma_{g}}{\sqrt{2 \pi} h_{g} \exp\left[ -z^{2} / \left( 2 h_{g}^{2} \right) \right]},
+\end{equation}
+
+\noindent where $\Sigma_{g}$ is the gas surface density (taken to be 240x the solid surface density), $h_{g} = c_{s} / \Omega$ is the local gas scale height and $z$ is the height above the disk midplane. The sound speed profile is given by $c_{s} = \sqrt{k_{B} T(r) / \left( \mu m_{H} \right)}$, where $k_{B}$ is Boltzmann's constant, $T(r) = T_{0} r^{-Q}$, $\mu = 2.34$ and $m_{h}$ is the mass of a hydrogen atom. For a protoplanetary disk around a typical M star, $T_{0} = 148$ K and $Q$ = 0.58 \citep{andrews05}.
+
+Finally, the headwind velocity of the gas, due to the fact that the gas disk is pressure supported, is given by
+
+\begin{equation}\label{eq:v_gas}
+	v_{g} = v_{k} \left[ 1 - \sqrt{ Q c_{s}^2 / v_{k}^2} \right],
+\end{equation}
+
+\noindent where $v_{k}$ is the local Keplerian velocity.
 
 More stuff about initial conditions, timestepping issues, gas drag
 
@@ -216,10 +248,11 @@ More stuff about initial conditions, timestepping issues, gas drag
 
 % does the accretion boundary always fall somewhere within the PPD, or can it lie inside the magnetic truncation radius sometimes? how does this depend on spectral type? (this is complicated, depends on radius + magnetic field strength of star, plus accretion rate of PPD)
 
-\section{Radial Transport of Material}
+\section{Assembly History of Embryos}
 
 % from how far do embryos accumulate material
 % do embryos migrate at all? might need to run a simulation without gas to demonstrate whether this is due to PDM
+% major vs minor mergers?
 
 \section{Simplifying Assumptions}\label{sec:assump}
 
