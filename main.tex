@@ -196,9 +196,19 @@ Finally, the headwind velocity of the gas, due to the fact that the gas disk is 
 	v_{g} = v_{k} \left[ 1 - \sqrt{ Q c_{s}^2 / v_{k}^2} \right],
 \end{equation}
 
-\noindent where $v_{k}$ is the local Keplerian velocity.
+\noindent where $v_{k}$ is the local Keplerian velocity. As in section \ref{sec:narrow}, the argument of perihelion $\omega$, longitude of ascending node $\Omega$, and mean anomaly M for the planetesimals drawn from a uniform distribution $\in [0, 2 \pi)$.
 
-More stuff about initial conditions, timestepping issues, gas drag
+\subsection{Gas Drag Force}
+
+In addition to the mutual gravitational forces, a Stokes drag force from to the gas disk is applied to each particle, following the prescription described in section 2.2.1 of \citet{morishima10}. The surface density and temperature profile are identical to those used to construct the initial conditions and the cylindrical coordinate system is centered on the host star.
+
+\subsection{Timestepping Criterion}
+
+In the case of the fdHi simulation, there are nearly 1 million particles, whose orbital periods two orders of magnitude in time. Due to the very short interaction timescales near the inner edge of the disk, a fixed timestep size would required a prohibitively large number of steps to follow planetesimal growth throughout the entire disk. For this reason, we use a multi-tiered timestepping scheme, in which particles are placed onto the nearest power of two timestep based on their most recently calculated gravitational acceleration. (Mention that this scheme is used in other works with ChaNGa).
+
+This more efficient scheme, however, introduces two additional issues related to particles interacting on different timesteps. First, momentum is not completely conserved when bodies switch timesteps. The error introduced becomes particularly severe for a particle on an eccentric Keplerian orbit, whose perihelion and aphelion distances straddle a timestep boundary. For a large collection of particles, this problem manifests itself as a V-shaped gap in the semimajor axis-eccentricity plane, which is centered on the boundary itself. To correct this problem, we introduce a second timestepping criterion, which is based on the gravitational acceleration on the particle by the central star at perihelion. Only in the case of a close encounter with another planetesimal (in which the acceleration is no longer dominated by the star) is the timestep allowed to reduce based on the original criterion.
+
+A second issue is introduced when two particles on different timesteps undergo a collision. As in the previous case, momentum is not completely conserved because the most recent `kick' steps did not happen simultaneously for these bodies. Early in the simulation, we find that runaway growth tends to trigger first at the timestep boundaries. Unfortunately, this issue carries itself forward through the embryo formation phase and protoplanets tend to form at the boundaries. To correct this issue, we ignore collisions between bodies on different timesteps early in the simulation. We find that enabling multi-timestep collisions after the maximum mass grows by a factor of 10 prevents any artifacts from forming at the timestep boundaries, while also minimizing the number of `skipped' collisions\footnote{In the case of fdHi, only about 20 collisions out of an eventual 900,000 are ignored.}.  
 
 \begin{figure*}
 \begin{center}

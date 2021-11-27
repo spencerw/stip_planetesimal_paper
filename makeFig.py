@@ -111,13 +111,11 @@ def plot_alpha_beta():
 
 	def subplot(ax, prefix, title):
 		mcen = 1
-		ih = True
-		if prefix == 'disk4000':
-			ih = False
 		snap0 = pb.load('data/'+prefix+'.ic')
-		pl0 = ko.orb_params(snap0, isHelio=ih, mCentral=mcen)
+		pl0 = ko.orb_params(snap0, isHelio=True, mCentral=mcen)
 		snap = pb.load('data/'+prefix+'.end')
-		pl = ko.orb_params(snap, isHelio=ih, mCentral=mcen)
+		pl = ko.orb_params(snap, isHelio=True, mCentral=mcen)
+		print()
 		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*100)
 		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*100)
 		ax.set_xlabel('Semimajor Axis [AU]')
@@ -125,9 +123,9 @@ def plot_alpha_beta():
 		ax.set_title(title)
 
 	fig, ax = plt.subplots(figsize=(16,16), nrows=2, ncols=2, sharex=True, sharey=True)
-	subplot(ax[0][0], 'ki_fluffy_cold', r'Large $\alpha$, Small $\beta$')
+	subplot(ax[0][0], 'ki_fluffy', r'Large $\alpha$, Small $\beta$')
 	subplot(ax[0][1], 'ki_fluffy_hot', r'Large $\alpha$, Large $\beta$')
-	subplot(ax[1][0], 'disk4000', r'Small $\alpha$, Small $\beta$')
+	subplot(ax[1][0], 'ki', r'Small $\alpha$, Small $\beta$')
 	subplot(ax[1][1], 'ki_hot', r'Small $\alpha$, Large $\beta$')
 
 	ax[1][1].set_yscale('log')
@@ -145,16 +143,18 @@ def plot_alpha_beta_evo():
 
 	fig, axes = plt.subplots(figsize=(8,8))
 
-	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy_cold.txt')
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy.txt')
 	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Small $\beta$')
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy_hot.txt')
 	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Large $\beta$')
 
-	stepnumber, max_mass, mean_mass = np.loadtxt('data/disk4000.txt')
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki.txt')
 	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Small $\beta$')
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_hot.txt')
+	ind = np.arange(len(stepnumber))
+	stepnumber[ind >= 51] += 500000
 	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Large $\beta$')
 
 	axes.set_xlabel('Time Steps')
@@ -170,7 +170,7 @@ def plot_alpha_beta_mass():
 
 	fig, axes = plt.subplots(figsize=(8,8), nrows=4, sharex=True, sharey=True)
 
-	snap = pb.load('data/ki_fluffy_cold.end')
+	snap = pb.load('data/ki_fluffy.end')
 	pl = ko.orb_params(snap, isHelio=True, mCentral=1)
 	q = (pl['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
@@ -186,7 +186,7 @@ def plot_alpha_beta_mass():
 	axes[1].loglog(bins, hist, linestyle='steps-mid')
 	axes[1].set_title(r'Large $\alpha$, Large $\beta$')
 
-	snap = pb.load('data/disk4000.end')
+	snap = pb.load('data/ki.end')
 	pl = ko.orb_params(snap, isHelio=False, mCentral=1)
 	q = (pl['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
@@ -332,9 +332,9 @@ def plot_pl_frac_time():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 #plot_timescales()
-#plot_alpha_beta()
-#plot_alpha_beta_evo()
-#plot_alpha_beta_mass()
+plot_alpha_beta()
+plot_alpha_beta_evo()
+plot_alpha_beta_mass()
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
