@@ -332,9 +332,9 @@ def plot_pl_frac_time():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 #plot_timescales()
-plot_alpha_beta()
-plot_alpha_beta_evo()
-plot_alpha_beta_mass()
+#plot_alpha_beta()
+#plot_alpha_beta_evo()
+#plot_alpha_beta_mass()
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()

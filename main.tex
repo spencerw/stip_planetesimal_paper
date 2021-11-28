@@ -143,17 +143,21 @@ To investigate whether any of these planetesimal disks underwent runaway growth,
 Additionally, these results suggest that the value of $\alpha$, which is a function of only the initial conditions, controls the qualitative outcome of accretion. Across most of a planet-forming disk, $\alpha$ is small, and frequent gravitational encounters between the growing bodies will allow oligarchic growth to operate. At shorter orbital periods, however, the Hill sphere of a body is no longer mostly empty space, and it appears as if collisions play a more significant role. In this regime, we observe that runaway growth still commences, but nearly all of the planetesimals are swept up by the forming protoplanets, rather than being scattered onto higher eccentricity orbits, where they would otherwise remain as a remnant of the early stages of planet formation \citep{kokubo98, kokubo00}.
 
 \begin{table}
-\begin{center}
 \caption{Summary of Full Disk Simulations Run}
-\begin{tabular}{lllll} \hline \hline
-Name     & A & $\alpha$ &  &  \\ \hline
-fdHi                 & 100                                                         & 1.5                              &  &  \\
-fdHiShallow     & 100                                                        & 0.5                              &  &  \\
-fdHiSteep       & 100                                                         & 2.5                              &  &  \\
-fdLo                & 1                                                             & 1.5                              &  &  \\ \hline
+\begin{tabular}{llllll} \hline \hline
+Name    & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\alpha^{d}$ &  \\ \hline
+fdHi                 & $5 \times 10^{22}$ & 903,687 & 100                                                         & 1.5                              &   \\
+fdHiShallow    & $5 \times 10^{22}$ & 903,687 & 100                                                        & 0.5                              &   \\
+fdHiSteep       & $5 \times 10^{22}$ & 903,687 & 100                                                         & 2.5                              &   \\
+fdLo                & $1 \times 10^{22}$ & 45,185    & 1                                                             & 1.5                              &   \\ \hline
 \end{tabular}
+\begin{flushleft}
+\textsc{Note} \\ {$^a$ Planetesimal mass [g] \\
+		       $^b$ Number of planetesimals \\
+		       $^c$ Solid surface density normalization (relative to MMSN) \\
+		       $^d$ Solid surface density power law index } \\
+\end{flushleft}
 \label{tab:sims}
-\end{center}
 \end{table}
 
 \section{Full Disk Simulation}\label{sec:fulldisk}
@@ -208,7 +212,40 @@ In the case of the fdHi simulation, there are nearly 1 million particles, whose 
 
 This more efficient scheme, however, introduces two additional issues related to particles interacting on different timesteps. First, momentum is not completely conserved when bodies switch timesteps. The error introduced becomes particularly severe for a particle on an eccentric Keplerian orbit, whose perihelion and aphelion distances straddle a timestep boundary. For a large collection of particles, this problem manifests itself as a V-shaped gap in the semimajor axis-eccentricity plane, which is centered on the boundary itself. To correct this problem, we introduce a second timestepping criterion, which is based on the gravitational acceleration on the particle by the central star at perihelion. Only in the case of a close encounter with another planetesimal (in which the acceleration is no longer dominated by the star) is the timestep allowed to reduce based on the original criterion.
 
-A second issue is introduced when two particles on different timesteps undergo a collision. As in the previous case, momentum is not completely conserved because the most recent `kick' steps did not happen simultaneously for these bodies. Early in the simulation, we find that runaway growth tends to trigger first at the timestep boundaries. Unfortunately, this issue carries itself forward through the embryo formation phase and protoplanets tend to form at the boundaries. To correct this issue, we ignore collisions between bodies on different timesteps early in the simulation. We find that enabling multi-timestep collisions after the maximum mass grows by a factor of 10 prevents any artifacts from forming at the timestep boundaries, while also minimizing the number of `skipped' collisions\footnote{In the case of fdHi, only about 20 collisions out of an eventual 900,000 are ignored.}.  
+A second issue is introduced when two particles on different timesteps undergo a collision. As in the previous case, momentum is not completely conserved because the most recent `kick' steps did not happen simultaneously for these bodies. Early in the simulation, we find that runaway growth tends to trigger first at the timestep boundaries. Unfortunately, this issue carries itself forward through the embryo formation phase and protoplanets tend to form at the boundaries. To correct this issue, we ignore collisions between bodies on different timesteps early in the simulation. We find that enabling multi-timestep collisions after the maximum mass grows by a factor of 10 prevents any artifacts from forming at the timestep boundaries, while also minimizing the number of `skipped' collisions\footnote{In the case of fdHi, only about 20 collisions out of an eventual 900,000 are ignored.}. 
+
+\subsection{Results}
+
+\begin{table}
+\caption{Final Properties of Full Disk Simulations}
+\begin{tabular}{lllll} \hline \hline
+Name     & $M_{PP}^a$ & $T_{int}^b$ & $T_{int 1}^c$ &  \\ \hline
+fdHi                 & 100                                                         & 1.5                              & 4  &  \\
+fdHiShallow     & 100                                                        & 0.5                              & 4  &  \\
+fdHiSteep       & 100                                                         & 2.5                              & 4 &  \\
+fdLo                & 1                                                             & 1.5                              & 4 &  \\ \hline
+\end{tabular}
+\label{tab:sim_properties}
+\begin{flushleft}
+\textsc{Note} \\ {$^a$ Maximum protoplanet mass [$M_{earth}$] \\
+		       $^b$ Integration time [yr] \\
+		       $^c$ Rescaled integration time [yr]} \\
+\end{flushleft}
+\end{table}
+
+In all four simulations, the timescales for embryo formation depend on the chosen surface density profile, along with the particular location in the disk. Protoplanets form first near the inner edge of the disk, where the dynamical timescales are short. Growth proceeds in an inside-out fashion, with the outermost regions of the disk completing the protoplanet assembly phase last. This fact is not typically accounted for in planet formation simulations, and appears to be an important component to forming realistic solar system analogs \citep{clement20}. As with the narrow annulus simulations, we stop the integration once the mass of protoplanets in the outermost region of the disk reach a steady value. In table \ref{tab:sim_properties}, we summarize the outcomes of the four `full disk' cases.
+
+We show the final state of the `fiHi' simulation in figure \ref{fig:fulldisk_e_m}. In the top panel, the initial (contours) and final (points) state of the simulation is shown in orbital period and eccentricity. The size of the points indicates the relative mass of the bodies. In the bottom panel, the mass of the largest bodies is shown as a function of orbital period. The solid curves indicate the isolation mass
+
+\begin{equation}\label{eq:iso}
+	M_{iso} = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2},
+\end{equation}
+
+\noindent where $\tilde{b}$ is the size of the feeding zone in units of Hill radii. For a body on a circular orbit $\tilde{b} = 2 \sqrt{3}$, while a protoplanet formed by oligarchic growth typically has $\tilde{b} = 10$ \citep{kokubo98}. The isolation mass is plotted in blue and orange for these two values of $\tilde{b}$, respectively.
+
+A qualitative shift in the protoplanet and planetesimal distribution is visible at $\sim$ 60 days. Interior to this location, there are very few remaining planetesimals and the embryos formed are noticeably more massive. Protoplanets in this region appear to closely follow the isolation mass curve for $\tilde{b} = 10$. Exterior to the boundary, the residual planetesimal population is much more numerous, and protoplanets more closely follow the $\tilde{b} = 2 \sqrt{3}$ curve. This tentatively suggests that the transition between the low $\alpha$ and high $\alpha$ accretion modes seen in section \ref{sec:narrow} happens near this location.
+
+In figure \ref{fig:alpha_pl_frac}, we show $\alpha$ (left axis) and the fraction of remaining planetesimals (right axis) as a function of orbital period. Here, the fraction of remaining planetesimals is measured by dividing the disk into 15 semimajor axis bins and using the profile function in {\sc pynbody} to measure the total solid surface density $\Sigma$ in each of those bins, and also the planetesimal surface density $\sigma$. Here, a planetesimal is defined to any body with $m < 10 m_{pl}$. Exterior to 60 days in orbital period, $\sigma/\Sigma$ sharply increases, indicating that the highly efficient accretion mode seen previously does not operate here. As can be seen from the plot, the accretion boundary roughly corresponds to $\alpha = 0.1$.
 
 \begin{figure*}
 \begin{center}
