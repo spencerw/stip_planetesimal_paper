@@ -128,19 +128,20 @@ To answer these questions, we run a series of simulations in which a narrow annu
 
 % Mention Rayleigh distribution
 In the `nominal' case, we give the bodies a bulk density of 3 g cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, where $e_{h} = e a/r_{h}$ (define this in the previous section instead) which corresponds to $\alpha = 3.6 \times 10^{-2}$ and $\beta = 3.4 \times 10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by a factor of $\sim$ 7100, which produces $\alpha = 1$. To vary $\beta$, the eccentricity dispersion is increased. For the high-$\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$.
-% Important note: need to use f=6 for the low alpha case, otherwise the simulation takes forever. Do these alpha values reflect the artifically enhanced collision cross section im using?
-% Should I choose beta = 1 instead? I did beta >> 1 to see if inelastic mergers will cool things off. Havent decided if that's important here
-% Another concern: using too large of a beta makes the apo-peri distances larger than the width of the annulus
 
 In all cases, the simulations are evolved with a base timestep of 1.7 days, which corresponds to 3\% of an orbital dynamical time $\sqrt{a^3/G M_{*}}$. Due to the vastly differing growth timescales in each case, a simulation is stopped when the growth of the most massive body flattens out. In figure \ref{fig:alpha_beta}, we show the a-e distribution of bodies in the initial (blue) and final (orange) snapshots from each of the 4 simulations. The size of the points indicates the relative masses of the bodies. Only in the case of small $\alpha$ does a residual population of dynamically hot planetesimals develop. The lack of high eccentricity planetesimals in the large $\alpha$ case suggests that most encounters instead result in accretion. In the case of large $\beta$, the protoplanets and remaining planetesimals end up in a dynamically cool state, compared to the initial conditions. (Are the inelastic collisions playing a significant role here?)
 
 In figure \ref{fig:alpha_beta_mass}, we show the mass distribution of bodies from the final snapshot in each of the four cases. In addition to leaving fewer residual planetesimals, the large $\alpha$ simulations produce significantly larger embryos. Despite the vastly different encounter velocities of each population of bodies, the initial size of $\beta$ appears to have no significant effect on the final distribution of masses.
 
-%If we run a cooler version of the high-beta simulations (so that the masses can evolve further), does the high alpha case end up cooler? If so, that would be a second indication that 'collisions are driving the dynamics at high alpha'.
-
 To investigate whether any of these planetesimal disks underwent runaway growth, we examine the time evolution of the maximum and mean masses in each case. The ratio $m_{max}/\left< m \right>$ is plotted in figure \ref{fig:alpha_beta_evo}. On this plot, a positive slope indicates that the growth rate is accelerating with mass, which is evident in all four cases. Even with a large value of $\beta$, which means that the effective collision cross section is very near the geometric value, runaway growth still appears to operate. This seems to imply that, as bodies collide and grow, the relative increase in their gravitational focusing factors, rather than its absolute size, is what drives the system towards runaway growth. Although larger encounter velocities will lengthen the growth timescales, this mode of growth appears to be inevitable, so long as gravity is the dominant force in the system.
 
 Additionally, these results suggest that the value of $\alpha$, which is a function of only the initial conditions, controls the qualitative outcome of accretion. Across most of a planet-forming disk, $\alpha$ is small, and frequent gravitational encounters between the growing bodies will allow oligarchic growth to operate. At shorter orbital periods, however, the Hill sphere of a body is no longer mostly empty space, and it appears as if collisions play a more significant role. In this regime, we observe that runaway growth still commences, but nearly all of the planetesimals are swept up by the forming protoplanets, rather than being scattered onto higher eccentricity orbits, where they would otherwise remain as a remnant of the early stages of planet formation \citep{kokubo98, kokubo00}.
+
+% Additional idea: run a simulation with an oligarch embedded in a disk of planetesimals for large and small alpha. Allow oligarch and planetesimals to collide. What does the eccentricity evolution of the oligarch look like in each case?
+% See equation 32 from goldreich 2004: b_scat ~ sqrt(u/vh) R_H
+% How does b_scat compare to particle size here?
+
+% One thing im still not clear on: In dispersion dominated regime, distant encounters are what drive VS + DF. These encounters happen well outside of the Hill sphere. Why does it appear to matter if the geometric cross section fills a significant chunk of the hill sphere? And why doesn't the velocity dispersion (beta large or small) appear to matter?
 
 \begin{table}
 \caption{Summary of Full Disk Simulations Run}
@@ -247,6 +248,10 @@ A qualitative shift in the protoplanet and planetesimal distribution is visible 
 
 In figure \ref{fig:alpha_pl_frac}, we show $\alpha$ (left axis) and the fraction of remaining planetesimals (right axis) as a function of orbital period. Here, the fraction of remaining planetesimals is measured by dividing the disk into 15 semimajor axis bins and using the profile function in {\sc pynbody} to measure the total solid surface density $\Sigma$ in each of those bins, and also the planetesimal surface density $\sigma$. Here, a planetesimal is defined to any body with $m < 10 m_{pl}$. Exterior to 60 days in orbital period, $\sigma/\Sigma$ sharply increases, indicating that the highly efficient accretion mode seen previously does not operate here. As can be seen from the plot, the accretion boundary roughly corresponds to $\alpha = 0.1$.
 
+To ensure that the boundary seen near 60 days in orbital period is not simply a transient product of the inside out growth throughout the disk, we examine the time evolution of $\sigma/\Sigma$ at multiple locations. In figure \ref{fig:pl_frac_time}, the value of $\sigma/\Sigma$ is plotted as a function of time in 10 orbital period bins. Bins interior to 60 days are indicated with a dashed line, while those exterior are indicated with a solid line. The planetesimal surface density fraction has decelerated and is approaching an asymptotic value in all cases. In the inner disk, this is driven by the near-total depletion of the planetesimal reservoir. In the outer disk, dynamical friction between the embryos and planetesimals throttles subsequent accretion.
+
+% Since we are using f=6, do we want to stick to plotting things in terms of timestep number, and then provide rescaled time estimates at the end?
+
 \begin{figure*}
 \begin{center}
     \includegraphics[width=\textwidth]{figures/alpha_beta.png}
@@ -278,20 +283,39 @@ In figure \ref{fig:alpha_pl_frac}, we show $\alpha$ (left axis) and the fraction
 \end{center}
 \end{figure*}
 
-\begin{figure}
+\begin{figure*}
 \begin{center}
-    \includegraphics[width=0.5\textwidth]{figures/alpha_pl_frac.png}
+    \includegraphics[width=\textwidth]{figures/alpha_pl_frac.png}
     \caption{Caption goes here.\label{fig:alpha_pl_frac}}
 \end{center}
-\end{figure}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+    \includegraphics[width=\textwidth]{figures/pl_frac_time.png}
+    \caption{Caption goes here.\label{fig:pl_frac_time}}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+    \includegraphics[width=\textwidth]{figures/surfden_profiles.png}
+    \caption{Caption goes here.\label{fig:surfden_profiles}}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+    \includegraphics[width=\textwidth]{figures/surfden_iso.png}
+    \caption{Caption goes here.\label{fig:surfden_iso}}
+\end{center}
+\end{figure*}
 
 % show period-e distribution
 % show show period-mass distribution, with isolation mass curve overlaid
 % what about 'maximum planetary mass' from Schlichting 2014?
 % show plot of period vs alpha, mass. drop in embryo mass occurs where alpha = 0.1
 % also plot period vs sigma/Sigma and mass with alpha=0.1 location marked. residual planetesimal population missing interior to alpha=0.1
-
-% is there a clever, succinct way to show the evolution of sigma/Sigma in each period bin? to demonstrate that the accretion boundary is static
 
 % does the accretion boundary always fall somewhere within the PPD, or can it lie inside the magnetic truncation radius sometimes? how does this depend on spectral type? (this is complicated, depends on radius + magnetic field strength of star, plus accretion rate of PPD)
 
