@@ -64,6 +64,16 @@ perICSh = 2*np.pi*np.sqrt((plVHiICSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).t
 prof_perIC_sh = 2*np.pi*np.sqrt((p_vhi_ic_sh['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 perSh = 2*np.pi*np.sqrt((plVHiSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
+snap = pb.load('data/fullDiskLo.ic')
+plLoIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+p_lo_ic = pb.analysis.profile.Profile(plLoIC.d, bins=bins)
+snap = pb.load('data/fullDiskLo1.426000')
+plLo = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+p_lo = pb.analysis.profile.Profile(plLo.d, bins=bins)
+perICLo = 2*np.pi*np.sqrt((plLoIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+prof_perIC_lo = 2*np.pi*np.sqrt((p_lo_ic['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+perLo = 2*np.pi*np.sqrt((plLo['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+
 p_min, p_max = -5, 100
 e_min, e_max = 1e-3, 1
 
@@ -357,15 +367,17 @@ def plot_surfden_profiles():
 
 	fig, axes = plt.subplots(figsize=(16,8))
 
-	axes.scatter(per.value, plVHi['e'], s=0.005*plVHi['mass']/np.min(plVHi['mass']))
-	axes.scatter(perSt.value, plVHiSt['e'], s=0.005*plVHiSt['mass']/np.min(plVHiSt['mass']))
-	axes.scatter(perSh.value, plVHiSh['e'], s=0.005*plVHiSh['mass']/np.min(plVHiSh['mass']))
+	axes.scatter(per.value, plVHi['e'], s=0.005*plVHi['mass']/np.min(plVHi['mass']), label='fdHi')
+	axes.scatter(perSt.value, plVHiSt['e'], s=0.005*plVHiSt['mass']/np.min(plVHiSt['mass']), label='fdHiSteep')
+	axes.scatter(perSh.value, plVHiSh['e'], s=0.005*plVHiSh['mass']/np.min(plVHiSh['mass']), label='fdHiShallow')
+	axes.scatter(perLo.value, plLo['e'], s=0.005*plLo['mass']/np.min(plLo['mass']), label='fdLo')
 
 	axes.set_yscale('log')
 	axes.set_ylim(1e-3, 0.5)
-	axes.set_xlim(-5, 110)
+	axes.set_xlim(-5, 100)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel('Eccentricity')
+	axes.legend(loc=3)
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -381,23 +393,30 @@ def plot_surfden_iso():
 	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
 	m_iso_vhi_at = np.sqrt((2*np.pi*(plVHi['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at)
+	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi')
 
 	surf_den = (p_vhi_ic_st['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSt['a'], p_vhi_ic_st['rbins'], surf_den)
 	m_iso_vhist_at = np.sqrt((2*np.pi*(plVHiSt['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perSt.value, (plVHiSt['mass']*u.M_sun).to(u.g).value/m_iso_vhist_at)
+	axes.scatter(perSt.value, (plVHiSt['mass']*u.M_sun).to(u.g).value/m_iso_vhist_at, label='fdHiSteep')
 
 	surf_den = (p_vhi_ic_sh['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSh['a'], p_vhi_ic_sh['rbins'], surf_den)
 	m_iso_vhish_at = np.sqrt((2*np.pi*(plVHiSh['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perSh.value, (plVHiSh['mass']*u.M_sun).to(u.g).value/m_iso_vhish_at)
+	axes.scatter(perSh.value, (plVHiSh['mass']*u.M_sun).to(u.g).value/m_iso_vhish_at, label='fdHiShallow')
+
+	surf_den = (p_lo_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	surf_den_at = np.interp(plLo['a'], p_lo_ic['rbins'], surf_den)
+	m_iso_lo_at = np.sqrt((2*np.pi*(plLo['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
+	axes.scatter(perLo.value, (plLo['mass']*u.M_sun).to(u.g).value/m_iso_lo_at, label='fdLo')
+
 	axes.axhline(1, ls='--')
 	axes.set_yscale('log')
 	axes.set_ylim(1e-2, 20)
 	axes.set_xlim(-5, 100)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'm / M$_{iso}$')
+	axes.legend()
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -408,5 +427,5 @@ def plot_surfden_iso():
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
-#plot_surfden_profiles()
+plot_surfden_profiles()
 plot_surfden_iso()
