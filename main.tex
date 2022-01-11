@@ -146,6 +146,8 @@ Additionally, these results suggest that the value of $\alpha$, which is a funct
 % Wetherill + Stewart 1989, Ohtsuki 1990, Spaute 1991 find that runaway growth happens when velocity decreases with mass. Is that what we're seeing at high alpha?
 
 \begin{table}
+% I'm going to replace the fdLo simulation with a lower resolution version m_pl = 5e22 for consistency
+% Originally wanted to run everything at m_pl = 1e22, which corresponds to 100km bodies, but this wasn't feasible at higher Sigma
 \caption{Summary of Full Disk Simulations Run}
 \begin{tabular}{llllll} \hline \hline
 Name    & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\alpha^{d}$ &  \\ \hline
@@ -258,6 +260,8 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 
 % Since we are using f=6, do we want to stick to plotting things in terms of timestep number, and then provide rescaled time estimates at the end?
 
+% Another important point: the accretion boundary doesn't move as we change surface density (how does t_relax and t_coll scale with sigma?). More evidence that it just depends on alpha(r)
+
 \begin{figure*}
 \begin{center}
     \includegraphics[width=\textwidth]{figures/alpha_beta.png}
@@ -325,6 +329,8 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 
 % does the accretion boundary always fall somewhere within the PPD, or can it lie inside the magnetic truncation radius sometimes? how does this depend on spectral type? (this is complicated, depends on radius + magnetic field strength of star, plus accretion rate of PPD)
 
+Next, we compare the effect of varying the initial solid surface density profile on the resulting planetesimal and embryo distribution. The final orbital period-eccentricity state of the particles is shown in figure \ref{fig:surfden_profiles}, with point sizes indicating the relative masses of the bodies. There is a clear trend between solid surface density at a given orbital period and the eccentricities of the remaining planetesimals. This trend is largely set by the initial conditions, as the gravitational stirring is more vigorous when bodies are packed together closely and higher eccentricities are required to produce an equilibrating aerodynamic drag force (see equations \ref{eq:eq:vs_timescale} and \ref{eq:ts_stokes}). Despite having significantly different masses, the planetary embryos formed in each case have remarkably similar eccentricities. This is likely due to the fact that inelastic collisions play a more significant role where the solid surface density is highest, which offsets the fact that the initial bodies started off in a dynamically hotter state.
+
 \section{Assembly History of Embryos}
 
 % from how far do embryos accumulate material
@@ -345,7 +351,7 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 % mostly because stirring rate increases with surface density
 % criteria should get less restrictive as larger bodies grow, what if we turn on bounces partway thru growth process?
 
-How to reconcile our concerns with the results of \citet{wallace17}?
+How to reconcile our concerns with the results of \citet{wallace17}? Show inner disk test with different collision models. Bounce/merge model delays onset of runaway growth, with smaller planetesimals being delayed by longer. Does not affect eccentricity or mass of resulting embryos. Because $v_{esc}$ grows with mass, a more realistic collision model only delays the onset of runaway growth.
 
 \section{Summary and Discussion} \label{sec:discuss}
 
