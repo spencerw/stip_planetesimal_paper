@@ -77,9 +77,15 @@ perLo = 2*np.pi*np.sqrt((plLo['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 p_min, p_max = -5, 100
 e_min, e_max = 1e-3, 1
 
+def prev_iorder(new_iord, num_original, del_iord):
+    indices = np.zeros(num_original, dtype=bool)
+    indices[del_iord] = True
+    prev_iord = np.where(indices == False)[0][new_iord]
+    return prev_iord
+
 # Input in sim units, output in days
-def p_orbit(sma, m_central):
-	return (2*np.pi*np.sqrt(sma**3/m_central)*simT).to(u.d).value
+def p_orbit(sma):
+	return (2*np.pi*np.sqrt(sma**3/mCentral)*simT).to(u.d).value
 
 def plot_timescales():
 	file_str = 'figures/timescales.' + fmt
@@ -420,6 +426,85 @@ def plot_surfden_iso():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
+# Extract information about the 'surviving' members from a collision table
+def coll_info(df):
+    mass_mask = df['m1'].values >= df['m2'].values
+    
+    del_x = df['x1x'].values
+    del_x[mass_mask] = df['x2x'].values[mass_mask]
+    
+    del_y = df['x1y'].values
+    del_y[mass_mask] = df['x2y'].values[mass_mask]
+    
+    del_z = df['x1z'].values
+    del_z[mass_mask] = df['x2z'].values[mass_mask]
+    
+    del_vx = df['v1x'].values
+    del_vx[mass_mask] = df['v2x'].values[mass_mask]
+    
+    del_vy = df['v1y'].values
+    del_vy[mass_mask] = df['v2y'].values[mass_mask]
+    
+    del_vz = df['v1z'].values
+    del_vz[mass_mask] = df['v2z'].values[mass_mask]
+    
+    del_a, del_e, del_inc, del_omega, del_Omega, del_M = ko.cart2kep(del_x, del_y, del_z, del_vx, del_vy, del_vz, 0.08, 1e-20)
+    
+    del_r = np.sqrt(del_x**2 + del_y**2, del_z**2)
+    
+    dvx = df['v1x'].values - df['v2x'].values
+    dvy = df['v1y'].values - df['v2y'].values
+    dvz = df['v1z'].values - df['v2z'].values
+    speed = np.sqrt(dvx**2 + dvy**2 + dvz**2)
+    vesc = np.sqrt((df['m1'].values+df['m2'].values)/(df['r1'].values + df['r2'].values))
+    Theta = (vesc/speed)**2
+    
+    return {'a': del_a, 'e': del_e, 'inc': del_inc, 'omega': del_omega, 'Omega': del_Omega, 'M': del_M, \
+            'r': del_r, 'Theta': Theta}
+
+def plot_smooth_acc():
+	file_str = 'figures/smooth_frac.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	# For each embryo, fraction of mass accreted in planetesimals
+	num_oli = 20
+
+	df = pd.read_csv('data/fullDiskVHi.coll')
+	df1_s, df1_d = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
+	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1][:num_oli]
+	asub_ind = np.argsort(plVHi['a'][massive_ind])
+	a_iord_orig = prev_iorder(plVHi['iord'][massive_ind[asub_ind]], len(plVHiIC), df1_d)
+	mmin = np.min(df['m1'])
+
+	info = coll_info(df)
+	p_coll = p_orbit(info['a'])
+
+	xvals = []
+	yvals = []
+	mass = []
+
+	for oli_idx in range(int(num_oli)):
+	    oli_iord = a_iord_orig[oli_idx]
+	    porbit = p_orbit(plVHi['a'][massive_ind[oli_idx]])
+	    
+	    mask = np.logical_or(df['iorder1'] == oli_iord, df['iorder2'] == oli_iord)
+	    mask1 = np.logical_or(df['m1'][mask] <= mmin, df['m2'][mask] <= mmin)
+	    frac = len(df[mask][mask1])*mmin/plVHi['mass'][massive_ind[oli_idx]]
+	    
+	    xvals.append(porbit)
+	    yvals.append(frac)
+	    mass.append(plVHi['mass'][massive_ind[oli_idx]])
+
+	fig, axes = plt.subplots(figsize=(8,8))
+	axes.scatter(xvals, yvals, s=200*np.array(mass)/np.max(plVHi['mass']))
+	axes.set_yscale('log')
+	axes.set_ylim(1e-4, 1e-1)
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel('Smooth Accretion Mass Fraction')
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
 #plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
@@ -427,5 +512,6 @@ def plot_surfden_iso():
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
-plot_surfden_profiles()
-plot_surfden_iso()
+#plot_surfden_profiles()
+#plot_surfden_iso()
+plot_smooth_acc()
