@@ -44,6 +44,22 @@ perIC = 2*np.pi*np.sqrt((plVHiIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.
 prof_perIC = 2*np.pi*np.sqrt((p_vhi_ic['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 per = 2*np.pi*np.sqrt((plVHi['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
+m_pl = np.min(plVHi['mass'])
+# For some reason, the 'eps' field doesnt read correctly, so I can't
+# pull the planeteismal radius from the snapshots
+rho = 3 # Rocky bodies
+r_pl = ((3*(m_pl*u.M_sun).to(u.g).value/(4*np.pi*rho))**(1/3)*u.cm).to(u.AU).value
+
+snap = pb.load('data/fullDiskVHif4.ic')
+plVHif4IC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+p_vhif4_ic = pb.analysis.profile.Profile(plVHif4IC.d, bins=bins)
+snap = pb.load('data/fullDiskVHif41.152000')
+plVHif4 = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+p_vhif4 = pb.analysis.profile.Profile(plVHif4.d, bins=bins)
+perf4IC = 2*np.pi*np.sqrt((plVHif4IC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+prof_perf4IC = 2*np.pi*np.sqrt((p_vhif4_ic['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+perf4 = 2*np.pi*np.sqrt((plVHif4['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+
 snap = pb.load('data/fullDiskVHiSteep.ic')
 plVHiICSt = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_vhi_ic_st = pb.analysis.profile.Profile(plVHiICSt.d, bins=bins)
@@ -457,51 +473,207 @@ def coll_info(df):
     dvz = df['v1z'].values - df['v2z'].values
     speed = np.sqrt(dvx**2 + dvy**2 + dvz**2)
     vesc = np.sqrt((df['m1'].values+df['m2'].values)/(df['r1'].values + df['r2'].values))
-    Theta = (vesc/speed)**2
     
     return {'a': del_a, 'e': del_e, 'inc': del_inc, 'omega': del_omega, 'Omega': del_Omega, 'M': del_M, \
-            'r': del_r, 'Theta': Theta}
+            'r': del_r,}
 
 def plot_smooth_acc():
-	file_str = 'figures/smooth_frac.' + fmt
+	file_str = 'figures/minor_frac.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
 
 	# For each embryo, fraction of mass accreted in planetesimals
-	num_oli = 20
+	num_oli = 100
 
 	df = pd.read_csv('data/fullDiskVHi.coll')
 	df1_s, df1_d = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
 	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1][:num_oli]
-	asub_ind = np.argsort(plVHi['a'][massive_ind])
-	a_iord_orig = prev_iorder(plVHi['iord'][massive_ind[asub_ind]], len(plVHiIC), df1_d)
+	a_iord_orig = prev_iorder(plVHi['iord'][massive_ind], len(plVHiIC), df1_d)
 	mmin = np.min(df['m1'])
 
 	info = coll_info(df)
 	p_coll = p_orbit(info['a'])
 
-	xvals = []
-	yvals = []
-	mass = []
+	xvals = np.zeros(num_oli)
+	yvals = np.zeros_like(xvals)
+	porb = np.zeros_like(xvals)
 
 	for oli_idx in range(int(num_oli)):
-	    oli_iord = a_iord_orig[oli_idx]
-	    porbit = p_orbit(plVHi['a'][massive_ind[oli_idx]])
-	    
-	    mask = np.logical_or(df['iorder1'] == oli_iord, df['iorder2'] == oli_iord)
-	    mask1 = np.logical_or(df['m1'][mask] <= mmin, df['m2'][mask] <= mmin)
-	    frac = len(df[mask][mask1])*mmin/plVHi['mass'][massive_ind[oli_idx]]
-	    
-	    xvals.append(porbit)
-	    yvals.append(frac)
-	    mass.append(plVHi['mass'][massive_ind[oli_idx]])
+		oli_iord = a_iord_orig[oli_idx]
+		porbit = p_orbit(plVHi['a'][massive_ind[oli_idx]])
+
+		mask = np.logical_or(df['iorder1'] == oli_iord, df['iorder2'] == oli_iord)
+		mask1 = np.logical_or(df['m1'][mask] <= mmin, df['m2'][mask] <= mmin)
+		frac = len(df[mask][mask1])*mmin/plVHi['mass'][massive_ind[oli_idx]]
+
+		xvals[oli_idx] = (plVHi['mass'][massive_ind[oli_idx]]*u.M_sun).to(u.M_earth).value
+		yvals[oli_idx] = frac
+		porb[oli_idx] = porbit
 
 	fig, axes = plt.subplots(figsize=(8,8))
-	axes.scatter(xvals, yvals, s=200*np.array(mass)/np.max(plVHi['mass']))
+	mask = porb < 60
+	axes.scatter(xvals[~mask], yvals[~mask], color='r', marker='x', label='P_orbit > 60d')
+	axes.scatter(xvals[mask], yvals[mask], label='P_orbit < 60d')
+	axes.set_xscale('log')
 	axes.set_yscale('log')
 	axes.set_ylim(1e-4, 1e-1)
-	axes.set_xlabel('Orbital Period [d]')
+	axes.set_xlim(1e-3, 2)
+	axes.set_xlabel('Mass [M_earth]')
 	axes.set_ylabel('Smooth Accretion Mass Fraction')
+	axes.legend()
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_acc_zones():
+	file_str = 'figures/acc_zones.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	fig, axes = plt.subplots(figsize=(8, 8))
+
+	s = 1000
+	amin, amax = 0.05, 0.2
+	histbins = np.linspace(0, 100, 200)
+
+	root_idx = np.loadtxt('data/roots_vhi.txt')
+	df1_s, df1_d = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
+	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1]
+	massive_iord_orig = prev_iorder(plVHi['iord'][massive_ind], len(plVHiIC), df1_d)
+
+	def p_orbit(a):
+		return ((np.sqrt(a**3/mCentral))*u.yr).to(u.d).value
+
+	def oli_plot(i, idx):
+		child_ind = np.argwhere(root_idx == massive_iord_orig[i])
+		child_a = plVHiIC['a'][child_ind]
+		child_p = p_orbit(child_a)
+		hist, bins = np.histogram(child_p, bins=histbins, normed=True)
+		bins = 0.5*(bins[1:] + bins[:-1])
+		hist /= np.max(hist)/0.1
+		axes.plot(bins, hist+0.2*idx, linestyle='steps-mid', color='gray', lw=0.5)
+		axes.fill_between(bins, np.min(hist)+0.2*idx, hist+0.2*idx)
+		pl_p = p_orbit(plVHi['a'][massive_ind[i]])
+		axes.vlines(pl_p, np.min(hist)+0.2*idx, np.max(hist)+0.2*idx )
+		axes.set_xlabel('Orbital Period [d]')
+		axes.set_ylabel('Planetesimals Accreted')
+
+	# Sort by semimajor axis beore plotting
+	indices = np.arange(0, 20)
+	sort_a_ind = np.argsort(plVHi['a'][massive_ind[indices]])
+
+	for idx, i in enumerate(sort_a_ind):
+		oli_plot(i, idx)
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_f6f4():
+	file_str = 'figures/f6f4.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
+
+	axes = ax[0]
+	btilde = 5
+
+	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
+	m_iso_vhi_at = np.sqrt((2*np.pi*(plVHi['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
+	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi')
+
+	surf_den = (p_vhif4_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	surf_den_at = np.interp(plVHif4['a'], p_vhif4_ic['rbins'], surf_den)
+	m_iso_vhi_at = np.sqrt((2*np.pi*(plVHif4['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
+	axes.scatter(perf4.value, (plVHif4['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHif4')
+
+	axes.axhline(1, ls='--')
+	axes.set_yscale('log')
+	axes.set_ylim(1e-2, 20)
+	axes.set_xlim(-5, 100)
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel(r'm / M$_{iso}$')
+	axes.legend()
+
+	axes = ax[1]
+	f = 6
+	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha)
+
+	f = 4
+	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha)
+
+	f = 1
+	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha)
+
+	axes.axhline(0.1, ls='--')
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel(r'$\alpha$')
+
+	fig.tight_layout()
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_frag_ecc():
+	file_str = 'figures/frag_ecc.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	snap0 = pb.load('data/innerDiskLo.ic')
+	pl0 = ko.orb_params(snap0, isHelio=True, mCentral=mCentral)
+	per0 = 2*np.pi*np.sqrt((pl0['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/innerDiskLoNoFrag.6911000')
+	plNf = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perNf = 2*np.pi*np.sqrt((plNf['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/innerDiskLoFrag.5676000')
+	plF = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perF = 2*np.pi*np.sqrt((plF['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+
+	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
+	axes = ax[0]
+	axes.scatter(per0, pl0['e'], s=pl0['mass']/np.min(pl0['mass'])*0.1)
+	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*1)
+	axes.scatter(perF, plF['e'], s=plF['mass']/np.min(pl0['mass'])*1)
+	axes.set_yscale('log')
+	axes.set_ylim(5e-5, 5e-2)
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel('Eccentricity')
+
+	axes = ax[1]
+	q = (plNf['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	axes.loglog(bins, hist, linestyle='steps-mid')
+
+	q = (plF['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	axes.semilogx(bins, hist, linestyle='steps-mid')
+
+	axes.set_xlabel('Mass [g]')
+	axes.set_ylabel('dn/dm')
+
+	fig.tight_layout()
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_frag_evo():
+	file_str = 'figures/frag_evo.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	fig, axes = plt.subplots(figsize=(8,8))
+
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/innerDiskLoNoFrag.txt')
+	axes.loglog(stepnumber, max_mass/mean_mass, label='Mergers Only')
+
+	stepnumber, max_mass, mean_mass = np.loadtxt('data/innerDiskLoFrag.txt')
+	axes.loglog(stepnumber, max_mass/mean_mass, label='Bounce + Mergers')
+
+	axes.set_xlabel('Time Steps')
+	axes.set_ylabel(r'M / $\langle$ m $\rangle$')
+	axes.legend()
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -514,4 +686,8 @@ def plot_smooth_acc():
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-plot_smooth_acc()
+#plot_smooth_acc()
+#plot_acc_zones()
+#plot_f6f4()
+#plot_frag_ecc()
+plot_frag_evo()
