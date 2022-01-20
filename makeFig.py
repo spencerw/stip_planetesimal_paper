@@ -360,10 +360,9 @@ def plot_pl_frac_time():
 	for idx, f in enumerate(files_sub):
 		snap = pb.load('data/'+f)
 		plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-		mask1 = plVHi['mass'] < 10*np.min(plVHi['mass'])
-		mask2 = plVHi['mass'] > 0
-		p_vhi_m1 = pb.analysis.profile.Profile(plVHi[mask1], bins=bins1)
-		p_vhi_m2 = pb.analysis.profile.Profile(plVHi[mask2], bins=bins1)
+		mask = plVHi['mass'] < 10*np.min(plVHi['mass'])
+		p_vhi_m1 = pb.analysis.profile.Profile(plVHi[mask], bins=bins1)
+		p_vhi_m2 = pb.analysis.profile.Profile(plVHiIC, bins=bins1)
 
 		time_arr[idx] = snap.properties['time'].in_units('yr')
 		prof_arr[:,idx] = (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
@@ -683,11 +682,11 @@ def plot_frag_evo():
 #plot_alpha_beta_mass()
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
-#plot_pl_frac_time()
+plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
 #plot_frag_ecc()
-plot_frag_evo()
+#plot_frag_evo()
