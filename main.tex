@@ -331,6 +331,9 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 
 Next, we compare the effect of varying the initial solid surface density profile on the resulting planetesimal and embryo distribution. The final orbital period-eccentricity state of the particles is shown in figure \ref{fig:surfden_profiles}, with point sizes indicating the relative masses of the bodies. There is a clear trend between solid surface density at a given orbital period and the eccentricities of the remaining planetesimals. This trend is largely set by the initial conditions, as the gravitational stirring is more vigorous when bodies are packed together closely and higher eccentricities are required to produce an equilibrating aerodynamic drag force (see equations \ref{eq:vs_timescale} and \ref{eq:ts_stokes}). Despite having significantly different masses, the planetary embryos formed in each case have remarkably similar eccentricities. This is likely due to the fact that inelastic collisions play a more significant role where the solid surface density is highest, which offsets the fact that the initial bodies started off in a dynamically hotter state.
 
+% Period vs mass for each model?
+% Positive trend for trappist-1 planets, excluding a,b
+
 In figure \ref{fig:surfden_iso}, we compare the masses of the resulting protoplanets and planetesimals in all four simulations to each other. Here, the masses are scaled by the isolation mass at the given orbital distance (see equation \ref{eq:iso}). In all four cases, the masses follow a similar trend: interior to about 60 days in orbital period, protoplanets grow to a factor of a few larger than $M_{iso}$. Exterior to this point, the protoplanet masses roughly stay near the isolation mass. Despite the drastically different solid surface density profiles used, the masses of the largest bodies in all four cases follow a similar trend with orbital period. This indicates that the highly efficient accretion mode seen at shorter orbital periods is dependent on the sizes of the individual bodies themselves, rather than how they are distributed. The transition visible near 60 days in all cases also supports our conclusion that planetesimal accretion is largely complete everywhere in the disk.
 % fdLo needs to run a bit longer
 
@@ -366,6 +369,10 @@ Further evidence for the lack of gravitational scattering events can be seen in 
 
 \subsection{Collision Cross Section}
 
+In all cases shown so far, the boundary between the standard oligarchic growth and the highly-efficient short period accretion region lies around 60 days in orbital period. The mode of accretion is set entirely by the local value of $\alpha$, which scales with both distance from the star and the bulk density of the planetesimals (see equation \ref{eq:alpha}). The artificial inflation of the collision cross section of the particles in our simulations, which is meant to reduce the computational expense, has the side effect of reducing the bulk densities. Because $\alpha \sim \rho_{pl}^{-1/3}$, increasing the particle sizes by a factor of f=6 reduces the orbital period at which $\alpha$ has a given value by a factor of approximately 15. Therefore, one would expect the accretion boundary to lie near 5 days in orbital period for 3 g $cm^{-3}$ bodies.
+
+Although a simulation with f=1 is not computationally tractable, we can test whether the accretion boundary moves in the way we expect by modestly changing the value of $f$. In figure \ref{fig:f6f4}, we compare the fdHi simulation to a nearly identical run using f=4. In the top panel, the embryo masses in units of the isolation mass are shown as a function of orbital period. In the bottom panel, the value of $\alpha$ as a function of orbital period is shown for 3 g $cm^{-3}$ bodies with an artificial radius enhancement of f=1, 4 and 6. The horizontal dashed line indicates the value of alpha below which the accretion mode switches to oligarchic growth. Comparing the top and bottom panels, the intersection of the embryo masses and local isolation mass matches well with the orbital period at which $\alpha \sim 0.1$. Also shown by the curved dotted lines are the $\alpha$ curves for realistic-sized bodies with $\rho_{pl}$ = 1, 5 and 10 g $cm^{-3}$. In all cases, the accretion boundary still lies within the part of the disk in which solids would be expected to accumulate (citation?).
+
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/f6f4.png}
@@ -374,6 +381,7 @@ Further evidence for the lack of gravitational scattering events can be seen in 
 \end{figure}
 
 % compare f=4 and f=6 disk. show that the mass transition moves inwards by the correct amount as alpha changes
+% how does density affect results? trappist-1 planets are 5 g/cc (agol+ 2021)
 
 \subsection{Collision Model}
 
@@ -406,6 +414,8 @@ How to reconcile our concerns with the results of \citet{wallace17}? Show inner 
 As was pointed out in \citet{clement20},  late stage initial conditions with a uniform distribution of embryos is not accurate. Evolution happens in the inner part of the disk first, so bodies will be more massive there.
 
 Summary and discussion text goes here
+
+% Compare with ICs used in Ogihara 22
 
 \bibliography{references}
 

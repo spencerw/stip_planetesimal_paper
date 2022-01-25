@@ -606,6 +606,21 @@ def plot_f6f4():
 	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
 	axes.semilogy(prof_perIC, alpha)
 
+	rhoval = (1*u.g/u.cm**3).to(u.M_sun/u.AU**3).value
+	r_pl_varyrho = (3*m_pl/(4*np.pi*rhoval))**(1/3)
+	alpha = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha, ls=':')
+
+	rhoval = (5*u.g/u.cm**3).to(u.M_sun/u.AU**3).value
+	r_pl_varyrho = (3*m_pl/(4*np.pi*rhoval))**(1/3)
+	alpha = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha, ls=':')
+
+	rhoval = (10*u.g/u.cm**3).to(u.M_sun/u.AU**3).value
+	r_pl_varyrho = (3*m_pl/(4*np.pi*rhoval))**(1/3)
+	alpha = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha, ls=':')
+
 	axes.axhline(0.1, ls='--')
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'$\alpha$')
@@ -674,6 +689,8 @@ def plot_frag_evo():
 	axes.set_ylabel(r'M / $\langle$ m $\rangle$')
 	axes.legend()
 
+	fig.tight_layout()
+
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 #plot_timescales()
@@ -682,11 +699,11 @@ def plot_frag_evo():
 #plot_alpha_beta_mass()
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
-plot_pl_frac_time()
+#plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_smooth_acc()
 #plot_acc_zones()
-#plot_f6f4()
+plot_f6f4()
 #plot_frag_ecc()
 #plot_frag_evo()
