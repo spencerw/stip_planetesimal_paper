@@ -399,13 +399,29 @@ Although a simulation with f=1 is not computationally tractable, we can test whe
 \end{center}
 \end{figure}
 
+In the simulations presented in this work, all collisions result in a complete merging of a pair of bodies with no loss of mass or momentum. Although simple to model, this assumption of perfect accretion may result in overly efficient growth, particularly at the innermost region of the disk where encounter velocities are the largest. To handle this issue properly, semianalytic collision resolution models have been developed and implemented in N-body codes (see \citep{leinhardt12}). However, resolving collisional debris fragments using a direct approach as we have done with {\sc ChaNGa} would result in an intractably large number of particles.
+
+To test whether a more restrictive collision model should modify our results, we present a smaller scale test using a slightly more sophisticated collision model. In this case, a collision can result in one of two outcomes: if the impact velocity is smaller than the mutual escape velocity of the colliding particles, defined as
+
+\begin{equation}\label{eq:v_mut}
+	v_{mut, esc} = \sqrt(\frac{G (m_{1} + m_{2}}{r_{1} r_{2}}),
+\end{equation}
+
+\noindent where $m_{1}, m_{2}$ and $r_{1}, r_{2}$ are the masses and radii of colliding particles 1 and 2, then the bodies perfectly merge. For impact velocities larger than $v_{mut, esc}$, no mass is transferred and the bodies undergo a completely elastic bounce. Because there is no possibility of partial accretion, this model likely restricts growth more than the model used by \citet{leinhardt12}. However, we will show below that the bounce-merge model does not meaningfully affect the outcome of the planetesimal accretion phase, and so a partial accretion model should do the same.
+
+For the configuration of initial conditions we have chosen, the typical encounter velocity (defined by $v_{enc} = \left< e^{2} \right>^{1/2} v_{k}$, where $v_{k}$ is the local Keplerian velocity) is about 25 percent larger than $v_{mut, esc}$. Because the encounter velocities follow a Gaussian distribution, there should be some small subset of collisions that still meet the merger criteria. In addition, $v_{mut, esc}$ becomes larger as the bodies grow and the merger criteria should become easier to meet as the system evolves.
+
+In figure \ref{fig:frag_ecc}, we show the results of two versions of the fdLo simulation, one with mergers only (shown in orange) and one with the bounce-merge model (shown in green). The blue points in the top panel show the initial conditions used for both cases. Because the bounce-merge model greatly increases the number of timesteps required, we choose to model only the innermost part of the disk to reduce the computational cost. Although the bounce-merge simulation takes much longer to reach the same phase of evolution, the resulting orbits and masses of the embryos are indistinguishable from the merger-only case.
+
+To investigate the differences between the two collision models early in the simulations, we show the time evolution of the ratio between the maximum and mean mass in figure \ref{fig:frag_evo}. In both cases, this ratio grows at early times, which indicates that runaway growth still operates, regardless of the collision model used. In the bounce-merge case, the mass ratio peaks at a higher value, while also undergoing a longer runaway growth phase. This suggests that the mass distribution becomes much less unimodal during this growth process, but as figure \ref{fig:frag_ecc} shows, this does not affect the resulting embryos or allow for a residual planetesimal population.
+
+% Maybe also show a plot of M vs time. The embryos should form quicker with the perfect accretion model.
+
 % show alpha, beta study again with bounce vs merge model
 % mergers still happen for 'lo' simulations but not 'hi'
 % this is because the eccentricity dispersion is significantly higher in the 'hi' case
 % mostly because stirring rate increases with surface density
 % criteria should get less restrictive as larger bodies grow, what if we turn on bounces partway thru growth process?
-
-How to reconcile our concerns with the results of \citet{wallace17}? Show inner disk test with different collision models. Bounce/merge model delays onset of runaway growth, with smaller planetesimals being delayed by longer. Does not affect eccentricity or mass of resulting embryos. Because $v_{esc}$ grows with mass, a more realistic collision model only delays the onset of runaway growth.
 
 \subsection{Type I Migration}
 
