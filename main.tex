@@ -415,8 +415,6 @@ In figure \ref{fig:frag_ecc}, we show the results of two versions of the fdLo si
 
 To investigate the differences between the two collision models early in the simulations, we show the time evolution of the ratio between the maximum and mean mass in figure \ref{fig:frag_evo}. In both cases, this ratio grows at early times, which indicates that runaway growth still operates, regardless of the collision model used. In the bounce-merge case, the mass ratio peaks at a higher value, while also undergoing a longer runaway growth phase. This suggests that the mass distribution becomes much less unimodal during this growth process, but as figure \ref{fig:frag_ecc} shows, this does not affect the resulting embryos or allow for a residual planetesimal population.
 
-% Maybe also show a plot of M vs time. The embryos should form quicker with the perfect accretion model.
-
 % show alpha, beta study again with bounce vs merge model
 % mergers still happen for 'lo' simulations but not 'hi'
 % this is because the eccentricity dispersion is significantly higher in the 'hi' case
@@ -425,13 +423,25 @@ To investigate the differences between the two collision models early in the sim
 
 \subsection{Type I Migration}
 
+What is the migration timescale for the embryos to move to the inner edge of the disk? Maybe this section isn't terribly important and should be excluded?
+
 \section{Summary and Discussion} \label{sec:discuss}
 
-As was pointed out in \citet{clement20},  late stage initial conditions with a uniform distribution of embryos is not accurate. Evolution happens in the inner part of the disk first, so bodies will be more massive there.
+In this work, we have demonstrated that planetary embryo formation operates in two distinct modes in a planet-forming disk. In the first mode, gravitational feedback from the growing embryos heats the remaining planetesimals and results in a dynamically cold population of embryos with a significant amount of residual planetesimals. This corresponds to the `oligarchic growth' case revealed by \citep{kokubo98}. In the second mode, the gravitational feedback does not operate, embryos quickly sweep up all planetesimals, and grow about twice as large as is predicted by oligarchic growth. The distinction between these modes is determined by ratio between the physical size of the bodies and their Hill radius. 
 
-Summary and discussion text goes here
+We have demonstrated the outcome of both accretion modes through a low resolution parameter study. The initial planetesimal distribution can be described in terms of two dimensionless constants, $\alpha$ and $\beta$, which describe the ratio between the physical radius of the planetesimals and the Hill ($r_{h}$) and gravitational ($r_{g}$) radii, respectively. For a fixed planetesimal mass and radius, $\alpha$ scales with the orbital period and $\beta$ scales with the level of dynamical excitation of the disk. We showed that $\alpha \ll 1$ leads to oligarchic growth, while a non-negligible $\alpha$ produces this new non-oligarchic growth mode. We find that the resulting mass distribution, along with the final eccentricities of the embryos and residual planetesimals, ends up the same, regardless of the initial value of $\beta$.
 
-% Compare with ICs used in Ogihara 22
+So long as the density of the bodies does not significantly change as their mass distribution evolves, this ratio, and therefore the boundary between these accretion modes is set entirely by the distance from the star. Because both the physical and Hill radius of the bodies grows as $M^{1/3}$, the boundary between growth remains at a fixed location in the disk during the planetesimal accretion process.
+
+We have verified this fact by testing the outcome of the planetesimal accretion process for a variety of solid surface density profiles. Although altering the surface density does affect the resulting masses of the embryos, the location of the boundary separating the growth modes is remarkably similar between all of our simulations. We have verified this by comparing the resulting embryo masses to the isolation mass, in addition to highlighting qualitative differences in the accretion history of embryos on both sides of the boundary.
+
+Lastly, we quantified the way in which our use of perfect accretion and an inflated collision cross section, both meant to make the simulations more computationally tractable, affect the non-oligarchic growth mode and the location of the accretion boundary. We showed that although the use of perfect accretion speeds up the growth of the embryos, it does not affect the masses or orbital properties of the resulting bodies. Because the inflated collision cross sections artificially reduce the density of the planetesimals, this shortcut does shift the accretion boundary outward. However, it moves in a predictable fashion and we verified this by running an extra simulation with a modestly smaller collision cross section. In a real planet-forming disk, one would expect this boundary to lie somewhere between 2 and 10 days, depending on the composition of the planetesimals.
+
+Presently, the implications that this non-oligarchic accretion mode has for the formation of short-period terrestrial planets, and whether the accretion boundary would leave any lasting imprint on the final orbital architecture, is unclear. One point that our results do highlight is that the initial conditions used for most late stage planet formation simulations are overly simplistic. \citet{clement20} recently simulated planetesimal accretion in a disk extending from the orbit of Mercury to the asteroid belt and found that the disk never reaches a state in which equally-spaced, isolation mass embryos are present everywhere simultaneously. Instead, different annuli reach a `giant impact' phase at different times, preventing the onset of a global instability throughout the entire disk, as is common in classic terrestrial planet formation models \citep{chambers01, raymond09}.
+
+% Any examples of studies of STIPs that use these simplistic ICs? Could the accretion boundary help reconcile differences with kepler systems?
+
+To connect these accretion modes to the final orbital architecture, and to ultimate determine what implications an in situ formation model has for the growth of STIPs, we will continue to evolve the final simulation snaphots presented here with a hybrid symplectic integrator. The final distribution of planets formed, along with composition predictions generated by applying cosmochemical models to our initial planetesimal distributions and propagating compositions through the merger trees, will be examined in a follow-up paper.
 
 \bibliography{references}
 
