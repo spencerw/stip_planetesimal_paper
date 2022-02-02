@@ -214,6 +214,8 @@ def plot_alpha_beta_evo():
 	axes.set_ylabel(r'M / $\langle$ m $\rangle$')
 	axes.legend()
 
+	plt.tight_layout()
+
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 def plot_alpha_beta_mass():
@@ -265,7 +267,7 @@ def plot_fulldisk_e_m():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, ax = plt.subplots(figsize=(16,16), nrows=2, sharex=True)
+	fig, ax = plt.subplots(figsize=(8,8), nrows=2, sharex=True)
 
 	axes = ax[0]
 	xbins = np.linspace(p_min, p_max, num=num_bins)
@@ -284,7 +286,7 @@ def plot_fulldisk_e_m():
 
 	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	a_vals = (p_vhi_ic['rbins']*u.AU).to(u.cm).value
-	btilde = 5
+	btilde = 2*np.sqrt(3)
 	m_iso_vhi = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentralg))
 	btilde = 10
 	m_iso_vhi1 = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentralg))
@@ -293,7 +295,7 @@ def plot_fulldisk_e_m():
 	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value)
 	axes.set_yscale('log')
 	axes.plot(prof_perIC, m_iso_vhi)
-	axes.plot(prof_perIC, m_iso_vhi1)
+	#axes.plot(prof_perIC, m_iso_vhi1)
 	axes.set_xlim(p_min, p_max)
 	axes.set_ylim(1e25, 1e28)
 	axes.set_ylabel('Mass [g]')
@@ -367,7 +369,7 @@ def plot_pl_frac_time():
 		time_arr[idx] = snap.properties['time'].in_units('yr')
 		prof_arr[:,idx] = (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 
-	fig, axes = plt.subplots(figsize=(16,8))
+	fig, axes = plt.subplots(figsize=(8,4))
 
 	for idx in range(len(bins1[:-1])):
 		if pbins[idx] < 60:
@@ -386,7 +388,7 @@ def plot_surfden_profiles():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(16,8))
+	fig, axes = plt.subplots(figsize=(8,4))
 
 	axes.scatter(per.value, plVHi['e'], s=0.005*plVHi['mass']/np.min(plVHi['mass']), label='fdHi')
 	axes.scatter(perSt.value, plVHiSt['e'], s=0.005*plVHiSt['mass']/np.min(plVHiSt['mass']), label='fdHiSteep')
@@ -407,9 +409,9 @@ def plot_surfden_iso():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(16,8))
+	fig, axes = plt.subplots(figsize=(8,4))
 
-	btilde = 5
+	btilde = 2*np.sqrt(3)#5
 
 	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
@@ -437,7 +439,7 @@ def plot_surfden_iso():
 	axes.set_xlim(-5, 100)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'm / M$_{iso}$')
-	axes.legend()
+	axes.legend(loc=3)
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -573,7 +575,7 @@ def plot_f6f4():
 	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
 
 	axes = ax[0]
-	btilde = 5
+	btilde = 2*np.sqrt(3)
 
 	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
@@ -658,6 +660,7 @@ def plot_frag_ecc():
 	q = (plNf['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
+	axes.loglog([], [])
 	axes.loglog(bins, hist, linestyle='steps-mid')
 
 	q = (plF['mass']*u.M_sun).to(u.g).value
@@ -678,6 +681,8 @@ def plot_frag_evo():
 		return
 
 	fig, axes = plt.subplots(figsize=(8,8))
+
+	axes.loglog([], [])
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/innerDiskLoNoFrag.txt')
 	axes.loglog(stepnumber, max_mass/mean_mass, label='Mergers Only')
@@ -704,6 +709,6 @@ def plot_frag_evo():
 #plot_surfden_iso()
 #plot_smooth_acc()
 #plot_acc_zones()
-plot_f6f4()
+#plot_f6f4()
 #plot_frag_ecc()
-#plot_frag_evo()
+plot_frag_evo()

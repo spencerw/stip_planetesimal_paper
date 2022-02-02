@@ -252,7 +252,8 @@ A qualitative shift in the protoplanet and planetesimal distribution is visible 
 
 % Also mention that no eccentricity difference between large and small alpha regions, as we saw in the narrow annulus simulations
 
-In figure \ref{fig:alpha_pl_frac}, we show $\alpha$ (left axis) and the fraction of remaining planetesimals (right axis) as a function of orbital period. Here, the fraction of remaining planetesimals is measured by dividing the disk into 15 semimajor axis bins and using the profile function in {\sc pynbody} to measure the total solid surface density $\Sigma$ in each of those bins, and also the planetesimal surface density $\sigma$. Here, a planetesimal is defined to any body with $m < 10 m_{pl}$. Exterior to 60 days in orbital period, $\sigma/\Sigma$ sharply increases, indicating that the highly efficient accretion mode seen previously does not operate here. As can be seen from the plot, the accretion boundary roughly corresponds to $\alpha = 0.1$.
+In figure (removed), we show $\alpha$ (left axis) and the fraction of remaining planetesimals (right axis) as a function of orbital period. Here, the fraction of remaining planetesimals is measured by dividing the disk into 15 semimajor axis bins and using the profile function in {\sc pynbody} to measure the total solid surface density $\Sigma$ in each of those bins, and also the planetesimal surface density $\sigma$. Here, a planetesimal is defined to any body with $m < 10 m_{pl}$. Exterior to 60 days in orbital period, $\sigma/\Sigma$ sharply increases, indicating that the highly efficient accretion mode seen previously does not operate here. As can be seen from the plot, the accretion boundary roughly corresponds to $\alpha = 0.1$.
+% This figure could be turned into a few sentences in the text.
 
 % A mystery: what's so special about alpha = 0.1?
 
@@ -265,61 +266,54 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 \begin{figure*}
 \begin{center}
     \includegraphics[width=\textwidth]{figures/alpha_beta.png}
-    \caption{The initial (blue) and final (orange) states of the simulations described in section \ref{sec:narrow}. Relative masses of the bodies are indicated by point size. In the case of large $\alpha$, almost no residual planetesimal population remains. Regardless of the choice of $\beta$, the protoplanets that form attain similar eccentricities. \label{fig:alpha_beta}}
+    \caption{The initial (blue) and final (orange) states of the simulations described in section \ref{sec:narrow}. Relative masses of the bodies are indicated by point size. In the case of large $\alpha$, almost no residual planetesimal population remains. Regardless of the initial choice of $\beta$, the protoplanets that form attain similar eccentricities. \label{fig:alpha_beta}}
 \end{center}
 \end{figure*}
 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/alpha_beta_mass.png}
-    \caption{Caption goes here.\label{fig:alpha_beta_mass}}
+    \caption{The final state of the mass distribution for the simulations described in section \ref{sec:narrow}. For small $\alpha$, a few embryos form alongside a power law tail of planetesimals. For larger values of $\alpha$, the mass distribution takes on a more unimodal form. As in the previous figure, the initial choice of $\beta$ does not appear to have any meaningful impact on the end result.\label{fig:alpha_beta_mass}}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/alpha_beta_evo.png}
-    \caption{Caption goes here.\label{fig:alpha_beta_evo}}
+    \caption{The evolution of the ratio between the maximum and mean mass for the four simulations presented in section \ref{sec:narrow}. The runaway growth phase can be identified by a positive slope in this ratio. For all values of $\alpha$, an increase in $\beta$ has the effect of delaying the growth of the embryos.\label{fig:alpha_beta_evo}}
 \end{center}
 \end{figure}
 
 % show 4 panel plot of period-e distribution for large, small alpha and beta
 % show that runaway growth still operates for large beta
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-    \includegraphics[width=\textwidth]{figures/fulldisk_e_m.png}
-    \caption{Caption goes here.\label{fig:fulldisk_e_m}}
+    \includegraphics[width=0.5\textwidth]{figures/fulldisk_e_m.png}
+    \caption{The final state of the fdHi simulation. In the top panel, the contours denote the initial period-eccentricity distribution of the planetesimals. Point sizes indicate the relative masses of bodies. In the bottom panel, the solid line indicates the isolation mass for $b = 2 \sqrt{3}$. The vertical dashed line marks the approximate location of the accretion mode boundary. For $P_{orb} < 60$ days, the high $\alpha$ accretion mode produces embryos that exceed the isolation mass.\label{fig:fulldisk_e_m}}
 \end{center}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-    \includegraphics[width=\textwidth]{figures/alpha_pl_frac.png}
-    \caption{Caption goes here.\label{fig:alpha_pl_frac}}
+    \includegraphics[width=0.5\textwidth]{figures/pl_frac_time.png}
+    \caption{The time evolution of the planetesimal surface density (in units of the total solid surface density) in the fdHi simulation. Each curve represents a radial slice of the disk. The innermost region evolves the quickest, and is therefore represented by the lowest curve. The dashed lines indicate radial zones interior to the 60 day orbital period boundary.\label{fig:pl_frac_time}}
 \end{center}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-    \includegraphics[width=\textwidth]{figures/pl_frac_time.png}
-    \caption{Caption goes here.\label{fig:pl_frac_time}}
+    \includegraphics[width=0.5\textwidth]{figures/surfden_profiles.png}
+    \caption{The final state of all simulations listed in table \ref{tab:sim_properties}. Point sizes indicate the relative masses.\label{fig:surfden_profiles}}
 \end{center}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-    \includegraphics[width=\textwidth]{figures/surfden_profiles.png}
-    \caption{Caption goes here.\label{fig:surfden_profiles}}
+    \includegraphics[width=0.5\textwidth]{figures/surfden_iso.png}
+    \caption{Masses of the remaining bodies from the simulations listed in table \ref{tab:sim_properties}, in units of the isolation mass for $b = 2 \sqrt{3}$. Despite the vastly different initial solid surface density profiles, the orbital period inside of which the embryo masses exceed the isolation mass is very consistent.\label{fig:surfden_iso}}
 \end{center}
-\end{figure*}
-
-\begin{figure*}
-\begin{center}
-    \includegraphics[width=\textwidth]{figures/surfden_iso.png}
-    \caption{Caption goes here.\label{fig:surfden_iso}}
-\end{center}
-\end{figure*}
+\end{figure}
 
 % show period-e distribution
 % show show period-mass distribution, with isolation mass curve overlaid
@@ -346,14 +340,14 @@ We begin by investigating the `smoothness' of the accretion events that give ris
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/minor_frac.png}
-    \caption{Caption goes here.\label{fig:minor_frac}}
+    \caption{For the 100 most massive bodies at the end of the fdHi simulation, the fraction of their total mass attained through mergers with initial mass planetesimals (smooth accretion) as a function of total mass. Bodies that reside beyond the 60 day accretion boundary are shown with red crosses, while bodies interior to the boundary are shown with blue dots. For the short period bodies, there is a decreasing correlation between smooth accretion fraction and mass, which suggests that most growth occurs between equal mass bodies. For the longer period bodies in the oligarchic growth region, this trend is flat, indicating that accretion of planetesimals is important during all phases of evolution.\label{fig:minor_frac}}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/acc_zones.png}
-    \caption{Caption goes here.\label{fig:acc_zones}}
+    \caption{For the 20 most massive bodies at the end of the fdHi simulation, the relative shape of the accretion zones for each body are shown. The black hash marks indicate the present position of the body. The accretion distributions indicate the initial locations of the planetesimals that were used to assemble a body, rather than the locations at which collisions with the massive body occurred.\label{fig:acc_zones}}
 \end{center}
 \end{figure}
 
@@ -376,7 +370,7 @@ Although a simulation with f=1 is not computationally tractable, we can test whe
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/f6f4.png}
-    \caption{Caption goes here.\label{fig:f6f4}}
+    \caption{In the top panel, we show the final masses of the bodies from the fdHi and fdHif4 simulations in units of the isolation mass for $b = 2\sqrt{3}$. The bottom panel shows the variation of $\alpha$ with orbital period for the bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of the embryo mass distribution and isolation mass. The dotted curves in the bottom panel show the values of alpha for realistic-sized planetesimals with $\rho =$ 1, 3, 5 and 10 g cm$^{-3}$. (need to fix the green curve)\label{fig:f6f4}}
 \end{center}
 \end{figure}
 
@@ -388,14 +382,14 @@ Although a simulation with f=1 is not computationally tractable, we can test whe
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/frag_ecc.png}
-    \caption{Caption goes here.\label{fig:frag_ecc}}
+    \caption{A comparison between the innermost regions of the fdLo (orange) simulation, and a second version using a bounce-merge collision model (green). In the top panel, the period-eccentricity state of the particles is shown, with marker sizes indicating relative mass. The blue points represent the initial state of the simulations. The bottom panel compares the final masses of the bodies. \label{fig:frag_ecc}}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/frag_evo.png}
-    \caption{Caption goes here.\label{fig:frag_evo}}
+    \caption{The evolution of the ratio between the maximum and mean mass of the simulations shown in figure \ref{fig:frag_ecc}. In both cases, the system first evolves through a phase of runaway growth, before the massive bodies consume the smaller bodies, driving down the mean mass. With the bounce-merge model, the mass ratio decreases later because not all collisions result in growth.\label{fig:frag_evo}}
 \end{center}
 \end{figure}
 
