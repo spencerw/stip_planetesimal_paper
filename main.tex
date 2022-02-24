@@ -14,7 +14,29 @@
 \affiliation{Astronomy Department, University of Washington, Seattle, WA 98195}
 
 \begin{abstract}
-Formation models in which terrestrial bodies grow via the pairwise accretion of planetesimals have been reasonably successful at reproducing the general properties of the solar system, including small body populations. However, planetesimal accretion has not yet been fully explored in the context of more exotic terrestrial systems, particularly those that host short-period planets. In this work, we use direct N-body simulations to explore and understand the growth of planetary embryos from planetesimals in disks extending down to $\simeq$ 1 day orbital periods. We show that planetesimal accretion becomes nearly 100 percent efficient at short orbital periods, leading to embryo masses that are roughly twice as large as the classical isolation mass. For rocky bodies, the physical size of the object begins to occupy a significant fraction of its Hill sphere at orbital periods less than about 50 days. In this regime, most close encounters result in collisions, rather than scattering, and the system cannot bifurcate into a collection of dynamically hot planetesimals and dynamically cold oligarchs, like is seen in previous work. The highly efficient accretion seen at short orbital periods implies that systems of tightly-packed inner planets should be almost completely devoid of any residual small bodies. We demonstrate the robustness of our results to assumptions about the initial disk model, and also investigate how far material can radially mix across the accretion boundary.
+Formation models in which terrestrial bodies grow via the pairwise
+accretion of planetesimals have been reasonably successful at
+reproducing the general properties of the solar system, including
+small body populations. However, planetesimal accretion has not yet
+been fully explored in the context of more exotic terrestrial systems,
+particularly those that host short-period planets. In this work, we
+use direct N-body simulations to explore and understand the growth of
+planetary embryos from planetesimals in disks extending down to
+$\simeq$ 1 day orbital periods. We show that planetesimal accretion
+becomes nearly 100 percent efficient at short orbital periods, leading
+to embryo masses that are roughly twice as large as the classical
+isolation mass. For rocky bodies, the physical size of the object
+begins to occupy a significant fraction of its Hill sphere at orbital
+periods less than about 50 days. In this regime, most close encounters
+result in collisions, rather than scattering, and the system cannot
+bifurcate into a collection of dynamically hot planetesimals and
+dynamically cold oligarchs, like is seen in previous work. The highly
+efficient accretion seen at short orbital periods implies that systems
+of tightly-packed inner planets should be almost completely devoid of
+any residual small bodies. We demonstrate the robustness of our
+results to assumptions about the initial disk model, and also
+investigate how far material can radially mix across the boundary
+between modes.
 \end{abstract}
 
 %\begin{list}
@@ -30,6 +52,8 @@ Formation models in which terrestrial bodies grow via the pairwise accretion of 
 
 \section{Introduction} \label{sec:intro}
 
+% TRQ: the following paragraph (particularly the last sentence could
+% use citations: probably to review articles.
 Planetesimal accretion is one of a number of stages in which micron-sized solids from the protostellar nebula coalesce to eventually build terrestrial planets. In the earliest stages, aerodynamic forces dominate the growth and evolution of the solids. Millimeter-sized bodies grow through adhesive pairwise collisions and stay well-coupled to the surrounding gas. Beyond this size, however, a number of growth barriers present themselves. Most notably, larger solids orbit the central star at Keplerian speeds as they decouple from the gas, which orbits at a sub-keplerian speed due to radial pressure support. This leads the solids to feel a headwind, which is maximally effective at sapping away angular momentum for objects around 1 meter in size. At this size, the timescale for the growing solids to fall onto the star is catastrophically short and leads to what is known as the drift barrier. In addition, two-body collisions between mm- to cm-sized bodies tend to result in bouncing or destruction, rather than continued growth. For these reasons, a number of mechanisms have been proposed which facilitate fast growth from mm to km sizes by locally concentrating solids. Dust traps, streaming instability, pebble piles...etc.
 
 Beyond kilometer scales, gravity begins to dominate and aerodynamic gas drag plays a smaller and smaller role. During this phase, collision cross sections are enhanced as gravitational focusing \citep{safronov69} acts to bend the trajectories of bodies undergoing close encounters. Large bodies are most effective at focusing the trajectories of nearby planetesimals, leading to a period of runaway growth \citep{wetherill89, kokubo96, barnes09}. Eventually, the largest bodies (known as oligarchs) dynamically heat the surrounding planetesimals, severely limiting further growth \citep{kokubo98}. The end result of this phase is a bimodal population of dynamically cold oligarchs, surrounded by dynamically hot, difficult to accrete residual planetesimals. Lines of evidence suggest that the asteroid belt, kuiper belt and the oort cloud are largely composed of the leftovers of this stage of planet formation. (Mention more specific evidence, morbidelli 09 paper, CAIs?)
@@ -38,35 +62,101 @@ Although gas drag has a minimal influence on the Moon to Mars-sized oligarchs, i
 
 Over the last few decades, terrestrial planet formation models have largely advanced by matching properties of the solar system. Compared to exoplanetary systems, the solar system provides a rich set of constraints (isotopic ratios, cratering records, small body populations) that are mostly unmeasurable for even the closest neighboring planet forming systems. However, the system architectures discovered by spaced-based missions in the last decade reveal that the solar system could very well be an outlier in terms of what a typical planet-forming disk produces. In addition, the sizes and compositions of the terrestrial planets likely rely on a series of finely-tuned events to play out that involve truncation of the primordial planetesimal disk \citep{raymond17}, inward, followed by outward migration of an outer giant planet \citep{walsh11}, or a large-scale instability triggered by a pair of convergently migrating giant planets \citep{tsiganis05, levison11, nesvorny11}. Given qualitatively similar initial conditions, solar system formation models can even occasionally reproduce the correct masses and orbital periods of the terrestrial planets without invoking any of the aforementioned scenarios, given the right random number seed \citep{fischer14}.
 
-Given the difficult question of whether to treat the solar system as an outlier, the best way forward is to use statistical samples of exoplanetary architectures to develop and inform formation models. This is generally done through the use of population synthesis models \citep{ida04, alibert11}, but many of the mechanisms in these models are informed and tuned by solar system constraints. One pervasive and exotic result revealed by the Kepler space telescope has the discovery of hundreds of compact multi-planet terrestrial systems, dubbed systems of tightly-packed inner planets (STIPs). Although there is no formal definition of a STIP, they typically contain 3 or more Earth-sized planets with orbital periods extending between 1 and 100 days. Reconciling the structural differences between the solar system (devoid of large bodies interior to 88 days) and STIPs is going to be an important step in building a general, widely-applicable planet formation model.
+Given the difficult question of whether to treat the solar system as
+an outlier, the best way forward is to use statistical samples of
+exoplanetary architectures to develop and inform formation
+models. This is generally done through the use of population synthesis
+models \citep{ida04, alibert11}, but many of the mechanisms in these
+models are informed and tuned by solar system constraints. One
+pervasive and exotic result revealed by the Kepler space telescope is the discovery of hundreds of compact multi-planet terrestrial systems, dubbed systems of tightly-packed inner planets (STIPs). Although there is no formal definition of a STIP, they typically contain 3 or more Earth-sized planets with orbital periods extending between 1 and 100 days. Reconciling the structural differences between the solar system (devoid of large bodies interior to 88 days) and STIPs is going to be an important step in building a general, widely-applicable planet formation model.
 
-To date, a large body of work exists that has attempted to reproduce the architectures of STIPs, starting from planetary embryos (cite some examples). However, the runaway and oligarchic growth phases, which precede the assembly of the embryos, are assumed to be ubiquitous. Given that the timescales for accretion and gravitational scattering scale differently with encounter velocity, which itself scales with orbital period, it is not entirely clear that planetary embryos should form in the same way close to the star as they do at much longer, more thoroughly studied orbital periods. In this paper, we use direct N-body simulations to explore the outcome of the planetesimal accretion stage at orbital periods shorter than 100 days. In particular, we seek to understand what the orbital and mass distributions of the embryos and residual planetesimals look like, and to assess whether the initial conditions used by late-stage simulations of STIP assembly are reasonable.
+To date, a large body of work exists that has attempted to reproduce
+the architectures of STIPs, starting from planetary embryos (cite some
+examples). However, the runaway and oligarchic growth phases, which
+precede the assembly of the embryos, are assumed to be
+ubiquitous. Given that the timescales for accretion and gravitational
+scattering scale differently with encounter velocity, which itself
+scales with orbital period, it is not entirely clear that planetary
+embryos should form in the same way close to the star as they do at
+much longer, more thoroughly studied orbital periods. In this paper,
+we use direct N-body simulations to explore the outcome of the
+planetesimal accretion stage at orbital periods shorter than 100 days
+around an M star.
+% TRQ perhaps mention habitable zone here.  Somewhere, a discussion of
+% the importance of understanding habitable zones around M-stars,
+% where STIPS are found, needs to be discussed.
+In particular, we seek to understand what the orbital and mass distributions of the embryos and residual planetesimals look like, and to assess whether the initial conditions used by late-stage simulations of STIP assembly are reasonable.
 
-In section \ref{sec:theory} we provide an overview of the theory behind planetesimal accretion and show that assumptions used to derive the well-known modes of growth are only valid at sufficiently long orbital periods. We then motivate the need for N-body simulations to study this problem and describe the code used, along with how our initial conditions were constructed in section \ref{sec:methods}. In section \ref{sec:results}, we present parameter study of planetesimal accretion using a series of simulations of narrow annuli at various orbital periods. We also present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
+In section \ref{sec:theory} we provide an overview of the theory
+behind planetesimal accretion and show that assumptions used to derive
+the well-known modes of growth are only valid at sufficiently long
+orbital periods. We then motivate the need for N-body simulations to
+study this problem and describe the code used, along with how our
+initial conditions were constructed in section \ref{sec:methods}. In
+section \ref{sec:narrow}, we present a parameter study of planetesimal
+accretion using a series of simulations of narrow annuli at various
+orbital periods.  In section \ref{sec:fulldisk}, we present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
 
 \section{Overview of Planetesimal Accretion}\label{sec:theory}
 
 \subsection{Oligarchic and Runaway Growth}
 
-We begin our analysis by considering a disk of equal planetesimals with radius $r_{pl}$, mass $m_{pl}$ and surface density $\Sigma_{pl}$. The collision rate in the vicinity of an orbit defined by Keplerian frequency $\Omega$ can be written as $n \Gamma v$, where $n = \Sigma_{pl} \Omega / 2 m_{pl} v$, $\Gamma$ is the effective collision cross section and $v$ is the typical encounter velocity between planetesimals. Assuming that every collision results in a perfect merger, the growth rate of a planetesimal is given by
+We begin our analysis by considering a disk of equal planetesimals
+with radius $r_{pl}$, mass $m_{pl}$ and surface density
+$\Sigma_{pl}$. The collision rate in the vicinity of an orbit defined
+by Keplerian frequency $\Omega$ can be written as $n \Gamma v$, where
+$n = \Sigma_{pl} \Omega / 2 m_{pl} v$, $\Gamma$ is the effective
+collision cross section and $v$ is the typical encounter velocity
+between planetesimals.
+% TRQ: mention that $v$ is related to the velocity dispersion of the
+% planetesimals.
+Assuming that every collision results in a perfect merger, the growth rate of a planetesimal is given by
 
 \begin{equation}\label{eq:growth}
 	\frac{dM}{dt} = \frac{\Sigma \Omega}{2 m_{pl}} \Gamma.
 \end{equation}
 
-In the case where the collision cross section $\Gamma$ depends only on the physical size of the planetesimals, the growth scales linearly with mass and the mass distribution is expected to evolve in an `orderly' fashion. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \Gamma_{geo} \left( 1 + v_{esc}^2 / v^2 \right)$, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
+In the case where the collision cross section, $\Gamma$, depends only
+on the physical size of the planetesimals, the growth scales linearly
+with mass and the mass distribution is expected to evolve in an
+``orderly'' fashion. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \Gamma_{geo} \left( 1 + v_{esc}^2 / v^2 \right)$, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
+%TRQ: reference Safranov?
 
-In the limit that $v_{esc} \gg v$, it can be shown that $M \propto M^{4/3}$, which implies a runaway scenario, in which growth accelerates with mass. This mode of growth was confirmed with N-body simulations by \citet{kokubo96} and appears necessary to construct protoplanets within the lifetime of a protoplanetary disk. Due to the velocity dependence of the gravitational focusing effect, it isn't clear how ubiquitous this mode of growth is. In particular, encounter velocities at short orbital periods will be rather large (because $v \sim v_{k}$) and the $v_{esc} \gg v$ condition may not always be satisfied. The effect that a dynamically hot disk has on runway growth will be examined in detail in section \ref{sec:results}.
+In the limit that $v_{esc} \gg v$, it can be shown that $M \propto
+M^{4/3}$, which implies a runaway scenario, in which growth
+accelerates with mass. This mode of growth was confirmed with N-body
+simulations by \citet{kokubo96} and appears necessary to construct
+protoplanets within the lifetime of a protoplanetary disk. Due to the
+velocity dependence of the gravitational focusing effect, it is not clear how ubiquitous this mode of growth is. In particular, encounter velocities at short orbital periods will be rather large (because $v \sim v_{k}$) and the $v_{esc} \gg v$ condition may not always be satisfied. The effect that a dynamically hot disk has on runway growth will be examined in detail in section \ref{sec:results}.
+%TRQ: fix section reference.
 
-An important feature is missing from the model described above, which limits its applicability at late times. Encounters between planetesimals that do not result in a collision play a crucial role over long timescales. These close encounters act to convert energy from Keplerian shear into random motion. Over time, this gravitational stirring effect will raise the typical encounter velocities between bodies and diminish the effectiveness of gravitational focusing. With a spectrum of masses, these velocity differences become even more pronounced because as system drifts towards a state of quasi-equilibrium where $v \sim m^{1/2}$. For a system of equal mass bodies in which encounters are driven by random motions rather than Keplerian shear (dispersion dominated), the timescale for gravitational stirring is described by the two-body relaxation time \citep{ida93}
+An important feature is missing from the model described above, which
+limits its applicability at late times. Encounters between
+planetesimals that do not result in a collision play a crucial role
+over long timescales. These close encounters act to convert energy
+from Keplerian shear into random motion. Over time, this gravitational
+stirring effect will raise the typical encounter velocities between
+bodies and diminish the effectiveness of gravitational focusing. With
+a spectrum of masses, these velocity differences become even more
+pronounced because as system evolves towards a state of quasi-equilibrium where $v \sim m^{1/2}$. For a system of equal mass bodies in which encounters are driven by random motions rather than Keplerian shear (dispersion dominated), the timescale for gravitational stirring is described by the two-body relaxation time \citep{ida93}
 
 \begin{equation}\label{eq:relax}
-	t_{relax} = \frac{v^3}{n \pi G^2 m_{pl} ln \Lambda},
+	t_{relax} = \frac{v^3}{n \pi G^2 m_{pl} \ln \Lambda},
 \end{equation}
 
-\noindent where $\mathrm{ln} \Lambda$ is the Coulomb logarithm, typically taken to be $\approx 10$ for a planetesimal disk. Despite the fact that the behavior of gravitational stirring is well-described by two-body formalism, \citep{ida93} found that the stirring in a planetesimal disk is actually driven by close encounters. As we will show in section \ref{sec:narrow}, gravitational stirring effectively shuts off when the Hill sphere of a body becomes comparable to its physical size. In this case, close encounters tend to result in collisions, and the main pathway for energy exchange between planetesimals is unable to operate.
+\noindent where $\mathrm{ln} \Lambda$ is the Coulomb logarithm,
+typically taken to be $\approx 10$ for a planetesimal disk. Despite
+the fact that the behavior of gravitational stirring is well-described
+by the two-body formalism, \citep{ida93} found that the stirring in a planetesimal disk is actually driven by close encounters. As we will show in section \ref{sec:narrow}, gravitational stirring effectively shuts off when the Hill sphere of a body becomes comparable to its physical size. In this case, close encounters tend to result in collisions, and the main pathway for energy exchange between planetesimals is unable to operate.
 
- As mentioned above, the system will tend toward a state of energy equipartition for a non-uniform mass distribution. \citet{kokubo98} showed that runaway growth is actually self-limiting. As the runaway bodies grow larger, they become more effective at heating the remaining planetesimals, which diminishes the effectiveness of gravitational focusing and throttles the growth rate. Around the time that the massive runaway bodies make up about 50 percent of the solid surface density (citation), a period of less vigorous `oligarchic' growth commences, in which the few largest bodies continue to accrete planetesimals at similar rates.
+As mentioned above, the system will tend toward a state of energy
+equipartition for a non-uniform mass distribution. \citet{kokubo98}
+showed that runaway growth is actually self-limiting. As the runaway
+bodies grow larger, they become more effective at heating the
+remaining planetesimals, which diminishes the effectiveness of
+gravitational focusing and throttles the growth rate. Around the time
+that the massive runaway bodies make up about 50 percent of the solid
+surface density (citation), a period of less vigorous ``oligarchic'' growth commences, in which the few largest bodies continue to accrete planetesimals at similar rates.
 
 The picture described above relies upon an important factor, which is that the mass distribution evolves slow enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the growth timescale. For typical conditions near the terrestrial planet forming region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, this condition can easily be violated at shorter orbital periods.
 
@@ -399,8 +489,9 @@ In the simulations presented in this work, all collisions result in a complete m
 
 To test whether a more restrictive collision model should modify our results, we present a smaller scale test using a slightly more sophisticated collision model. In this case, a collision can result in one of two outcomes: if the impact velocity is smaller than the mutual escape velocity of the colliding particles, defined as
 
+%TRQ: I corrected this off the top of my head: CHECK!
 \begin{equation}\label{eq:v_mut}
-	v_{mut, esc} = \sqrt(\frac{G (m_{1} + m_{2}}{r_{1} r_{2}}),
+	v_{mut, esc} = \sqrt{\frac{G (m_{1} + m_{2})}{r_{1} + r_{2}}},
 \end{equation}
 
 \noindent where $m_{1}, m_{2}$ and $r_{1}, r_{2}$ are the masses and radii of colliding particles 1 and 2, then the bodies perfectly merge. For impact velocities larger than $v_{mut, esc}$, no mass is transferred and the bodies undergo a completely elastic bounce. Because there is no possibility of partial accretion, this model likely restricts growth more than the model used by \citet{leinhardt12}. However, we will show below that the bounce-merge model does not meaningfully affect the outcome of the planetesimal accretion phase, and so a partial accretion model should do the same.
