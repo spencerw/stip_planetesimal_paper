@@ -27,6 +27,7 @@ simV = u.AU/simT
 clobber = True
 fmt = 'png'
 s = 0.005
+lw = 4
 
 num_bins = 50
 mCentral = 0.08
@@ -80,10 +81,10 @@ perICSh = 2*np.pi*np.sqrt((plVHiICSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).t
 prof_perIC_sh = 2*np.pi*np.sqrt((p_vhi_ic_sh['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 perSh = 2*np.pi*np.sqrt((plVHiSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
-snap = pb.load('data/fullDiskLo.ic')
+snap = pb.load('data/fullDiskLoLarge.ic')
 plLoIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_lo_ic = pb.analysis.profile.Profile(plLoIC.d, bins=bins)
-snap = pb.load('data/fullDiskLo1.426000')
+snap = pb.load('data/fullDiskLoLarge.1000000')
 plLo = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_lo = pb.analysis.profile.Profile(plLo.d, bins=bins)
 perICLo = 2*np.pi*np.sqrt((plLoIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -143,12 +144,12 @@ def plot_timescales():
 
 		return t_relax_vals/t_coll_vals
 
-	fig, axes = plt.subplots(figsize=(8,8))
+	fig, axes = plt.subplots(figsize=(8,6))
 	ehvals = [16, 8, 4, 2, 1]
 	colors = plt.cm.viridis(np.linspace(0, 1, len(ehvals)))
 	for idx, eh in enumerate(ehvals):
-		axes.plot(p_bins.to(u.d), timescale_ratio(eh), c=colors[idx], label=r'e$_{h}$ = '+str(eh))
-	axes.axhline(1, ls='--')
+		axes.plot(p_bins.to(u.d), timescale_ratio(eh), c=colors[idx], label=r'e$_{h}$ = '+str(eh), lw=lw)
+	axes.axhline(1, ls='--', color='gray')
 	axes.legend()
 	axes.set_xscale('log')
 	axes.set_yscale('log')
@@ -169,23 +170,29 @@ def plot_alpha_beta():
 		snap = pb.load('data/'+prefix+'.end')
 		pl = ko.orb_params(snap, isHelio=True, mCentral=mcen)
 		print()
-		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*100)
-		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*100)
-		ax.set_xlabel('Semimajor Axis [AU]')
-		ax.set_ylabel('Eccentricity')
-		ax.set_title(title)
+		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*500)
+		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*500)
+		ax.text(0.85, 0.95, title, transform=ax.transAxes, ha='center', va='center')
 
-	fig, ax = plt.subplots(figsize=(16,16), nrows=2, ncols=2, sharex=True, sharey=True)
+	fig, ax = plt.subplots(figsize=(16,12), nrows=2, ncols=2, sharex=True, sharey=True)
 	subplot(ax[0][0], 'ki_fluffy', r'Large $\alpha$, Small $\beta$')
+	ax[0][0].set_ylabel('Eccentricity')
 	subplot(ax[0][1], 'ki_fluffy_hot', r'Large $\alpha$, Large $\beta$')
 	subplot(ax[1][0], 'ki', r'Small $\alpha$, Small $\beta$')
+	ax[1][0].set_xlabel('Semimajor Axis [AU]')
+	ax[1][0].set_ylabel('Eccentricity')
+	ax[1][0].get_xticklabels()[0].set_visible(False)
+	ax[1][0].get_xticklabels()[-1].set_visible(False)
 	subplot(ax[1][1], 'ki_hot', r'Small $\alpha$, Large $\beta$')
+	ax[1][1].set_xlabel('Semimajor Axis [AU]')
+	ax[1][1].get_xticklabels()[0].set_visible(False)
+	ax[1][1].get_xticklabels()[-1].set_visible(False)
 
 	ax[1][1].set_yscale('log')
 	ax[1][1].set_xlim(0.9, 1.1)
 	ax[1][1].set_ylim(1e-5, 0.3)
 
-	plt.tight_layout()
+	plt.subplots_adjust(wspace=0, hspace=0)
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -194,21 +201,21 @@ def plot_alpha_beta_evo():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(8,8))
+	fig, axes = plt.subplots(figsize=(8,6))
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Small $\beta$')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Small $\beta$', lw=lw)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy_hot.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Large $\beta$')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Large $\beta$', lw=lw)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Small $\beta$')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Small $\beta$', lw=lw)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_hot.txt')
 	ind = np.arange(len(stepnumber))
 	stepnumber[ind >= 51] += 500000
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Large $\beta$')
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Large $\beta$', lw=lw)
 
 	axes.set_xlabel('Time Steps')
 	axes.set_ylabel(r'M / $\langle$ m $\rangle$')
@@ -223,42 +230,52 @@ def plot_alpha_beta_mass():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(8,8), nrows=4, sharex=True, sharey=True)
+	fig, axes = plt.subplots(figsize=(8,6), nrows=4, sharex=True, sharey=True)
 
 	snap = pb.load('data/ki_fluffy.end')
 	pl = ko.orb_params(snap, isHelio=True, mCentral=1)
 	q = (pl['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
-	axes[0].loglog(bins, hist, linestyle='steps-mid')
-	axes[0].set_title(r'Large $\alpha$, Small $\beta$')
+	axes[0].loglog(bins, hist, drawstyle='steps-mid')
+	axes[0].fill_between(bins, 0, hist, step='mid')
+	axes[0].set_yticks([])
+	axes[0].text(0.85, 0.85, r'Large $\alpha$, Small $\beta$', transform=axes[0].transAxes, ha='center', va='center')
 
 	snap = pb.load('data/ki_fluffy_hot.end')
 	pl = ko.orb_params(snap, isHelio=True, mCentral=1)
 	q = (pl['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
-	axes[1].loglog(bins, hist, linestyle='steps-mid')
-	axes[1].set_title(r'Large $\alpha$, Large $\beta$')
+	axes[1].loglog(bins, hist, drawstyle='steps-mid')
+	axes[1].fill_between(bins, 0, hist, step='mid')
+	axes[1].set_yticks([])
+	axes[1].text(0.85, 0.85, r'Large $\alpha$, Large $\beta$', transform=axes[1].transAxes, ha='center', va='center')
 
 	snap = pb.load('data/ki.end')
 	pl = ko.orb_params(snap, isHelio=False, mCentral=1)
 	q = (pl['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
-	axes[2].loglog(bins, hist, linestyle='steps-mid')
-	axes[2].set_title(r'Small $\alpha$, Small $\beta$')
+	axes[2].loglog(bins, hist, drawstyle='steps-mid')
+	axes[2].fill_between(bins, 0, hist, step='mid')
+	axes[2].set_yticks([])
+	axes[2].text(0.85, 0.85, r'Small $\alpha$, Small $\beta$', transform=axes[2].transAxes, ha='center', va='center')
 
 	snap = pb.load('data/ki_hot.end')
 	pl = ko.orb_params(snap, isHelio=True, mCentral=1)
 	q = (pl['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
-	axes[3].loglog(bins, hist, linestyle='steps-mid')
-	axes[3].set_title(r'Small $\alpha$, Large $\beta$')
+	axes[3].loglog(bins, hist, drawstyle='steps-mid')
+	axes[3].fill_between(bins, 0, hist, step='mid')
+	axes[3].set_yticks([])
+	axes[3].text(0.85, 0.85, r'Small $\alpha$, Large $\beta$', transform=axes[3].transAxes, ha='center', va='center')
 
-	axes[2].set_ylabel('dn/dm')
+	axes[2].set_ylabel('log dn/dm')
 	axes[3].set_xlabel('Mass [g]')
+
+	plt.subplots_adjust(wspace=0, hspace=0)
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -701,7 +718,7 @@ def plot_frag_evo():
 #plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
-#plot_alpha_beta_mass()
+plot_alpha_beta_mass()
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
@@ -711,4 +728,4 @@ def plot_frag_evo():
 #plot_acc_zones()
 #plot_f6f4()
 #plot_frag_ecc()
-plot_frag_evo()
+#plot_frag_evo()
