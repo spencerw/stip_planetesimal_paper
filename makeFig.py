@@ -629,7 +629,7 @@ def plot_f6f4():
 
 	f = 1
 	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
-	axes.semilogy(prof_perIC, alpha, lw=lw)
+	#axes.semilogy(prof_perIC, alpha, lw=lw)
 
 	rhoval = (1*u.g/u.cm**3).to(u.M_sun/u.AU**3).value
 	r_pl_varyrho = (3*m_pl/(4*np.pi*rhoval))**(1/3)
@@ -739,7 +739,7 @@ def plot_frag_evo():
 #plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_smooth_acc()
-plot_acc_zones()
-#plot_f6f4()
+#plot_acc_zones()
+plot_f6f4()
 #plot_frag_ecc()
 #plot_frag_evo()
