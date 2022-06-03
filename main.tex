@@ -87,15 +87,7 @@ around an M star.
 % where STIPS are found, needs to be discussed.
 In particular, we seek to understand what the orbital and mass distributions of the embryos and residual planetesimals look like, and to assess whether the initial conditions used by late-stage simulations of STIP assembly are reasonable.
 
-In section \ref{sec:theory} we provide an overview of the theory
-behind planetesimal accretion and show that assumptions used to derive
-the well-known modes of growth are only valid at sufficiently long
-orbital periods. We then motivate the need for N-body simulations to
-study this problem and describe the code used, along with how our
-initial conditions were constructed in section \ref{sec:methods}. In
-section \ref{sec:narrow}, we present a parameter study of planetesimal
-accretion using a series of simulations of narrow annuli at various
-orbital periods.  In section \ref{sec:fulldisk}, we present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
+In section \ref{sec:theory} we provide an overview of the theory behind planetesimal accretion and show that assumptions used to derive the well-known modes of growth are only valid at sufficiently long orbital periods. We then motivate the need for N-body simulations to study this problem and describe the code used, along with how our initial conditions were constructed in section \ref{sec:methods}. In section \ref{sec:narrow}, we present a parameter study of planetesimal accretion using a series of simulations of narrow annuli at various orbital periods. We also present a set of simulations starting with a much wider planetesimal disk and demonstrate that a transition between accretion modes occurs at moderately small ($\simeq$ 50d) orbital periods. Next, we assess the impact of simplifications made to our collision model on this result in section \ref{sec:assump}. In section \ref{sec:discuss}, we discuss the implications of this multimodal accretion behavior throughout the disk for planet formation models and conclude.
 
 \section{Overview of Planetesimal Accretion}\label{sec:theory}
 
@@ -122,13 +114,7 @@ with mass and the mass distribution is expected to evolve in an
 ``orderly'' fashion. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \Gamma_{geo} \left( 1 + v_{esc}^2 / v^2 \right)$, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
 %TRQ: reference Safranov?
 
-In the limit that $v_{esc} \gg v$, it can be shown that $M \propto
-M^{4/3}$, which implies a runaway scenario, in which growth
-accelerates with mass. This mode of growth was confirmed with N-body
-simulations by \citet{kokubo96} and appears necessary to construct
-protoplanets within the lifetime of a protoplanetary disk. Due to the
-velocity dependence of the gravitational focusing effect, it is not clear how ubiquitous this mode of growth is. In particular, encounter velocities at short orbital periods will be rather large (because $v \sim v_{k}$) and the $v_{esc} \gg v$ condition may not always be satisfied. The effect that a dynamically hot disk has on runway growth will be examined in detail in section \ref{sec:results}.
-%TRQ: fix section reference.
+In the limit that $v_{esc} \gg v$, it can be shown that $M \propto M^{4/3}$, which implies a runaway scenario, in which growth accelerates with mass. This mode of growth was confirmed with N-body simulations by \citet{kokubo96} and appears necessary to construct protoplanets within the lifetime of a protoplanetary disk. Due to the velocity dependence of the gravitational focusing effect, it isn't clear how ubiquitous this mode of growth is. In particular, encounter velocities at short orbital periods will be rather large (because $v \sim v_{k}$) and the $v_{esc} \gg v$ condition may not always be satisfied. The effect that a dynamically hot disk has on runway growth will be examined in detail in section \ref{sec:narrow}.
 
 An important feature is missing from the model described above, which
 limits its applicability at late times. Encounters between
@@ -165,7 +151,7 @@ In figure \ref{fig:timescales}, we show ratio between the relaxation and collisi
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/timescales.png}
-    \caption{The ratio between the two-body relaxation and collision timescale for a population of equal-mass planetesimals. Only in regions where $t_{relax} \ll t_{coll}$ can the velocity distribution respond to changes in the mass of the bodies such that oligarchic growth can operate. This condition is no longer satisfied for a dynamically hot disk at sufficiently short orbital periods.\label{fig:timescales}}
+    \caption{The ratio between the two-body relaxation and collision timescale for a population of equal-mass planetesimals with an internal density of 3 g cm$^{-3}$. Only in regions where $t_{relax} \ll t_{coll}$ can the velocity distribution respond to changes in the mass of the bodies such that oligarchic growth can operate. This condition is no longer satisfied for a dynamically hot disk at sufficiently short orbital periods.\label{fig:timescales}}
 \end{center}
 \end{figure}
 
@@ -396,7 +382,7 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/surfden_profiles.png}
-    \caption{The final state of all simulations listed in table \ref{tab:sim_properties}. Point sizes indicate the relative masses.\label{fig:surfden_profiles}}
+    \caption{The final state of all simulations listed in table \ref{tab:sim_properties}. Point sizes indicate mass relative to the largest body in the fdHi simulation.\label{fig:surfden_profiles}}
 \end{center}
 \end{figure}
 
@@ -436,12 +422,12 @@ We begin by investigating the `smoothness' of the accretion events that give ris
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure*}
 \begin{center}
-    \includegraphics[width=0.5\textwidth]{figures/acc_zones.png}
+    \includegraphics[width=\textwidth]{figures/acc_zones.png}
     \caption{For the 20 most massive bodies at the end of the fdHi simulation, the relative shape of the accretion zones for each body are shown. The black hash marks indicate the present position of the body. The accretion distributions indicate the initial locations of the planetesimals that were used to assemble a body, rather than the locations at which collisions with the massive body occurred.\label{fig:acc_zones}}
 \end{center}
-\end{figure}
+\end{figure*}
 
 The difference in slope of the short vs longer period bodies in figure \ref{fig:minor_frac} indicates a difference in how the planetesimal-embryo populations interact in each region. In the long period oligarchic growth region, embryos continue to accrete planetesimals as they grow and the minor mass fraction stays mostly flat. At short period, collisions mostly occur between equal mass bodies as the embryos grow and the contribution from planetesimals becomes less significant over time. This suggests that embryo-embryo collisions are common at short period. As discussed in section \ref{sec:sizeandhill}, the importance of gravitational scattering is greatly reduced here. Without frequent gravitational interactions between the embryos and planetesimals, orbital repulsion \citep{kokubo98} and isolation of the embryos does not occur. As we showed in figure \ref{fig:surfden_iso}, the embryos formed in this region exceed the isolation mass.
 
@@ -462,7 +448,7 @@ Although a simulation with f=1 is not computationally tractable, we can test whe
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/f6f4.png}
-    \caption{In the top panel, we show the final masses of the bodies from the fdHi and fdHif4 simulations in units of the isolation mass for $b = 2\sqrt{3}$. The bottom panel shows the variation of $\alpha$ with orbital period for the bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of the embryo mass distribution and isolation mass. The dotted curves in the bottom panel show the values of alpha for realistic-sized planetesimals with $\rho =$ 1, 3, 5 and 10 g cm$^{-3}$. (need to fix the green curve)\label{fig:f6f4}}
+    \caption{In the top panel, we show the final masses of the bodies from the fdHi and fdHif4 simulations in units of the isolation mass for $b = 2\sqrt{3}$. The bottom panel shows the variation of $\alpha$ with orbital period for the bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of the embryo mass distribution and isolation mass. The shaded region in the bottom panel show the values of alpha for realistic-sized (f=1) planetesimals with bulk densities between 10 and 1 g cm$^{-3}$.\label{fig:f6f4}}
 \end{center}
 \end{figure}
 
@@ -485,7 +471,7 @@ Although a simulation with f=1 is not computationally tractable, we can test whe
 \end{center}
 \end{figure}
 
-In the simulations presented in this work, all collisions result in a complete merging of a pair of bodies with no loss of mass or momentum. Although simple to model, this assumption of perfect accretion may result in overly efficient growth, particularly at the innermost region of the disk where encounter velocities are the largest. To handle this issue properly, semianalytic collision resolution models have been developed and implemented in N-body codes (see \citep{leinhardt12}). However, resolving collisional debris fragments using a direct approach as we have done with {\sc ChaNGa} would result in an intractably large number of particles.
+In the simulations presented in this work, all collisions result in a complete merging of a pair of bodies with no loss of mass or momentum. Although simple to model, this assumption of perfect accretion may result in overly efficient growth, particularly at the innermost region of the disk where encounter velocities are the largest. To handle this issue properly, semianalytic collision resolution models have been developed and implemented in N-body codes (see \citet{leinhardt12}). However, resolving collisional debris fragments using a direct approach as we have done with {\sc ChaNGa} would result in an intractably large number of particles.
 
 To test whether a more restrictive collision model should modify our results, we present a smaller scale test using a slightly more sophisticated collision model. In this case, a collision can result in one of two outcomes: if the impact velocity is smaller than the mutual escape velocity of the colliding particles, defined as
 
