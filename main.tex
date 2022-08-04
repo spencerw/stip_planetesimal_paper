@@ -52,17 +52,60 @@ between modes.
 
 \section{Introduction} \label{sec:intro}
 
-Planetesimal accretion is a key phase in the terrestrial planet growth process, bridging the gap from kilometer-sized bodies up to roughly moon-sized objects known as planetary embryos. In the earliest stages of the planet formation process, aerodynamic forces dominate the growth and evolution of the solids and statistical models \citep{johansen14, birnstiel16} are appropriate to describe how these numerous, small bodies coagulate. Due to the internal pressure support of the gas disk, the gas itself orbits at sub-Keplerian speed and exerts a headwind on any solids large enough to decouple from the gas \citep{weidenschilling77}. Above about a meter in size, this headwind is maximally effective at sapping away angular momentum and planet-building material can fall onto the central star on catastrophically short timescales \citep{weidenschilling77, nakagawa86}. Additionally, laboratory experiments suggest that collisions between mm- to cm- sized solids tend to result in bouncing or destruction, rather than continued growth \citep{blum93, beitz11, colwell03}. For these reasons, a number of mechanisms which involve radially concentrating solids in a planet-forming disk have been proposed to facilitate fast growth from mm to km sizes \citep{johansen07, lyra08, bai10}. Interestingly, formation models for the short-period multiplanet systems revealed by Kepler \citep{fabrycky14} also seem to require enhanced concentrations of planet-building material to reproduce the observed architectures \citep{raymond07, hansen12}.
+Planetesimal accretion is a key phase in the terrestrial planet growth
+process, bridging the gap from kilometer-sized bodies up to roughly
+moon-sized objects known as planetary embryos. In the earliest stages
+of the planet formation process, aerodynamic forces dominate the
+growth and evolution of the solids and statistical models
+\citep{johansen14, birnstiel16} are appropriate to describe how these
+numerous, small bodies coagulate. Due to the internal pressure support
+of the gas disk, the gas itself orbits at sub-Keplerian speed and
+exerts a headwind on any solids large enough to decouple from the gas
+\citep{weidenschilling77}. Above about a meter in size, this headwind
+is maximally effective at sapping away angular momentum, and planet-building material can fall onto the central star on catastrophically short timescales \citep{weidenschilling77, nakagawa86}. Additionally, laboratory experiments suggest that collisions between mm- to cm- sized solids tend to result in bouncing or destruction, rather than continued growth \citep{blum93, beitz11, colwell03}. For these reasons, a number of mechanisms which involve radially concentrating solids in a planet-forming disk have been proposed to facilitate fast growth from mm to km sizes \citep{johansen07, lyra08, bai10}. Interestingly, formation models for the short-period multiplanet systems revealed by Kepler \citep{fabrycky14} also seem to require enhanced concentrations of planet-building material to reproduce the observed architectures \citep{raymond07, hansen12}.
 
 Regardless of how the mm- to km-sized growth barriers are surmounted, gravity begins to dominate and aerodynamic gas drag plays a less significant role beyond this size. During this phase, collision cross sections are enhanced as gravitational focusing \citep{safronov69} acts to bend the trajectories of bodies undergoing close encounters. Because larger bodies are more effective at focusing the trajectories of nearby planetesimals, a period of runaway growth occurs \citep{wetherill89, kokubo96, barnes09}. Eventually, the largest bodies (known as oligarchs) dynamically heat the surrounding planetesimals, severely limiting further growth \citep{kokubo98}. The end result of this phase is a bimodal population of dynamically cold oligarchs, surrounded by dynamically hot, difficult to accrete residual planetesimals. Lines of evidence suggest that the asteroid belt, Kuiper belt and the Oort cloud are largely composed of the leftovers of this stage of planet formation.
 
-After a long period of quiescence, the collection of embryos and remaining planetesimals undergoes a large-scale instability \citep{chambers98}. Suddenly, the oligarchics are no longer on isolated, stable orbits and coalesce to form Earth-sized planets through a series of extremely energetic, giant impacts \citep{kokubo02, raymond05, raymond06}. Due to the relative ease of modeling the early dust coagulation phases and the final giant impact phase, these steps in the terrestrial planet formation process have received the most attention in the literature. The planetesimal accretion phase, which we will focus on in this paper, falls into an awkward in-between, where there are too many particles to directly track with traditional N-body codes, while the gravitational influence of the few, but massive oligarchs that form make statistical methods an inappropriate approach. Because of this limitation, planetesimal accretion is usually modeled in a narrow ring and the results are then scaled to suit whatever situation is being studied. N-body simulations of terrestrial planet formation typically begin with a series of neatly spaced oligarchs, whose mass varies smoothly with orbital period. As we will show in this paper, this extrapolation with orbital period is inappropriate, particularly at short ($<$ 10 day) periods.
+After a long period of quiescence, the collection of embryos and
+remaining planetesimals undergoes a large-scale instability
+\citep{chambers98}.
+%TRQ "Suddenly" seems a drastic term to use here.
+Suddenly, the oligarchics are no longer on isolated, stable orbits and
+coalesce to form Earth-sized planets through a series of extremely
+energetic, giant impacts \citep{kokubo02, raymond05, raymond06}.
+%TRQ new paragraph here?
+Due to the relative ease of modeling the early dust coagulation phases
+and the final giant impact phase, these steps in the terrestrial
+planet formation process have received the most attention in the
+literature. The planetesimal accretion phase, which we will focus on
+in this paper, falls into an awkward in-between, where there are too
+many particles to directly track with traditional N-body codes, while
+the gravitational influence of the few, but massive oligarchs that
+form make statistical methods an inappropriate approach. Because of
+this limitation, planetesimal accretion is usually modeled in a narrow
+ring, and the results are then scaled to suit whatever situation is being studied. N-body simulations of terrestrial planet formation typically begin with a series of neatly spaced oligarchs, whose mass varies smoothly with orbital period. As we will show in this paper, this extrapolation with orbital period is inappropriate, particularly at short ($<$ 10 day) periods.
 
-Given that systems of tightly-packed inner planets (STIPs) appear to be a common outcome of planet formation, understanding exactly how solids accumulate at short orbital periods is crucial. Although gas-disk driven migration of the planets themselves is often invoked to explain the observed architectures, we will focus on an in-situ model in this paper. That is, once the planetesimals themselves form, they largely stay in place and any subsequent large-scale movement of the solids are the result of mutual gravitational interactions. The focus of this work will be to understand how the outcome of the planetesimal accretion process scales with orbital period by using a high-powered N-body code to directly follow the growth and evolution of the planetesimals across a wide range of orbital periods (1 to 100 days). In doing so, we will assess whether the typical `isolation mass' initial conditions used in studies of terrestrial planet formation are actually appropriate for understanding STIPs. In a series of follow up papers, we plan to use these results to directly track the formation of full-sized planets from planetesimals and to understand how gravitational perturbations from a nearby gas giant might affect the outcome of this process.
+Given that systems of tightly-packed inner planets (STIPs) appear to
+be a common outcome of planet formation, understanding exactly how
+solids accumulate at short orbital periods is crucial. Although
+gas-disk driven migration of the planets themselves is often invoked
+to explain the observed architectures, we will focus on an in-situ
+model in this paper. That is, once the planetesimals themselves form,
+they largely stay in place and any subsequent large-scale movement of
+the solids are the result of mutual gravitational interactions. The
+focus of this work will be to understand how the outcome of the
+planetesimal accretion process scales with orbital period by using a
+high-powered N-body code to directly follow the growth and evolution
+of the planetesimals across a wide range of orbital periods (1 to 100
+days). In doing so, we will assess whether the typical ``isolation
+mass'' initial conditions used in studies of terrestrial planet formation are actually appropriate for understanding STIPs. In a series of follow up papers, we plan to use these results to directly track the formation of full-sized planets from planetesimals and to understand how gravitational perturbations from a nearby gas giant might affect the outcome of this process.
 
 % This stuff doesn't fit since I reworked the intro. Might be better to save some of this for paper 2 (planetesimals->planets)
 % Still deciding whether I should mention habitability and low mass stars
 % I think there are plenty of STIPs around sun like stars, but I should double check this
+% TRQ: for the discussion/conclusions: mention that the mass of the
+% star doesn't matter (caveat composition changes in the
+% planetesimals); it's the orbital period that is crucial.
 
 %Over the last few decades, terrestrial planet formation models have largely advanced by matching properties of the solar system. Compared to exoplanetary systems, the solar system provides a rich set of constraints (isotopic ratios, cratering records, small body populations) that are mostly unmeasurable for even the closest neighboring planet forming systems. However, the system architectures discovered by spaced-based missions in the last decade reveal that the solar system could very well be an outlier in terms of what a typical planet-forming disk produces. In addition, the sizes and compositions of the terrestrial planets likely rely on a series of finely-tuned events to play out that involve truncation of the primordial planetesimal disk \citep{raymond17}, inward, followed by outward migration of an outer giant planet \citep{walsh11}, or a large-scale instability triggered by a pair of convergently migrating giant planets \citep{tsiganis05, levison11, nesvorny11}. Given qualitatively similar initial conditions, solar system formation models can even occasionally reproduce the correct masses and orbital periods of the terrestrial planets without invoking any of the aforementioned scenarios, given the right random number seed \citep{fischer14}.
 
@@ -324,7 +367,7 @@ their absolute size, is what drives the system towards runaway
 growth. Although larger encounter velocities will lengthen the growth
 timescales, this mode of growth appears to be inevitable, so long as
 gravity is the dominant force in the system.
-% TRQ: also mention the negative slope
+% TRQ: also mention the negative slope?
 
 Additionally, these results suggest that the value of $\alpha$, which is a function of only the initial conditions, controls the qualitative outcome of accretion. Across most of a planet-forming disk, $\alpha$ is small, and frequent gravitational encounters between the growing bodies will allow oligarchic growth to operate. In the dispersion-dominated regime, close encounters drive the stirring between planetesimals and embryos \citep{weidenschilling89, ida90}. When $\alpha$ is large, the Hill sphere of a body is no longer mostly empty space, and close encounters that would otherwise result in stirring instead result in accretion. In this regime, we observe that runaway growth still commences, but nearly all of the planetesimals are swept up by the forming protoplanets, rather than being scattered onto higher eccentricity orbits, where they would otherwise remain as a remnant of the early stages of planet formation \citep{kokubo98, kokubo00}.
 
@@ -390,7 +433,8 @@ In all cases, the eccentricities and inclinations of the bodies are randomly dra
 	\rho_{g} = \frac{\Sigma_{g}}{\sqrt{2 \pi} h_{g} \exp\left[ -z^{2} / \left( 2 h_{g}^{2} \right) \right]},
 \end{equation}
 
-\noindent where $\Sigma_{g}$ is the gas surface density (taken to be 240x the solid surface density), $h_{g} = c_{s} / \Omega$ is the local gas scale height and $z$ is the height above the disk midplane. The sound speed profile is given by $c_{s} = \sqrt{k_{B} T(r) / \left( \mu m_{H} \right)}$, where $k_{B}$ is Boltzmann's constant, $T(r) = T_{0} r^{-Q}$, $\mu = 2.34$ and $m_{h}$ is the mass of a hydrogen atom. For a protoplanetary disk around a typical M star, $T_{0} = 148$ K and $Q$ = 0.58 \citep{andrews05}.
+\noindent where $\Sigma_{g}$ is the gas surface density (taken to be
+240 times the solid surface density), $h_{g} = c_{s} / \Omega$ is the local gas scale height and $z$ is the height above the disk midplane. The sound speed profile is given by $c_{s} = \sqrt{k_{B} T(r) / \left( \mu m_{H} \right)}$, where $k_{B}$ is Boltzmann's constant, $T(r) = T_{0} r^{-Q}$, $\mu = 2.34$ and $m_{h}$ is the mass of a hydrogen atom. For a protoplanetary disk around a typical M star, $T_{0} = 148$ K and $Q$ = 0.58 \citep{andrews05}.
 
 Finally, the headwind velocity of the gas, due to the fact that the gas disk is pressure supported, is given by
 
@@ -398,7 +442,9 @@ Finally, the headwind velocity of the gas, due to the fact that the gas disk is 
 	v_{g} = v_{k} \left[ 1 - \sqrt{ Q c_{s}^2 / v_{k}^2} \right],
 \end{equation}
 
-\noindent where $v_{k}$ is the local Keplerian velocity. As in section \ref{sec:narrow}, the argument of perihelion $\omega$, longitude of ascending node $\Omega$, and mean anomaly M for the planetesimals drawn from a uniform distribution $\in [0, 2 \pi)$.
+\noindent where $v_{k}$ is the local Keplerian velocity. As in section
+\ref{sec:narrow}, the argument of perihelion $\omega$, longitude of
+ascending node $\Omega$, and mean anomaly M for the planetesimals are drawn from a uniform distribution $\in [0, 2 \pi)$.
 
 \subsection{Gas Drag Force}
 
@@ -406,9 +452,24 @@ In addition to the mutual gravitational forces, a Stokes drag force from to the 
 
 \subsection{Timestepping Criterion}
 
-In the case of the fdHi simulation, there are nearly 1 million particles, whose orbital periods two orders of magnitude in time. Due to the very short interaction timescales near the inner edge of the disk, a fixed timestep size would required a prohibitively large number of steps to follow planetesimal growth throughout the entire disk. For this reason, we use a multi-tiered timestepping scheme, in which particles are placed onto the nearest power of two timestep based on their most recently calculated gravitational acceleration. (Mention that this scheme is used in other works with ChaNGa).
+In the case of the fdHi simulation, there are nearly 1 million
+particles, whose orbital periods vary by two orders of magnitude. Due
+to the very short interaction timescales near the inner edge of the
+disk, a fixed timestep size would required a prohibitively large
+number of steps to follow planetesimal growth throughout the entire
+disk. For this reason, we use a multi-tiered timestepping scheme, in
+which particles are placed onto the nearest power of two timestep
+based on their most recently calculated gravitational
+acceleration. (This scheme is used on almost all works using ChaNGa,
+and is common among large-scale simulation codes.)
 
-This more efficient scheme, however, introduces two additional issues related to particles interacting on different timesteps. First, momentum is not completely conserved when bodies switch timesteps. The error introduced becomes particularly severe for a particle on an eccentric Keplerian orbit, whose perihelion and aphelion distances straddle a timestep boundary. For a large collection of particles, this problem manifests itself as a V-shaped gap in the semimajor axis-eccentricity plane, which is centered on the boundary itself. To correct this problem, we introduce a second timestepping criterion, which is based on the gravitational acceleration on the particle by the central star at perihelion. Only in the case of a close encounter with another planetesimal (in which the acceleration is no longer dominated by the star) is the timestep allowed to reduce based on the original criterion.
+This more efficient scheme, however, introduces two additional issues
+related to particles interacting on different timesteps. First,
+momentum is not completely conserved when bodies switch timesteps. The
+error introduced becomes particularly severe for a particle on an
+eccentric Keplerian orbit, whose perihelion and aphelion distances
+straddle a timestep boundary. For a large collection of particles,
+this problem manifests itself as the development of a V-shaped gap in the semimajor axis-eccentricity plane, which is centered on the boundary itself. To correct this problem, we introduce a second timestepping criterion, which is based on the gravitational acceleration on the particle by the central star at perihelion. Only in the case of a close encounter with another planetesimal (in which the acceleration is no longer dominated by the star) is the timestep allowed to reduce based on the original criterion.
 
 A second issue is introduced when two particles on different timesteps undergo a collision. As in the previous case, momentum is not completely conserved because the most recent `kick' steps did not happen simultaneously for these bodies. Early in the simulation, we find that runaway growth tends to trigger first at the timestep boundaries. Unfortunately, this issue carries itself forward through the embryo formation phase and protoplanets tend to form at the boundaries. To correct this issue, we ignore collisions between bodies on different timesteps early in the simulation. We find that enabling multi-timestep collisions after the maximum mass grows by a factor of 10 prevents any artifacts from forming at the timestep boundaries, while also minimizing the number of `skipped' collisions\footnote{In the case of fdHi, only about 20 collisions out of an eventual 900,000 are ignored.}. 
 
@@ -416,6 +477,7 @@ A second issue is introduced when two particles on different timesteps undergo a
 
 \begin{table}
 \caption{Final Properties of Full Disk Simulations}
+%TRQ: the mass numbers in this table look wrong.
 \begin{tabular}{lllll} \hline \hline
 Name     & $M_{PP}^a$ & $T_{int}^b$ & $T_{int 1}^c$ &  \\ \hline
 fdHi                 & 100                                                         & 1.5                              & 4  &  \\
@@ -431,15 +493,29 @@ fdLo                & 1                                                         
 \end{flushleft}
 \end{table}
 
-In all four simulations, the timescales for embryo formation depend on the chosen surface density profile, along with the particular location in the disk. Protoplanets form first near the inner edge of the disk, where the dynamical timescales are short. Growth proceeds in an inside-out fashion, with the outermost regions of the disk completing the protoplanet assembly phase last. This fact is not typically accounted for in planet formation simulations, and appears to be an important component to forming realistic solar system analogs \citep{clement20}. As with the narrow annulus simulations, we stop the integration once the mass of protoplanets in the outermost region of the disk reach a steady value. In table \ref{tab:sim_properties}, we summarize the outcomes of the four `full disk' cases.
+In all four simulations, the timescales for embryo formation depend on
+the chosen surface density profile, along with the particular location
+in the disk. Protoplanets form first near the inner edge of the disk,
+where the dynamical timescales are short. Growth proceeds in an
+inside-out fashion, with the outermost regions of the disk completing
+the protoplanet assembly phase last. This fact is not typically
+accounted for in planet formation simulations, and appears to be an
+important component to forming realistic solar system analogs
+\citep{clement20}. As with the narrow annulus simulations, we stop the
+integration once the masses of protoplanets in the outermost region of
+the disk reach a steady value. In table \ref{tab:sim_properties}, we
+summarize the outcomes of the four ``full disk'' cases.
 
-We show the final state of the `fiHi' simulation in figure \ref{fig:fulldisk_e_m}. In the top panel, the initial (contours) and final (points) state of the simulation is shown in orbital period and eccentricity. The size of the points indicates the relative mass of the bodies. In the bottom panel, the mass of the largest bodies is shown as a function of orbital period. The solid curves indicate the isolation mass
-
+We show the final state of the ``fiHi'' simulation in figure \ref{fig:fulldisk_e_m}. In the top panel, the initial (contours) and final (points) state of the simulation is shown in orbital period and eccentricity. The size of the points indicates the relative mass of the bodies. In the bottom panel, the mass of the largest bodies is shown as a function of orbital period. The solid curves indicate the isolation mass,
 \begin{equation}\label{eq:iso}
 	M_{iso} = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2},
 \end{equation}
-
-\noindent where $\tilde{b}$ is the size of the feeding zone in units of Hill radii. For a body on a circular orbit $\tilde{b} = 2 \sqrt{3}$, while a protoplanet formed by oligarchic growth typically has $\tilde{b} = 10$ \citep{kokubo98}. The isolation mass is plotted in blue and orange for these two values of $\tilde{b}$, respectively.
+where $\tilde{b}$ is the size of the feeding zone in units
+of Hill radii. For a body on a circular orbit $\tilde{b} = 2
+\sqrt{3}$, while a protoplanet formed by oligarchic growth typically
+has $\tilde{b} = 10$ \citep{kokubo98}.
+%TRQ there is no orange line in the figure.
+The isolation mass is plotted in blue and orange for these two values of $\tilde{b}$, respectively.
 
 A qualitative shift in the protoplanet and planetesimal distribution is visible at $\sim$ 60 days. Interior to this location, there are very few remaining planetesimals and the embryos formed are noticeably more massive. Protoplanets in this region appear to closely follow the isolation mass curve for $\tilde{b} = 10$. Exterior to the boundary, the residual planetesimal population is much more numerous, and protoplanets more closely follow the $\tilde{b} = 2 \sqrt{3}$ curve. This tentatively suggests that the transition between the low $\alpha$ and high $\alpha$ accretion modes seen in section \ref{sec:narrow} happens near this location.
 
@@ -450,7 +526,14 @@ In figure (removed), we show $\alpha$ (left axis) and the fraction of remaining 
 
 % A mystery: what's so special about alpha = 0.1?
 
-To ensure that the boundary seen near 60 days in orbital period is not simply a transient product of the inside out growth throughout the disk, we examine the time evolution of $\sigma/\Sigma$ at multiple locations. In figure \ref{fig:pl_frac_time}, the value of $\sigma/\Sigma$ is plotted as a function of time in 10 orbital period bins. Bins interior to 60 days are indicated with a dashed line, while those exterior are indicated with a solid line. The planetesimal surface density fraction has decelerated and is approaching an asymptotic value in all cases. In the inner disk, this is driven by the near-total depletion of the planetesimal reservoir. In the outer disk, dynamical friction between the embryos and planetesimals throttles subsequent accretion.
+To ensure that the boundary seen near 60 days in orbital period is not
+simply a transient product of the inside out growth throughout the
+disk, we examine the time evolution of $\sigma/\Sigma$ at multiple
+locations. In figure \ref{fig:pl_frac_time}, the value of
+$\sigma/\Sigma$ is plotted as a function of time in 10 orbital period
+bins.
+%TRQ: width of the bins?
+Bins interior to 60 days are indicated with a dashed line, while those exterior are indicated with a solid line. The planetesimal surface density fraction has decelerated and is approaching an asymptotic value in all cases. In the inner disk, this is driven by the near-total depletion of the planetesimal reservoir. In the outer disk, dynamical friction between the embryos and planetesimals throttles subsequent accretion.
 
 % Since we are using f=6, do we want to stick to plotting things in terms of timestep number, and then provide rescaled time estimates at the end?
 
@@ -487,7 +570,11 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/fulldisk_e_m.png}
-    \caption{The final state of the fdHi simulation. In the top panel, the contours denote the initial period-eccentricity distribution of the planetesimals. Point sizes indicate the relative masses of bodies. In the bottom panel, the solid line indicates the isolation mass for $b = 2 \sqrt{3}$. The vertical dashed line marks the approximate location of the accretion mode boundary. For $P_{orb} < 60$ days, the high $\alpha$ accretion mode produces embryos that exceed the isolation mass.\label{fig:fulldisk_e_m}}
+    \caption{The final state of the fdHi simulation. In the top panel,
+      the contours denote the initial period-eccentricity distribution
+      of the planetesimals. Point sizes indicate the relative masses
+      of bodies. In the bottom panel, the solid line indicates the
+      isolation mass for $\tilde{b} = 2 \sqrt{3}$. The vertical dashed line marks the approximate location of the accretion mode boundary. For $P_{orb} < 60$ days, the high $\alpha$ accretion mode produces embryos that exceed the isolation mass.\label{fig:fulldisk_e_m}}
 \end{center}
 \end{figure}
 
@@ -508,7 +595,9 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/surfden_iso.png}
-    \caption{Masses of the remaining bodies from the simulations listed in table \ref{tab:sim_properties}, in units of the isolation mass for $b = 2 \sqrt{3}$. Despite the vastly different initial solid surface density profiles, the orbital period inside of which the embryo masses exceed the isolation mass is very consistent.\label{fig:surfden_iso}}
+    \caption{Masses of the remaining bodies from the simulations
+      listed in table \ref{tab:sim_properties}, in units of the
+      isolation mass for $\tilde{b} = 2 \sqrt{3}$. Despite the vastly different initial solid surface density profiles, the orbital period inside of which the embryo masses exceed the isolation mass is very consistent.\label{fig:surfden_iso}}
 \end{center}
 \end{figure}
 
@@ -520,7 +609,12 @@ To ensure that the boundary seen near 60 days in orbital period is not simply a 
 
 % does the accretion boundary always fall somewhere within the PPD, or can it lie inside the magnetic truncation radius sometimes? how does this depend on spectral type? (this is complicated, depends on radius + magnetic field strength of star, plus accretion rate of PPD)
 
-Next, we compare the effect of varying the initial solid surface density profile on the resulting planetesimal and embryo distribution. The final orbital period-eccentricity state of the particles is shown in figure \ref{fig:surfden_profiles}, with point sizes indicating the relative masses of the bodies. There is a clear trend between solid surface density at a given orbital period and the eccentricities of the remaining planetesimals. This trend is largely set by the initial conditions, as the gravitational stirring is more vigorous when bodies are packed together closely and higher eccentricities are required to produce an equilibrating aerodynamic drag force (see equations \ref{eq:vs_timescale} and \ref{eq:ts_stokes}). Despite having significantly different masses, the planetary embryos formed in each case have remarkably similar eccentricities. This is likely due to the fact that inelastic collisions play a more significant role where the solid surface density is highest, which offsets the fact that the initial bodies started off in a dynamically hotter state.
+Next, we compare the effect of varying the initial solid surface
+density profile on the resulting planetesimal and embryo
+distribution. The final orbital period-eccentricity state of the
+particles is shown in figure \ref{fig:surfden_profiles}, with colors
+and point styles indicating the different initial surface density profiles,
+and with point sizes indicating the relative masses of the bodies. There is a clear trend between solid surface density at a given orbital period and the eccentricities of the remaining planetesimals. This trend is largely set by the initial conditions, as the gravitational stirring is more vigorous when bodies are packed together closely and higher eccentricities are required to produce an equilibrating aerodynamic drag force (see equations \ref{eq:vs_timescale} and \ref{eq:ts_stokes}). Despite having significantly different masses, the planetary embryos formed in each case have remarkably similar eccentricities. This is likely due to the fact that inelastic collisions play a more significant role where the solid surface density is highest, which offsets the fact that the initial bodies started off in a dynamically hotter state.
 
 % Period vs mass for each model?
 % Positive trend for trappist-1 planets, excluding a,b
@@ -532,7 +626,10 @@ In figure \ref{fig:surfden_iso}, we compare the masses of the resulting protopla
 
 Further insight into the difference between the short vs long period accretion modes can be gained by examining the merger history of the planetary embryos. Because all collisions are directly resolved by the N-body code, a direct lineage can be traced between each embryo and a set of initial planetesimals.
 
-We begin by investigating the `smoothness' of the accretion events that give rise to each embryo. Drawing from a common technique used for cosmological simulations (citation?), we divide growth events for a given body into `major' and `minor' mergers. Minor events are defined as any collision involving an initial planetesimal, while major events consist of any two larger bodies. In figure \ref{fig:minor_frac}, we show the total mass fraction gained by minor events as a function of mass for the 100 largest bodies at the end of fdHi. Blue dots represent bodies interior to the 60 day orbital period boundary, while red crosses indicate bodies exterior. For the outer bodies in the oligarchic growth region, we see a very weak trend between minor accretion mass fraction and total mass. Regardless of how much an embryo has grown, the initial mass planetesimals contribute about the same relative amount to its total mass. At shorter orbital periods, however, there is a somewhat stronger trend. The largest bodies in this region gain about an order of magnitude more of their mass fraction from major mergers, compared to the smallest bodies.
+We begin by investigating the ``smoothness'' of the accretion events
+that give rise to each embryo. Drawing from a common technique used
+for cosmological simulations (citation?), we divide growth events for
+a given body into ``major'' and ``minor'' mergers. Minor events are defined as any collision involving an initial planetesimal, while major events consist of any two larger bodies. In figure \ref{fig:minor_frac}, we show the total mass fraction gained by minor events as a function of mass for the 100 largest bodies at the end of fdHi. Blue dots represent bodies interior to the 60 day orbital period boundary, while red crosses indicate bodies exterior. For the outer bodies in the oligarchic growth region, we see a very weak trend between minor accretion mass fraction and total mass. Regardless of how much an embryo has grown, the initial mass planetesimals contribute about the same relative amount to its total mass. At shorter orbital periods, however, there is a somewhat stronger trend. The largest bodies in this region gain about an order of magnitude more of their mass fraction from major mergers, compared to the smallest bodies.
 
 \begin{figure}
 \begin{center}
@@ -548,9 +645,23 @@ We begin by investigating the `smoothness' of the accretion events that give ris
 \end{center}
 \end{figure*}
 
-The difference in slope of the short vs longer period bodies in figure \ref{fig:minor_frac} indicates a difference in how the planetesimal-embryo populations interact in each region. In the long period oligarchic growth region, embryos continue to accrete planetesimals as they grow and the minor mass fraction stays mostly flat. At short period, collisions mostly occur between equal mass bodies as the embryos grow and the contribution from planetesimals becomes less significant over time. This suggests that embryo-embryo collisions are common at short period. As discussed in section \ref{sec:sizeandhill}, the importance of gravitational scattering is greatly reduced here. Without frequent gravitational interactions between the embryos and planetesimals, orbital repulsion \citep{kokubo98} and isolation of the embryos does not occur. As we showed in figure \ref{fig:surfden_iso}, the embryos formed in this region exceed the isolation mass.
+The difference in slope of the short vs.\ long period bodies in figure \ref{fig:minor_frac} indicates a difference in how the planetesimal-embryo populations interact in each region. In the long period oligarchic growth region, embryos continue to accrete planetesimals as they grow and the minor mass fraction stays mostly flat. At short period, collisions mostly occur between equal mass bodies as the embryos grow and the contribution from planetesimals becomes less significant over time. This suggests that embryo-embryo collisions are common at short period. As discussed in section \ref{sec:sizeandhill}, the importance of gravitational scattering is greatly reduced here. Without frequent gravitational interactions between the embryos and planetesimals, orbital repulsion \citep{kokubo98} and isolation of the embryos does not occur. As we showed in figure \ref{fig:surfden_iso}, the embryos formed in this region exceed the isolation mass.
 
-Further evidence for the lack of gravitational scattering events can be seen in figure \ref{fig:acc_zones}. Here, we have chosen the 20 most massive bodies from the fdHi simulation and arranged them in order of present orbital period. The vertical black line indicates the orbital period of each embryo. The associated histogram for each body denotes where the planetesimals used to construct that embryo originated in the disk. The peaks of the histograms have all been normalized to the same value, so that the distributions only show the relative widths and locations of the feeding zones. Beyond the 60 day boundary, the ordering of the feeding zones and the embryo locations become much less consistent. This suggests that scattering events between embryos are much more common beyond this accretion mode boundary. In the inner region of the disk, close encounters between embryos often result in a merger, which allows them to grow beyond the isolation mass while only a minor alteration to their orbital period. With few close encounters resulting in a scattering event, embryos are unable to move away from their birth location.
+Further evidence for the lack of gravitational scattering events in
+the inner region can be seen in figure \ref{fig:acc_zones}. Here, we
+have chosen the 20 most massive bodies from the fdHi simulation and
+arranged them in order of present orbital period. The vertical black
+line indicates the orbital period of each embryo. The associated
+histogram for each body denotes where the planetesimals used to
+construct that embryo originated in the disk. The peaks of the
+histograms have all been normalized to the same value, so that the
+distributions only show the relative widths and locations of the
+feeding zones. Beyond the 60 day boundary, the ordering of the feeding
+zones and the embryo locations become much less consistent. This
+suggests that scattering events between embryos are much more common
+beyond this accretion mode boundary. In the inner region of the disk,
+close encounters between embryos often result in a merger, which
+allows them to grow beyond the isolation mass with only a minor alteration to their orbital period. With few close encounters resulting in a scattering event, embryos are unable to move away from their birth location.
 
 % from how far do embryos accumulate material
 % do embryos migrate at all? might need to run a simulation without gas to demonstrate whether this is due to PDM
@@ -560,14 +671,41 @@ Further evidence for the lack of gravitational scattering events can be seen in 
 
 \subsection{Collision Cross Section}
 
-In all cases shown so far, the boundary between the standard oligarchic growth and the highly-efficient short period accretion region lies around 60 days in orbital period. The mode of accretion is set entirely by the local value of $\alpha$, which scales with both distance from the star and the bulk density of the planetesimals (see equation \ref{eq:alpha}). The artificial inflation of the collision cross section of the particles in our simulations, which is meant to reduce the computational expense, has the side effect of reducing the bulk densities. Because $\alpha \sim \rho_{pl}^{-1/3}$, increasing the particle sizes by a factor of f=6 reduces the orbital period at which $\alpha$ has a given value by a factor of approximately 15. Therefore, one would expect the accretion boundary to lie near 5 days in orbital period for 3 g $cm^{-3}$ bodies.
+In all cases shown so far, the boundary between the standard
+oligarchic growth and the highly-efficient short period accretion
+region lies around 60 days in orbital period. The mode of accretion is
+set entirely by the local value of $\alpha$, which scales with both
+distance from the star and the bulk density of the planetesimals (see
+equation \ref{eq:alpha}). The artificial inflation of the collision
+cross section of the particles in our simulations, which is meant to
+reduce the computational expense, has the side effect of reducing the
+bulk densities. Because $\alpha \sim \rho_{pl}^{-1/3}$, increasing the
+particle sizes by a factor of $f=6$ reduces the orbital period at which $\alpha$ has a given value by a factor of approximately 15. Therefore, one would expect the accretion boundary to lie near 5 days in orbital period for 3 g $cm^{-3}$ bodies.
 
-Although a simulation with f=1 is not computationally tractable, we can test whether the accretion boundary moves in the way we expect by modestly changing the value of $f$. In figure \ref{fig:f6f4}, we compare the fdHi simulation to a nearly identical run using f=4. In the top panel, the embryo masses in units of the isolation mass are shown as a function of orbital period. In the bottom panel, the value of $\alpha$ as a function of orbital period is shown for 3 g $cm^{-3}$ bodies with an artificial radius enhancement of f=1, 4 and 6. The horizontal dashed line indicates the value of alpha below which the accretion mode switches to oligarchic growth. Comparing the top and bottom panels, the intersection of the embryo masses and local isolation mass matches well with the orbital period at which $\alpha \sim 0.1$. Also shown by the curved dotted lines are the $\alpha$ curves for realistic-sized bodies with $\rho_{pl}$ = 1, 5 and 10 g $cm^{-3}$. In all cases, the accretion boundary still lies within the part of the disk in which solids would be expected to accumulate (citation?).
+Although a simulation with $f=1$ is not computationally tractable, we
+can test whether the accretion boundary moves in the way we expect by
+modestly changing the value of $f$. In figure \ref{fig:f6f4}, we
+compare the fdHi simulation to a nearly identical run using $f=4$. In
+the top panel, the embryo masses in units of the isolation mass are
+shown as a function of orbital period. In the bottom panel, the value
+of $\alpha$ as a function of orbital period is shown for 3 g $cm^{-3}$
+bodies with an artificial radius enhancement of $f=1$, 4 and 6. The
+horizontal dashed line indicates the value of alpha below which the
+accretion mode switches to oligarchic growth. Comparing the top and
+bottom panels, the intersection of the embryo masses and local
+isolation mass matches well with the orbital period at which $\alpha
+\sim 0.1$.  Also shown by the shaded region are $\alpha$ values for
+realistic sized bodies with $\rho_{pl}$ between 1 and 10 g cm$^{-3}$.
+% Also shown by the curved dotted lines are the $\alpha$ curves for
+% realistic-sized bodies with $\rho_{pl}$ = 1, 5 and 10 g $cm^{-3}$.
+In all cases, the accretion boundary still lies within the part of the disk in which solids would be expected to accumulate (citation?).
 
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/f6f4.png}
-    \caption{In the top panel, we show the final masses of the bodies from the fdHi and fdHif4 simulations in units of the isolation mass for $b = 2\sqrt{3}$. The bottom panel shows the variation of $\alpha$ with orbital period for the bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of the embryo mass distribution and isolation mass. The shaded region in the bottom panel show the values of alpha for realistic-sized (f=1) planetesimals with bulk densities between 10 and 1 g cm$^{-3}$.\label{fig:f6f4}}
+    \caption{In the top panel, we show the final masses of the bodies
+      from the fdHi and fdHif4 simulations in units of the isolation
+      mass for $\tilde{b} = 2\sqrt{3}$. The bottom panel shows the variation of $\alpha$ with orbital period for the bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of the embryo mass distribution and isolation mass. The shaded region in the bottom panel show the values of alpha for realistic-sized ($f=1$) planetesimals with bulk densities between 10 and 1 g cm$^{-3}$.\label{fig:f6f4}}
 \end{center}
 \end{figure}
 
@@ -593,13 +731,13 @@ Although a simulation with f=1 is not computationally tractable, we can test whe
 In the simulations presented in this work, all collisions result in a complete merging of a pair of bodies with no loss of mass or momentum. Although simple to model, this assumption of perfect accretion may result in overly efficient growth, particularly at the innermost region of the disk where encounter velocities are the largest. To handle this issue properly, semianalytic collision resolution models have been developed and implemented in N-body codes (see \citet{leinhardt12}). However, resolving collisional debris fragments using a direct approach as we have done with {\sc ChaNGa} would result in an intractably large number of particles.
 
 To test whether a more restrictive collision model should modify our results, we present a smaller scale test using a slightly more sophisticated collision model. In this case, a collision can result in one of two outcomes: if the impact velocity is smaller than the mutual escape velocity of the colliding particles, defined as
-
 %TRQ: I corrected this off the top of my head: CHECK!
 \begin{equation}\label{eq:v_mut}
 	v_{mut, esc} = \sqrt{\frac{G (m_{1} + m_{2})}{r_{1} + r_{2}}},
 \end{equation}
-
-\noindent where $m_{1}, m_{2}$ and $r_{1}, r_{2}$ are the masses and radii of colliding particles 1 and 2, then the bodies perfectly merge. For impact velocities larger than $v_{mut, esc}$, no mass is transferred and the bodies undergo a completely elastic bounce. Because there is no possibility of partial accretion, this model likely restricts growth more than the model used by \citet{leinhardt12}. However, we will show below that the bounce-merge model does not meaningfully affect the outcome of the planetesimal accretion phase, and so a partial accretion model should do the same.
+where $m_{1}, m_{2}$ and $r_{1}, r_{2}$ are the masses and radii of
+colliding particles 1 and 2, then the bodies perfectly merge. For
+impact velocities larger than $v_{mut, esc}$, no mass is transferred, and the bodies undergo a completely elastic bounce. Because there is no possibility of partial accretion, this model likely restricts growth more than the model used by \citet{leinhardt12}. However, we will show below that the bounce-merge model does not meaningfully affect the outcome of the planetesimal accretion phase, and so a partial accretion model should do the same.
 
 For the configuration of initial conditions we have chosen, the typical encounter velocity (defined by $v_{enc} = \left< e^{2} \right>^{1/2} v_{k}$, where $v_{k}$ is the local Keplerian velocity) is about 25 percent larger than $v_{mut, esc}$. Because the encounter velocities follow a Gaussian distribution, there should be some small subset of collisions that still meet the merger criteria. In addition, $v_{mut, esc}$ becomes larger as the bodies grow and the merger criteria should become easier to meet as the system evolves.
 
@@ -607,6 +745,7 @@ In figure \ref{fig:frag_ecc}, we show the results of two versions of the fdLo si
 
 To investigate the differences between the two collision models early in the simulations, we show the time evolution of the ratio between the maximum and mean mass in figure \ref{fig:frag_evo}. In both cases, this ratio grows at early times, which indicates that runaway growth still operates, regardless of the collision model used. In the bounce-merge case, the mass ratio peaks at a higher value, while also undergoing a longer runaway growth phase. This suggests that the mass distribution becomes much less unimodal during this growth process, but as figure \ref{fig:frag_ecc} shows, this does not affect the resulting embryos or allow for a residual planetesimal population.
 
+%TRQ: expand on this?  Compare figure 10 histograms for the two runs?
 Radial mixing appears to be enhanced by a partial collision model, along with smaller collision cross section inflation \citep{childs22}.
 
 % show alpha, beta study again with bounce vs merge model
@@ -618,26 +757,54 @@ Radial mixing appears to be enhanced by a partial collision model, along with sm
 \subsection{Type I Migration}
 
 What is the migration timescale for the embryos to move to the inner edge of the disk? Maybe this section isn't terribly important and should be excluded?
+TRQ: I agree
 
 \section{Summary and Discussion} \label{sec:discuss}
 
-In this work, we have demonstrated that planetary embryo formation operates in two distinct modes in a planet-forming disk. In the first mode, gravitational feedback from the growing embryos heats the remaining planetesimals and results in a dynamically cold population of embryos with a significant amount of residual planetesimals. This corresponds to the `oligarchic growth' case revealed by \citep{kokubo98}. In the second mode, the gravitational feedback does not operate, embryos quickly sweep up all planetesimals, and grow about twice as large as is predicted by oligarchic growth. The distinction between these modes is determined by ratio between the physical size of the bodies and their Hill radius. 
+In this work, we have demonstrated that planetary embryo formation
+operates in two distinct modes in a planet-forming disk. In the first
+mode, gravitational feedback from the growing embryos heats the
+remaining planetesimals and results in a dynamically cold population
+of embryos with a significant amount of residual planetesimals. This
+corresponds to the ``oligarchic growth'' case revealed by \citep{kokubo98}. In the second mode, the gravitational feedback does not operate, embryos quickly sweep up all planetesimals, and grow about twice as large as is predicted by oligarchic growth. The distinction between these modes is determined by ratio between the physical size of the bodies and their Hill radius. 
 
-We have demonstrated the outcome of both accretion modes through a low resolution parameter study. The initial planetesimal distribution can be described in terms of two dimensionless constants, $\alpha$ and $\beta$, which describe the ratio between the physical radius of the planetesimals and the Hill ($r_{h}$) and gravitational ($r_{g}$) radii, respectively. For a fixed planetesimal mass and radius, $\alpha$ scales with the orbital period and $\beta$ scales with the level of dynamical excitation of the disk. We showed that $\alpha \ll 1$ leads to oligarchic growth, while a non-negligible $\alpha$ produces this new non-oligarchic growth mode. We find that the resulting mass distribution, along with the final eccentricities of the embryos and residual planetesimals, ends up the same, regardless of the initial value of $\beta$.
+We have demonstrated the outcome of both accretion modes through a
+sparsely sampled parameter study. The initial planetesimal distribution can be described in terms of two dimensionless constants, $\alpha$ and $\beta$, which describe the ratio between the physical radius of the planetesimals and the Hill ($r_{h}$) and gravitational ($r_{g}$) radii, respectively. For a fixed planetesimal mass and radius, $\alpha$ scales with the orbital period and $\beta$ scales with the level of dynamical excitation of the disk. We showed that $\alpha \ll 1$ leads to oligarchic growth, while a non-negligible $\alpha$ produces this new non-oligarchic growth mode. We find that the resulting mass distribution, along with the final eccentricities of the embryos and residual planetesimals, ends up the same, regardless of the initial value of $\beta$.
 
-So long as the density of the bodies does not significantly change as their mass distribution evolves, this ratio, and therefore the boundary between these accretion modes is set entirely by the distance from the star. Because both the physical and Hill radius of the bodies grows as $M^{1/3}$, the boundary between growth remains at a fixed location in the disk during the planetesimal accretion process.
+So long as the density of the bodies does not significantly change as
+their mass distribution evolves, this ratio, and therefore the
+boundary between these accretion modes is set entirely by the distance
+from the star. Because both the physical and Hill radii of the bodies
+grows as $M^{1/3}$, the boundary between growth remains at a fixed
+location in the disk during the planetesimal accretion process.
 
-We have verified this fact by testing the outcome of the planetesimal accretion process for a variety of solid surface density profiles. Although altering the surface density does affect the resulting masses of the embryos, the location of the boundary separating the growth modes is remarkably similar between all of our simulations. We have verified this by comparing the resulting embryo masses to the isolation mass, in addition to highlighting qualitative differences in the accretion history of embryos on both sides of the boundary.
+We have verified this fact by testing the outcome of the planetesimal
+accretion process for a variety of solid surface density
+profiles. Although altering the surface density does affect the
+resulting masses of the embryos, the location of the boundary
+separating the growth modes is remarkably similar among all of our simulations. We have verified this by comparing the resulting embryo masses to the isolation mass, in addition to highlighting qualitative differences in the accretion history of embryos on both sides of the boundary.
 
 Lastly, we quantified the way in which our use of perfect accretion and an inflated collision cross section, both meant to make the simulations more computationally tractable, affect the non-oligarchic growth mode and the location of the accretion boundary. We showed that although the use of perfect accretion speeds up the growth of the embryos, it does not affect the masses or orbital properties of the resulting bodies. Because the inflated collision cross sections artificially reduce the density of the planetesimals, this shortcut does shift the accretion boundary outward. However, it moves in a predictable fashion and we verified this by running an extra simulation with a modestly smaller collision cross section. In a real planet-forming disk, one would expect this boundary to lie somewhere between 2 and 10 days, depending on the composition of the planetesimals.
 
-To date, there have been no other studies of planetesimal accretion with such a large value of $\alpha$. However, a value of $\alpha = 1$ corresponds to the Roche limit of a three-body system, and so one might wonder this high-$\alpha$ accretion mode might be relevant for a circumplanetary system. There is a small collection of previous works which use N-body methods to examine in-situ satellitesimal accretion \citep{ida97, richardson00, ida20}. \citet{ida97} was able to form 1-2 large moon just exterior to the Roche limit, depending on the extent of the disk with very little satellitesimal material left over. The widest disk they modeled extended out to $\alpha = 0.5$. Qualitatively, this result is very similar to the short period planetesimal accretion mode observed in our simulations. \citet{ida20} modeled a much wider satellitesimal disk, which extends out to about $\alpha \approx 0.05$. Inside to the $\alpha = 0.1$ accretion boundary (which lies near $15 R_{U}$ in figure 1 of \citet{ida20}), bodies grow beyond the isolation mass, while the opposite is true on the other side of the boundary. In addition, a residual population of satellitesimals is still present beyond the boundary, which suggests that oligarchic growth is indeed operating on the far side.
+To date, there have been no other studies of planetesimal accretion
+with such a large value of $\alpha$. However, a value of $\alpha = 1$
+corresponds to the Roche limit of a three-body system, and so one
+might wonder this high-$\alpha$ accretion mode might be relevant for a
+circumplanetary system. There is a small collection of previous works
+which use N-body methods to examine in-situ satellitesimal accretion
+\citep{ida97, richardson00, ida20}. \citet{ida97} was able to form 1-2
+large moons just exterior to the Roche limit, depending on the extent of the disk with very little satellitesimal material left over. The widest disk they modeled extended out to $\alpha = 0.5$. Qualitatively, this result is very similar to the short period planetesimal accretion mode observed in our simulations. \citet{ida20} modeled a much wider satellitesimal disk, which extends out to about $\alpha \approx 0.05$. Inside to the $\alpha = 0.1$ accretion boundary (which lies near $15 R_{U}$ in figure 1 of \citet{ida20}), bodies grow beyond the isolation mass, while the opposite is true on the other side of the boundary. In addition, a residual population of satellitesimals is still present beyond the boundary, which suggests that oligarchic growth is indeed operating on the far side.
 
 Presently, the implications that this non-oligarchic accretion mode has for the formation of short-period terrestrial planets, and whether the accretion boundary would leave any lasting imprint on the final orbital architecture, is unclear. One point that our results do highlight is that the initial conditions used for most late stage planet formation simulations are overly simplistic. \citet{clement20} recently simulated planetesimal accretion in a disk extending from the orbit of Mercury to the asteroid belt and found that the disk never reaches a state in which equally-spaced, isolation mass embryos are present everywhere simultaneously. Instead, different annuli reach a `giant impact' phase at different times, preventing the onset of a global instability throughout the entire disk, as is common in classic terrestrial planet formation models \citep{chambers01, raymond09}.
 
 % Any examples of studies of STIPs that use these simplistic ICs? Could the accretion boundary help reconcile differences with kepler systems?
 
-To connect these accretion modes to the final orbital architecture, and to ultimate determine what implications an in situ formation model has for the growth of STIPs, we will continue to evolve the final simulation snaphots presented here with a hybrid symplectic integrator. The final distribution of planets formed, along with composition predictions generated by applying cosmochemical models to our initial planetesimal distributions and propagating compositions through the merger trees, will be examined in a follow-up paper.
+To connect these accretion modes to the final orbital architecture,
+and to ultimately determine what implications an in situ formation model has for the growth of STIPs, we will continue to evolve the final simulation snaphots presented here with a hybrid symplectic integrator. The final distribution of planets formed, along with composition predictions generated by applying cosmochemical models to our initial planetesimal distributions and propagating compositions through the merger trees, will be examined in a follow-up paper.
+
+\section{Acknowledgements}
+
+NSF, XSEDE.
 
 \bibliography{references}
 
