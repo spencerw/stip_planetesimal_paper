@@ -69,11 +69,11 @@ Regardless of how the mm- to km-sized growth barriers are surmounted, gravity be
 After a long period of quiescence, the collection of embryos and
 remaining planetesimals undergoes a large-scale instability
 \citep{chambers98}.
-%TRQ "Suddenly" seems a drastic term to use here.
-Suddenly, the oligarchics are no longer on isolated, stable orbits and
-coalesce to form Earth-sized planets through a series of extremely
-energetic, giant impacts \citep{kokubo02, raymond05, raymond06}.
-%TRQ new paragraph here?
+As a consequence of the instability, the oligarchics are no longer
+on isolated, stable orbits and coalesce to form Earth-sized planets'
+through a series of extremely energetic, giant 
+impacts \citep{kokubo02, raymond05, raymond06}.
+
 Due to the relative ease of modeling the early dust coagulation phases
 and the final giant impact phase, these steps in the terrestrial
 planet formation process have received the most attention in the
@@ -153,22 +153,23 @@ We begin our analysis by considering a disk of equal planetesimals
 with radius $r_{pl}$, mass $m_{pl}$ and surface density
 $\Sigma_{pl}$. The collision rate in the vicinity of an orbit defined
 by Keplerian frequency $\Omega$ can be written as $n \Gamma v$, where
-$n = \Sigma_{pl} \Omega / 2 m_{pl} v$, $\Gamma$ is the effective
+$n = \Sigma_{pl} \Omega / 2 m_{pl} v$ (where we have assumed that the scale height of the planetesimal disk goes as $\Omega/(2v)$. $\Gamma$ describes the effective
 collision cross section and $v$ is the typical encounter velocity
 between planetesimals.
-% TRQ: mention that $v$ is related to the velocity dispersion of the
-% planetesimals.  Also: mention that the scale height of the disk is
-% assumed to be \Omega/(2v)
+For a swarm of planetesimals on randomly oriented orbits, $v$ is typically
+taken to the rms velocity, which can be related to the eccentricity and inclination distribution $(e, i)$ in the following way \citep{lissauer93}:
+\begin{equation}\label{eq:ecc_vel}
+	\left< v^{2} \right>^{1/2} = \left( \frac{5}{4} \left< e^{2} \right>^{1/2} + \left< i^{2} \right>^{1/2}  \right) v_{k}.
+\end{equation}
 Assuming that every collision results in a perfect merger, the growth rate of a planetesimal is given by
 \begin{equation}\label{eq:growth}
 	\frac{dM}{dt} = \frac{\Sigma \Omega}{2 m_{pl}} \Gamma.
 \end{equation}
 
-In the case where the collision cross section, $\Gamma$, depends only
+In the case where the collision cross section, depends only
 on the physical size of the planetesimals, the growth scales linearly
 with mass and the mass distribution is expected to evolve in an
-``orderly'' fashion. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \Gamma_{geo} \left( 1 + v_{esc}^2 / v^2 \right)$, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
-%TRQ: reference Safranov?
+``orderly'' fashion. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \Gamma_{geo} \left( 1 + v_{esc}^2 / v^2 \right)$ \citep{safronov69}, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
 
 In the limit that $v_{esc} \gg v$, it can be shown that $M \propto
 M^{4/3}$, which implies a runaway scenario, in which growth
@@ -190,7 +191,6 @@ energy equipartition where $v \sim m^{1/2}$. For a system of equal mass bodies i
 \begin{equation}\label{eq:relax}
 	t_{relax} = \frac{v^3}{4 \pi n G^2 {m_{pl}}^2 \ln \Lambda},
 \end{equation}
-%TRQ: changed this to match Ida & Makino 1993.
 where $\ln \Lambda$ is the Coulomb logarithm,
 typically taken to be $\approx 10$ for a planetesimal disk. Despite
 the fact that the behavior of gravitational stirring is well-described
@@ -202,12 +202,13 @@ showed that runaway growth is actually self-limiting. As the runaway
 bodies grow larger, they become more effective at heating the
 remaining planetesimals, which diminishes the effectiveness of
 gravitational focusing and throttles the growth rate. Around the time
-that the massive runaway bodies make up about 50 percent of the solid
-surface density
-%TRQ: citation needed.
-(citation), a period of less vigorous ``oligarchic'' growth commences, in which the few largest bodies continue to accrete planetesimals at similar rates.
+that the mass of the runaway bodies exceeds the mass of the planetesimals
+by a factor of $\sim 50-100$ (depending on the orbital period)
+\citep{ida93} a phase of less vigorous ``oligarchic'' 
+growth commences, in which the few largest bodies continue to 
+accrete planetesimals at similar rates.
 
-The picture described above relies upon an important factor, which is that the mass distribution evolves slow enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the growth timescale. For typical conditions near the terrestrial planet forming region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, this condition can easily be violated at shorter orbital periods.
+The picture described above relies upon an important assumption, which is that the mass distribution evolves slow enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the growth timescale. For typical conditions near the terrestrial planet forming region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, this condition can easily be violated at shorter orbital periods.
 
 In figure \ref{fig:timescales}, we show ratio between the relaxation
 and collision timescale for a population of equal-mass planetesimals
@@ -217,7 +218,7 @@ $$
 v = \left( 5/8 \left< e^2 \right>^{1/2} + \left< i^2 \right>^{1/2}
 \right)^{1/2} v_{k},
 $$
-(citation) where $\left< e^2 \right>^{1/2}$ and $\left< i^2
+\citep{lissauer93} where $\left< e^2 \right>^{1/2}$ and $\left< i^2
 \right>^{1/2}$ are the eccentricity and inclination dispersions of the
 planetesimal disk and $v_{k}$ is the Keplerian velocity. For
 simplicity, we assume that $\left< e^2 \right>^{1/2} = 2\left< i^2
@@ -261,25 +262,10 @@ We also introduce a second dimensionless quantity, which relates the physical si
 \begin{equation}\label{eq:beta}
 	\beta = \frac{r_{pl}}{r_{g}}.
 \end{equation}
-where $r_{g} = G m_{pl} / v^{2}$ is the gravitational radius of a body. Encounters between bodies inside of a distance of $r_{g}$ result in significant deflections of their trajectories. It should be noted that the gravitational focusing enhancement factor $v^{2}/v_{esc}^{2}$ is equal to 1 for $\beta = 1$. In the case where $r_{g}$ is smaller than the size of a planetesimal, the gravitational focusing enhancement factor will be between 0 and 1. 
+where $r_{g} = G m_{pl} / v^{2}$ is the gravitational radius of a body. Encounters between bodies inside of a distance of $r_{g}$ result in significant deflections of their trajectories. It should be noted that the gravitational focusing enhancement factor $v^{2}/v_{esc}^{2}$ is equal to 1 for $\beta = 1$. In the case where $r_{g}$ is smaller than the size of a planetesimal, the gravitational focusing enhancement factor will be between 0 and 1.
 
 These scaling considerations motivate the range of parameters in the
-following numerical experiments as explore the different regimes.
-
-% Need a transition to next section here.
-
-% analytic conditions for runaway and orderly growth
-% not clear what happens as gravitational focusing factor approaches 1
-
-% mass and velocity distributions both evolve, two-body relaxation time works to describe velocity evolution when dispersion dominated
-% if relaxation time shorter than collision time, oligarchic growth operates
-% but what happens if these timescales are flipped? not clear, because the timescales themselves depend on mass and velocity, which both evolve with time
-
-% a cleaner formalism: compare planetesimal size to hill and gravitational radius (alpha, beta)
-% alpha does not evolve with time, beta will tend towards 1
-
-% motivation for n-body simulations: what do masses and orbital properties of embryos look like as we change alpha and beta?
-% at short period, alpha and beta are large
+following numerical experiments as we explore the different regimes.
 
 \section{Numerical Methods}\label{sec:methods}
 
@@ -293,8 +279,10 @@ described in \citet{richardson94} and \citet{richardson00}. To
 summarize, imminent collisions are detected during the ``drift'' phase
 by extrapolating positions of bodies forward in time, using the
 velocity calculated at the opening ``kick''. For each body, any
-neighboring particles which fall within a search ball of radius XXX
-$fill in later$ are tested for an imminent collision. In the case that
+neighboring particles which fall within a search ball of radius
+$2 \Delta T v + 2 r_{pl}$, where $\Delta T$ is the current timestep size
+for the particle and $v$ is magnitude of its heliocentric velocity,
+ are tested for an imminent collision. In the case that
 a collision is detected, the particles are merged into a single larger
 body, which is given the center of mass position and velocity of the
 two children. Resolving a collision can produce another imminent
@@ -326,10 +314,9 @@ individual masses of $5 \times 10^{23}$ g are placed with semimajor
 axes randomly drawn between 0.95 and 1.05 AU about a 1 $M_{\odot}$
 star. The argument of perihelion $\omega$, longitude of ascending node
 $\Omega$, and mean anomaly M for each body is drawn from a uniform
-distribution $\in [0, 2 \pi)$. The inclination dispersion $\left<
-i^{2} \right>^{1/2}$ is chosen to be half the eccentricity
-dispersion $\left< e^{2} \right>^{1/2}$ \citep{ida93a}.
-% Mention Rayleigh distribution: TRQ: yes!
+distribution $\in [0, 2 \pi)$. The inclinations and eccentricities are drawn
+from a Rayleigh distribution with
+$\left< i^{2} \right> = 1/2 \left< e^{2} \right>$ \citep{ida93a}.
 
 In the ``fiducial'' case, we give the bodies a bulk density of 3 g
 cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, which corresponds to $\alpha = 3.6 \times 10^{-2}$ and $\beta = 3.4 \times 10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by a factor of $\sim$ 7100, which produces $\alpha = 1$. To vary $\beta$, the eccentricity dispersion is increased. For the high-$\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$.
@@ -388,7 +375,7 @@ Name    & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\alpha^{d}$ &  \\ \hline
 fdHi                 & $5 \times 10^{22}$ & 903,687 & 100                                                         & 1.5                              &   \\
 fdHiShallow    & $5 \times 10^{22}$ & 903,687 & 100                                                        & 0.5                              &   \\
 fdHiSteep       & $5 \times 10^{22}$ & 903,687 & 100                                                         & 2.5                              &   \\
-fdLo                & $1 \times 10^{22}$ & 45,185    & 1                                                             & 1.5                              &   \\ \hline
+fdLo                & $5 \times 10^{22}$ & 45,185    & 1                                                             & 1.5                              &   \\ \hline
 \end{tabular}
 \begin{flushleft}
 \textsc{Note} \\ {$^a$ Planetesimal mass [g] \\
