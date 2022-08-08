@@ -334,29 +334,39 @@ develop. The lack of high eccentricity planetesimals in the large
 $\alpha$ case suggests that most encounters result in accretion
 instead of scattering. In the case of large $\beta$, the protoplanets
 and remaining planetesimals end up in a dynamically cool state,
-compared to the initial conditions.
-%TRQ albeit for small alpha, only slightly cooler.
-(Are the inelastic collisions playing a significant role here?)
+compared with the initial conditions. This is due to kinetic energy 
+being lost as particles inelastically collide. One final point to note 
+is the difference between eccentricities of the protoplanets in the 
+large $\alpha$, large $\beta$ and the small $\alpha$,
+large $\beta$ case. The dynamically cooler result of the latter case
+is likely due to the dominant role that inelastic collisions play here.
 
 In figure \ref{fig:alpha_beta_mass}, we show the mass distribution of bodies from the final snapshot in each of the four cases. In addition to leaving fewer residual planetesimals, the large $\alpha$ simulations produce significantly larger embryos. Despite the vastly different encounter velocities of each population of bodies, the initial size of $\beta$ (so long as bodies remain in the dispersion-dominated regime) appears to have no significant effect on the final distribution of masses.
 
-To investigate whether any of these planetesimal disks underwent
+To investigate whether any of these planetesimal rings underwent
 runaway growth, we examine the time evolution of the maximum and mean
-masses in each case. The ratio $m_{max}/\left< m \right>$ is plotted
+masses in each simulation. The ratio $m_{max}/\left< m \right>$ is plotted
 in figure \ref{fig:alpha_beta_evo}. On this plot, a positive slope
-indicates that the growth rate is accelerating with mass, which is
-evident at various times in all four cases. Even with a large value of
+indicates that the maximum and mean masses are diverging (i.e.
+the growth rate is accelerating with mass), which is
+evident for every case we have tested. Even with a large
 $\beta$, which means that the effective collision cross section is
 very near the geometric value, runaway growth still appears to
-operate. This seems to imply that, as bodies collide and grow, the
-relative increase in their gravitational focusing factors, rather than
-their absolute size, is what drives the system towards runaway
-growth. Although larger encounter velocities will lengthen the growth
+operate. The ubiquity of the early positive trends in this figure indicates
+that, as bodies collide and grow the
+relative difference in gravitational focusing factors between bodies
+is what drives the system towards runaway
+growth. Although larger encounter velocities lengthen the growth
 timescales, this mode of growth appears to be inevitable, so long as
-gravity is the dominant force in the system.
-% TRQ: also mention the negative slope?
+gravity is the dominant force in the system. For the large $\alpha$
+cases, the curves in this figure eventually turn over and begin to decline.
+Upon inspecting the simulation snapshots, we find that this trend is
+driven by an increase in the average mass as the planetesimal population
+becomes depleted. One should expect that the same thing will eventually
+occur for small $\alpha$, although many more timesteps are required to
+begin to run out of planetesimals.
 
-Additionally, these results suggest that the value of $\alpha$, which is a function of only the initial conditions, controls the qualitative outcome of accretion. Across most of a planet-forming disk, $\alpha$ is small, and frequent gravitational encounters between the growing bodies will allow oligarchic growth to operate. In the dispersion-dominated regime, close encounters drive the stirring between planetesimals and embryos \citep{weidenschilling89, ida90}. When $\alpha$ is large, the Hill sphere of a body is no longer mostly empty space, and close encounters that would otherwise result in stirring instead result in accretion. In this regime, we observe that runaway growth still commences, but nearly all of the planetesimals are swept up by the forming protoplanets, rather than being scattered onto higher eccentricity orbits, where they would otherwise remain as a remnant of the early stages of planet formation \citep{kokubo98, kokubo00}.
+Additionally, these results suggest that the value of $\alpha$, which is a function of only the initial conditions (the physical and Hill radius both scale with $M^{1/3}$, so $\alpha$ stays constant as bodies grow), controls the qualitative outcome of accretion. Across most of a planet-forming disk, $\alpha$ is small, and frequent gravitational encounters between the growing bodies will facilitate oligarchic growth. In the dispersion-dominated regime, close encounters drive the stirring between planetesimals and embryos \citep{weidenschilling89, ida90}. When $\alpha$ is large, the Hill sphere of a body is no longer mostly empty space, and close encounters that would otherwise result in stirring instead result in accretion. In this regime, we observe that runaway growth still commences, but nearly all of the planetesimals are swept up by the forming protoplanets, rather than being scattered onto higher eccentricity orbits, where they would otherwise remain as a remnant of the early stages of planet formation \citep{kokubo98, kokubo00}.
 
 % Additional idea: run a simulation with an oligarch embedded in a disk of planetesimals for large and small alpha. Allow oligarch and planetesimals to collide. What does the eccentricity evolution of the oligarch look like in each case?
 
@@ -367,8 +377,6 @@ Additionally, these results suggest that the value of $\alpha$, which is a funct
 % Wetherill + Stewart 1989, Ohtsuki 1990, Spaute 1991 find that runaway growth happens when velocity decreases with mass. Is that what we're seeing at high alpha?
 
 \begin{table}
-% I'm going to replace the fdLo simulation with a lower resolution version m_pl = 5e22 for consistency
-% Originally wanted to run everything at m_pl = 1e22, which corresponds to 100km bodies, but this wasn't feasible at higher Sigma
 \caption{Summary of Full Disk Simulations Run}
 \begin{tabular}{llllll} \hline \hline
 Name    & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\alpha^{d}$ &  \\ \hline
@@ -390,16 +398,21 @@ fdLo                & $5 \times 10^{22}$ & 45,185    & 1                        
 
 \subsection{Initial Conditions}
 
-Motivated by the apparent dependence of accretion modes on $\alpha$,
+Motivated by the dependence of accretion modes on $\alpha$,
 we next investigate whether this highly efficient, non-oligarchic
 growth mode should be expected to operate in a typical planet-forming
-disk. Given the dearth (TRQ: why is this a reason for a wide disk?) of short period terrestrial planets observed around M stars (citation), we model a series of wide planetesimal disks, which span from 1 to 100 days in orbital period orbiting a late-type M star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this orbital period range corresponds to $\alpha \in (0.7, 0.05)$. By simultaneously modeling a broad range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and also explore how the oligarchic/non-oligarchic accretion boundary affects the resulting distribution of protoplanets.
+disk. Given that N-body simulations of short-period terrestrial planet formation 
+typically begin with a chain of neatly-spaced, isolation mass 
+(see \citet{kokubo00} eq. 20) protoplanets, it is pertinent to determine 
+whether the high $\alpha$ growth mode we revealed
+in the previous section invalidates this choice of initial conditions.
+
+ Given the dearth of short-period terrestrial planets observed around M stars (e.g. TRAPPIST-1), we chose to model a series of wide planetesimal disks, which span from 1 to 100 days in orbital period orbiting a late-type M star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this orbital period range corresponds to $\alpha \in (0.7, 0.05)$. By simultaneously modeling a broad range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and also explore how the oligarchic/non-oligarchic accretion boundary affects the resulting distribution of protoplanets.
 
 Four wide disk simulations are run in total (see table \ref{tab:sims}). In each case, the solid surface density follows a power law profile
 \begin{equation}
-	\Sigma(r) = \left( \frac{M_{*}}{M_{\odot}} \right) A \Sigma_{MMSN} \left( \frac{r}{1 AU} \right)^{-\alpha},
+	\Sigma(r) = \left( \frac{M_{*}}{M_{\odot}} \right) A \Sigma_{\mathrm{MMSN}} \left( \frac{r}{1 \mathrm{AU}} \right)^{-\delta},
 \end{equation}
-%TRQ: should we use a different greek letter for the power law index?
 where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g cm$^{-2}$ is surface density of the minimum-mass solar nebula \citep{hayashi81} at 1 AU, and $A$ is an enhancement factor. In the first case (fdHi), we model a disk that follows a MMSN power law slope, with the overall normalization enhanced by a factor of 100. This choice of parameters for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of the solids profile.
 
 In all cases, the eccentricities and inclinations of the bodies are randomly drawn from a Rayleigh distribution, with $\left< e^{2} \right>^{1/2} = 2\left<i^{2} \right>^{1/2} = e_{eq}$. The value of $e_{eq}$ is chosen such that the timescales for viscous stirring and aerodynamic gas drag on the planetesimals are in equilibrium. The viscous stirring timescale is given by \citet{ida93} as
