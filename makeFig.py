@@ -467,6 +467,36 @@ def plot_surfden_iso():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
+def plot_surfden_b():
+	file_str = 'figures/surfden_b.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	def get_btilde(pl, prof0):
+		surf_den = (prof0['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+		mp = (pl['mass']*u.M_sun).to(u.g).value
+		mCeng = (mCentral*u.M_sun).to(u.g).value
+		aCm = (pl['a']*u.AU).to(u.cm).value
+		surf_den_at = np.interp(pl['a'], prof0['rbins'], surf_den)
+		return mp**(2./3.)*(3*mCeng)**(1./3.)/(2*np.pi*aCm**2*surf_den_at)
+
+	fig, axes = plt.subplots(figsize=(8,6))
+
+	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black')
+	axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black')
+	axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black')
+	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black')
+	axes.axhline(2*np.sqrt(3), ls='--')
+
+	axes.set_xlim(-5, 100)
+	axes.set_yscale('log')
+	axes.set_ylim(1, 200)
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.legend()
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
 # Extract information about the 'surviving' members from a collision table
 def coll_info(df):
     mass_mask = df['m1'].values >= df['m2'].values
@@ -737,8 +767,9 @@ def plot_frag_evo():
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
-plot_surfden_profiles()
-plot_surfden_iso()
+#plot_surfden_profiles()
+#plot_surfden_iso()
+plot_surfden_b()
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
