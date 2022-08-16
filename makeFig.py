@@ -28,6 +28,7 @@ clobber = True
 fmt = 'png'
 s = 0.005
 lw = 4
+refmass = (1*u.M_earth).to(u.M_sun).value
 
 num_bins = 50
 mCentral = 0.08
@@ -84,7 +85,7 @@ perSh = 2*np.pi*np.sqrt((plVHiSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.
 snap = pb.load('data/fullDiskLoLarge.ic')
 plLoIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_lo_ic = pb.analysis.profile.Profile(plLoIC.d, bins=bins)
-snap = pb.load('data/fullDiskLoLarge.2840000')
+snap = pb.load('data/fullDiskLoLarge.4640000')
 plLo = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_lo = pb.analysis.profile.Profile(plLo.d, bins=bins)
 perICLo = 2*np.pi*np.sqrt((plLoIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -169,7 +170,6 @@ def plot_alpha_beta():
 		pl0 = ko.orb_params(snap0, isHelio=True, mCentral=mcen)
 		snap = pb.load('data/'+prefix+'.end')
 		pl = ko.orb_params(snap, isHelio=True, mCentral=mcen)
-		print()
 		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*500)
 		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*500)
 		ax.text(0.85, 0.95, title, transform=ax.transAxes, ha='center', va='center')
@@ -297,7 +297,7 @@ def plot_fulldisk_e_m():
 	l = np.logspace(np.log10(30), np.log10(np.max(H)), 10)
 	c = axes.contour(binsX, binsY, np.flipud(np.rot90(H)), colors='black', linewidths=0.2, levels=l)
 
-	axes.scatter(per.value, plVHi['e'], s=plVHi['mass']/np.max(plVHi['mass'])*500)
+	axes.scatter(per.value, plVHi['e'], s=plVHi['mass']/refmass*500)
 	axes.set_ylabel('Eccentricity')
 	axes.set_xlim(p_min, p_max)
 	axes.set_ylim(e_min, e_max)
@@ -311,10 +311,10 @@ def plot_fulldisk_e_m():
 	m_iso_vhi1 = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentralg))
 
 	axes = ax[1]
-	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value, s=plVHi['mass']/np.max(plVHi['mass'])*500)
+	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value, s=plVHi['mass']/refmass*500)
 	axes.set_yscale('log')
 	axes.plot(prof_perIC, m_iso_vhi, lw=lw)
-	#axes.plot(prof_perIC, m_iso_vhi1)
+	axes.plot(prof_perIC, m_iso_vhi1, lw=lw)
 	axes.set_xlim(p_min, p_max)
 	axes.set_ylim(1e25, 1e28)
 	axes.set_ylabel('Mass [g]')
@@ -387,7 +387,7 @@ def plot_pl_frac_time():
 		p_vhi_m1 = pb.analysis.profile.Profile(plVHi[mask], bins=bins1)
 		p_vhi_m2 = pb.analysis.profile.Profile(plVHiIC, bins=bins1)
 
-		time_arr[idx] = snap.properties['time'].in_units('yr')
+		time_arr[idx] = snap.properties['time'].in_units('yr')*365.25/100 # Outer disk rotation periods
 		prof_arr[:,idx] = (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 
 	fig, axes = plt.subplots(figsize=(8,4))
@@ -402,7 +402,7 @@ def plot_pl_frac_time():
 		axes.plot(time_arr, prof_arr[idx], color='black', linestyle=ls, lw=lw1)
 
 	axes.set_ylabel(r'$\sigma$ / $\Sigma$')
-	axes.set_xlabel('Time [yr]')
+	axes.set_xlabel('Time [Outer Rotation Periods]')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -414,17 +414,17 @@ def plot_surfden_profiles():
 	fig, axes = plt.subplots(figsize=(8,6))
 
 	size = 1000
-	axes.scatter(per.value, plVHi['e'], s=size*plVHi['mass']/np.max(plVHiSt['mass']), label='fdHi', marker='o')
-	axes.scatter(perSt.value, plVHiSt['e'], s=size*plVHiSt['mass']/np.max(plVHiSt['mass']), label='fdHiSteep', marker='^')
-	axes.scatter(perSh.value, plVHiSh['e'], s=size*plVHiSh['mass']/np.max(plVHiSt['mass']), label='fdHiShallow', marker='x')
-	axes.scatter(perLo.value, plLo['e'], s=size*plLo['mass']/np.max(plVHiSt['mass']), label='fdLo', marker='p')
+	axes.scatter(per.value, plVHi['e'], s=size*plVHi['mass']/np.max(plVHi['mass']), label='fdHi')
+	axes.scatter(perSt.value, plVHiSt['e'], s=size*plVHiSt['mass']/np.max(plVHiSt['mass']), label='fdHiSteep')
+	axes.scatter(perSh.value, plVHiSh['e'], s=size*plVHiSh['mass']/np.max(plVHiSh['mass']), label='fdHiShallow')
+	axes.scatter(perLo.value, plLo['e'], s=size*plLo['mass']/np.max(plLo['mass']), label='fdLo')
 
 	axes.set_yscale('log')
 	axes.set_ylim(1e-4, 0.5)
 	axes.set_xlim(-5, 100)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel('Eccentricity')
-	axes.legend(loc=1)
+	axes.legend()
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -437,25 +437,27 @@ def plot_surfden_iso():
 
 	btilde = 2*np.sqrt(3)#5
 
+	s = 50
+
 	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
 	m_iso_vhi_at = np.sqrt((2*np.pi*(plVHi['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi', s=20)
+	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi', s=s, edgecolor='black')
 
 	surf_den = (p_vhi_ic_st['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSt['a'], p_vhi_ic_st['rbins'], surf_den)
 	m_iso_vhist_at = np.sqrt((2*np.pi*(plVHiSt['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perSt.value, (plVHiSt['mass']*u.M_sun).to(u.g).value/m_iso_vhist_at, label='fdHiSteep', s=20)
+	axes.scatter(perSt.value, (plVHiSt['mass']*u.M_sun).to(u.g).value/m_iso_vhist_at, label='fdHiSteep', s=s, edgecolor='black')
 
 	surf_den = (p_vhi_ic_sh['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSh['a'], p_vhi_ic_sh['rbins'], surf_den)
 	m_iso_vhish_at = np.sqrt((2*np.pi*(plVHiSh['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perSh.value, (plVHiSh['mass']*u.M_sun).to(u.g).value/m_iso_vhish_at, label='fdHiShallow', s=20)
+	axes.scatter(perSh.value, (plVHiSh['mass']*u.M_sun).to(u.g).value/m_iso_vhish_at, label='fdHiShallow', s=s, edgecolor='black')
 
 	surf_den = (p_lo_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plLo['a'], p_lo_ic['rbins'], surf_den)
 	m_iso_lo_at = np.sqrt((2*np.pi*(plLo['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perLo.value, (plLo['mass']*u.M_sun).to(u.g).value/m_iso_lo_at, label='fdLo', s=20)
+	axes.scatter(perLo.value, (plLo['mass']*u.M_sun).to(u.g).value/m_iso_lo_at, label='fdLo', s=s, edgecolor='black')
 
 	axes.axhline(1, ls='--', color='gray')
 	axes.set_yscale('log')
@@ -540,7 +542,11 @@ def plot_smooth_acc():
 	# For each embryo, fraction of mass accreted in planetesimals
 	num_oli = 100
 
-	df = pd.read_csv('data/fullDiskVHi.coll')
+	nam = ['time', 'collType', 'iorder1', 'iorder2', 'm1', 'm2', 'r1', 'r2', 'x1x', 'x1y', 'x1z', 'x2x', 'x2y', 'x2z',  'v1x', 'v1y', 'v1z', \
+	'v2x', 'v2y', 'v2z', 'w1x', 'w1y', 'w1z', 'w2x', 'w2y', 'w2z']
+	df1 = pd.read_csv('data/fullDiskVHi.coll', names=nam, sep=' ', index_col=False)
+	df2 = pd.read_csv('data/fullDiskVHi1.coll', names=nam, sep=' ', index_col=False)
+	df = pd.concat([df1, df2])
 	df1_s, df1_d = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
 	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1][:num_oli]
 	a_iord_orig = prev_iorder(plVHi['iord'][massive_ind], len(plVHiIC), df1_d)
@@ -591,7 +597,7 @@ def plot_acc_zones():
 	histbins = np.linspace(0, 100, 200)
 
 	root_idx = np.loadtxt('data/roots_vhi.txt')
-	df1_s, df1_d = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
+	df1_d, df1_s = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
 	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1]
 	massive_iord_orig = prev_iorder(plVHi['iord'][massive_ind], len(plVHiIC), df1_d)
 
