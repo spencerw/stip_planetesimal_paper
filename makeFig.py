@@ -9,6 +9,7 @@ import glob as gl
 import re
 import os
 import profileTools as pt
+import pickle
 
 from astropy import units as u
 from astropy.constants import G
@@ -31,6 +32,7 @@ lw = 4
 refmass = (1*u.M_earth).to(u.M_sun).value
 
 num_bins = 50
+dDelta = 0.008213552361396302 # 2 pi years
 mCentral = 0.08
 mCentralg = (mCentral*u.M_sun).to(u.g)
 
@@ -39,7 +41,7 @@ bins = np.linspace(0.01, 0.3, num_bins)
 snap = pb.load('data/fullDiskVHi.ic')
 plVHiIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_vhi_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins)
-snap = pb.load('data/fullDiskVHi1.348000')
+snap = pb.load('data/fullDiskVHi1.250000')
 plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_vhi = pb.analysis.profile.Profile(plVHi.d, bins=bins)
 perIC = 2*np.pi*np.sqrt((plVHiIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -85,7 +87,7 @@ perSh = 2*np.pi*np.sqrt((plVHiSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.
 snap = pb.load('data/fullDiskLoLarge.ic')
 plLoIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_lo_ic = pb.analysis.profile.Profile(plLoIC.d, bins=bins)
-snap = pb.load('data/fullDiskLoLarge.4640000')
+snap = pb.load('data/fullDiskLoLarge.3000000')
 plLo = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_lo = pb.analysis.profile.Profile(plLo.d, bins=bins)
 perICLo = 2*np.pi*np.sqrt((plLoIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -104,6 +106,35 @@ def prev_iorder(new_iord, num_original, del_iord):
 # Input in sim units, output in days
 def p_orbit(sma):
 	return (2*np.pi*np.sqrt(sma**3/mCentral)*simT).to(u.d).value
+
+# For a given snapshot, find a given property of the 'roots' of the particles
+def get_root_property(pl0, pl, root, time, prop):
+	def find(node, iord):
+		if node.iord == iord:
+			return node
+		elif node.children:
+			for c in node.children:
+				result = find(c, iord)
+				if result:
+					return result
+
+	root_iord = np.ones(len(pl0))*-1
+	def get_roots_at(node, time, parent_iord):
+		root_iord[node.iord] = parent_iord
+		for c in node.children:
+			if c.parent_time < time:
+				get_roots_at(c, time, parent_iord)
+
+	for iord in pl['iord']:
+		node = find(root, iord)
+		get_roots_at(node, time, node.iord)
+
+	root_prop = []
+	for i in range(len(pl)):
+		child_ind = np.argwhere(root_iord == pl['iord'][i])
+		root_prop.append(pl0[prop][child_ind])
+
+	return root_prop
 
 def plot_timescales():
 	file_str = 'figures/timescales.' + fmt
@@ -383,11 +414,12 @@ def plot_pl_frac_time():
 	for idx, f in enumerate(files_sub):
 		snap = pb.load('data/'+f)
 		plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-		mask = plVHi['mass'] < 10*np.min(plVHi['mass'])
+		mask = plVHi['mass'] <= 16*np.min(plVHi['mass'])
 		p_vhi_m1 = pb.analysis.profile.Profile(plVHi[mask], bins=bins1)
 		p_vhi_m2 = pb.analysis.profile.Profile(plVHiIC, bins=bins1)
 
-		time_arr[idx] = snap.properties['time'].in_units('yr')*365.25/100 # Outer disk rotation periods
+		time = int(f.split('.')[-1])*dDelta/(2*np.pi)*365.25/100 # Outer disk rotation periods
+		time_arr[idx] = time
 		prof_arr[:,idx] = (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 
 	fig, axes = plt.subplots(figsize=(8,4))
@@ -433,27 +465,31 @@ def plot_surfden_iso():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(8,6))
+	fig, ax = plt.subplots(figsize=(8,6), nrows=4, sharex=True, sharey=True)
 
 	btilde = 2*np.sqrt(3)#5
 
 	s = 50
 
+	axes = ax[0]
 	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
 	m_iso_vhi_at = np.sqrt((2*np.pi*(plVHi['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
 	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi', s=s, edgecolor='black')
 
+	axes = ax[1]
 	surf_den = (p_vhi_ic_st['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSt['a'], p_vhi_ic_st['rbins'], surf_den)
 	m_iso_vhist_at = np.sqrt((2*np.pi*(plVHiSt['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
 	axes.scatter(perSt.value, (plVHiSt['mass']*u.M_sun).to(u.g).value/m_iso_vhist_at, label='fdHiSteep', s=s, edgecolor='black')
 
+	axes = ax[2]
 	surf_den = (p_vhi_ic_sh['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSh['a'], p_vhi_ic_sh['rbins'], surf_den)
 	m_iso_vhish_at = np.sqrt((2*np.pi*(plVHiSh['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
 	axes.scatter(perSh.value, (plVHiSh['mass']*u.M_sun).to(u.g).value/m_iso_vhish_at, label='fdHiShallow', s=s, edgecolor='black')
 
+	axes = ax[3]
 	surf_den = (p_lo_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plLo['a'], p_lo_ic['rbins'], surf_den)
 	m_iso_lo_at = np.sqrt((2*np.pi*(plLo['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
@@ -465,7 +501,7 @@ def plot_surfden_iso():
 	axes.set_xlim(-5, 100)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'm / M$_{iso}$')
-	axes.legend(loc=3)
+	#axes.legend(loc=3)
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -482,21 +518,30 @@ def plot_surfden_b():
 		surf_den_at = np.interp(pl['a'], prof0['rbins'], surf_den)
 		return mp**(2./3.)*(3*mCeng)**(1./3.)/(2*np.pi*aCm**2*surf_den_at)
 
-	fig, axes = plt.subplots(figsize=(8,6))
+	fig, ax = plt.subplots(figsize=(8,12), nrows=4, sharex=True, sharey=True)
 
+	axes = ax[0]
 	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black')
+	axes.axhline(2*np.sqrt(3), ls='--')
+	axes = ax[1]
 	axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black')
+	axes.axhline(2*np.sqrt(3), ls='--')
+	axes = ax[2]
 	axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black')
+	axes.axhline(2*np.sqrt(3), ls='--')
+	axes = ax[3]
 	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black')
 	axes.axhline(2*np.sqrt(3), ls='--')
 
 	axes.set_xlim(-5, 100)
-	axes.set_yscale('log')
-	axes.set_ylim(1, 200)
+	#axes.set_yscale('log')
+	axes.set_ylim(0, 20)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'Required $\tilde{b}$')
-	axes.legend()
+	#axes.legend()
 
+	plt.tight_layout()
+	plt.subplots_adjust(wspace=0, hspace=0)
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 # Extract information about the 'surviving' members from a collision table
@@ -586,6 +631,51 @@ def plot_smooth_acc():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 def plot_acc_zones():
+	file_str = 'figures/acc_zones.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	with open('data/colltree.dat', 'rb') as f:
+		root = pickle.load(f)
+
+	time = 0.05*250000/(2*np.pi)
+	# Grab the 20 most massive bodies to plot
+	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1][:20]
+	pl = plVHi[massive_ind]
+	a_init = get_root_property(plVHiIC, pl, root, time, 'a')
+
+	fig, axes = plt.subplots(figsize=(16, 12))
+
+	s = 1000
+	amin, amax = 0.05, 0.2
+	histbins = np.linspace(0, 100, 200)
+
+	def p_orbit(a):
+		return ((np.sqrt(a**3/mCentral))*u.yr).to(u.d).value
+
+	def oli_plot(i, idx):
+		child_p = p_orbit(a_init[i])
+		hist, bins = np.histogram(child_p, bins=histbins, normed=True)
+		bins = 0.5*(bins[1:] + bins[:-1])
+		hist /= np.max(hist)/0.1
+		axes.plot(bins, hist+0.2*idx, linestyle='steps-mid', color='gray', lw=0.5)
+		axes.fill_between(bins, np.min(hist)+0.2*idx, hist+0.2*idx, color='gray')
+		pl_p = p_orbit(plVHi['a'][massive_ind[i]])
+		axes.vlines(pl_p, np.min(hist)+0.2*idx, np.max(hist)+0.2*idx, lw=lw)
+		axes.set_xlabel('Orbital Period [d]')
+		axes.set_ylabel('Fraction of Planetesimals Accreted')
+		axes.set_yticks([])
+
+	# Sort by semimajor axis beore plotting
+	indices = np.arange(0, 20)
+	sort_a_ind = np.argsort(plVHi['a'][massive_ind[indices]])
+
+	for idx, i in enumerate(sort_a_ind):
+		oli_plot(i, idx)
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_acc_zones_old():
 	file_str = 'figures/acc_zones.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
@@ -775,9 +865,9 @@ def plot_frag_evo():
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-plot_surfden_b()
+#plot_surfden_b()
 #plot_smooth_acc()
-#plot_acc_zones()
+plot_acc_zones()
 #plot_f6f4()
 #plot_frag_ecc()
 #plot_frag_evo()
