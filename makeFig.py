@@ -523,25 +523,32 @@ def plot_surfden_b():
 	axes = ax[0]
 	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black')
 	axes.axhline(2*np.sqrt(3), ls='--')
+	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.set_title('fdHi')
 	axes = ax[1]
 	axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black')
 	axes.axhline(2*np.sqrt(3), ls='--')
+	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.set_title('fdHiSteep')
 	axes = ax[2]
 	axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black')
 	axes.axhline(2*np.sqrt(3), ls='--')
+	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.set_title('fdHiShallow')
 	axes = ax[3]
 	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black')
 	axes.axhline(2*np.sqrt(3), ls='--')
+	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.set_title('fdLo')
 
 	axes.set_xlim(-5, 100)
 	#axes.set_yscale('log')
 	axes.set_ylim(0, 20)
 	axes.set_xlabel('Orbital Period [d]')
-	axes.set_ylabel(r'Required $\tilde{b}$')
 	#axes.legend()
 
 	plt.tight_layout()
-	plt.subplots_adjust(wspace=0, hspace=0)
+	#plt.subplots_adjust(wspace=0, hspace=0)
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 # Extract information about the 'surviving' members from a collision table
@@ -865,9 +872,9 @@ def plot_frag_evo():
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-#plot_surfden_b()
+plot_surfden_b()
 #plot_smooth_acc()
-plot_acc_zones()
+#plot_acc_zones()
 #plot_f6f4()
 #plot_frag_ecc()
 #plot_frag_evo()
