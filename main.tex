@@ -610,12 +610,20 @@ In figure \ref{fig:surfden_b}, we plot the masses of the resulting protoplanets 
 
 \subsection{Assembly History of Embryos}\label{sec:assembly}
 
-Further insight into the difference between the short vs long period accretion modes can be gained by examining the merger history of the planetary embryos. Because all collisions are directly resolved by the N-body code, a direct lineage can be traced between each embryo and a set of initial planetesimals.
+Further insight regarding the difference between the short vs long period accretion modes can be gained by looking at the merger history of the planetary embryos. Because all collisions are directly resolved by the N-body code, a direct lineage can be traced between the resulting planetary embryo and the initial planetesimals.
 
 We begin by investigating the ``smoothness'' of the accretion events
 that give rise to each embryo. Drawing from a common technique used
-for cosmological simulations (citation?), we divide growth events for
-a given body into ``major'' and ``minor'' mergers. Minor events are defined as any collision involving an initial planetesimal, while major events consist of any two larger bodies. In figure \ref{fig:minor_frac}, we show the total mass fraction gained by minor events as a function of mass for the 100 largest bodies at the end of fdHi. Blue dots represent bodies interior to the 60 day orbital period boundary, while red crosses indicate bodies exterior. For the outer bodies in the oligarchic growth region, we see a very weak trend between minor accretion mass fraction and total mass. Regardless of how much an embryo has grown, the initial mass planetesimals contribute about the same relative amount to its total mass. At shorter orbital periods, however, there is a somewhat stronger trend. The largest bodies in this region gain about an order of magnitude more of their mass fraction from major mergers, compared to the smallest bodies.
+for cosmological simulations of galaxy formation, we divide growth events for
+a given body into ``major'' and ``minor'' mergers. Here, we define minor events as any collision involving an initial mass 
+planetesimal, while major events consist of a merger between any two larger bodies. In figure \ref{fig:minor_frac}, we choose the 
+100 largest bodies at the end of the fdHi simulation, retrieve all collision events involving these bodies, and plot the total mass 
+fraction attained through minor events as a function of the final mass of the body. The bodies are then subdivided into those that 
+end up with orbital periods greater than 60 days (red x's) and less than 60 days (blue dots). For the bodies in the outer oligarchic 
+growth region, the trend between smooth accretion mass fraction and final mass is nearly flat. Regardless of how much an 
+embryo has grown, mergers with initial mass planetesimals contribute on the order of a few percent to the final mass.
+At shorter orbital periods, however, the contribution from minor mergers can be over an order of magnitude smaller as the 
+embryos mature.
 
 \begin{figure}
 \begin{center}
@@ -631,23 +639,15 @@ a given body into ``major'' and ``minor'' mergers. Minor events are defined as a
 \end{center}
 \end{figure*}
 
-The difference in slope of the short vs.\ long period bodies in figure \ref{fig:minor_frac} indicates a difference in how the planetesimal-embryo populations interact in each region. In the long period oligarchic growth region, embryos continue to accrete planetesimals as they grow and the minor mass fraction stays mostly flat. At short period, collisions mostly occur between equal mass bodies as the embryos grow and the contribution from planetesimals becomes less significant over time. This suggests that embryo-embryo collisions are common at short period. As discussed in section \ref{sec:sizeandhill}, the importance of gravitational scattering is greatly reduced here. Without frequent gravitational interactions between the embryos and planetesimals, orbital repulsion \citep{kokubo98} and isolation of the embryos does not occur. As we showed in figure \ref{fig:surfden_iso}, the embryos formed in this region exceed the isolation mass.
+The variation in smooth accretion fraction with mass for the short period bodies suggests that the planetesimal and embryo populations interact differently than those in the outer disk. Exterior to the 60 day accretion mode boundary, the growing embryos continue to accrete planetesimals as they near their final mass. Inside the boundary, however, later growth events tend to be dominated by embryo-embryo collisions, and the smooth accretion fraction drops as mergers with planetesimals play a less significant role. As we discussed in section \ref{sec:sizeandhill}, gravitational scattering should be very weak in the inner disk. Gravitational scattering between embryos and planetesimals is a key ingredient for orbital repulsion (see \citet{kokubo98}), and so a lack of gravitational scattering should prevent the embryos from settling onto neatly-spaced, isolated orbits. As we showed in figure \ref{fig:surfden_b}, the embryos in the inner disk appear to reach well beyond the typical feeding zones predicted by an oligarchic growth model. Figure \ref{fig:minor_frac} suggests that this extra mass here obtain comes from mergers with the other nearby embryos.
 
-Further evidence for the lack of gravitational scattering events in
-the inner region can be seen in figure \ref{fig:acc_zones}. Here, we
-have chosen the 20 most massive bodies from the fdHi simulation and
-arranged them in order of present orbital period. The vertical black
-line indicates the orbital period of each embryo. The associated
-histogram for each body denotes where the planetesimals used to
-construct that embryo originated in the disk. The peaks of the
-histograms have all been normalized to the same value, so that the
-distributions only show the relative widths and locations of the
-feeding zones. Beyond the 60 day boundary, the ordering of the feeding
-zones and the embryo locations become much less consistent. This
-suggests that scattering events between embryos are much more common
-beyond this accretion mode boundary. In the inner region of the disk,
-close encounters between embryos often result in a merger, which
-allows them to grow beyond the isolation mass with only a minor alteration to their orbital period. With few close encounters resulting in a scattering event, embryos are unable to move away from their birth location.
+%%%
+
+Another line of evidence pointing to a lack of gravitational scattering and orbital repulsion in the inner disk can be seen in figure \ref{fig:acc_zones}. Here, we have chosen the 20 most massive bodies from the fdHi simulation and arranged them in order of final orbital period. On each line, the black has mark indicates the present orbital period of an embryo and the gray histogram represents the initial orbital period distribution of the planetesimals which were used to construct the embryo. One should note that unlike the previous figure, this plot shows where every single bit of mass (in the form of planetesimals) originated, rather than only denoting embryo-planetesimal collisions.
+
+Qualitatively, there are a couple of differences between the initial planetesimal distributions in the inner ($<$ 60 days) and outer ($>$ 60 days) part of the disk. The planetesimal distributions for the outer disk are much more smooth and unimodal, while many of the distributions near the inner disk have multiple peaks. As we discussed when examining figure \ref{fig:minor_frac}, growth events for the inner embryos tend to be sudden and stochastic, often involving pairs of embryos. When an embryo-embryo collision happens, one would expect a second peak to appear in the accretion distribution as the merger tree suddenly obtains a whole other subtree from the embryo that it absorbed. In the outer disk, however, the increased importance of embryo-planetesimal mergers means that growth should be smooth, steady and local.
+
+In figure \ref{fig:acc_zones}, evidence of orbital repulsion can be seen for the outermost embryos. Beyond 60 days, the final positions of the embryos tend to be offset from the peaks of the accretion distributions. This suggests that gravitational scattering events between embryos occurred later on, after accretion had mostly completed. Although many of the inner embryos also end up shifted away from the peak of their accretion distribution, their present position is usually associated with another secondary peak. This suggests that most of the close encounters between embryos here resulted in a merger event, rather than a scatter. 
 
 % from how far do embryos accumulate material
 % do embryos migrate at all? might need to run a simulation without gas to demonstrate whether this is due to PDM
