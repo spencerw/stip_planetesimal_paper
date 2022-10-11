@@ -584,7 +584,7 @@ Bins interior to 60 days are shown by a dashed line, while those exterior are sh
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/surfden_b.png}
-    \caption{Feeding zone width (see equation \ref{eq:iso} required to produce the final masses for the protoplanets from the simulations listed in table \ref{tab:sim_properties}. The horizontal dashed line indicates $\tilde{b} = 2 \sqrt{3}$. Despite the vastly different initial solid surface density profiles, the feeding zone width reaches the circular orbit value around $\sim$ 60 days. \label{fig:surfden_b}}
+    \caption{Feeding zone width (see equation \ref{eq:iso}) required to produce the final masses for the protoplanets from the simulations listed in table \ref{tab:sim_properties}. The horizontal dashed line indicates $\tilde{b} = 2 \sqrt{3}$. Despite the vastly different initial solid surface density profiles, the feeding zone width reaches the circular orbit value around $\sim$ 60 days. \label{fig:surfden_b}}
 \end{center}
 \end{figure}
 
@@ -641,62 +641,56 @@ embryos mature.
 
 The variation in smooth accretion fraction with mass for the short period bodies suggests that the planetesimal and embryo populations interact differently than those in the outer disk. Exterior to the 60 day accretion mode boundary, the growing embryos continue to accrete planetesimals as they near their final mass. Inside the boundary, however, later growth events tend to be dominated by embryo-embryo collisions, and the smooth accretion fraction drops as mergers with planetesimals play a less significant role. As we discussed in section \ref{sec:sizeandhill}, gravitational scattering should be very weak in the inner disk. Gravitational scattering between embryos and planetesimals is a key ingredient for orbital repulsion (see \citet{kokubo98}), and so a lack of gravitational scattering should prevent the embryos from settling onto neatly-spaced, isolated orbits. As we showed in figure \ref{fig:surfden_b}, the embryos in the inner disk appear to reach well beyond the typical feeding zones predicted by an oligarchic growth model. Figure \ref{fig:minor_frac} suggests that this extra mass here obtain comes from mergers with the other nearby embryos.
 
-%%%
-
 Another line of evidence pointing to a lack of gravitational scattering and orbital repulsion in the inner disk can be seen in figure \ref{fig:acc_zones}. Here, we have chosen the 20 most massive bodies from the fdHi simulation and arranged them in order of final orbital period. On each line, the black has mark indicates the present orbital period of an embryo and the gray histogram represents the initial orbital period distribution of the planetesimals which were used to construct the embryo. One should note that unlike the previous figure, this plot shows where every single bit of mass (in the form of planetesimals) originated, rather than only denoting embryo-planetesimal collisions.
 
 Qualitatively, there are a couple of differences between the initial planetesimal distributions in the inner ($<$ 60 days) and outer ($>$ 60 days) part of the disk. The planetesimal distributions for the outer disk are much more smooth and unimodal, while many of the distributions near the inner disk have multiple peaks. As we discussed when examining figure \ref{fig:minor_frac}, growth events for the inner embryos tend to be sudden and stochastic, often involving pairs of embryos. When an embryo-embryo collision happens, one would expect a second peak to appear in the accretion distribution as the merger tree suddenly obtains a whole other subtree from the embryo that it absorbed. In the outer disk, however, the increased importance of embryo-planetesimal mergers means that growth should be smooth, steady and local.
 
-In figure \ref{fig:acc_zones}, evidence of orbital repulsion can be seen for the outermost embryos. Beyond 60 days, the final positions of the embryos tend to be offset from the peaks of the accretion distributions. This suggests that gravitational scattering events between embryos occurred later on, after accretion had mostly completed. Although many of the inner embryos also end up shifted away from the peak of their accretion distribution, their present position is usually associated with another secondary peak. This suggests that most of the close encounters between embryos here resulted in a merger event, rather than a scatter. 
-
-% from how far do embryos accumulate material
-% do embryos migrate at all? might need to run a simulation without gas to demonstrate whether this is due to PDM
-% major vs minor mergers?
+In figure \ref{fig:acc_zones}, evidence of orbital repulsion can be seen for the outermost embryos. Beyond 60 days, the final positions of the embryos tend to be offset from the peaks of the accretion distributions. This suggests that gravitational scattering events between embryos occurred later on, after accretion had mostly completed. Although many of the inner embryos also end up shifted away from the peak of their accretion distribution, their present position is usually associated with another secondary peak. This suggests that most of the close encounters between embryos here resulted in a merger event, rather than a scatter.
 
 \section{Simplifying Assumptions}\label{sec:assump}
 
 \subsection{Collision Cross Section}
 
-In all cases shown so far, the boundary between the standard
+In all cases shown so far, the boundary between the
 oligarchic growth and the highly-efficient short period accretion
-region lies around 60 days in orbital period. The mode of accretion is
+region lies around 60 days in orbital period. As discussed in section \ref{sec:sizeandhill}, the mode of accretion is
 set entirely by the local value of $\alpha$, which scales with both
 distance from the star and the bulk density of the planetesimals (see
-equation \ref{eq:alpha}). The artificial inflation of the collision
-cross section of the particles in our simulations, which is meant to
-reduce the computational expense, has the side effect of reducing the
-bulk densities. Because $\alpha \sim \rho_{pl}^{-1/3}$, increasing the
-particle sizes by a factor of $f=6$ reduces the orbital period at which $\alpha$ has a given value by a factor of approximately 15. Therefore, one would expect the accretion boundary to lie near 5 days in orbital period for 3 g $cm^{-3}$ bodies.
+equation \ref{eq:alpha}). Because we chose to artificially inflate the
+collision cross section of the particles in our simulations, the bulk densities
+of the particles are reduced, and the accretion boundary is shifted outward.
+However,  the scaling relation between $\alpha$ and $\rho$ ($\alpha \sim \rho_{pl}^{-1/3}$) can be used
+to predict where this accretion boundary should lie in a disk with realistic-sized planetesimals. The simulations
+presented in this paper use a collision cross section enhancement factor of 6, which moves the boundary outward in orbital
+period by a factor of approximately 15. One would therefore expect the accretion boundary to lie near 5 days in orbital period
+for 3 g $cm^{-3}$ bodies.
 
 Although a simulation with $f=1$ is not computationally tractable, we
 can test whether the accretion boundary moves in the way we expect by
-modestly changing the value of $f$. In figure \ref{fig:f6f4}, we
+modestly changing the value of $f$. In figure \ref{fig:f6f4_b}, we
 compare the fdHi simulation to a nearly identical run using $f=4$. In
-the top panel, the embryo masses in units of the isolation mass are
-shown as a function of orbital period. In the bottom panel, the value
+the top panel, we show the feeding zone width required for each particle to
+attain its present mass. As in figure \ref{fig:surfden_b}, we indicate the feeding
+zone size predicted by oligarchic growth with a horizontal dashed line.  In the bottom panel, the value
 of $\alpha$ as a function of orbital period is shown for 3 g $cm^{-3}$
 bodies with an artificial radius enhancement of $f=1$, 4 and 6. The
-horizontal dashed line indicates the value of alpha below which the
-accretion mode switches to oligarchic growth. Comparing the top and
-bottom panels, the intersection of the embryo masses and local
-isolation mass matches well with the orbital period at which $\alpha
-\sim 0.1$.  Also shown by the shaded region are $\alpha$ values for
-realistic sized bodies with $\rho_{pl}$ between 1 and 10 g cm$^{-3}$.
-% Also shown by the curved dotted lines are the $\alpha$ curves for
-% realistic-sized bodies with $\rho_{pl}$ = 1, 5 and 10 g $cm^{-3}$.
-In all cases, the accretion boundary still lies within the part of the disk in which solids would be expected to accumulate (citation?).
+horizontal dashed line indicates the empirical value of alpha below which the
+accretion mode switches to oligarchic. Comparing the top and
+bottom panels, the intersection of the feeding zone width seen in our simulations and the
+feeding zone width predicted by oligarchic growth matches well with the orbital period at which $\alpha
+\sim 0.1$ for both values of $f$.  Also shown by the shaded region are the expected $\alpha$ values for
+realistic-sized bodies with $\rho_{pl}$ between 1 and 10 g cm$^{-3}$. Although the removal of the cross section
+enhancement greatly reduces the size of the non-oligarchic region, it still should be expected to cover a portion of the
+disk where planetesimals might be expected to form for a wide range of $\rho_{pl}$.
 
 \begin{figure}
 \begin{center}
-    \includegraphics[width=0.5\textwidth]{figures/f6f4.png}
+    \includegraphics[width=0.5\textwidth]{figures/f6f4_b.png}
     \caption{In the top panel, we show the final masses of the bodies
       from the fdHi and fdHif4 simulations in units of the isolation
-      mass for $\tilde{b} = 2\sqrt{3}$. The bottom panel shows the variation of $\alpha$ with orbital period for the bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of the embryo mass distribution and isolation mass. The shaded region in the bottom panel show the values of alpha for realistic-sized ($f=1$) planetesimals with bulk densities between 10 and 1 g cm$^{-3}$.\label{fig:f6f4}}
+      mass for $\tilde{b} = 2\sqrt{3}$. The bottom panel shows the variation of $\alpha$ with orbital period for the bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of the embryo mass distribution and isolation mass. The shaded region in the bottom panel show the values of alpha for realistic-sized ($f=1$) planetesimals with bulk densities between 10 and 1 g cm$^{-3}$.\label{fig:f6f4_b}}
 \end{center}
 \end{figure}
-
-% compare f=4 and f=6 disk. show that the mass transition moves inwards by the correct amount as alpha changes
-% how does density affect results? trappist-1 planets are 5 g/cc (agol+ 2021)
 
 \subsection{Collision Model}
 
@@ -714,36 +708,33 @@ In all cases, the accretion boundary still lies within the part of the disk in w
 \end{center}
 \end{figure}
 
-In the simulations presented in this work, all collisions result in a complete merging of a pair of bodies with no loss of mass or momentum. Although simple to model, this assumption of perfect accretion may result in overly efficient growth, particularly at the innermost region of the disk where encounter velocities are the largest. To handle this issue properly, semianalytic collision resolution models have been developed and implemented in N-body codes (see \citet{leinhardt12}). However, resolving collisional debris fragments using a direct approach as we have done with {\sc ChaNGa} would result in an intractably large number of particles.
+For the simulations presented in this work, every collision results in a perfect merger between pairs of bodies, with no loss
+of mass or momentum. Although simpler and less computationally expensive to model, allowing every collision to produce a
+merger might result in overly efficient growth, particularly in the innermost region of the disk where the encounter velocities are largest. A proper way to handle this would be to allow for a range of collision outcomes, based on a semianalytic model (see \citet{leinhardt12}). However, resolving collisional debris, or even prolonging growth by forcing high-velocity pairs of bodies to bounce is too expensive to model, even with {\sc ChaNGa}.
 
-To test whether a more restrictive collision model should modify our results, we present a smaller scale test using a slightly more sophisticated collision model. In this case, a collision can result in one of two outcomes: if the impact velocity is smaller than the mutual escape velocity of the colliding particles, defined as
-%TRQ: I corrected this off the top of my head: CHECK!
+To test whether a more restrictive collision model should alter the growth mode of the inner disk, we ran a smaller scale test using a slightly more restrictive collision model. In this case, a collision can result in one of two outcomes: if the impact velocity is smaller than the mutual escape velocity of the colliding particles, defined as
 \begin{equation}\label{eq:v_mut}
-	v_{mut, esc} = \sqrt{\frac{G (m_{1} + m_{2})}{r_{1} + r_{2}}},
+	v_{mut, esc} = \sqrt{\frac{2 G (m_{1} + m_{2})}{r_{1} + r_{2}}},
 \end{equation}
 where $m_{1}, m_{2}$ and $r_{1}, r_{2}$ are the masses and radii of
-colliding particles 1 and 2, then the bodies perfectly merge. For
-impact velocities larger than $v_{mut, esc}$, no mass is transferred, and the bodies undergo a completely elastic bounce. Because there is no possibility of partial accretion, this model likely restricts growth more than the model used by \citet{leinhardt12}. However, we will show below that the bounce-merge model does not meaningfully affect the outcome of the planetesimal accretion phase, and so a partial accretion model should do the same.
+colliding particles 1 and 2, then the bodies merge. For
+impact velocities larger than $v_{mut, esc}$, no mass is transferred, and the bodies undergo a completely elastic bounce. Because the accretion outcome is all or nothing, this model should restrict growth more than a partial accretion model \citep{leinhardt12}. Below, we will show that the bounce-merge model does not meaningfully affect the outcome of the inner disk's planetesimal accretion phase, and so a partial accretion model should do the same.
 
-For the configuration of initial conditions we have chosen, the typical encounter velocity (defined by $v_{enc} = \left< e^{2} \right>^{1/2} v_{k}$, where $v_{k}$ is the local Keplerian velocity) is about 25 percent larger than $v_{mut, esc}$. Because the encounter velocities follow a Gaussian distribution, there should be some small subset of collisions that still meet the merger criteria. In addition, $v_{mut, esc}$ becomes larger as the bodies grow and the merger criteria should become easier to meet as the system evolves.
+To compare the outcome of the two collision models, we have chosen to use the initial conditions from the fdLo simulation, but 
+have truncated the disk beyond 3 days in orbital period. We truncate the outer disk because the particle count with the bounce-
+merge model declines much more slowly, while also requiring many more timesteps overall.
+For the initial conditions we have chosen, the typical encounter velocity (defined by $v_{enc} = \left< e^{2} \right>^{1/2} v_{k}$, 
+where $v_{k}$ is the local Keplerian velocity) is about 25 percent larger than $v_{mut, esc}$. Because the encounter velocities 
+follow a Gaussian distribution, there should still be a small subset of collisions that still meet the merger criteria to occur early on. 
+In addition, $v_{mut, esc}$ becomes larger as the bodies grow and the merger criteria should become easier to meet as the 
+system evolves. For these reasons, one would expect the inhibition of growth due to the more restrictive collision model to be temporary.
 
-In figure \ref{fig:frag_ecc}, we show the results of two versions of the fdLo simulation, one with mergers only (shown in orange) and one with the bounce-merge model (shown in green). The blue points in the top panel show the initial conditions used for both cases. Because the bounce-merge model greatly increases the number of timesteps required, we choose to model only the innermost part of the disk to reduce the computational cost. Although the bounce-merge simulation takes much longer to reach the same phase of evolution, the resulting orbits and masses of the embryos are indistinguishable from the merger-only case.
+In figure \ref{fig:frag_ecc}, we compare the outcomes of the simulations, one with mergers only (shown in orange) and one with the bounce-merge model (shown in green). The blue points in the top panel show the initial conditions used for both cases. Although the bounce-merge simulation takes much longer to reach the same phase of evolution, the resulting orbital properties and mass distribution of the embryos are indistinguishable from the merger-only case.
 
-To investigate the differences between the two collision models early in the simulations, we show the time evolution of the ratio between the maximum and mean mass in figure \ref{fig:frag_evo}. In both cases, this ratio grows at early times, which indicates that runaway growth still operates, regardless of the collision model used. In the bounce-merge case, the mass ratio peaks at a higher value, while also undergoing a longer runaway growth phase. This suggests that the mass distribution becomes much less unimodal during this growth process, but as figure \ref{fig:frag_ecc} shows, this does not affect the resulting embryos or allow for a residual planetesimal population.
+To investigate the differences in growth between the two collision models early on, we show the time evolution of the ratio between the maximum and mean mass in figure \ref{fig:frag_evo}. In both cases, this ratio first increases, which indicates that runaway growth still operates, regardless of the collision model used. In the bounce-merge case, the mass ratio peaks at a higher value, while also undergoing a longer runaway growth phase. This suggests that the mass distribution becomes much less unimodal during this growth process, but as figure \ref{fig:frag_ecc} shows, this does not affect the resulting embryos or allow for a residual planetesimal population.
 
 %TRQ: expand on this?  Compare figure 10 histograms for the two runs?
 Radial mixing appears to be enhanced by a partial collision model, along with smaller collision cross section inflation \citep{childs22}.
-
-% show alpha, beta study again with bounce vs merge model
-% mergers still happen for 'lo' simulations but not 'hi'
-% this is because the eccentricity dispersion is significantly higher in the 'hi' case
-% mostly because stirring rate increases with surface density
-% criteria should get less restrictive as larger bodies grow, what if we turn on bounces partway thru growth process?
-
-\subsection{Type I Migration}
-
-What is the migration timescale for the embryos to move to the inner edge of the disk? Maybe this section isn't terribly important and should be excluded?
-TRQ: I agree
 
 \section{Summary and Discussion} \label{sec:discuss}
 

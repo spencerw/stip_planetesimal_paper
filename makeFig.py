@@ -107,6 +107,16 @@ def prev_iorder(new_iord, num_original, del_iord):
 def p_orbit(sma):
 	return (2*np.pi*np.sqrt(sma**3/mCentral)*simT).to(u.d).value
 
+# Determine the feeding zone widths required for a set of particles
+# to obtain their current mass, based on an initial surface density profile
+def get_btilde(pl, prof0):
+	surf_den = (prof0['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	mp = (pl['mass']*u.M_sun).to(u.g).value
+	mCeng = (mCentral*u.M_sun).to(u.g).value
+	aCm = (pl['a']*u.AU).to(u.cm).value
+	surf_den_at = np.interp(pl['a'], prof0['rbins'], surf_den)
+	return mp**(2./3.)*(3*mCeng)**(1./3.)/(2*np.pi*aCm**2*surf_den_at)
+
 # For a given snapshot, find a given property of the 'roots' of the particles
 def get_root_property(pl0, pl, root, time, prop):
 	def find(node, iord):
@@ -510,14 +520,6 @@ def plot_surfden_b():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	def get_btilde(pl, prof0):
-		surf_den = (prof0['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
-		mp = (pl['mass']*u.M_sun).to(u.g).value
-		mCeng = (mCentral*u.M_sun).to(u.g).value
-		aCm = (pl['a']*u.AU).to(u.cm).value
-		surf_den_at = np.interp(pl['a'], prof0['rbins'], surf_den)
-		return mp**(2./3.)*(3*mCeng)**(1./3.)/(2*np.pi*aCm**2*surf_den_at)
-
 	fig, ax = plt.subplots(figsize=(8,12), nrows=4, sharex=True, sharey=True)
 
 	axes = ax[0]
@@ -792,6 +794,76 @@ def plot_f6f4():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
+def plot_f6f4_b():
+	file_str = 'figures/f6f4_b.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	fig, ax = plt.subplots(figsize=(8,8), nrows=2, sharex=True)
+
+	axes = ax[0]
+
+	#surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	#surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
+	#m_iso_vhi_at = np.sqrt((2*np.pi*(plVHi['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
+	#axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi')
+
+	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='f = 6', edgecolor='black')
+
+	#surf_den = (p_vhif4_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	#surf_den_at = np.interp(plVHif4['a'], p_vhif4_ic['rbins'], surf_den)
+	#m_iso_vhi_at = np.sqrt((2*np.pi*(plVHif4['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
+	#axes.scatter(perf4.value, (plVHif4['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHif4')
+
+	axes.scatter(perf4.value, get_btilde(plVHif4, p_vhif4_ic), label='f = 4', edgecolor='black')
+
+	axes.axhline(2*np.sqrt(3), ls='--')
+	#axes.set_yscale('log')
+	axes.set_ylim(0, 20)
+	axes.set_xlim(-5, 100)
+	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.legend()
+
+	axes = ax[1]
+	f = 6
+	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha, lw=lw)
+
+	f = 4
+	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	axes.semilogy(prof_perIC, alpha, lw=lw)
+
+	f = 1
+	alpha = r_pl*f/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	#axes.semilogy(prof_perIC, alpha, lw=lw)
+
+	rhoval = (1*u.g/u.cm**3).to(u.M_sun/u.AU**3).value
+	r_pl_varyrho = (3*m_pl/(4*np.pi*rhoval))**(1/3)
+	alpha1g = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	#axes.semilogy(prof_perIC, alpha, ls=':')
+
+	rhoval = (5*u.g/u.cm**3).to(u.M_sun/u.AU**3).value
+	r_pl_varyrho = (3*m_pl/(4*np.pi*rhoval))**(1/3)
+	alpha = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	#axes.semilogy(prof_perIC, alpha, ls=':')
+
+	rhoval = (10*u.g/u.cm**3).to(u.M_sun/u.AU**3).value
+	r_pl_varyrho = (3*m_pl/(4*np.pi*rhoval))**(1/3)
+	alpha10g = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
+	#axes.semilogy(prof_perIC, alpha, ls=':')
+
+	axes.fill_between(prof_perIC, alpha1g, alpha10g, alpha=0.5)
+
+	axes.axhline(0.1, ls='--', color='gray')
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel(r'$\alpha$')
+
+	fig.tight_layout()
+
+	plt.subplots_adjust(wspace=0, hspace=0)
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
 def plot_frag_ecc():
 	file_str = 'figures/frag_ecc.' + fmt
 	if not clobber and os.path.exists(file_str):
@@ -810,23 +882,23 @@ def plot_frag_ecc():
 	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
 	axes = ax[0]
 	axes.scatter(per0, pl0['e'], s=pl0['mass']/np.min(pl0['mass'])*0.1)
-	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*1)
-	axes.scatter(perF, plF['e'], s=plF['mass']/np.min(pl0['mass'])*1)
+	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*1, edgecolor='black')
+	axes.scatter(perF, plF['e'], s=plF['mass']/np.min(pl0['mass'])*1, edgecolor='black')
 	axes.set_yscale('log')
 	axes.set_ylim(5e-5, 5e-2)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel('Eccentricity')
 
 	axes = ax[1]
-	q = (plNf['mass']*u.M_sun).to(u.g).value
-	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
+	q1 = (plNf['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q1, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
 	bins = 0.5*(bins[1:] + bins[:-1])
 	axes.fill_between([], [], step='mid')
 	#axes.loglog(bins, hist, linestyle='steps-mid')
 	axes.fill_between(bins, hist, step='mid', alpha=0.8)
 
-	q = (plF['mass']*u.M_sun).to(u.g).value
-	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
+	q2 = (plF['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q2, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
 	bins = 0.5*(bins[1:] + bins[:-1])
 	#axes.semilogx(bins, hist, linestyle='steps-mid')
 	axes.fill_between(bins, hist, step='mid', alpha=0.8)
@@ -870,11 +942,12 @@ def plot_frag_evo():
 #plot_fulldisk_e_m()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
-plot_surfden_profiles()
+#plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_surfden_b()
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
-#plot_frag_ecc()
+#plot_f6f4_b()
+plot_frag_ecc()
 #plot_frag_evo()
