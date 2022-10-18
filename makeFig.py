@@ -40,10 +40,10 @@ bins = np.linspace(0.01, 0.3, num_bins)
 
 snap = pb.load('data/fullDiskVHi.ic')
 plVHiIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhi_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins)
+p_vhi_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins, calc_x = lambda x: x['a'])
 snap = pb.load('data/fullDiskVHi1.250000')
 plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhi = pb.analysis.profile.Profile(plVHi.d, bins=bins)
+p_vhi = pb.analysis.profile.Profile(plVHi.d, bins=bins, calc_x = lambda x: x['a'])
 perIC = 2*np.pi*np.sqrt((plVHiIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 prof_perIC = 2*np.pi*np.sqrt((p_vhi_ic['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 per = 2*np.pi*np.sqrt((plVHi['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -56,40 +56,40 @@ r_pl = ((3*(m_pl*u.M_sun).to(u.g).value/(4*np.pi*rho))**(1/3)*u.cm).to(u.AU).val
 
 snap = pb.load('data/fullDiskVHif4.ic')
 plVHif4IC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhif4_ic = pb.analysis.profile.Profile(plVHif4IC.d, bins=bins)
+p_vhif4_ic = pb.analysis.profile.Profile(plVHif4IC.d, bins=bins, calc_x = lambda x: x['a'])
 snap = pb.load('data/fullDiskVHif41.152000')
 plVHif4 = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhif4 = pb.analysis.profile.Profile(plVHif4.d, bins=bins)
+p_vhif4 = pb.analysis.profile.Profile(plVHif4.d, bins=bins, calc_x = lambda x: x['a'])
 perf4IC = 2*np.pi*np.sqrt((plVHif4IC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 prof_perf4IC = 2*np.pi*np.sqrt((p_vhif4_ic['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 perf4 = 2*np.pi*np.sqrt((plVHif4['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
 snap = pb.load('data/fullDiskVHiSteep.ic')
 plVHiICSt = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhi_ic_st = pb.analysis.profile.Profile(plVHiICSt.d, bins=bins)
+p_vhi_ic_st = pb.analysis.profile.Profile(plVHiICSt.d, bins=bins, calc_x = lambda x: x['a'])
 snap = pb.load('data/fullDiskVHiSteep1.348000')
 plVHiSt = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhi_st = pb.analysis.profile.Profile(plVHiSt.d, bins=bins)
+p_vhi_st = pb.analysis.profile.Profile(plVHiSt.d, bins=bins, calc_x = lambda x: x['a'])
 perICSt = 2*np.pi*np.sqrt((plVHiICSt['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 prof_perIC_st = 2*np.pi*np.sqrt((p_vhi_ic_st['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 perSt = 2*np.pi*np.sqrt((plVHiSt['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
 snap = pb.load('data/fullDiskVHiShallow.ic')
 plVHiICSh = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhi_ic_sh = pb.analysis.profile.Profile(plVHiICSh.d, bins=bins)
+p_vhi_ic_sh = pb.analysis.profile.Profile(plVHiICSh.d, bins=bins, calc_x = lambda x: x['a'])
 snap = pb.load('data/fullDiskVHiShallow1.348000')
 plVHiSh = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_vhi_sh = pb.analysis.profile.Profile(plVHiSh.d, bins=bins)
+p_vhi_sh = pb.analysis.profile.Profile(plVHiSh.d, bins=bins, calc_x = lambda x: x['a'])
 perICSh = 2*np.pi*np.sqrt((plVHiICSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 prof_perIC_sh = 2*np.pi*np.sqrt((p_vhi_ic_sh['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 perSh = 2*np.pi*np.sqrt((plVHiSh['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
 snap = pb.load('data/fullDiskLoLarge.ic')
 plLoIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_lo_ic = pb.analysis.profile.Profile(plLoIC.d, bins=bins)
+p_lo_ic = pb.analysis.profile.Profile(plLoIC.d, bins=bins, calc_x = lambda x: x['a'])
 snap = pb.load('data/fullDiskLoLarge.3000000')
 plLo = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-p_lo = pb.analysis.profile.Profile(plLo.d, bins=bins)
+p_lo = pb.analysis.profile.Profile(plLo.d, bins=bins, calc_x = lambda x: x['a'])
 perICLo = 2*np.pi*np.sqrt((plLoIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 prof_perIC_lo = 2*np.pi*np.sqrt((p_lo_ic['rbins']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 perLo = 2*np.pi*np.sqrt((plLo['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -212,7 +212,7 @@ def plot_alpha_beta():
 		snap = pb.load('data/'+prefix+'.end')
 		pl = ko.orb_params(snap, isHelio=True, mCentral=mcen)
 		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*500)
-		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*500)
+		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*500, edgecolor='black')
 		ax.text(0.85, 0.95, title, transform=ax.transAxes, ha='center', va='center')
 
 	fig, ax = plt.subplots(figsize=(16,12), nrows=2, ncols=2, sharex=True, sharey=True)
@@ -220,18 +220,18 @@ def plot_alpha_beta():
 	ax[0][0].set_ylabel('Eccentricity')
 	subplot(ax[0][1], 'ki_fluffy_hot', r'Large $\alpha$, Large $\beta$')
 	subplot(ax[1][0], 'ki', r'Small $\alpha$, Small $\beta$')
-	ax[1][0].set_xlabel('Semimajor Axis [AU]')
-	ax[1][0].set_ylabel('Eccentricity')
 	ax[1][0].get_xticklabels()[0].set_visible(False)
 	ax[1][0].get_xticklabels()[-1].set_visible(False)
 	subplot(ax[1][1], 'ki_hot', r'Small $\alpha$, Large $\beta$')
-	ax[1][1].set_xlabel('Semimajor Axis [AU]')
 	ax[1][1].get_xticklabels()[0].set_visible(False)
 	ax[1][1].get_xticklabels()[-1].set_visible(False)
 
 	ax[1][1].set_yscale('log')
 	ax[1][1].set_xlim(0.9, 1.1)
 	ax[1][1].set_ylim(1e-5, 0.3)
+
+	fig.supslabel('Semimajor Axis [AU]')
+	fig.supylabel('Eccentricity')
 
 	plt.subplots_adjust(wspace=0, hspace=0)
 
@@ -279,7 +279,7 @@ def plot_alpha_beta_mass():
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
 	axes[0].loglog(bins, hist, drawstyle='steps-mid')
-	axes[0].fill_between(bins, 0, hist, step='mid')
+	axes[0].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[0].set_yticks([])
 	axes[0].text(0.85, 0.85, r'Large $\alpha$, Small $\beta$', transform=axes[0].transAxes, ha='center', va='center')
 
@@ -289,7 +289,7 @@ def plot_alpha_beta_mass():
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
 	axes[1].loglog(bins, hist, drawstyle='steps-mid')
-	axes[1].fill_between(bins, 0, hist, step='mid')
+	axes[1].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[1].set_yticks([])
 	axes[1].text(0.85, 0.85, r'Large $\alpha$, Large $\beta$', transform=axes[1].transAxes, ha='center', va='center')
 
@@ -299,7 +299,7 @@ def plot_alpha_beta_mass():
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
 	axes[2].loglog(bins, hist, drawstyle='steps-mid')
-	axes[2].fill_between(bins, 0, hist, step='mid')
+	axes[2].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[2].set_yticks([])
 	axes[2].text(0.85, 0.85, r'Small $\alpha$, Small $\beta$', transform=axes[2].transAxes, ha='center', va='center')
 
@@ -309,11 +309,11 @@ def plot_alpha_beta_mass():
 	hist, bins = np.histogram(q, bins=np.logspace(np.min(np.log10(q)), np.max(np.log10(q))))
 	bins = 0.5*(bins[1:] + bins[:-1])
 	axes[3].loglog(bins, hist, drawstyle='steps-mid')
-	axes[3].fill_between(bins, 0, hist, step='mid')
+	axes[3].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[3].set_yticks([])
 	axes[3].text(0.85, 0.85, r'Small $\alpha$, Large $\beta$', transform=axes[3].transAxes, ha='center', va='center')
 
-	axes[2].set_ylabel('log dn/dm')
+	fig.supylabel('log dn/dm')
 	axes[3].set_xlabel('Mass [g]')
 
 	plt.subplots_adjust(wspace=0, hspace=0)
@@ -361,6 +361,49 @@ def plot_fulldisk_e_m():
 	axes.set_ylabel('Mass [g]')
 	axes.set_xlabel('Orbital Period [d]')
 	axes.axvline(60, ls='--')
+
+	plt.tight_layout()
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_fulldisk_e_m_b():
+	file_str = 'figures/fulldisk_e_m_b.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	fig, ax = plt.subplots(figsize=(8,8), nrows=2, sharex=True)
+
+	axes = ax[0]
+	# Not sure why I have to set the bin minimum this way, but it prevents a weird
+	# artifact from appearing on the left side of the contours
+	xbins = np.linspace(-1, p_max, num=num_bins)
+	ybins = np.logspace(np.log10(e_min), np.log10(e_max), num=num_bins)
+	H, xedges, yedges = np.histogram2d(perIC.value, plVHiIC['e'], bins=(xbins, ybins))
+	binsX = 0.5*(xedges[1:] + xedges[:-1])
+	binsY = 0.5*(yedges[1:] + yedges[:-1])
+	l = np.logspace(np.log10(30), np.log10(np.max(H)), 10)
+	c = axes.contour(binsX, binsY, np.flipud(np.rot90(H)), colors='black', linewidths=0.2, levels=l)
+
+	axes.scatter(per.value, plVHi['e'], s=plVHi['mass']/refmass*1000, edgecolor='black', linewidth=0.4)
+	axes.set_ylabel('Eccentricity')
+	axes.set_xlim(p_min, p_max)
+	axes.set_ylim(e_min, e_max)
+	axes.set_yscale('log')
+
+	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
+	a_vals = (p_vhi_ic['rbins']*u.AU).to(u.cm).value
+	btilde = 2*np.sqrt(3)
+	m_iso_vhi = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentralg))
+	#btilde = 10
+	#m_iso_vhi1 = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentralg))
+
+	axes = ax[1]
+	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), edgecolor='black', linewidth=0.4)
+	axes.axhline(2.*np.sqrt(3.), ls='--', color='gray')
+	axes.axhline(10., ls='--', color='gray')
+	axes.set_ylim(0, 20)
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel(r'Required $\tilde{b}$')
 
 	plt.tight_layout()
 
@@ -453,20 +496,27 @@ def plot_surfden_profiles():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(8,6))
+	fig, ax = plt.subplots(figsize=(8,12), nrows=4, sharex=True, sharey=True)
 
-	size = 1000
-	axes.scatter(per.value, plVHi['e'], s=size*plVHi['mass']/np.max(plVHi['mass']), label='fdHi')
-	axes.scatter(perSt.value, plVHiSt['e'], s=size*plVHiSt['mass']/np.max(plVHiSt['mass']), label='fdHiSteep')
-	axes.scatter(perSh.value, plVHiSh['e'], s=size*plVHiSh['mass']/np.max(plVHiSh['mass']), label='fdHiShallow')
-	axes.scatter(perLo.value, plLo['e'], s=size*plLo['mass']/np.max(plLo['mass']), label='fdLo')
+	size = 500
+	axes = ax[0]
+	axes.set_title('fdHi')
+	axes.scatter(per.value, plVHi['e'], s=size*plVHi['mass']/np.max(plVHi['mass']), label='fdHi', edgecolor='black', linewidth=0.4)
+	axes = ax[1]
+	axes.set_title('fdSteep')
+	axes.scatter(perSt.value, plVHiSt['e'], s=size*plVHiSt['mass']/np.max(plVHiSt['mass']), label='fdHiSteep', edgecolor='black', linewidth=0.4)
+	axes = ax[2]
+	axes.set_title('fdShallow')
+	axes.scatter(perSh.value, plVHiSh['e'], s=size*plVHiSh['mass']/np.max(plVHiSh['mass']), label='fdHiShallow', edgecolor='black', linewidth=0.4)
+	axes = ax[3]
+	axes.set_title('fdLo')
+	axes.scatter(perLo.value, plLo['e'], s=size*plLo['mass']/np.max(plLo['mass']), label='fdLo', edgecolor='black', linewidth=0.4)
 
 	axes.set_yscale('log')
 	axes.set_ylim(1e-4, 0.5)
 	axes.set_xlim(-5, 100)
 	axes.set_xlabel('Orbital Period [d]')
-	axes.set_ylabel('Eccentricity')
-	axes.legend()
+	fig.supylabel('Eccentricity')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -475,7 +525,7 @@ def plot_surfden_iso():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, ax = plt.subplots(figsize=(8,6), nrows=4, sharex=True, sharey=True)
+	fig, ax = plt.subplots(figsize=(8,12), nrows=4, sharex=True, sharey=True)
 
 	btilde = 2*np.sqrt(3)#5
 
@@ -485,26 +535,25 @@ def plot_surfden_iso():
 	surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHi['a'], p_vhi_ic['rbins'], surf_den)
 	m_iso_vhi_at = np.sqrt((2*np.pi*(plVHi['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi', s=s, edgecolor='black')
-
+	axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi', s=s, edgecolor='black', linewidth=0.4)
+	axes.axhline(1, ls='--', color='gray')
 	axes = ax[1]
 	surf_den = (p_vhi_ic_st['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSt['a'], p_vhi_ic_st['rbins'], surf_den)
 	m_iso_vhist_at = np.sqrt((2*np.pi*(plVHiSt['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perSt.value, (plVHiSt['mass']*u.M_sun).to(u.g).value/m_iso_vhist_at, label='fdHiSteep', s=s, edgecolor='black')
-
+	axes.scatter(perSt.value, (plVHiSt['mass']*u.M_sun).to(u.g).value/m_iso_vhist_at, label='fdHiSteep', s=s, edgecolor='black', linewidth=0.4)
+	axes.axhline(1, ls='--', color='gray')
 	axes = ax[2]
 	surf_den = (p_vhi_ic_sh['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plVHiSh['a'], p_vhi_ic_sh['rbins'], surf_den)
 	m_iso_vhish_at = np.sqrt((2*np.pi*(plVHiSh['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perSh.value, (plVHiSh['mass']*u.M_sun).to(u.g).value/m_iso_vhish_at, label='fdHiShallow', s=s, edgecolor='black')
-
+	axes.scatter(perSh.value, (plVHiSh['mass']*u.M_sun).to(u.g).value/m_iso_vhish_at, label='fdHiShallow', s=s, edgecolor='black', linewidth=0.4)
+	axes.axhline(1, ls='--', color='gray')
 	axes = ax[3]
 	surf_den = (p_lo_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	surf_den_at = np.interp(plLo['a'], p_lo_ic['rbins'], surf_den)
 	m_iso_lo_at = np.sqrt((2*np.pi*(plLo['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
-	axes.scatter(perLo.value, (plLo['mass']*u.M_sun).to(u.g).value/m_iso_lo_at, label='fdLo', s=s, edgecolor='black')
-
+	axes.scatter(perLo.value, (plLo['mass']*u.M_sun).to(u.g).value/m_iso_lo_at, label='fdLo', s=s, edgecolor='black', linewidth=0.4)
 	axes.axhline(1, ls='--', color='gray')
 	axes.set_yscale('log')
 	axes.set_ylim(1e-2, 20)
@@ -523,24 +572,20 @@ def plot_surfden_b():
 	fig, ax = plt.subplots(figsize=(8,12), nrows=4, sharex=True, sharey=True)
 
 	axes = ax[0]
-	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black')
-	axes.axhline(2*np.sqrt(3), ls='--')
-	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHi')
 	axes = ax[1]
-	axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black')
-	axes.axhline(2*np.sqrt(3), ls='--')
-	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHiSteep')
 	axes = ax[2]
-	axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black')
-	axes.axhline(2*np.sqrt(3), ls='--')
-	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHiShallow')
 	axes = ax[3]
-	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black')
-	axes.axhline(2*np.sqrt(3), ls='--')
-	axes.set_ylabel(r'Required $\tilde{b}$')
+	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black', linewidth=0.4)
+	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdLo')
 
 	axes.set_xlim(-5, 100)
@@ -548,6 +593,8 @@ def plot_surfden_b():
 	axes.set_ylim(0, 20)
 	axes.set_xlabel('Orbital Period [d]')
 	#axes.legend()
+
+	fig.supylabel(r'Required $\tilde{b}$')
 
 	plt.tight_layout()
 	#plt.subplots_adjust(wspace=0, hspace=0)
@@ -603,7 +650,7 @@ def plot_smooth_acc():
 	df = pd.concat([df1, df2])
 	df1_s, df1_d = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
 	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1][:num_oli]
-	a_iord_orig = prev_iorder(plVHi['iord'][massive_ind], len(plVHiIC), df1_d)
+	a_iord_orig = plVHi['iord'][massive_ind]#prev_iorder(plVHi['iord'][massive_ind], len(plVHiIC), df1_d)
 	mmin = np.min(df['m1'])
 
 	info = coll_info(df)
@@ -628,7 +675,7 @@ def plot_smooth_acc():
 	fig, axes = plt.subplots(figsize=(8,6))
 	mask = porb < 60
 	axes.scatter(xvals[~mask], yvals[~mask], color='r', marker='x', label='P_orbit > 60d')
-	axes.scatter(xvals[mask], yvals[mask], label='P_orbit < 60d')
+	axes.scatter(xvals[mask], yvals[mask], label='P_orbit < 60d', edgecolor='black', linewidth=0.4)
 	axes.set_xscale('log')
 	axes.set_yscale('log')
 	axes.set_ylim(1e-4, 1e-1)
@@ -667,10 +714,11 @@ def plot_acc_zones():
 		hist, bins = np.histogram(child_p, bins=histbins, normed=True)
 		bins = 0.5*(bins[1:] + bins[:-1])
 		hist /= np.max(hist)/0.1
-		axes.plot(bins, hist+0.2*idx, linestyle='steps-mid', color='gray', lw=0.5)
-		axes.fill_between(bins, np.min(hist)+0.2*idx, hist+0.2*idx, color='gray')
+		axes.plot(bins, hist+0.2*idx, drawstyle='steps-mid', lw=0.5)
+		axes.fill_between(bins, np.min(hist)+0.2*idx, hist+0.2*idx, alpha=0.5)
 		pl_p = p_orbit(plVHi['a'][massive_ind[i]])
 		axes.vlines(pl_p, np.min(hist)+0.2*idx, np.max(hist)+0.2*idx, lw=lw)
+		plt.gca().set_prop_cycle(None)
 		axes.set_xlabel('Orbital Period [d]')
 		axes.set_ylabel('Fraction of Planetesimals Accreted')
 		axes.set_yticks([])
@@ -747,7 +795,7 @@ def plot_f6f4():
 	m_iso_vhi_at = np.sqrt((2*np.pi*(plVHif4['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
 	axes.scatter(perf4.value, (plVHif4['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHif4')
 
-	axes.axhline(1, ls='--')
+	axes.axhline(1, ls='--', color='gray')
 	axes.set_yscale('log')
 	axes.set_ylim(8e-3, 20)
 	axes.set_xlim(-5, 100)
@@ -808,16 +856,16 @@ def plot_f6f4_b():
 	#m_iso_vhi_at = np.sqrt((2*np.pi*(plVHi['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
 	#axes.scatter(per.value, (plVHi['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHi')
 
-	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='f = 6', edgecolor='black')
+	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='f = 6', edgecolor='black', linewidth=0.4)
 
 	#surf_den = (p_vhif4_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 	#surf_den_at = np.interp(plVHif4['a'], p_vhif4_ic['rbins'], surf_den)
 	#m_iso_vhi_at = np.sqrt((2*np.pi*(plVHif4['a']*u.AU).to(u.cm).value**2*btilde*surf_den_at)**3/(3*mCentralg))
 	#axes.scatter(perf4.value, (plVHif4['mass']*u.M_sun).to(u.g).value/m_iso_vhi_at, label='fdHif4')
 
-	axes.scatter(perf4.value, get_btilde(plVHif4, p_vhif4_ic), label='f = 4', edgecolor='black')
+	axes.scatter(perf4.value, get_btilde(plVHif4, p_vhif4_ic), label='f = 4', edgecolor='black', linewidth=0.4)
 
-	axes.axhline(2*np.sqrt(3), ls='--')
+	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	#axes.set_yscale('log')
 	axes.set_ylim(0, 20)
 	axes.set_xlim(-5, 100)
@@ -875,36 +923,35 @@ def plot_frag_ecc():
 	snap = pb.load('data/innerDiskLoNoFrag.6911000')
 	plNf = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 	perNf = 2*np.pi*np.sqrt((plNf['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
-	snap = pb.load('data/innerDiskLoFrag.5676000')
+	snap = pb.load('data/innerDiskLoFragLarge.5559000')
 	plF = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 	perF = 2*np.pi*np.sqrt((plF['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
 	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
 	axes = ax[0]
 	axes.scatter(per0, pl0['e'], s=pl0['mass']/np.min(pl0['mass'])*0.1)
-	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*1, edgecolor='black')
-	axes.scatter(perF, plF['e'], s=plF['mass']/np.min(pl0['mass'])*1, edgecolor='black')
+	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*1, edgecolor='black', linewidth=0.4)
+	axes.scatter(perF, plF['e'], s=plF['mass']/np.min(pl0['mass'])*1, edgecolor='black', linewidth=0.4)
 	axes.set_yscale('log')
 	axes.set_ylim(5e-5, 5e-2)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel('Eccentricity')
 
 	axes = ax[1]
+	axes.plot([], [])
+
 	q1 = (plNf['mass']*u.M_sun).to(u.g).value
 	hist, bins = np.histogram(q1, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
 	bins = 0.5*(bins[1:] + bins[:-1])
-	axes.fill_between([], [], step='mid')
-	#axes.loglog(bins, hist, linestyle='steps-mid')
-	axes.fill_between(bins, hist, step='mid', alpha=0.8)
+	axes.plot(bins, np.cumsum(hist), linewidth=lw)
 
 	q2 = (plF['mass']*u.M_sun).to(u.g).value
-	hist, bins = np.histogram(q2, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
+	hist, bins = np.histogram(q2, bins=np.logspace(np.min(np.log10(q2)), np.max(np.log10(q2))))
 	bins = 0.5*(bins[1:] + bins[:-1])
-	#axes.semilogx(bins, hist, linestyle='steps-mid')
-	axes.fill_between(bins, hist, step='mid', alpha=0.8)
+	axes.plot(bins, np.cumsum(hist), linewidth=lw)
 
 	axes.set_xlabel('Mass [g]')
-	axes.set_ylabel('dn/dm')
+	axes.set_ylabel('N (<M)')
 	axes.set_xscale('log')
 
 	fig.tight_layout()
@@ -935,11 +982,76 @@ def plot_frag_evo():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
+def plot_frag_acc_zones():
+	file_str = 'figures/frag_acc_zones.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	fig, ax = plt.subplots(figsize=(8, 12), nrows=2)
+
+	snap0 = pb.load('data/innerDiskLo.ic')
+	pl0 = ko.orb_params(snap0, isHelio=True, mCentral=mCentral)
+
+	s = 1000
+	amin, amax = 0.05, 0.2
+	histbins = np.linspace(0, 4, 100)
+
+
+	# Grab the 3 most massive bodies to plot
+	maxoli = 3
+
+	def p_orbit(a):
+		return ((np.sqrt(a**3/mCentral))*u.yr).to(u.d).value
+
+	def oli_plot(i, idx, pl, axes, c):
+		child_p = p_orbit(a_init[i])
+		hist, bins = np.histogram(child_p, bins=histbins, normed=True)
+		bins = 0.5*(bins[1:] + bins[:-1])
+		hist /= np.max(hist)/0.1
+		#axes.plot(bins, hist+0.2*idx, linestyle='steps-mid', color='gray', lw=0.5)
+		axes.fill_between(bins, np.min(hist)+0.2*idx, hist+0.2*idx, color=c)
+		pl_p = p_orbit(pl['a'][massive_ind[i]])
+		axes.vlines(pl_p, np.min(hist)+0.2*idx, np.max(hist)+0.2*idx, lw=lw)
+		axes.set_xlabel('Orbital Period [d]')
+		axes.set_ylabel('Fraction of Planetesimals Accreted')
+		axes.set_yticks([])
+		print(pl['mass'][massive_ind[i]], len(child_p)*np.min(pl0['mass']), len(child_p))
+
+	with open('data/innerDiskLoTree.dat', 'rb') as f:
+		root = pickle.load(f)
+	snap = pb.load('data/innerDiskLoNoFrag.6911000')
+	plNf = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	time = 0.05*6911000/(2*np.pi)
+	massive_ind = np.argsort(np.array(plNf['mass']))[::-1][:maxoli]
+	pl = plNf[massive_ind]
+	a_init = get_root_property(pl0, pl, root, time, 'a')
+	# Sort by semimajor axis beore plotting
+	indices = np.arange(0, maxoli)
+	sort_a_ind = np.argsort(plNf['a'][massive_ind[indices]])
+	for idx, i in enumerate(sort_a_ind):
+		oli_plot(i, idx, plNf, ax[0], 'orange')
+
+	with open('data/innerDiskLoFragLargeTree.dat', 'rb') as f:
+		root = pickle.load(f)
+	snap = pb.load('data/innerDiskLoFragLarge.5559000')
+	plNf = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	time = 0.05*5559000/(2*np.pi)
+	massive_ind = np.argsort(np.array(plNf['mass']))[::-1][:maxoli]
+	pl = plNf[massive_ind]
+	a_init = get_root_property(pl0, pl, root, time, 'a')
+	# Sort by semimajor axis beore plotting
+	indices = np.arange(0, maxoli)
+	sort_a_ind = np.argsort(plNf['a'][massive_ind[indices]])
+	for idx, i in enumerate(sort_a_ind):
+		oli_plot(i, idx, plNf, ax[1], 'green')
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
 #plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
-#plot_fulldisk_e_m()
+plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
 #plot_surfden_profiles()
@@ -949,5 +1061,6 @@ def plot_frag_evo():
 #plot_acc_zones()
 #plot_f6f4()
 #plot_f6f4_b()
-plot_frag_ecc()
+#plot_frag_ecc()
 #plot_frag_evo()
+#plot_frag_acc_zones()
