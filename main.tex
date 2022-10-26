@@ -70,7 +70,7 @@ After a long period of quiescence, the collection of embryos and
 remaining planetesimals undergoes a large-scale instability
 \citep{chambers98}.
 As a consequence of the instability, the oligarchics are no longer
-on isolated, stable orbits and coalesce to form Earth-sized planets'
+on isolated, stable orbits and coalesce to form Earth-sized planets
 through a series of extremely energetic, giant 
 impacts \citep{kokubo02, raymond05, raymond06}.
 
@@ -91,7 +91,7 @@ solids accumulate at short orbital periods is crucial. Although
 gas-disk driven migration of the planets themselves is often invoked
 to explain the observed architectures, we will focus on an in-situ
 model in this paper. That is, once the planetesimals themselves form,
-they largely stay in place and any subsequent large-scale movement of
+they largely stay in place, and any subsequent large-scale movement of
 the solids are the result of mutual gravitational interactions. The
 focus of this work will be to understand how the outcome of the
 planetesimal accretion process scales with orbital period by using a
@@ -153,7 +153,7 @@ We begin our analysis by considering a disk of equal planetesimals
 with radius $r_{pl}$, mass $m_{pl}$ and surface density
 $\Sigma_{pl}$. The collision rate in the vicinity of an orbit defined
 by Keplerian frequency $\Omega$ can be written as $n \Gamma v$, where
-$n = \Sigma_{pl} \Omega / 2 m_{pl} v$ (where we have assumed that the scale height of the planetesimal disk goes as $\Omega/(2v)$. $\Gamma$ describes the effective
+$n = \Sigma_{pl} \Omega / 2 m_{pl} v$ (where we have assumed that the scale height of the planetesimal disk goes as $2v/\Omega$. $\Gamma$ describes the effective
 collision cross section and $v$ is the typical encounter velocity
 between planetesimals.
 For a swarm of planetesimals on randomly oriented orbits, $v$ is typically
@@ -163,15 +163,16 @@ taken to the rms velocity, which can be related to the eccentricity and inclinat
 \end{equation}
 Assuming that every collision results in a perfect merger, the growth rate of a planetesimal is given by
 \begin{equation}\label{eq:growth}
-	\frac{dM}{dt} = \frac{\Sigma \Omega}{2 m_{pl}} \Gamma.
+	\frac{dM}{dt} = \frac{\Sigma \Omega}{2}} \Gamma.
 \end{equation}
 
 In the case where the collision cross section, depends only
+% TRQ: perhaps "sub-linearly"?  I see dMdt ~ M^{2/3}
 on the physical size of the planetesimals, the growth scales linearly
 with mass and the mass distribution is expected to evolve in an
 ``orderly'' fashion. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \Gamma_{geo} \left( 1 + v_{esc}^2 / v^2 \right)$ \citep{safronov69}, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
 
-In the limit that $v_{esc} \gg v$, it can be shown that $M \propto
+In the limit that $v_{esc} \gg v$, it can be shown that $dM/dt \propto
 M^{4/3}$, which implies a runaway scenario, in which growth
 accelerates with mass. This mode of growth was confirmed with N-body
 simulations by \citet{kokubo96} and appears necessary to construct
@@ -208,9 +209,10 @@ by a factor of $\sim 50-100$ (depending on the orbital period)
 growth commences, in which the few largest bodies continue to 
 accrete planetesimals at similar rates.
 
-The picture described above relies upon an important assumption, which is that the mass distribution evolves slow enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the growth timescale. For typical conditions near the terrestrial planet forming region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, this condition can easily be violated at shorter orbital periods.
+The picture described above relies upon an important assumption, which
+is that the mass distribution evolves slowly enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the growth timescale. For typical conditions near the terrestrial planet forming region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, this condition can easily be violated at shorter orbital periods.
 
-In figure \ref{fig:timescales}, we show ratio between the relaxation
+In figure \ref{fig:timescales}, we show the ratio between the relaxation
 and collision timescale for a population of equal-mass planetesimals
 as a function of orbital period. Here, the encounter velocity is
 described by equation \ref{eq:ecc_vel}. For
@@ -239,15 +241,31 @@ we will explore the behavior and outcome of planetesimal accretion in regions wh
 
 \subsection{Planetesimal Size and Extent of Hill Sphere}\label{sec:sizeandhill}
 
-In the formalism described above, the mass and velocity distribution of the bodies are both a function of time. Due to the interdependence of these quantities, it is not clear whether the timescales for gravitational scattering and growth will remain proportional as the oligarchs develop. In the case of many studies of planetesimal accretion in the solar system (cite examples), the $t_{relax} \ll t_{coll}$ condition must remain true, otherwise runaway growth would have continued until all of the planetesimals were consumed. However, it isn't immediately clear what will happen if the system begins in a state where $t_{coll} \ll t_{relax}$.
+In the formalism described above, the mass and velocity distribution
+of the bodies are both a function of time. Due to the interdependence
+of these quantities, it is not clear whether the timescales for
+gravitational scattering and growth will remain proportional as the
+oligarchs develop. In the case of many studies of planetesimal
+accretion in the solar system
+%TRQ: citations needed
+{\bf(cite examples)}, the $t_{relax} \ll t_{coll}$ condition must remain true, otherwise runaway growth would have continued until all of the planetesimals were consumed. However, it isn't immediately clear what will happen if the system begins in a state where $t_{coll} \ll t_{relax}$.
 
 An insight into the expected behavior in this regime can be gained by
-defining the dimensionless parameter $\alpha$, which is the ratio
-between the physical size of a body and it's Hill radius, $r_{h}$:
+defining the dimensionless parameter, $\alpha$, which is the ratio
+between the physical size of a body and its Hill radius, $r_{h}$:
 \begin{equation}\label{eq:alpha}
 	\alpha = \frac{r_{pl}}{r_{h}} = \frac{1}{a} \left( \frac{9 M_{\star}}{4 \pi \rho_{pl}} \right)^{1/3},
 \end{equation}
-where $a$ is the semimajor axis of the body and $\rho_{pl}$ is its bulk density. Assuming a fixed bulk density as bodies collide and grow, and that no large-scale migration occurs, the scaling of both $r_{pl}$ and $r_{h}$ with $m_{pl}^{1/3}$ means that $\alpha$ will be constant with time. For a composition of ice and rock, $\alpha$ is small for any populated region of the solar system ($\alpha \sim 10^{-2}$ for Earth and $\alpha \sim 10^{-4}$ in the Kuiper belt). As one moves close to the star $\alpha$ becomes larger than 1, which implies that the physical extent of a body exceeds its Hill sphere. (also mention that hill sphere size independent of velocity for small eccentricity)
+where $a$ is the semimajor axis of the body and $\rho_{pl}$ is its
+bulk density. Assuming a fixed bulk density as bodies collide and
+grow, and that no large-scale migration occurs, the scaling of both
+$r_{pl}$ and $r_{h}$ with $m_{pl}^{1/3}$ means that $\alpha$ will be
+constant with time. For a composition of ice and rock, $\alpha$ is
+small for any populated region of the solar system ($\alpha \sim
+10^{-2}$ for Earth and $\alpha \sim 10^{-4}$ in the Kuiper belt). As
+one moves close to the star $\alpha$ becomes larger than 1, which
+implies that the physical extent of a body exceeds its Hill sphere.
+{\bf(also mention that hill sphere size independent of velocity for small eccentricity)}
 
 The size of $\alpha$ controls the relative importance of gravitational scattering and collisions in driving the evolution of the planetesimal disk. In the case that $\alpha$ is small, most close encounters will result in a gravitational interaction only, moving the system toward a state of relaxation. If, however, the Hill sphere is largely filled by the body itself, these same encounters will instead drive evolution of the masses. Because $\alpha$ is independent of time, the innermost region of the planetesimal disk, where collisions dominate over scattering events, should remain that way.
 
@@ -305,8 +323,8 @@ narrow annulus of planetesimals orbits a star. The values of $\alpha$
 and $\beta$ are varied individually. 4000 planetesimals with
 individual masses of $5 \times 10^{23}$ g are placed with semimajor
 axes randomly drawn between 0.95 and 1.05 AU about a 1 $M_{\odot}$
-star. The argument of perihelion $\omega$, longitude of ascending node
-$\Omega$, and mean anomaly M for each body is drawn from a uniform
+star. The argument of perihelion, $\omega$, longitude of ascending node,
+$\Omega$, and mean anomaly, M, for each body is drawn from a uniform
 distribution $\in [0, 2 \pi)$. The inclinations and eccentricities are drawn
 from a Rayleigh distribution with
 $\left< i^{2} \right> = 1/2 \left< e^{2} \right>$ \citep{ida93a}.
@@ -331,8 +349,10 @@ compared with the initial conditions. This is due to kinetic energy
 being lost as particles inelastically collide. One final point to note 
 is the difference between eccentricities of the protoplanets in the 
 large $\alpha$, large $\beta$ and the small $\alpha$,
+%TRQ large alpha (former) is cooler!?!
 large $\beta$ case. The dynamically cooler result of the latter case
 is likely due to the dominant role that inelastic collisions play here.
+%TRQ Moving figure 2 up in the paper would help keep this discussion straight.
 
 In figure \ref{fig:alpha_beta_mass}, we show the mass distribution of bodies from the final snapshot in each of the four cases. In addition to leaving fewer residual planetesimals, the large $\alpha$ simulations produce significantly larger embryos. Despite the vastly different encounter velocities of each population of bodies, the initial size of $\beta$ (so long as bodies remain in the dispersion-dominated regime) appears to have no significant effect on the final distribution of masses.
 
@@ -542,7 +562,7 @@ Bins interior to 60 days are shown by a dashed line, while those exterior are sh
       simulations described in section \ref{sec:narrow}. For small
       $\alpha$, a few embryos form alongside a power law tail of
       planetesimals. For larger values of $\alpha$, the mass
-      distribution takes on a more uniform form. As in the previous figure, the initial choice of $\beta$ does not appear to have any meaningful impact on the end result.\label{fig:alpha_beta_mass}}
+      distribution is more uniform.  As in the previous figure, the initial choice of $\beta$ does not appear to have any meaningful impact on the end result.\label{fig:alpha_beta_mass}}
 \end{center}
 \end{figure}
 
