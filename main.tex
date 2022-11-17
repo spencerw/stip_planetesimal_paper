@@ -357,10 +357,11 @@ onto higher eccentricity orbits, where they would otherwise remain as a remnant 
 
 % Wetherill + Stewart 1989, Ohtsuki 1990, Spaute 1991 find that runaway growth happens when velocity decreases with mass. Is that what we're seeing at high alpha?
 
+%TRQ: switched to delta for power law index
 \begin{table}
 \caption{Summary of Full Disk Simulations Run}
 \begin{tabular}{llllll} \hline \hline
-Name    & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\alpha^{d}$ &  \\ \hline
+Name    & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\delta^{d}$ &  \\ \hline
 fdHi                 & $5 \times 10^{22}$ & 903,687 & 100                                                         & 1.5                              &   \\
 fdHiShallow    & $5 \times 10^{22}$ & 903,687 & 100                                                        & 0.5                              &   \\
 fdHiSteep       & $5 \times 10^{22}$ & 903,687 & 100                                                         & 2.5                              &   \\
@@ -425,28 +426,28 @@ Four wide-disk simulations are run in total (see table \ref{tab:sims}). In each 
 \begin{equation}
 	\Sigma(r) = \left( \frac{M_{*}}{M_{\odot}} \right) A \Sigma_{\mathrm{MMSN}} \left( \frac{r}{1 \mathrm{AU}} \right)^{-\delta},
 \end{equation}
-where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g cm$^{-2}$ is surface density of the minimum-mass solar nebula \citep{hayashi81} at 1 AU, and $A$ is an enhancement factor. In the first case (fdHi), we model a disk that follows a MMSN power law slope, with the overall normalization enhanced by a factor of 100. This choice of normalization for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of $\Sigma(r)$.
+where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g
+cm$^{-2}$ is the surface density of the minimum-mass solar nebula
+\citep{hayashi81} at 1 AU, and $A$ is an enhancement factor.
+%TRQ: \delta = ???
+In the first case (fdHi), we model a disk that follows a MMSN power law slope, with the overall normalization enhanced by a factor of 100. This choice of normalization for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of $\Sigma(r)$.
 
 In all cases, the eccentricities and inclinations of the bodies are randomly drawn from a Rayleigh distribution, with $\left< e^{2} \right>^{1/2} = 2\left<i^{2} \right>^{1/2} = e_{eq}$. The value of $e_{eq}$ is chosen such that the timescales for viscous stirring and aerodynamic gas drag on the planetesimals are in equilibrium. The viscous stirring timescale is given by \citet{ida93} as
 
 \begin{equation}\label{eq:vs_timescale}
     \tau_{vs}  = \frac{\left< e^2 \right>}{d \left< e^2 \right> / dt} \approx \frac{1}{40}\left(\frac{\Omega^{2} a^{3}}{2 G m_{pl}}\right)^{2} \frac{4 m_{pl} \langle e^{2} \rangle^{2}}{\Sigma a^{2} \Omega},
 \end{equation}
-
-\noindent where $\Omega$, $a$ and $e$ are the orbital frequencies, semimajor axes and eccentricities of the individual planetesimals. In the Stokes regime, the gas drag timescale is given by \citet{adachi76} as
-
+where $\Omega$, $a$ and $e$ are the orbital frequencies, semimajor axes and eccentricities of the individual planetesimals. In the Stokes regime, the gas drag timescale is given by \citet{adachi76} as
 \begin{equation}\label{eq:ts_stokes}
     t_{s} = \frac{2 m_{pl}}{C_{D} \pi r_{pl}^{2} \rho_{g} v_{g}},
 \end{equation}
-
-\noindent where $C_{D}$ is a drag coefficient of order unity, $\rho_{g}$ is the local gas volume density and $v_{g}$ is the headwind velocity of the gas experienced by the planetesimal. The local gas volume density is given by
-
+where $C_{D}$ is a drag coefficient of order unity, $\rho_{g}$ is the local gas volume density and $v_{g}$ is the headwind velocity of the gas experienced by the planetesimal. The local gas volume density is given by
+%TRQ check this
 \begin{equation}\label{eq:rho_gas}
-	\rho_{g} = \frac{\Sigma_{g}}{\sqrt{2 \pi} h_{g} \exp\left[ -z^{2} / \left( 2 h_{g}^{2} \right) \right]},
+	\rho_{g} = \frac{\Sigma_{g}}{\sqrt{2 \pi} h_{g}} \exp\left[ -z^{2} / \left( 2 h_{g}^{2} \right) \right],
 \end{equation}
-
-\noindent where $\Sigma_{g}$ is the gas surface density (taken to be
-240 times the solid surface density), $h_{g} = c_{s} / \Omega$ is the local gas scale height and $z$ is the height above the disk midplane. The sound speed profile is given by $c_{s} = \sqrt{k_{B} T(r) / \left( \mu m_{H} \right)}$, where $k_{B}$ is Boltzmann's constant, $T(r) = T_{0} r^{-Q}$, $\mu = 2.34$ and $m_{h}$ is the mass of a hydrogen atom. For a protoplanetary disk around a typical M star, $T_{0} = 148$ K and $Q$ = 0.58 \citep{andrews05}.
+where $\Sigma_{g}$ is the gas surface density (taken to be
+240 times the solid surface density ({\bf citation for this number}), $h_{g} = c_{s} / \Omega$ is the local gas scale height and $z$ is the height above the disk midplane. The sound speed profile is given by $c_{s} = \sqrt{k_{B} T(r) / \left( \mu m_{H} \right)}$, where $k_{B}$ is Boltzmann's constant, $T(r) = T_{0} r^{-Q}$, $\mu = 2.34$ and $m_{h}$ is the mass of a hydrogen atom. For a protoplanetary disk around a typical M star, $T_{0} = 148$ K and $Q$ = 0.58 \citep{andrews05}.
 
 Finally, the headwind velocity of the gas, due to the fact that the gas disk is pressure supported, is given by
 
@@ -461,6 +462,8 @@ ascending node $\Omega$, and mean anomaly M for the planetesimals are drawn from
 \subsection{Gas Drag Force}
 
 In addition to the mutual gravitational forces, a Stokes drag force from to the gas disk is applied to each particle, following the prescription described in section 2.2.1 of \citet{morishima10}.
+%TRQ: add a qualitative description of the effect of this, e.g. what
+%is the drift timescale caused by this drag.
 
 \subsection{Timestepping Criterion}
 
@@ -472,7 +475,7 @@ number of steps to follow planetesimal growth throughout the entire
 disk. For this reason, we use a multi-tiered timestepping scheme, in
 which particles are placed onto the nearest power of two timestep
 based on their most recently calculated gravitational
-acceleration. \footnote{This scheme is used on almost all works using ChaNGa,
+acceleration.\footnote{This scheme is used on almost all works using ChaNGa,
 and is common among large-scale simulation codes.}
 
 This more efficient scheme introduces two issues, however. Firstly,
@@ -482,7 +485,18 @@ eccentric Keplerian orbit, whose perihelion and aphelion distances
 straddle a timestep boundary. For a large collection of particles,
 this problem manifests itself as the development of a V-shaped gap in the semimajor axis-eccentricity plane, which is centered on the boundary itself. To correct this problem, we introduce a slightly modified timestepping criterion, which is based on the expected gravitational acceleration of the particle at pericenter. Only in the case of a close encounter with another planetesimal (in which the acceleration is no longer dominated by the star) is the timestep allowed to reduce based on the original criterion.
 
-A second issue is introduced when two particles on different timesteps undergo a collision. As in the previous case, momentum is not completely conserved because the most recent `kick' steps did not happen simultaneously for these bodies. Early in the simulation, we find that runaway growth tends to initiate at the timestep boundaries. This issue carries itself forward through the embryo formation phase, and protoplanets tend to form at the boundaries. To correct this issue, we ignore collisions between bodies on different timesteps early in the simulation. We find that preventing multi-timestep collisions until after the maximum mass grows by a factor of 10 prevents any artifacts from developing at the timestep boundaries, while also minimizing the number of `skipped' collisions\footnote{In the case of fdHi, only about 20 collisions out of an eventual 900,000 are ignored.}. 
+A second issue is introduced when two particles on different timesteps
+undergo a collision. As in the previous case, momentum is not
+completely conserved because the most recent `kick' steps did not
+happen simultaneously for these bodies. Early in the simulation, we
+find that runaway growth tends to initiate at the timestep
+boundaries. This issue carries itself forward through the embryo
+formation phase, and protoplanets tend to form at the boundaries. To
+correct this issue, we ignore collisions between bodies on different
+timesteps early in the simulation. We find that preventing
+multi-timestep collisions until after the maximum mass grows by a
+factor of 10 prevents any artifacts from developing at the timestep
+boundaries, while also minimizing the number of `skipped' collisions.\footnote{In the case of fdHi, only about 20 collisions out of an eventual 900,000 are ignored.} 
 
 \subsection{Results}
 
@@ -518,20 +532,24 @@ the disk reach a steady value. In table \ref{tab:sim_properties}, we
 summarize the outcomes of the four ``full disk'' cases.
 
 We show the final state of the ``fdHi'' simulation in figure \ref{fig:fulldisk_e_m}. In the top panel,
-the initial (contours) and final (points) state of the simulation is shown in the orbital period-eccentricity plane. The size of the points indicates the relative mass of the bodies. In the bottom panel, the final masses of the bodies (in units of feeding zone size) are shown as a function of orbital period. The feeding zone size $\tilde{b}$ is calculated according to
-
+the initial (contours) and final (points) state of the simulation is
+shown in the orbital period-eccentricity plane. The size of the points
+indicates the relative mass of the bodies. In the bottom panel, the
+final masses of the bodies (in units of feeding zone size) are shown
+as a function of orbital period. The feeding zone size $\tilde{b}$ is
+calculated according to ({\bf citation})
 \begin{equation}\label{eq:iso}
 	M = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2},
 \end{equation}
-
 where $M$ is taken to be the final mass of each body. Here, we assume that each embryo has reached its isolation mass, and 
 that differences in mass are driven by differences in the initial surface density at the embryo's current location, along with the 
 size of its feeding zone, which is set by the dynamics relevant at that location in the disk. By plotting the derived value of $
 \tilde{b}$ as a function of orbital period, differences in the dynamical interactions at different locations of the disk are made more 
 clearly visible. For two bodies on circular, non-inclined orbits,  $\tilde{b} = 2
-\sqrt{3}$ (indicated by the horizontal dashed line) is the smallest orbital separation that produces a non-negative Jacobi energy
+\sqrt{3}$ (indicated by the lower horizontal dashed line) is the smallest orbital separation that produces a non-negative Jacobi energy
 and permits a close encounter (see \citet{naka88}). In typical oligarchic growth simulations \citep{kokubo98}, protoplanets tend 
-to space themselves apart by $\tilde{b} = 10$, although it should be noted that they do not consume all of the planetesimals 
+to space themselves apart by $\tilde{b} = 10$, (top horizontial line in
+figure \ref{fig:fulldisk_e_m}, bottom panel) although it should be noted that they do not consume all of the planetesimals 
 within this distance.
 
 A qualitative shift in the protoplanet and planetesimal distribution is visible at $\sim$ 60 days. Interior to this location, there are 
@@ -548,6 +566,7 @@ different because of the dependence of the viscous stirring and gas drag timesca
 protoplanet formation timescales for the inner and outer disk are vastly different, making a comparison between these regions at 
 the same moment in time somewhat inappropriate.
 
+%TRQ: \sigma is not defined.
 To ensure that the boundary seen near 60 days in orbital period is not
 simply a transient product of the inside-out growth throughout the
 disk, we examine the time evolution of $\sigma/\Sigma$ at multiple
@@ -573,7 +592,10 @@ protoplanets.
       of bodies at the end of the simulation. In the bottom panel, we show the
       feeding zone width (see equation \ref{eq:iso}) required to produce
       the final masses of the bodies. The lower dashed line indicates the feeding
-      zone size ($\tilde{b} = 2 \sqrt{3}$) expected for bodies on circular orbits. Interior to the oligarchc
+      zone size ($\tilde{b} = 2 \sqrt{3}$) expected for bodies on
+      circular orbits.
+%TRQ: upper horizontal line ....
+      Interior to the oligarchic
       growth region (around 60 d), the feeding zone sizes exceed this value.\label{fig:fulldisk_e_m}}
 \end{center}
 \end{figure}
