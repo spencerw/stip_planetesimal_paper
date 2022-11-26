@@ -579,7 +579,7 @@ planetesimal population entirely depletes. In the outer disk, dynamical friction
 eventually throttles subsequent accretion and leaves $\sim$ 10 percent or more of the mass surface density as planetesimals. It 
 should be noted that in a typical oligarchic growth scenario, where protoplanets space themselves apart by 10 $r_{h}$ and settle 
 onto circular orbits (giving $\tilde{b} = 2 \sqrt{3}$), roughly 30 percent of the planetesimal mass should remain out of reach of the 
-protoplanets.
+protoplanets.({\bf citation here})
 
 % Another important point: the accretion boundary doesn't move as we change surface density (how does t_relax and t_coll scale with sigma?). More evidence that it just depends on alpha(r)
 
@@ -637,11 +637,12 @@ having significantly different masses, the planetary embryos formed in all simul
 is likely due to the fact that inelastic collisions play a more significant role where the solid surface density is highest, which 
 offsets the fact that the initial bodies started off in a dynamically hotter state. The only exception to this is the fdLo simulation, 
 where the resulting eccentricities are a couple orders of magnitude smaller. Inelastic damping likely plays an even more 
+% TRQ: ??? the masses of the initial planetesimals are the same in all
+% simulations according to table 1.
 significant role here, due to the much larger masses of the initial planetesimals.
 
 In figure \ref{fig:surfden_b}, we plot the masses of the resulting protoplanets and planetesimals in all four simulations in units of $
 \tilde{b}$ (see equation \ref{eq:iso}). 
-
 As mentioned previously, $\tilde{b} = 2 \sqrt{3}$ (indicated by the horizontal dashed line) carries a special significance, being the  
 feeding zone width that a body on a circular orbit should have. In all four simulations, the feeding zone width exceeds the 
 minimum value in the inner disk and approaches $2 \sqrt{3}$ beyond $\sim$ 60 days. The orbital periods at which this transition 
@@ -675,6 +676,7 @@ embryos mature.
 \end{center}
 \end{figure}
 
+%TRQ: perhaps use a logarithmic horizontal axis for better comparison
 \begin{figure*}
 \begin{center}
     \includegraphics[width=\textwidth]{figures/acc_zones.png}
@@ -684,7 +686,13 @@ embryos mature.
 
 The variation in smooth accretion fraction with mass for the short period bodies suggests that the planetesimal and embryo populations interact differently than those in the outer disk. Exterior to the 60 day accretion mode boundary, the growing embryos continue to accrete planetesimals as they near their final mass. Inside the boundary, however, later growth events tend to be dominated by embryo-embryo collisions, and the smooth accretion fraction drops as mergers with planetesimals play a less significant role. As we discussed in section \ref{sec:sizeandhill}, gravitational scattering should be very weak in the inner disk. Gravitational scattering between embryos and planetesimals is a key ingredient for orbital repulsion (see \citet{kokubo98}), and so a lack of gravitational scattering should prevent the embryos from settling onto neatly-spaced, isolated orbits. As we showed in figure \ref{fig:surfden_b}, the embryos in the inner disk appear to reach well beyond the typical feeding zones predicted by an oligarchic growth model. Figure \ref{fig:minor_frac} suggests that this extra mass here obtain comes from mergers with the other nearby embryos.
 
-Another line of evidence pointing to a lack of gravitational scattering and orbital repulsion in the inner disk can be seen in figure \ref{fig:acc_zones}. Here, we have chosen the 20 most massive bodies from the fdHi simulation and arranged them in order of final orbital period. On each line, the black has mark indicates the present orbital period of an embryo and the gray histogram represents the initial orbital period distribution of the planetesimals which were used to construct the embryo. One should note that unlike the previous figure, this plot shows where every single bit of mass (in the form of planetesimals) originated, rather than only denoting embryo-planetesimal collisions.
+Another line of evidence pointing to a lack of gravitational
+scattering and orbital repulsion in the inner disk can be seen in
+figure \ref{fig:acc_zones}. Here, we have chosen the 20 most massive
+bodies from the fdHi simulation and arranged them in order of final
+orbital period. On each line, the black
+%TRQ: the mark is dark blue, not black.
+hash mark indicates the present orbital period of an embryo and the gray histogram represents the initial orbital period distribution of the planetesimals which were used to construct the embryo. One should note that unlike the previous figure, this plot shows where every single bit of mass (in the form of planetesimals) originated, rather than only denoting embryo-planetesimal collisions.
 
 Qualitatively, there are a couple of differences between the initial planetesimal distributions in the inner ($<$ 60 days) and outer ($>$ 60 days) part of the disk. The planetesimal distributions for the outer disk are much more smooth and unimodal, while many of the distributions near the inner disk have multiple peaks. As we discussed when examining figure \ref{fig:minor_frac}, growth events for the inner embryos tend to be sudden and stochastic, often involving pairs of embryos. When an embryo-embryo collision happens, one would expect a second peak to appear in the accretion distribution as the merger tree suddenly obtains a whole other subtree from the embryo that it absorbed. In the outer disk, however, the increased importance of embryo-planetesimal mergers means that growth should be smooth, steady and local.
 
@@ -730,10 +738,10 @@ disk where planetesimals might be expected to form for a wide range of $\rho_{pl
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/f6f4_b.png}
     \caption{In the top panel, we show the required feeding zone sizes to produce the masses of the bodies seen
-    at the end of the fdHi and fdHif4 simulations.The bottom panel shows the variation of $\alpha$ with orbital period for the 
+    at the end of the fdHi and fdHif4 simulations.  The bottom panel shows the variation of $\alpha$ with orbital period for the 
     bodies used in each case (solid curves). The orbital period at which $\alpha \simeq 0.1$ matches well with the intersection of 
-    the embryo mass distribution and isolation mass. The shaded region in the bottom panel show the values of alpha for realistic-
-    sized ($f=1$) planetesimals with bulk densities between 10 and 1 g cm$^{-3}$.\label{fig:f6f4_b}}
+    the embryo mass distribution and isolation mass. The shaded region
+    in the bottom panel show the values of alpha for realistic-sized ($f=1$) planetesimals with bulk densities between 10 and 1 g cm$^{-3}$.\label{fig:f6f4_b}}
 \end{center}
 \end{figure}
 
@@ -769,11 +777,9 @@ bounce is too expensive to model, even with {\sc ChaNGa}.
 To test whether a more restrictive collision model should alter the growth mode of the inner disk, we ran a smaller scale test 
 using a slightly more restrictive collision model. In this case, a collision can result in one of two outcomes: if the impact velocity is 
 smaller than the mutual escape velocity of the colliding particles, defined as
-
 \begin{equation}\label{eq:v_mut}
 	v_{mut, esc} = \sqrt{\frac{2 G (m_{1} + m_{2})}{r_{1} + r_{2}}},
 \end{equation}
-
 where $m_{1}, m_{2}$ and $r_{1}, r_{2}$ are the masses and radii of
 colliding particles 1 and 2, then the bodies merge. For
 impact velocities larger than $v_{mut, esc}$, no mass is transferred, and the bodies undergo a completely elastic bounce. 
@@ -818,7 +824,8 @@ of embryos with a modest amount of residual planetesimals. This
 corresponds to the ``oligarchic growth'' case revealed by \citep{kokubo98}, which is often used as a starting point for late-stage 
 accretion models (e.g. \citet{kokubo02, raymond05, raymond06}). In the second mode, the gravitational feedback does not 
 operate, embryos quickly sweep up all planetesimals, and grow larger and less uniformly spaced than those produced by 
-oligarchic growth. The distinction between these modes is determined by ratio between the physical size of the bodies and their 
+oligarchic growth. The distinction between these modes is determined
+by the ratio between the physical size of the bodies and their 
 Hill radius, which sets the relative contribution of close gravitational encounters and collisions to the dynamical evolution of the 
 disk.
 
