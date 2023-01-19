@@ -400,7 +400,7 @@ def plot_fulldisk_e_m_b():
 	axes = ax[1]
 	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), edgecolor='black', linewidth=0.4)
 	axes.axhline(2.*np.sqrt(3.), ls='--', color='gray')
-	axes.axhline(10., ls='--', color='gray')
+	#axes.axhline(10., ls='--', color='gray')
 	axes.set_ylim(0, 20)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'Required $\tilde{b}$')
@@ -704,14 +704,14 @@ def plot_acc_zones():
 
 	s = 1000
 	amin, amax = 0.05, 0.2
-	histbins = np.linspace(0, 100, 200)
+	histbins = np.logspace(0, 2, 200)#np.linspace(0, 100, 200)
 
 	def p_orbit(a):
 		return ((np.sqrt(a**3/mCentral))*u.yr).to(u.d).value
 
 	def oli_plot(i, idx):
 		child_p = p_orbit(a_init[i])
-		hist, bins = np.histogram(child_p, bins=histbins, normed=True)
+		hist, bins = np.histogram(child_p, bins=histbins, density=True)
 		bins = 0.5*(bins[1:] + bins[:-1])
 		hist /= np.max(hist)/0.1
 		axes.plot(bins, hist+0.2*idx, drawstyle='steps-mid', lw=0.5)
@@ -722,6 +722,7 @@ def plot_acc_zones():
 		axes.set_xlabel('Orbital Period [d]')
 		axes.set_ylabel('Fraction of Planetesimals Accreted')
 		axes.set_yticks([])
+		axes.set_xscale('log')
 
 	# Sort by semimajor axis beore plotting
 	indices = np.arange(0, 20)
@@ -963,7 +964,7 @@ def plot_frag_evo():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(8,8))
+	fig, axes = plt.subplots(figsize=(8,6))
 
 	axes.plot([], [])
 
@@ -1051,7 +1052,7 @@ def plot_frag_acc_zones():
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
-plot_fulldisk_e_m_b()
+#plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
 #plot_surfden_profiles()
@@ -1062,5 +1063,5 @@ plot_fulldisk_e_m_b()
 #plot_f6f4()
 #plot_f6f4_b()
 #plot_frag_ecc()
-#plot_frag_evo()
+plot_frag_evo()
 #plot_frag_acc_zones()
