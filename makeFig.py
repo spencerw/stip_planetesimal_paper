@@ -38,10 +38,10 @@ mCentralg = (mCentral*u.M_sun).to(u.g)
 
 bins = np.linspace(0.01, 0.3, num_bins)
 
-snap = pb.load('data/fullDiskVHi.ic')
+snap = pb.load('data/fullDiskVHia.ic')
 plVHiIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_vhi_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins, calc_x = lambda x: x['a'])
-snap = pb.load('data/fullDiskVHi1.250000')
+snap = pb.load('data/fullDiskVHi1a.250000')
 plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_vhi = pb.analysis.profile.Profile(plVHi.d, bins=bins, calc_x = lambda x: x['a'])
 perIC = 2*np.pi*np.sqrt((plVHiIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -458,6 +458,7 @@ def plot_pl_frac_time():
 
 	pbins = (np.linspace(1, 100, 10)*u.d).value
 	bins1 = ((((pbins*u.d).to(u.s)/(2*np.pi))**2*G.cgs*(mCentral*u.M_sun).to(u.g))**(1/3)).to(u.AU).value
+	prof_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins1, calc_x = lambda x: x['a'])
 
 	files_sub = files
 
@@ -484,10 +485,27 @@ def plot_pl_frac_time():
 		else:
 			ls = '-'
 			lw1 = lw
-		axes.plot(time_arr, prof_arr[idx], color='black', linestyle=ls, lw=lw1)
+		tdyn_loc = pbins[idx]/(2*np.pi)
+
+		e_disp = prof_ic['e_disp'][idx]
+		vk = np.sqrt(mCentral/prof_ic['rbins'][idx])
+		v = np.sqrt(e_disp)*vk
+
+		sigma_geo = np.pi*(6*r_pl)**2
+		v_esc = np.sqrt(2*m_pl/(6*r_pl))
+		sigma = sigma_geo*(1 + (v_esc**2/v**2))
+
+		omega = np.sqrt(mCentral/prof_ic['rbins'][idx]**3)
+		n = prof_ic['density'][idx]*omega/(2*m_pl*v)
+
+		tacc_loc = 1/(n*sigma*v)
+
+		axes.plot(time_arr/tacc_loc, prof_arr[idx], color='black', linestyle=ls, lw=lw1)
 
 	axes.set_ylabel(r'$\sigma$ / $\Sigma$')
-	axes.set_xlabel('Time [Outer Rotation Periods]')
+	axes.set_xlabel('Time [Local Accretion Timescale]')
+	axes.set_xscale('log')
+	axes.set_xlim(1e-1, 1e2)
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -528,7 +546,6 @@ def plot_surfden_iso():
 	fig, ax = plt.subplots(figsize=(8,12), nrows=4, sharex=True, sharey=True)
 
 	btilde = 2*np.sqrt(3)#5
-
 	s = 50
 
 	axes = ax[0]
@@ -571,16 +588,67 @@ def plot_surfden_b():
 
 	fig, ax = plt.subplots(figsize=(8,12), nrows=4, sharex=True, sharey=True)
 
+	snap = pb.load('data/fullDiskVHi1b.248000')
+	plVHib = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perb = 2*np.pi*np.sqrt((plVHib['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHi1c.248000')
+	plVHic = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perc = 2*np.pi*np.sqrt((plVHic['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHi1d.248000')
+	plVHid = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perd = 2*np.pi*np.sqrt((plVHid['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHi1e.248000')
+	plVHie = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	pere = 2*np.pi*np.sqrt((plVHie['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+
+	snap = pb.load('data/fullDiskVHiSteep1b.324000')
+	plVHiStb = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perStb = 2*np.pi*np.sqrt((plVHiStb['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHiSteep1c.324000')
+	plVHiStc = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perStc = 2*np.pi*np.sqrt((plVHiStc['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHiSteep1d.324000')
+	plVHiStd = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perStd = 2*np.pi*np.sqrt((plVHiStd['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHiSteep1e.324000')
+	plVHiSte = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perSte = 2*np.pi*np.sqrt((plVHiSte['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+
+	snap = pb.load('data/fullDiskVHiShallow1b.313000')
+	plVHiShb = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perShb = 2*np.pi*np.sqrt((plVHiShb['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHiShallow1c.313000')
+	plVHiShc = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perShc = 2*np.pi*np.sqrt((plVHiShc['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHiShallow1d.313000')
+	plVHiShd = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perShd = 2*np.pi*np.sqrt((plVHiShd['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/fullDiskVHiShallow1e.313000')
+	plVHiShe = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perShe = 2*np.pi*np.sqrt((plVHiShe['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+
 	axes = ax[0]
 	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	axes.scatter(perb.value, get_btilde(plVHib, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	axes.scatter(perc.value, get_btilde(plVHic, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	axes.scatter(perd.value, get_btilde(plVHid, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	axes.scatter(pere.value, get_btilde(plVHie, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHi')
 	axes = ax[1]
 	axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	axes.scatter(perStb.value, get_btilde(plVHiStb, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	axes.scatter(perStc.value, get_btilde(plVHiStc, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	axes.scatter(perStd.value, get_btilde(plVHiStd, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	axes.scatter(perSte.value, get_btilde(plVHiSte, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHiSteep')
 	axes = ax[2]
 	axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	axes.scatter(perShb.value, get_btilde(plVHiShb, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	axes.scatter(perShc.value, get_btilde(plVHiShc, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	axes.scatter(perShd.value, get_btilde(plVHiShd, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	axes.scatter(perShe.value, get_btilde(plVHiShe, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHiShallow')
 	axes = ax[3]
@@ -964,7 +1032,7 @@ def plot_frag_evo():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(8,6))
+	fig, axes = plt.subplots(figsize=(8,8))
 
 	axes.plot([], [])
 
@@ -1054,7 +1122,7 @@ def plot_frag_acc_zones():
 #plot_alpha_beta_mass()
 #plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
-#plot_pl_frac_time()
+plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_surfden_b()
@@ -1063,5 +1131,5 @@ def plot_frag_acc_zones():
 #plot_f6f4()
 #plot_f6f4_b()
 #plot_frag_ecc()
-plot_frag_evo()
+#plot_frag_evo()
 #plot_frag_acc_zones()
