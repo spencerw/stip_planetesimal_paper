@@ -26,7 +26,8 @@ Could the authors comment on this? Maybe the authors can argue why collisions ar
 	Accretion mode is size independent (only depends on density and orbital period), so the growth for smaller bodies should behave exactly the same. No chance of enhanced orbital repulsion or scattering with smaller bodies. The other concern to adress would be whether material gets ground down and removed faster than the embryos can grow. Need to compare the growth timescale and calculate some sort of mass removal timescale (look into this).
 
 	Mass removal mechanisms: grinding to meter sizes, radial drift
-							 grinding to dust size, pr drag
+							 grinding to cm size, pr drag
+							 grinding to micron size, dust blowout
 
 
 4) I think the introduction of several physical concepts warrants additional clarification for accessibility and clarity of the manuscript, and sometimes also lack concrete definitions. In particular, this includes isolation mass, the concepts of tidal stability and Hill radius, the eccentricity dispersion e_h, and the exact definition of tilde b. See my specific comments below.
@@ -38,18 +39,33 @@ Specific comments, notes and suggestions.
 
 Abstract
 7: Are short period planets that exotic in the broader context of exoplanets?
+	Hard to say! We have replaced 'exotic' with 'wide variety'.
 14: "[...] population OF dynamically [...]"
+	Fixed
 17-18: something is missing in the second part of this sentence.
+	Missing words at the end of L17: 'investigate *the effects*'
 
 1.Introduction
 26: How large are these solids? I assume this is referencing micron sized dust-grains?
+	Correct, some text was added to clarify this.
 68: Add reference
+	Need to find a reference for this
 72: Maybe elaborate on this. How long is the period of quiescence? How does this instability work?
+	We intentionally left this part vague as someone really needs to look into this more! There are three relevant timescales here:
+	1. The timescale for the instability itself (depends on the orbital properties of the embryos, see Chambers 98)
+	2. Dynamical friction between protoplanets and planetesimals. This will shut off once the planetesimals are either scattered away, or slowly accreted onto the embryos. Not sure what the timescale for this would be. Note that this shouldn't operate at short period according to this work!
+	3. Tidal eccentricity damping of the embryos due to the gas disk. Should shut off once the gas disk disperses on ~Myr timescales.
+	TODO: decide what to add to the text here.
 88: Add reference maybe.
+	I don't know of any references to add, but we added some text to clarify why this is the case (for particle-in-a-box methods, oligarchic growth results in only a few bodies in the highest mass bins)
 99: Capitalize "Systems of Tightly-packed Inner Planets"
+	Fixed
 104: Gas-Disk driven migration → reference?
+	Added reference to Izidoro 17 and 21, which invokes gas disk driven migration, followed by resonant trapping and an possible orbital instability to explain the observed architectures of STIPs
 116: What is the "isolation mass" initial condition? Maybe isolation mass can be defined
+	We will define isolation mass later in the paper. For now, we removed this term and replaced it with 'fully-formed, evenly spaced protoplanets'.
 118: I'm not sure if this belongs in the introduction. I think the mention of future work at the end of the discussion is sufficient.
+	Agreed. Removed the last sentence of this paragraph.
 
 2. Overview of planetesimal accretion
 2.1 Oligarchic and Runaway Growth

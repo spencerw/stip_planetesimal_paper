@@ -18,8 +18,8 @@ Formation models in which terrestrial bodies grow via the pairwise
 accretion of planetesimals have been reasonably successful at
 reproducing the general properties of the solar system, including
 small body populations. However, planetesimal accretion has not yet
-been fully explored in the context of more exotic terrestrial systems,
-particularly those that host short-period planets. In this work, we
+been fully explored in the context of the wide variety of recently discovered extrasolar planetary systems,
+particularly those that host short-period terrestrial planets. In this work, we
 use direct N-body simulations to explore and understand the growth of
 planetary embryos from planetesimals in disks extending down to
 $\simeq$ 1 day orbital periods. We show that planetesimal accretion
@@ -28,13 +28,13 @@ to embryo masses that are much larger than the classical
 isolation mass. For rocky bodies, the physical size of the object
 begins to occupy a significant fraction of its Hill sphere towards the inner edge of the disk. In this regime, most close encounters
 result in collisions, rather than scattering, and the system does not
-develop a bimodal population dynamically hot planetesimals and
+develop a bimodal population of dynamically hot planetesimals and
 dynamically cold oligarchs, like is seen in previous studies. The highly
 efficient accretion seen at short orbital periods implies that systems
 of tightly-packed inner planets should be almost completely devoid of
 any residual small bodies. We demonstrate the robustness of our
 results to assumptions about the initial disk model, and also
-investigate that our simplified collision model has on the emergence
+investigate the effects that our simplified collision model has on the emergence
 of this non-oligarchic growth mode in a planet forming disk.
 \end{abstract}
 
@@ -43,7 +43,7 @@ of this non-oligarchic growth mode in a planet forming disk.
 Planetesimal accretion is a key phase in the terrestrial planet growth
 process, bridging the gap from kilometer-sized bodies up to roughly
 moon-sized objects known as planetary embryos. In the earliest stages
-of the planet formation process, aerodynamic forces dominate the
+of the planet formation process, beginning from $\mu$m sizes, aerodynamic forces dominate the
 growth and evolution of the solids and statistical models
 \citep{johansen14, birnstiel16} are appropriate to describe how these
 numerous, small bodies coagulate. 
@@ -69,7 +69,7 @@ becomes more effective as bodies grow larger, a period of runaway growth occurs 
 power law spectrum of masses develop. Eventually, the largest bodies (known as oligarchs) dynamically heat the remaining 
 planetesimals, severely limiting further growth \citep{kokubo98}. The final outcome of this phase is a bimodal population of 
 dynamically cold oligarchs, surrounded by dynamically hot, difficult to accrete residual planetesimals. Lines of evidence suggest 
-that the asteroid belt, Kuiper belt and the Oort cloud are largely composed of the leftovers of this stage of planet formation.
+that the asteroid belt, Kuiper belt and the Oort cloud are largely composed of the leftovers of this stage of planet formation (add reference).
 
 After a long period of quiescence, the collection of embryos and
 remaining planetesimals undergo a large-scale instability
@@ -77,7 +77,7 @@ remaining planetesimals undergo a large-scale instability
 As a consequence of the instability, the oligarchics are no longer
 on isolated, stable orbits and coalesce to form Earth-sized planets
 through a series of extremely energetic giant 
-impacts \citep{kokubo02, raymond05, raymond06}.
+impacts \citep{kokubo02, raymond05, raymond06}. 
 
 Due to the relative ease of modeling the early dust coagulation phases
 and the final giant impact phase, these steps in the terrestrial
@@ -86,18 +86,18 @@ literature. The planetesimal accretion phase, which we will focus on
 in this paper, is more difficult and expensive to model because there are too
 many particles to directly track with traditional N-body codes, while
 the gravitational influence of the few massive oligarchs that
-form make statistical methods inappropriate. Due to computational expense, N-body simulations of
+form make statistical methods inappropriate because the highest mass bins contain only a few bodies. Due to computational expense, N-body simulations of
 planetesimal accretion are usually modeled in a narrow
 ring \citep{kokubo96, kokubo98}, and the results and timescales are then scaled to suit whatever relevant orbital period is being 
 studied. N-body simulations of terrestrial planet assembly typically begin with a series of neatly spaced oligarchs, whose mass 
 varies smoothly with orbital period. As we will show in this paper, oligarchic growth does not scale to arbitrarily short
 orbital periods.
 
-Given that systems of tightly-packed inner planets (STIPs) appear to
+Given that Systems of Tightly-packed Inner Planets (STIPs) appear to
 be a common outcome of planet formation \citep{lantham11, lissauer11, rowe14}, understanding exactly how
 solids accumulate at short orbital periods is crucial. Although
 gas-disk driven migration of the planets themselves is often invoked
-to explain the observed architectures, we will focus on an in-situ
+to explain the observed architectures \citep{izidoro17, izidoro21}, we will focus on an in-situ
 model in this paper. That is, once the planetesimals themselves form,
 they largely stay in place, and any subsequent large-scale movement of
 the solids are the result of mutual gravitational interactions. The
@@ -105,8 +105,7 @@ focus of this work will be to understand how the outcome of the
 planetesimal accretion process scales with orbital period by using a
 high-powered N-body code to directly follow the growth and evolution
 of the planetesimals across a wide range of orbital periods (1 to 100
-days). In doing so, we will assess whether the typical ``isolation
-mass'' initial conditions used in studies of terrestrial planet formation are actually appropriate for understanding STIPs. In a series of follow up papers, we plan to use these results to directly track the formation of full-sized planets from planetesimals and to understand how gravitational perturbations from a nearby gas giant might affect the outcome of this process.
+days). In doing so, we will assess whether the typical initial conditions (fully formed, evenly spaced protoplanets, e.g. \citet{raymond06}) used in studies of terrestrial planet formation are actually appropriate for understanding STIPs.
 
 In section \ref{sec:theory} we provide an overview of the theory
 behind planetesimal accretion and show that assumptions used to derive
