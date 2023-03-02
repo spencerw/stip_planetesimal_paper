@@ -1122,7 +1122,7 @@ def plot_frag_acc_zones():
 #plot_alpha_beta_mass()
 #plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
-plot_pl_frac_time()
+#plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_surfden_b()

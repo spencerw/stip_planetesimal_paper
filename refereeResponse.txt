@@ -32,10 +32,14 @@ Could the authors comment on this? Maybe the authors can argue why collisions ar
 
 4) I think the introduction of several physical concepts warrants additional clarification for accessibility and clarity of the manuscript, and sometimes also lack concrete definitions. In particular, this includes isolation mass, the concepts of tidal stability and Hill radius, the eccentricity dispersion e_h, and the exact definition of tilde b. See my specific comments below.
 
+Where should I put these?
+
 
 5) I have some suggestions for improving the presentation of the results in Figures, to make the science result more clear and intuitively obtainable. In my specific comments below, I included suggestions for the figures.
 
 Specific comments, notes and suggestions.
+
+TODO: First few edits need to be highlighted in manuscript with strikethroughs and bold face.
 
 Abstract
 7: Are short period planets that exotic in the broader context of exoplanets?
@@ -54,7 +58,7 @@ Abstract
 	We intentionally left this part vague as someone really needs to look into this more! There are three relevant timescales here:
 	1. The timescale for the instability itself (depends on the orbital properties of the embryos, see Chambers 98)
 	2. Dynamical friction between protoplanets and planetesimals. This will shut off once the planetesimals are either scattered away, or slowly accreted onto the embryos. Not sure what the timescale for this would be. Note that this shouldn't operate at short period according to this work!
-	3. Tidal eccentricity damping of the embryos due to the gas disk. Should shut off once the gas disk disperses on ~Myr timescales.
+	3. Tidal eccentricity damping of the embryos due to the gas disk. Should shut off once the gas disk disperses on ~Myr timescales (Beckwith + Sargent 1996).
 	TODO: decide what to add to the text here.
 88: Add reference maybe.
 	I don't know of any references to add, but we added some text to clarify why this is the case (for particle-in-a-box methods, oligarchic growth results in only a few bodies in the highest mass bins)
@@ -70,16 +74,27 @@ Abstract
 2. Overview of planetesimal accretion
 2.1 Oligarchic and Runaway Growth
 144 onwards: indices in math upright
+	Fixed
 152: Define rms velocity
+	TODO: not sure what the referee wants? Its defined in equation 1?
 161: What does "orderly" fashion mean exactly?
+	This means the mass ratios between bodies tend toward unity. This has been clarified in the text.
 174: Add reference.
+	TODO: Section 5.2.1 of the Armitage book calculates this. Is there also a paper to reference? (runaway growth required to build planets in a reasonable amount of time)
 198: Ln Lambda approx 10 missing could use a reference.
+	TODO: This is also in the armitage book, but lets look for a paper that calculates it
 204: I suggest more formally introducing the concept of Hill sphere and hill factor.
+	TODO: Where to put this?
 209: This sentence seems not necessary.
+	Agreed, removed
 213: add "dynamically" heating
+	Added
 222: add "a" crucial assumption
+	Fixed
 226: Maybe clarify that growth timescale equals collision time scale.
+	We have replaced 'growth' with 'collision' here
 238: The eccentricity dispersion e_h is never defined anywhere. It is unclear to me what scaling e_h with the Hill-factor means physically.
+	TODO: Clarify
 Figure .1:
 Since this is an analytical plot, I think one could color the entire parameter space according to the ratio t_relax/t_coll. Currently, it may suggest that the plotted values for e_h are chosen for a particular reason.
 Also, I think it would be nice to have a reference for what values of e_h are standard for certain disk conditions, i.e. how outrageous would it be to have a e_h = 16? Are all disks like that? Or do we expect e_h = 1 as the standard?
@@ -154,6 +169,7 @@ I think Table 1 and Table 2 could be combined
 554: footnote 2 can just go in the main text body.
 584: footnote 3 can also go in the main text body.
 584: Are there any works on the numerical robustness of this more efficient time-stepping scheme. While I'm inclined to believe that the error is only marginal, I think having some sort of test (or a reference to one) would make the results more steadfast.
+	No there arent. I'm going to create an appendix which shows the fdHi simulations from 1 to 4 days in p_orbit with fixed steps and multi stepping. The results should be the same.
 
 5.4 Results
 586: Maybe include reference to figure where this is shown
