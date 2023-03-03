@@ -92,21 +92,32 @@ Abstract
 222: add "a" crucial assumption
 	Fixed
 226: Maybe clarify that growth timescale equals collision time scale.
-	We have replaced 'growth' with 'collision' here
+	We have replaced 'growth' with 'collision' here, and done the same elsewhere in the paper for consistency
 238: The eccentricity dispersion e_h is never defined anywhere. It is unclear to me what scaling e_h with the Hill-factor means physically.
-	TODO: Clarify
+	e_h can be thought of as the radial excursion of the body's orbit in units of its Hill radius. For e_h > 1, encounters between bodies can be treated with a two-body formalism. We have decided to remove any mention of e_h here, and instead save this definition for section 4 (TODO: define in section 4), where it is next mentioned.
 Figure .1:
 Since this is an analytical plot, I think one could color the entire parameter space according to the ratio t_relax/t_coll. Currently, it may suggest that the plotted values for e_h are chosen for a particular reason.
+	Get rid of the legend, explain that e_h values increase from bottom to top.
 Also, I think it would be nice to have a reference for what values of e_h are standard for certain disk conditions, i.e. how outrageous would it be to have a e_h = 16? Are all disks like that? Or do we expect e_h = 1 as the standard?
+	Not sure if there is going to be a reference for this. Equilibrium e_h depends on particle mass and gas density. Could try to plot things in terms of that instead. (Maybe fix rho_gas and vary mass?)
 Also, I recommend adjusting the x-limits of the plot to correspond to the limits of the orbital period.
+	Done
+
+
 
 2.2 Planetesimal Size and Extent of Hill Sphere
 253: "will remain proportional" - Proportional to what?
+	Changed the wording to 'ratio between the relaxation and collision timescale remains constant' to clarify this.
 254: but this doesn't have to be the case at all orbital periods, right? Given Fig.1 it seems clear that outside of 1AU, and especially for the Kuiper Belt this condition seems to be fulfilled.
+	Exactly! That's the point we're getting at here. (TODO: do I need to clarify something in the paper here?)
 263: Again, I think the concept of Hill radius and tidal stability needs to be formally introduced earlier.
+	TODO: Introduct this formally earlier
 273: Wouldn't these bodies then be tidally disrupted, and therefore not exist? Alpha > 1 is certainly not true for any solar system bodies that I am aware of. I understand that the scaling of alpha predicts alpha >1 at some radius (which I would explicitly mention), but this just implies that inside this radius, bodies must have greater densities to not be disrupted.
+	Alpha = 1 doesn't correspond  to the roche limit (although they are close)! TODO: Maybe add a calculation here explaining this.
 289: gravitational radius: is this physically motivated? Maybe reference
+	Yes, it is explained just below the equation. TODO: Do I need to clarify something?
 296: beta > 1 means collision cross section > geometric and small gravitational focusing. I recommend explicitly stating what the physical intuition for beta < 1 is.
+	Done.
 
 I think this section could be improved by having a schematic of the three sizes, for two different sets of alpha and beta, that highlights the physical meaning of both. This would communicate intuition for the two dimensionless parameters, and thus allow for a smoother read-through of the N-body results.
 

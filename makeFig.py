@@ -162,7 +162,7 @@ def plot_timescales():
 	mp = 4/3*np.pi*rhop*rp**3
 
 	mstar = (1*u.M_sun).to(u.g)
-	p_bins = (np.logspace(-4, 0)*u.yr).to(u.s)
+	p_bins = (np.logspace(0, 2)*u.d).to(u.s)
 	r_bins = ((p_bins/(2*np.pi))**2*G.cgs*mstar)**(1/3)
 
 	def timescale_ratio(eh):
@@ -188,11 +188,9 @@ def plot_timescales():
 
 	fig, axes = plt.subplots(figsize=(8,6))
 	ehvals = [16, 8, 4, 2, 1]
-	colors = plt.cm.viridis(np.linspace(0, 1, len(ehvals)))
 	for idx, eh in enumerate(ehvals):
-		axes.plot(p_bins.to(u.d), timescale_ratio(eh), c=colors[idx], label=r'e$_{h}$ = '+str(eh), lw=lw)
+		axes.plot(p_bins.to(u.d), timescale_ratio(eh), c='black', label=r'e$_{h}$ = '+str(eh), lw=lw)
 	axes.axhline(1, ls='--', color='gray')
-	axes.legend()
 	axes.set_xscale('log')
 	axes.set_yscale('log')
 	axes.set_xlabel('Orbital Period [d]')
@@ -1116,7 +1114,7 @@ def plot_frag_acc_zones():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-#plot_timescales()
+plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
