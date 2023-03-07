@@ -893,6 +893,22 @@ This work used the Extreme Science and Engineering Discovery Environment (XSEDE)
 \section*{Data Availability}
 The data presented in this article are available on our GitHub repository, at \url{https://github.com/spencerw/stip_planetesimal_paper}.
 
+\appendix
+\section{Robustness of Timestepping Scheme}\label{sec:rung_ecc}
+
+As described in section \ref{sec:methods}, {\sc ChaNGa} evolves the motions of the particles in the planetesimal disk using a multi-tiered timestepping scheme. Due to the extremely short dynamical timescale at the inner edge of the disk, the outer disk would require a prohibitive number of timesteps to reach the protoplanet phase using a fixed timestep scheme.To circumvent this, particles are evolved in discrete power-of-two timestep groups. In the event that a collision occurs between two particles on different timesteps, a slight error is introduced to the energy and angular momentum of the merged particle. Due to the nonlinear nature of the runaway growth phase, this slight error tends to trigger more subsequent collisions at the timestep boundary in the disk, and causes protoplanets to preferentially form at the boundaries.
+
+To circumvent this issue, we prohibit particles on different timesteps from merging until the runaway growth phase is well underway. For the fdHi simulation, multi-tiered mergers are not allowed during the first thousand steps. To verify that this technique does not alter the resulting protoplanet distribution in any meaningful way, we ran two test simulations of the inner part (1 to 4 days in orbital period) of the disk from the fdHi simulation. In the first case, the aforementioned timestepping scheme is used. In the second case, all particles are evolved on the timestep appropriate for the inner edge of the disk.
+
+\begin{figure}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{figures/rung_ecc.png}
+    \caption{A comparison between the innermost region of the fdHi (orange) simulation, and a second version using a fixed timestep appropriate for the inner edge of the disk (green). In the top panel, the period-eccentricity state of the particles is shown, with marker sizes indicating relative mass. The blue points represent the initial state of the simulations. The bottom panel compares the final mass distributions of the bodies (diff or cumulative?).\label{fig:rung_ecc}}
+\end{center}
+\end{figure}
+
+In figure \ref{fig:rung_ecc}, we compare the final period-eccentricity state and final mass distributions to each other. There do not appear to be any differences between the two protoplanet distributions, particularly near the timestep boundary at 2 days. In addition, the masses of both the protoplanets and the remaining growing planetesimals are indistinguishable. We therefore safely conclude that the timestepping scheme used in this work does not alter the growth of the protoplanets in any meaningful way.
+
 \bibliography{references}
 
 \clearpage

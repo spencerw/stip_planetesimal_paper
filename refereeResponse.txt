@@ -180,7 +180,7 @@ I think Table 1 and Table 2 could be combined
 554: footnote 2 can just go in the main text body.
 584: footnote 3 can also go in the main text body.
 584: Are there any works on the numerical robustness of this more efficient time-stepping scheme. While I'm inclined to believe that the error is only marginal, I think having some sort of test (or a reference to one) would make the results more steadfast.
-	No there arent. I'm going to create an appendix which shows the fdHi simulations from 1 to 4 days in p_orbit with fixed steps and multi stepping. The results should be the same.
+	No there arent. I've added an appendix that compares this timestepping scheme against a fixed timestep case. There appear to be no meaningful differences. TODO: Show mass distribution as differential or cumulative? Finish running sims
 
 5.4 Results
 586: Maybe include reference to figure where this is shown

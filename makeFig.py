@@ -1114,7 +1114,62 @@ def plot_frag_acc_zones():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-plot_timescales()
+def plot_rung_ecc():
+	file_str = 'figures/rung_ecc.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	snap0 = pb.load('data/rungTest/rungTest.ic')
+	pl0 = ko.orb_params(snap0, isHelio=True, mCentral=mCentral)
+	per0 = 2*np.pi*np.sqrt((pl0['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/rungTest/fullDiskVHi1.054000')
+	plNf = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perNf = 2*np.pi*np.sqrt((plNf['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+	snap = pb.load('data/rungTestSingle/fullDiskVHi.216000')
+	plF = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	perF = 2*np.pi*np.sqrt((plF['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
+
+	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
+	axes = ax[0]
+	axes.scatter(per0, pl0['e'], s=pl0['mass']/np.min(pl0['mass'])*0.1)
+	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*0.1, edgecolor='black', linewidth=0.4)
+	axes.scatter(perF, plF['e'], s=plF['mass']/np.min(pl0['mass'])*0.1, edgecolor='black', linewidth=0.4)
+	axes.set_yscale('log')
+	axes.set_ylim(5e-5, 5e-2)
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel('Eccentricity')
+
+	axes = ax[1]
+	axes.plot([], [])
+	axes.fill_between([], [], [], step='mid', alpha=0.5)
+
+	q1 = (plNf['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q1, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	#axes.plot(bins, np.cumsum(hist), linewidth=lw)
+	#axes.loglog(bins, hist, drawstyle='steps-mid')
+	axes.fill_between(bins, 0, hist, step='mid', alpha=0.5)
+	axes.set_yticks([])
+	axes.set_yscale('log')
+
+	q2 = (plF['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q2, bins=np.logspace(np.min(np.log10(q2)), np.max(np.log10(q2))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	#axes.plot(bins, np.cumsum(hist), linewidth=lw)
+	#axes.loglog(bins, hist, drawstyle='steps-mid')
+	axes.fill_between(bins, 0, hist, step='mid', alpha=0.5)
+	axes.set_yticks([])
+	axes.set_xscale('log')
+
+	axes.set_xlabel('Mass [g]')
+	axes.set_ylabel('N (<M)')
+	axes.set_xscale('log')
+
+	fig.tight_layout()
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+#plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
@@ -1131,3 +1186,4 @@ plot_timescales()
 #plot_frag_ecc()
 #plot_frag_evo()
 #plot_frag_acc_zones()
+plot_rung_ecc()
