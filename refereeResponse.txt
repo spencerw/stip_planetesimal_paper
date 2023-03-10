@@ -53,7 +53,7 @@ Abstract
 26: How large are these solids? I assume this is referencing micron sized dust-grains?
 	Correct, some text was added to clarify this.
 68: Add reference
-	Need to find a reference for this
+	Added a handful of references arguing that the asteroids, KBOs and Oort cloud bodies are leftover planetesimals.
 72: Maybe elaborate on this. How long is the period of quiescence? How does this instability work?
 	We intentionally left this part vague as someone really needs to look into this more! There are three relevant timescales here:
 	1. The timescale for the instability itself (depends on the orbital properties of the embryos, see Chambers 98)
@@ -61,7 +61,7 @@ Abstract
 	3. Tidal eccentricity damping of the embryos due to the gas disk. Should shut off once the gas disk disperses on ~Myr timescales (Beckwith + Sargent 1996).
 	TODO: decide what to add to the text here.
 88: Add reference maybe.
-	I don't know of any references to add, but we added some text to clarify why this is the case (for particle-in-a-box methods, oligarchic growth results in only a few bodies in the highest mass bins)
+	I don't know of any references which have tested the applicability of statistical methods during the oligarchic growth phase, but maybe some clarification would help. The runaway growth phase produces a small number of large bodies, which eventually interact and terminate runaway growth (Ida + Makino 1993, Kokubo + Ida 1995). Given how few oligarchs are produced, one would not expect particle-in-a-box methods to be a good approach here. We've clarified this in the text as well.
 99: Capitalize "Systems of Tightly-packed Inner Planets"
 	Fixed
 104: Gas-Disk driven migration → reference?
@@ -80,9 +80,9 @@ Abstract
 161: What does "orderly" fashion mean exactly?
 	This means the mass ratios between bodies tend toward unity. This has been clarified in the text.
 174: Add reference.
-	TODO: Section 5.2.1 of the Armitage book calculates this. Is there also a paper to reference? (runaway growth required to build planets in a reasonable amount of time)
+	Added reference to Lissauer 1987. Also mentioned that pebble accretion is a viable alternative.
 198: Ln Lambda approx 10 missing could use a reference.
-	TODO: This is also in the armitage book, but lets look for a paper that calculates it
+	Typo in the text, Ln Lambda ~ 3 is typically used. Added references to Ida 1990, Stewart and Ida 1993). Ln Lambda = 3 was used to construct figure 1, so no changes to the figure needed.
 204: I suggest more formally introducing the concept of Hill sphere and hill factor.
 	TODO: Where to put this?
 209: This sentence seems not necessary.
@@ -94,7 +94,7 @@ Abstract
 226: Maybe clarify that growth timescale equals collision time scale.
 	We have replaced 'growth' with 'collision' here, and done the same elsewhere in the paper for consistency
 238: The eccentricity dispersion e_h is never defined anywhere. It is unclear to me what scaling e_h with the Hill-factor means physically.
-	e_h can be thought of as the radial excursion of the body's orbit in units of its Hill radius. For e_h > 1, encounters between bodies can be treated with a two-body formalism. We have decided to remove any mention of e_h here, and instead save this definition for section 4 (TODO: define in section 4), where it is next mentioned.
+	e_h can be thought of as the radial excursion of the body's orbit in units of its Hill radius. For e_h > 1, the random velocity of a body dominates over the velocity difference due to the shearing of the disk (over a separation of 1 r_h) and encounters between bodies can be treated with a two-body formalism. We have decided to remove any mention of e_h here, and instead save this definition for section 4 (TODO: define in section 4), where it is next mentioned.
 Figure .1:
 Since this is an analytical plot, I think one could color the entire parameter space according to the ratio t_relax/t_coll. Currently, it may suggest that the plotted values for e_h are chosen for a particular reason.
 	Get rid of the legend, explain that e_h values increase from bottom to top.
@@ -111,11 +111,11 @@ Also, I recommend adjusting the x-limits of the plot to correspond to the limits
 254: but this doesn't have to be the case at all orbital periods, right? Given Fig.1 it seems clear that outside of 1AU, and especially for the Kuiper Belt this condition seems to be fulfilled.
 	Exactly! That's the point we're getting at here. (TODO: do I need to clarify something in the paper here?)
 263: Again, I think the concept of Hill radius and tidal stability needs to be formally introduced earlier.
-	TODO: Introduct this formally earlier
+	TODO: Introduce this formally earlier
 273: Wouldn't these bodies then be tidally disrupted, and therefore not exist? Alpha > 1 is certainly not true for any solar system bodies that I am aware of. I understand that the scaling of alpha predicts alpha >1 at some radius (which I would explicitly mention), but this just implies that inside this radius, bodies must have greater densities to not be disrupted.
 	Alpha = 1 doesn't correspond  to the roche limit (although they are close)! TODO: Maybe add a calculation here explaining this.
 289: gravitational radius: is this physically motivated? Maybe reference
-	Yes, it is explained just below the equation. TODO: Do I need to clarify something?
+	There is a physical explanation of r_g immediately below equation 5 in the text. Also added a reference to Ida 1990.
 296: beta > 1 means collision cross section > geometric and small gravitational focusing. I recommend explicitly stating what the physical intuition for beta < 1 is.
 	Done.
 
@@ -137,9 +137,16 @@ Maybe consider having beta value as a column label and alpha value as a row labe
 I would also probably label the four panels / cases a,b,c,d and then refer as such in the text body
 
 391: Why would this because there are no high eccentricity planetesimals. Isn't the fact that there is no residual population not already evidence that encounters are accreting rather than scattering? Also, isn't this also not just very expected since alpha exactly quantifies the relative importance of scattering vs accretion?
+	There are two possible outcomes from an encounter:
+		Scattering, eccentricity increases, subsequent encounters more unlikely
+		Collision -> merger -> eccentricity decreases due to collisional damping
+	No high eccentricity particles suggests there are very few scattering events
 394: small alpha, large beta doesn't look dynamically cool to me.
+	TODO: Change the text to only reference the dynamical state of the protoplanets
 400: Small alpha large beta does not look dynamically cooler than large alpha large beta to me. In fact, the opposite.
+	You are correct! This is a mistake in the text. TODO: Fix
 402: I don't really understand why small alpha small beta leads to so many dynamically hot bodies, both planetesimals and protoplanets. Maybe the authors can elaborate.
+
 Figure 3:
 Again, I really think labeling the cases would be helpful.
 I would express the mass in units of e.g. Ceres
@@ -151,6 +158,7 @@ I'd be interested in also having another panel that shows the evolution of just 
 
 418: I would specifically state that for the large alpha cases runaway growth only occurs at the start, to avoid initial confusion that the slope turns around when the planetesimal supply is depleted.
 435: Is this true? I was under the impression that the residual planetesimal population remains? I think this does not seem consistent with the rest of the work...?
+	TODO: Change the wording here. Maybe this isnt true. Would the growth mode simply 'flatten' out here?
 446: What exactly does alpha being non-negligible mean? Given that alpha is always less than unity, what alpha value marks the transition of the oligarchic growth regime vs, consumption regime? See major comment.
 
 5. Full disk Simulation

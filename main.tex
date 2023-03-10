@@ -70,7 +70,7 @@ becomes more effective as bodies grow larger, a period of runaway growth occurs 
 power law spectrum of masses develop. Eventually, the largest bodies (known as oligarchs) dynamically heat the remaining 
 planetesimals, severely limiting further growth \citep{kokubo98}. The final outcome of this phase is a bimodal population of 
 dynamically cold oligarchs, surrounded by dynamically hot, difficult to accrete residual planetesimals. Lines of evidence suggest 
-that the asteroid belt, Kuiper belt and the Oort cloud are largely composed of the leftovers of this stage of planet formation (add reference).
+that the asteroid belt \textbf{\citep{bottke05, morbidelli09}}, Kuiper belt \textbf{\citep{levison08, sheppard10}} and the Oort cloud \textbf{\citep{levison11}} are largely composed of the leftovers of this stage of planet formation.
 
 After a long period of quiescence, the collection of embryos and
 remaining planetesimals undergo a large-scale instability
@@ -86,8 +86,7 @@ planet formation process have received most of the attention in the
 literature. The planetesimal accretion phase, which we will focus on
 in this paper, is more difficult and expensive to model because there are too
 many particles to directly track with traditional N-body codes, while
-the gravitational influence of the few massive oligarchs that
-form make statistical methods inappropriate because the highest mass bins contain only a few bodies. Due to computational expense, N-body simulations of
+the gravitational interactions between the \textbf{few massive bodies produced by the runaway growth phase \citep{ida93, kokubo95, kokubo98} render statistical methods inappropriate}. Due to computational expense, N-body simulations of
 planetesimal accretion are usually modeled in a narrow
 ring \citep{kokubo96, kokubo98}, and the results and timescales are then scaled to suit whatever relevant orbital period is being 
 studied. N-body simulations of terrestrial planet assembly typically begin with a series of neatly spaced oligarchs, whose mass 
@@ -98,7 +97,7 @@ Given that Systems of Tightly-packed Inner Planets (STIPs) appear to
 be a common outcome of planet formation \citep{lantham11, lissauer11, rowe14}, understanding exactly how
 solids accumulate at short orbital periods is crucial. Although
 gas-disk driven migration of the planets themselves is often invoked
-to explain the observed architectures \citep{izidoro17, izidoro21}, we will focus on an in-situ
+to explain the observed architectures \textbf{\citep{izidoro17, izidoro21}}, we will focus on an in-situ
 model in this paper. That is, once the planetesimals themselves form,
 they largely stay in place, and any subsequent large-scale movement of
 the solids are the result of mutual gravitational interactions. The
@@ -151,7 +150,7 @@ In the limit that $v_{esc} \gg v$, it can be shown that $dM/dt \propto
 M^{4/3}$, which implies a runaway scenario where growth
 accelerates with mass. This mode of growth was confirmed with N-body
 simulations by \citet{kokubo96} and appears necessary to construct
-protoplanets within the lifetime of a protoplanetary disk. Due to the
+protoplanets within the lifetime of a protoplanetary disk \textbf{\citep{lissauer87}, although one should note that pebble accretion \citep{lambrechts12, lambrechts14, bitsch15} is a viable alternative scenario}. Due to the
 velocity dependence of the gravitational focusing effect, it is not clear how ubiquitous this mode of growth is. In particular, encounter velocities at short orbital periods will be rather large (because $v \sim v_{k}$) and the $v_{esc} \gg v$ condition may not always be satisfied. The effect that a dynamically hot disk has on runway growth will be examined in detail in section \ref{sec:narrow}.
 
 An important feature is missing from the model described above, which
@@ -167,7 +166,7 @@ relaxation time \citep{ida93}
 	t_{relax} = \frac{v^3}{4 \pi n G^2 {m_{pl}}^2 \ln \Lambda},
 \end{equation}
 where $\ln \Lambda$ is the Coulomb logarithm,
-typically taken to be $\approx 10$ for a planetesimal disk. Despite
+typically taken to be \textbf{$\approx 3$ for a planetesimal disk \citep{ida90, stewart00}}. Despite
 the fact that the behavior of gravitational stirring is well-described
 by a two-body formula, \citep{ida93} found that the stirring in a planetesimal disk is actually driven by close encounters, which 
 requires a three-body formalism. As we will show in section \ref{sec:narrow}, gravitational stirring effectively shuts off when the 
@@ -246,7 +245,7 @@ We also introduce a second dimensionless quantity, which relates the physical si
 \begin{equation}\label{eq:beta}
 	\beta = \frac{r_{pl}}{r_{g}}.
 \end{equation}
-where $r_{g} = G m_{pl} / v^{2}$ is the gravitational radius of a body. Encounters between bodies inside of a distance of $r_{g}$ result in significant deflections of their trajectories. It should be noted that the gravitational focusing enhancement factor $v^{2}/v_{esc}^{2}$ is equal to 1 for $\beta = 1$. In the case where $r_{g}$ is smaller than the size of a planetesimal, the gravitational focusing enhancement factor will be between 0 and 1 and the collision cross section is mostly set by the geometric value. \textbf{For very large values of $r_{g}$ ($\beta \gg 1$), the effective collision cross section is almost entirely set by gravitational scattering.}
+where $r_{g} = G m_{pl} / v^{2}$ is the gravitational radius of a body (see eq 4.1 of \citet{ida90}). Encounters between bodies inside of a distance of $r_{g}$ result in significant deflections of their trajectories. It should be noted that the gravitational focusing enhancement factor $v^{2}/v_{esc}^{2}$ is equal to 1 for $\beta = 1$. In the case where $r_{g}$ is smaller than the size of a planetesimal, the gravitational focusing enhancement factor will be between 0 and 1 and the collision cross section is mostly set by the geometric value. \textbf{For very large values of $r_{g}$ ($\beta \gg 1$), the effective collision cross section is almost entirely set by gravitational scattering.}
 
 These scaling considerations motivate the range of parameters we choose for the numerical experiments presented in the next section, where we aim to understand where and when runaway and oligarchic growth can operate.
 
