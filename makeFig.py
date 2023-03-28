@@ -169,7 +169,7 @@ def plot_timescales():
 		Sigma = surf_den(r_bins.to(u.AU))
 
 		vk = np.sqrt(G.cgs*mstar/r_bins)
-		lnLam = 5
+		lnLam = 3
 		omega = 2*np.pi/p_bins
 		vesc = np.sqrt(G.cgs*mp/rp)
 
@@ -214,13 +214,13 @@ def plot_alpha_beta():
 		ax.text(0.85, 0.95, title, transform=ax.transAxes, ha='center', va='center')
 
 	fig, ax = plt.subplots(figsize=(16,12), nrows=2, ncols=2, sharex=True, sharey=True)
-	subplot(ax[0][0], 'ki_fluffy', r'Large $\alpha$, Small $\beta$')
+	subplot(ax[0][0], 'ki_fluffy', r'Case a: Large $\alpha$, Small $\beta$')
 	ax[0][0].set_ylabel('Eccentricity')
-	subplot(ax[0][1], 'ki_fluffy_hot', r'Large $\alpha$, Large $\beta$')
-	subplot(ax[1][0], 'ki', r'Small $\alpha$, Small $\beta$')
+	subplot(ax[0][1], 'ki_fluffy_hot', r'Case b: Large $\alpha$, Large $\beta$')
+	subplot(ax[1][0], 'ki', r'Case c: Small $\alpha$, Small $\beta$')
 	ax[1][0].get_xticklabels()[0].set_visible(False)
 	ax[1][0].get_xticklabels()[-1].set_visible(False)
-	subplot(ax[1][1], 'ki_hot', r'Small $\alpha$, Large $\beta$')
+	subplot(ax[1][1], 'ki_hot', r'Case d: Small $\alpha$, Large $\beta$')
 	ax[1][1].get_xticklabels()[0].set_visible(False)
 	ax[1][1].get_xticklabels()[-1].set_visible(False)
 
@@ -228,7 +228,7 @@ def plot_alpha_beta():
 	ax[1][1].set_xlim(0.9, 1.1)
 	ax[1][1].set_ylim(1e-5, 0.3)
 
-	fig.supslabel('Semimajor Axis [AU]')
+	fig.supxlabel('Semimajor Axis [AU]')
 	fig.supylabel('Eccentricity')
 
 	plt.subplots_adjust(wspace=0, hspace=0)
@@ -243,18 +243,18 @@ def plot_alpha_beta_evo():
 	fig, axes = plt.subplots(figsize=(8,6))
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Small $\beta$', lw=lw)
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case a: Large $\alpha$, Small $\beta$', lw=lw)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy_hot.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Large $\alpha$, Large $\beta$', lw=lw)
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case b: Large $\alpha$, Large $\beta$', lw=lw)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Small $\beta$', lw=lw)
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case c: Small $\alpha$, Small $\beta$', lw=lw)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_hot.txt')
 	ind = np.arange(len(stepnumber))
 	stepnumber[ind >= 51] += 500000
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Small $\alpha$, Large $\beta$', lw=lw)
+	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case d: Small $\alpha$, Large $\beta$', lw=lw)
 
 	axes.set_xlabel('Time Steps')
 	axes.set_ylabel(r'M / $\langle$ m $\rangle$')
@@ -279,7 +279,7 @@ def plot_alpha_beta_mass():
 	axes[0].loglog(bins, hist, drawstyle='steps-mid')
 	axes[0].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[0].set_yticks([])
-	axes[0].text(0.85, 0.85, r'Large $\alpha$, Small $\beta$', transform=axes[0].transAxes, ha='center', va='center')
+	axes[0].text(0.85, 0.85, r'Case a: Large $\alpha$, Small $\beta$', transform=axes[0].transAxes, ha='center', va='center')
 
 	snap = pb.load('data/ki_fluffy_hot.end')
 	pl = ko.orb_params(snap, isHelio=True, mCentral=1)
@@ -289,7 +289,7 @@ def plot_alpha_beta_mass():
 	axes[1].loglog(bins, hist, drawstyle='steps-mid')
 	axes[1].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[1].set_yticks([])
-	axes[1].text(0.85, 0.85, r'Large $\alpha$, Large $\beta$', transform=axes[1].transAxes, ha='center', va='center')
+	axes[1].text(0.85, 0.85, r'Case b: Large $\alpha$, Large $\beta$', transform=axes[1].transAxes, ha='center', va='center')
 
 	snap = pb.load('data/ki.end')
 	pl = ko.orb_params(snap, isHelio=False, mCentral=1)
@@ -299,7 +299,7 @@ def plot_alpha_beta_mass():
 	axes[2].loglog(bins, hist, drawstyle='steps-mid')
 	axes[2].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[2].set_yticks([])
-	axes[2].text(0.85, 0.85, r'Small $\alpha$, Small $\beta$', transform=axes[2].transAxes, ha='center', va='center')
+	axes[2].text(0.85, 0.85, r'Case c: small $\alpha$, Small $\beta$', transform=axes[2].transAxes, ha='center', va='center')
 
 	snap = pb.load('data/ki_hot.end')
 	pl = ko.orb_params(snap, isHelio=True, mCentral=1)
@@ -309,7 +309,7 @@ def plot_alpha_beta_mass():
 	axes[3].loglog(bins, hist, drawstyle='steps-mid')
 	axes[3].fill_between(bins, 0, hist, step='mid', alpha=0.5)
 	axes[3].set_yticks([])
-	axes[3].text(0.85, 0.85, r'Small $\alpha$, Large $\beta$', transform=axes[3].transAxes, ha='center', va='center')
+	axes[3].text(0.85, 0.85, r'Case d: Small $\alpha$, Large $\beta$', transform=axes[3].transAxes, ha='center', va='center')
 
 	fig.supylabel('log dn/dm')
 	axes[3].set_xlabel('Mass [g]')
@@ -648,6 +648,9 @@ def plot_surfden_b():
 	axes.scatter(perShd.value, get_btilde(plVHiShd, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	axes.scatter(perShe.value, get_btilde(plVHiShe, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
+	rungs = np.arange(0, 7)
+	for rung in rungs:
+		axes.axvline(2**rung)
 	axes.set_title('fdHiShallow')
 	axes = ax[3]
 	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black', linewidth=0.4)
@@ -1170,9 +1173,9 @@ def plot_rung_ecc():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 #plot_timescales()
-#plot_alpha_beta()
-#plot_alpha_beta_evo()
-#plot_alpha_beta_mass()
+plot_alpha_beta()
+plot_alpha_beta_evo()
+plot_alpha_beta_mass()
 #plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
@@ -1186,4 +1189,4 @@ def plot_rung_ecc():
 #plot_frag_ecc()
 #plot_frag_evo()
 #plot_frag_acc_zones()
-plot_rung_ecc()
+#plot_rung_ecc()

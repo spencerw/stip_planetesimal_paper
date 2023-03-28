@@ -298,7 +298,7 @@ for the particle and $v$ is magnitude of its heliocentric velocity,
  are tested for an imminent collision. In the case that
 a collision is detected, the particles are merged into a single larger
 body, which is given the center of mass position and velocity of the
-two children. Resolving a collision can produce another imminent
+two \textbf{parents}. Resolving a collision can produce another imminent
 collision, so collisions are handled one-by-one and another full
 collision check is run after the previous event is resolved. For a
 more detailed description of the collision module in {\sc ChaNGa}, see
@@ -315,8 +315,9 @@ replaced with the mass of the nearby particle.
 
 \section{Narrow Annulus Simulations}\label{sec:narrow}
 
-We begin by presenting a parameter study of planetesimal accretion,
-motivated by two questions raised in section \ref{sec:theory}. 1) Does
+We begin by 
+\textbf{exploring the outcome of planetesimal accretion in different parts of the $\left( \alpha, \beta \right)$
+parameter space.} The choices of $\alpha$ and $\beta$ are motivated by two questions raised in section \ref{sec:theory}. 1) Does
 runaway growth still operate when the condition that $v \ll v_{esc}$
 is not satisfied? 2) How does planetesimal accretion proceed when the planetesimals themselves occupy a significant fraction of 
 their Hill spheres?
@@ -325,7 +326,7 @@ To answer these questions, we run a series of simulations in which a
 narrow annulus of planetesimals orbits a star. The values of $\alpha$
 and $\beta$ are varied individually. 4000 planetesimals with
 individual masses of $5 \times 10^{23}$ g are placed with semimajor
-axes randomly drawn between 0.95 and 1.05 AU about a 1 $M_{\odot}$
+axes drawn \textbf{from a uniform distribution} between 0.95 and 1.05 AU about a 1 $M_{\odot}$
 star. The argument of perihelion, $\omega$, longitude of ascending node,
 $\Omega$, and mean anomaly, M, for each body is drawn from a uniform
 distribution $\in [0, 2 \pi)$. The inclinations and eccentricities are drawn
@@ -336,8 +337,8 @@ In the ``fiducial'' case, we give the bodies a bulk density of 3 g
 cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, which corresponds to $\alpha = 3.6 \times 10^{-2}$ and $\beta = 3.4 \times 
 10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. 
 To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by 
-a factor of $\sim$ 7100, which produces $\alpha = 1$. To vary $\beta$, the eccentricity dispersion is increased. For the high-$
-\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$.
+a factor of $\sim$ 7100, which produces $\alpha = 1$. \textbf{In this case, a planetesimal completely fills its Hill sphere, and one should expect no strong gravitational scattering to occur.} To vary $\beta$, the eccentricity dispersion is increased. For the high-$
+\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$. \textbf{This choice of $\beta$ places the system firmly in the $v > v_{esc}$ regime, while still allowing growth to occur in a reasonable number of timesteps.}
 
 In all cases, the simulations are evolved with a base timestep of 1.7
 days, which corresponds to 3\% of an orbital dynamical time
@@ -346,20 +347,20 @@ each case, a simulation is stopped when the growth of the most massive
 body flattens out. In figure \ref{fig:alpha_beta}, we show the a-e
 distribution of bodies in the initial (blue) and final (orange)
 snapshots from each of the 4 simulations. The size of the points
-indicates the relative masses of the bodies. Only in the case of small
-$\alpha$ does a residual population of dynamically hot planetesimals
+indicates the relative masses of the bodies. Only \textbf{with small
+$\alpha$ (case c, d)} does a residual population of dynamically hot planetesimals
 develop. The lack of high eccentricity planetesimals in the large
-$\alpha$ case suggests that most encounters result in accretion
-rather than scattering. In the case of large $\beta$, the protoplanets
-and remaining planetesimals end up in a dynamically cool state,
-compared with the initial conditions. This is due to kinetic energy 
+$\alpha$ \textbf{(case a, b) simulation} suggests that most encounters result in accretion
+rather than scattering. \textbf{For} large $\beta$ \textbf{(case b, d)}, the \textbf{growing} protoplanets
+and end up in a dynamically cool state,
+\textbf{relative} with the initial conditions. This is due to kinetic energy 
 being lost as particles inelastically collide. One last point we note
 is the difference between the eccentricities of protoplanets in the 
-large $\alpha$, large $\beta$ and the small $\alpha$,
-large $\beta$ case. The dynamically cooler result of the latter case
+large $\alpha$, large $\beta$ \textbf{(case b)} and the small $\alpha$,
+large $\beta$ \textbf{(case d) simulation}. The dynamically cooler result of the \textbf{former} case
 is likely due to the dominant role that inelastic collisions play here.
 
-In figure \ref{fig:alpha_beta_mass}, we show the mass distribution of bodies from the final snapshot in each of the four cases. In addition to leaving fewer residual planetesimals, the large $\alpha$ simulations produce significantly larger embryos. Despite the vastly different encounter velocities of each population of bodies, the initial size of $\beta$ (so long as bodies remain in the dispersion-dominated regime) appears to have no significant effect on the final distribution of masses.
+In figure \ref{fig:alpha_beta_mass}, we show the mass distribution of bodies from the final snapshot in each of the four \textbf{simulations}. In addition to leaving fewer residual planetesimals, the large $\alpha$ \textbf{(case a, b)} simulations produce significantly larger embryos. Despite the vastly different encounter velocities of each population of bodies, the initial size of $\beta$ (so long as bodies remain in the dispersion-dominated regime) appears to have no significant effect on the final distribution of masses.
 
 To investigate whether any of these planetesimal rings underwent
 runaway growth, we examine the time evolution of the maximum and mean
@@ -377,8 +378,8 @@ is what drives the system towards runaway
 growth, no matter how close the collision cross sections lie to the geometric value.
 Although larger encounter velocities lengthen the growth
 timescales, runaway growth appears to be inevitable, so long as
-gravity is the dominant force in the system. For the large $\alpha$
-cases, the curves in this figure eventually turn over and begin to decline.
+gravity is the dominant force in the system. For large $\alpha$
+\textbf{(case a, b)}, the curves in this figure eventually turn over and begin to decline.
 Upon inspecting the simulation snapshots, we find that this trend is
 driven by an increase in the average mass as the planetesimal population
 becomes depleted. One should expect that the same thing will eventually

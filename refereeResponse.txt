@@ -123,29 +123,39 @@ I think this section could be improved by having a schematic of the three sizes,
 
 3. Numerical Methods
 335: children: Would those not be the parent particles?
+	We've been representing the collision history of a particle with a tree structure. Following computer science convention, our tree is flipped upside down, with the original planetesimals at the bottom (hence calling them children). I agree that calling them 'parents' is probably more intuitive for most readers, however. We have changed 'children' to 'parents' here.
 
 4. Narrow Annulus Simulations
 352: I think it's somewhat ambitious calling four simulations a parameter study.
+	Agreed. This has been changed to 'an exploration of the (alpha, beta) parameter space'.
 362: Regarding the initial condition, I recommend adding some more intuitive mass units, i.e. approx 0.5 Ceres masses, as well as the corresponding radius 341 km. Also, to what is the bulk density reduced to? Is this still physical? What is the corresponding radius? Maybe motivate the initial planetesimal masses / radii (e.g., Morbidelli 2009, Hartlep & Cuzzi 2020, Gerbig & Li, 2023). Also, maybe put the total mass of the planetesimals into context. I think this is 0.33 Earth masses, within 0.1 AU of Earth, the feeding zone of Earth.
+	I don't think I like the idea of providing more physical motivation here. This was meant to be a study of the effects of varying alpha and beta. I think some of these points should be saved for the full disk section. Perhaps it would be better if I described everything in dimensionless units? TODO
+
 367: I'm assuming the semi-major axis is also drawn from a uniform distribution?
+	Yes, this is now clarified.
+
 377: is alpha=1 chosen because it is the highest stable alpha? If so I would write that. Why is beta = 15000 chosen?
+	Alpha = 1 corresponds to r_pl = r_hill. One would expect that gravitational scattering should completely shut off for alpha >= 1. The 'large beta' value is chosen to be as large as possible while still allowing the simulation to finish in a reasonable amount of time (collisions become more infrequent as we turn up the eccentricity dispersion). This is not explained in the text. Beta is also probably limited by r_apo-r_peri < delta_a (TODO: calculate this)
 
 Figure.2: Some suggestions to improve this figure are:
 A reference planetesimal size that shows what mass a circle has
+	Might skip this, want to keep everything in dimensionless units here TODO: decide
 Horizontal lines in each panel showing where e_h is
+	Might skip this, depending on whether I remove the e_h lines from figure 1. TODO
 Maybe consider having beta value as a column label and alpha value as a row label. I would also explicitly state the values for alpha.
+
 I would also probably label the four panels / cases a,b,c,d and then refer as such in the text body
+	Done
 
 391: Why would this because there are no high eccentricity planetesimals. Isn't the fact that there is no residual population not already evidence that encounters are accreting rather than scattering? Also, isn't this also not just very expected since alpha exactly quantifies the relative importance of scattering vs accretion?
-	There are two possible outcomes from an encounter:
-		Scattering, eccentricity increases, subsequent encounters more unlikely
-		Collision -> merger -> eccentricity decreases due to collisional damping
-	No high eccentricity particles suggests there are very few scattering events
+	I'm assuming this is referring to the statement that begins with 'The lack of high eccentricity planetesimals...'. I think you must be misinterpreting what we said in the text here, because it sounds like we are both making the same point. When we turn up alpha, the high eccentricity planetesimals dissapear. This is expected, because large alpha makes gravitational scattering difficult, so those bodies that undergo close encounters end up being accreted by the protoplanets, rather than getting kicked onto high eccentricity orbits. If there is something that needs to be clarified in the text, please let us know!
+
 394: small alpha, large beta doesn't look dynamically cool to me.
-	TODO: Change the text to only reference the dynamical state of the protoplanets
+	This should have been referring to the dynamical state of the growing protoplanets, relative to the initial eccentricities of the planetesimals. This has now been clarified in the text.
 400: Small alpha large beta does not look dynamically cooler than large alpha large beta to me. In fact, the opposite.
-	You are correct! This is a mistake in the text. TODO: Fix
+	You are correct! This is a mistake in the text (replaced 'latter' with 'former').
 402: I don't really understand why small alpha small beta leads to so many dynamically hot bodies, both planetesimals and protoplanets. Maybe the authors can elaborate.
+	When alpha and beta are both small, the gravitational stirring timescale is very short and the disk quickly heats up. Because the stirring timescale goes as v^{1/4} (TODO: reference), the scattering slows down as the disk gets hotter. So runaway growth doesn't really kick in until after the eccentricities have grown enough that stirring slows down. I think this is why the initial choice of beta doesn't really seem to affect the final dynamical state of the disk in figure 2. This is also why the initial choice of e_h isn't very consistent across planetesimal accretion studies (cite some examples). TODO: Let's add another paragraph discussing this here.
 
 Figure 3:
 Again, I really think labeling the cases would be helpful.
