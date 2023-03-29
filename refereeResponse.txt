@@ -160,11 +160,15 @@ I would also probably label the four panels / cases a,b,c,d and then refer as su
 Figure 3:
 Again, I really think labeling the cases would be helpful.
 I would express the mass in units of e.g. Ceres
+	Todo: Push back on this? Use dimensionless units for this section.
 406: I'm not sure about "significantly" larger. The biggest body in large alpha, small beta is about a factor 3 more massive than in small alpha, small beta. This is only a factor of 1.4 in size.
+	The text now says 'a factor of a few larger'
 415: the y-label in Fig.6 does not match the description in the text
+	This comment must be referring to figure 4? If so, 'm_max' in the text has been changed to 'M'.
 Figure 4:
 Why don't the simulations start all with m_max/m = 1?
 I'd be interested in also having another panel that shows the evolution of just M_max and <m> (maybe in solid and dashed lines) for the four simulations. That would also underscore that the turnover is driven by an increase in <m> rather than m_max.
+	We have now added a second panel to figure 4 which shows the evolution of these quantities separately. Todo: Units? Why does the max mass decrease for case a?
 
 418: I would specifically state that for the large alpha cases runaway growth only occurs at the start, to avoid initial confusion that the slope turns around when the planetesimal supply is depleted.
 435: Is this true? I was under the impression that the residual planetesimal population remains? I think this does not seem consistent with the rest of the work...?

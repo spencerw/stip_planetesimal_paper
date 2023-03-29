@@ -240,25 +240,38 @@ def plot_alpha_beta_evo():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	fig, axes = plt.subplots(figsize=(8,6))
+	fig, axes = plt.subplots(figsize=(8,12), nrows=2)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case a: Large $\alpha$, Small $\beta$', lw=lw)
+	c=next(axes[0]._get_lines.prop_cycler)['color']
+	axes[0].loglog(stepnumber, max_mass/mean_mass, label=r'Case a: Large $\alpha$, Small $\beta$', lw=lw, color=c)
+	axes[1].loglog(stepnumber, max_mass, lw=lw, color=c)
+	axes[1].loglog(stepnumber, mean_mass, lw=lw, ls='--', color=c)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_fluffy_hot.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case b: Large $\alpha$, Large $\beta$', lw=lw)
+	c=next(axes[0]._get_lines.prop_cycler)['color']
+	axes[0].loglog(stepnumber, max_mass/mean_mass, label=r'Case b: Large $\alpha$, Large $\beta$', lw=lw, color=c)
+	axes[1].loglog(stepnumber, max_mass, lw=lw, color=c)
+	axes[1].loglog(stepnumber, mean_mass, lw=lw, ls='--', color=c)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki.txt')
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case c: Small $\alpha$, Small $\beta$', lw=lw)
+	c=next(axes[0]._get_lines.prop_cycler)['color']
+	axes[0].loglog(stepnumber, max_mass/mean_mass, label=r'Case c: Small $\alpha$, Small $\beta$', lw=lw, color=c)
+	axes[1].loglog(stepnumber, max_mass, lw=lw, color=c)
+	axes[1].loglog(stepnumber, mean_mass, lw=lw, ls='--', color=c)
 
 	stepnumber, max_mass, mean_mass = np.loadtxt('data/ki_hot.txt')
 	ind = np.arange(len(stepnumber))
 	stepnumber[ind >= 51] += 500000
-	axes.loglog(stepnumber, max_mass/mean_mass, label=r'Case d: Small $\alpha$, Large $\beta$', lw=lw)
+	c=next(axes[0]._get_lines.prop_cycler)['color']
+	axes[0].loglog(stepnumber, max_mass/mean_mass, label=r'Case d: Small $\alpha$, Large $\beta$', lw=lw, color=c)
+	axes[1].loglog(stepnumber, max_mass, lw=lw, color=c)
+	axes[1].loglog(stepnumber, mean_mass, lw=lw, ls='--', color=c)
 
-	axes.set_xlabel('Time Steps')
-	axes.set_ylabel(r'M / $\langle$ m $\rangle$')
-	axes.legend()
+	axes[1].set_xlabel('Time Steps')
+	axes[0].set_ylabel(r'M / $\langle$ m $\rangle$')
+	axes[1].set_ylabel(r'M, $\langle$ m $\rangle$')
+	axes[0].legend()
 
 	plt.tight_layout()
 
@@ -1173,9 +1186,9 @@ def plot_rung_ecc():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 #plot_timescales()
-plot_alpha_beta()
+#plot_alpha_beta()
 plot_alpha_beta_evo()
-plot_alpha_beta_mass()
+#plot_alpha_beta_mass()
 #plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
