@@ -392,8 +392,7 @@ begin to run out of planetesimals.
 Additionally, these results suggest that the value of $\alpha$, which is a function of only the initial conditions, controls the qualitative outcome of accretion. 
 Across most of a planet-forming disk, $\alpha$ is small, and frequent gravitational encounters between the growing bodies will 
 facilitate oligarchic growth. In the dispersion-dominated regime, close encounters drive the stirring between planetesimals and 
-embryos \citep{weidenschilling89, ida90}. When $\alpha$ is non-negligible, the Hill sphere of a body is no longer mostly 
-empty space, and close encounters that would otherwise result in viscous stirring instead result in accretion. In this regime, we 
+embryos \citep{weidenschilling89, ida90}. \textbf{When $\alpha \ll 1$, the Hill sphere of a body is mostly empty space and the majority of close encounters result in viscous stirring, rather than accretion. In the opposite regime,} we 
 observe that runaway growth still occurs, but nearly all of the planetesimals are consumed by the forming protoplanets, rather 
 than being scattered onto higher eccentricity orbits, where they would otherwise remain as a remnant of the early stages of 
 planet formation \citep{kokubo98, kokubo00}.
@@ -428,12 +427,15 @@ typically begin with a chain of neatly-spaced, isolation mass
 whether the high $\alpha$ growth mode we revealed
 in the previous section invalidates this choice of initial conditions.
 
-Given the dearth of short-period terrestrial planets observed around M stars (e.g. TRAPPIST-1), we chose to model the evolution of a series of wide planetesimal disks, which span from 1 to 100 days in orbital period, orbiting a late-type M star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this orbital period range corresponds to $\alpha \in (0.7, 0.05)$. By simultaneously modeling a broad range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and also explore how the oligarchic/non-oligarchic accretion boundary affects the resulting distribution of protoplanets.
+Given the dearth of short-period terrestrial planets observed around M stars (e.g. TRAPPIST-1 \textbf{\citep{gillon16, gillon17, agol21}}), we chose to model the evolution of a series of wide planetesimal disks, which span from 1 to 100 days in orbital period, orbiting a late-type M star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this orbital period range corresponds to $\alpha \in (0.7, 0.05)$. By simultaneously modeling a broad range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and also explore how the oligarchic/non-oligarchic accretion boundary affects the resulting distribution of protoplanets.
 
 Four wide-disk simulations are run in total (see table \ref{tab:sims}). In each case, the solid surface density follows a power law profile
 \begin{equation}
-	\Sigma(r) = \left( \frac{M_{*}}{M_{\odot}} \right) A \Sigma_{\mathrm{MMSN}} \left( \frac{r}{1 \mathrm{AU}} \right)^{-\delta},
+	\Sigma(r) = \textrm{10 g cm}^{-2} \times A \left( \frac{M_{*}}{M_{\odot}} \right) \left( \frac{r}{\textrm{1 AU}} \right)^{-\delta}
 \end{equation}
+%\begin{equation}
+%	\Sigma(r) = \left( \frac{M_{*}}{M_{\odot}} \right) A \Sigma_{\mathrm{MMSN}} \left( \frac{r}{1 \mathrm{AU}} \right)^{-\delta},
+%\end{equation}
 where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g
 cm$^{-2}$ is the surface density of the minimum-mass solar nebula
 \citep{hayashi81} at 1 AU, $A$ is an enhancement factor and $\delta$ is the power law index.

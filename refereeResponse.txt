@@ -174,11 +174,15 @@ I'd be interested in also having another panel that shows the evolution of just 
 435: Is this true? I was under the impression that the residual planetesimal population remains? I think this does not seem consistent with the rest of the work...?
 	TODO: Change the wording here. Maybe this isnt true. Would the growth mode simply 'flatten' out here?
 446: What exactly does alpha being non-negligible mean? Given that alpha is always less than unity, what alpha value marks the transition of the oligarchic growth regime vs, consumption regime? See major comment.
+	This is a good point, and I'm not sure if we have a definitive answer. Inspecting figure 11, theh transition seems to occur near alpha ~ 0.1. I think the best thing to do here is to state the converse: for alpha << 1, most encounters result in scattering and you get oligarchic growth. The key finding from this section is that oligarchic growth does not occur when alpha is not << 1. The text has been updated to reflect this.
+
 
 5. Full disk Simulation
 5.1 Initial Conditions
 470: Reference of TRAPPIST-1
+	Added reference to Gillon 2016 + 2017, Agol 2021
 483 I recommend writing Eq. (6) along the lines of 10 g/cm^2 \times A (M_*/M_\odot)(r/1AU)^(-delta) for readability. The Sigma_MMSN is never used so it's not necessary.
+	
 Table 1.
 I don't think the notes are necessary
 I would probably put the planetesimal masses in units of Ceres

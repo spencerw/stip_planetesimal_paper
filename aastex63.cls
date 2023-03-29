@@ -1752,6 +1752,7 @@ APPENDIX}\hfill\mbox{}\par
 \newcommand\jrasc{\ref@jnl{JRASC}}%   % Journal of the RAS of Canada 
 \newcommand\memras{\ref@jnl{MmRAS}}%  % Memoirs of the RAS 
 \newcommand\mnras{\ref@jnl{MNRAS}}%   % Monthly Notices of the RAS 
+\newcommand\psj{\ref@jnl{PSJ}}
 \renewcommand\pra{\ref@jnl{PhRvA}}% % Physical Review A: General Physics 
 \renewcommand\prb{\ref@jnl{PhRvB}}% % Physical Review B: Solid State 
 \renewcommand\prc{\ref@jnl{PhRvC}}% % Physical Review C 
