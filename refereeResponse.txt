@@ -135,7 +135,7 @@ I think this section could be improved by having a schematic of the three sizes,
 	Yes, this is now clarified.
 
 377: is alpha=1 chosen because it is the highest stable alpha? If so I would write that. Why is beta = 15000 chosen?
-	Alpha = 1 corresponds to r_pl = r_hill. One would expect that gravitational scattering should completely shut off for alpha >= 1. The 'large beta' value is chosen to be as large as possible while still allowing the simulation to finish in a reasonable amount of time (collisions become more infrequent as we turn up the eccentricity dispersion). This is not explained in the text. Beta is also probably limited by r_apo-r_peri < delta_a (TODO: calculate this)
+	Alpha = 1 corresponds to r_pl = r_hill. One would expect that gravitational scattering should completely shut off for alpha >= 1. Beta = 15,000 corresponds to <e^{1/2}>^2 = 0.05, which is the largest eccentricity for which a particle at 1 AU will an apo and pericenter distance that is still within the boundaries of the disk. For an eccentricity dispersion this large, the stirring timescale is much longer than the simulation time, so we can be confident that the boundary effects do not get worse. An explanation of the large beta value has been added to the text.
 
 Figure.2: Some suggestions to improve this figure are:
 A reference planetesimal size that shows what mass a circle has
@@ -182,17 +182,27 @@ I'd be interested in also having another panel that shows the evolution of just 
 470: Reference of TRAPPIST-1
 	Added reference to Gillon 2016 + 2017, Agol 2021
 483 I recommend writing Eq. (6) along the lines of 10 g/cm^2 \times A (M_*/M_\odot)(r/1AU)^(-delta) for readability. The Sigma_MMSN is never used so it's not necessary.
-	
+	Done
 Table 1.
 I don't think the notes are necessary
 I would probably put the planetesimal masses in units of Ceres
+	Where should I put the units?
 I think Table 1 and Table 2 could be combined
+	Table 1 has been merged into table 2.
 
 490: How could such an enhancement in planetesimal surface density be achieved initially? Is this initial condition consistent with planetesimal formation models, e.g. Dra̧żkowska & Dullemond 2018, Lenz et al 2019.
+	Most planetesimal formation models invoke some sort of localized surface density enhancement to trigger the streaming instability. However, as the drazkowska paper shows, these preferential locations (in their case the snowline) can move, this spreading out super MMSN density planetesimals over a rather wide area.
+	TODO: What to mention in the paper about this?
+
 493: What is the motivation behind variation in the power-law index? Is there significant uncertainty in the MMSN power law index?
+	Chiang and Laughlin 2013 found that the MMEN power law varies between 1.6 and 1.8
+	Sub-mm observations of cold outer disks finds power law slopes as low as 0.5 (Mundy 2000, Andrews 2009, 2010). Alpha = 2.5 is chosen to increase the power law slope by the same interval in the other direction. TODO: Incorporate this into text
 499: Maybe elaborate on why this equilibrium is physical? Are there other works which use the same balance to inform initial conditions?
+	t_vs = t_gas is more of an upper limit on the eccentricity, although this is the same technique that Kokubo + Ida 1998 use to set up their initial conditions. It's certainly possible that the disk could have started out dynamically colder, although as we showed in figure 2, this doesn't seem to affect the resulting protoplanets. We have added a short discussion of these points to the text.
 504: missing respectively. And semi-major axes.
+	Fixed
 505: When is the Stokes regime valid, and what does it mean?
+	In the Stokes regime, the mean free path of the gas is much smaller than the size of the bodies and the gas can be treated as a fluid. For conditions in a typical protoplanetary disk, Stokes drag is relevant for cm-sized bodies and larger. This has been added to the text.
 506: The letter tau is used for a timescale just above, but now it says t. I would recommend staying consistent. Tau tends to be used for dimensionless timescales, so I would probably go with t_s and t_vs.
 511: Solid-to-gas surface density ratio of 1/240 seems very small, especially given that the authors are considering the solid surface density to already be enhanced by a factor of 100. Also, if the planetesimals are already formed, it is conceivable that the gas disk is already dissipating (especially so close in). I think the authors could be over-estimating the gas density by up to a factor of a 100, which means the stopping time would be a factor of 100 longer.
 516: I suggest using another symbol for the temperature power law, since Q is associated with the Toomre value of the disk, for example q. Also, this equation should read T(r) = T_0(r/1AU)^-q, right?

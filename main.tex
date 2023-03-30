@@ -339,7 +339,9 @@ cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, which corresponds to $\al
 10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. 
 To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by 
 a factor of $\sim$ 7100, which produces $\alpha = 1$. \textbf{In this case, a planetesimal completely fills its Hill sphere, and one should expect no strong gravitational scattering to occur.} To vary $\beta$, the eccentricity dispersion is increased. For the high-$
-\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$. \textbf{This choice of $\beta$ places the system firmly in the $v > v_{esc}$ regime, while still allowing growth to occur in a reasonable number of timesteps.}
+\beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$. \textbf{This is the largest value of $\beta$ that permits a particle at 1 AU to still an apocenter and pericenter distance that lies within the boundaries of the disk.}
+
+\textbf{This choice of $\beta$ places the system firmly in the $v > v_{esc}$ regime, while still allowing growth to occur in a reasonable number of timesteps.}
 
 In all cases, the simulations are evolved with a base timestep of 1.7
 days, which corresponds to 3\% of an orbital dynamical time
@@ -396,23 +398,6 @@ embryos \citep{weidenschilling89, ida90}. \textbf{When $\alpha \ll 1$, the Hill 
 observe that runaway growth still occurs, but nearly all of the planetesimals are consumed by the forming protoplanets, rather 
 than being scattered onto higher eccentricity orbits, where they would otherwise remain as a remnant of the early stages of 
 planet formation \citep{kokubo98, kokubo00}.
-\begin{table}
-\caption{Summary of Full Disk Simulations Run}
-\begin{tabular}{llllll} \hline \hline
-Name    & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\delta^{d}$ &  \\ \hline
-fdHi                 & $5 \times 10^{22}$ & 903,687 & 100                                                         & 1.5                              &   \\
-fdHiShallow    & $5 \times 10^{22}$ & 903,687 & 100                                                        & 0.5                              &   \\
-fdHiSteep       & $5 \times 10^{22}$ & 903,687 & 100                                                         & 2.5                              &   \\
-fdLo                & $5 \times 10^{22}$ & 45,185    & 1                                                             & 1.5                              &   \\ \hline
-\end{tabular}
-\begin{flushleft}
-\textsc{Note} \\ {$^a$ Planetesimal mass [g] \\
-		       $^b$ Number of planetesimals \\
-		       $^c$ Solid surface density normalization (relative to MMSN) \\
-		       $^d$ Solid surface density power law index } \\
-\end{flushleft}
-\label{tab:sims}
-\end{table}
 
 \section{Full Disk Simulation}\label{sec:fulldisk}
 
@@ -429,24 +414,22 @@ in the previous section invalidates this choice of initial conditions.
 
 Given the dearth of short-period terrestrial planets observed around M stars (e.g. TRAPPIST-1 \textbf{\citep{gillon16, gillon17, agol21}}), we chose to model the evolution of a series of wide planetesimal disks, which span from 1 to 100 days in orbital period, orbiting a late-type M star of mass 0.08 $M_{\odot}$. For a population of planetesimals with a bulk density of 3 g cm$^{-3}$, this orbital period range corresponds to $\alpha \in (0.7, 0.05)$. By simultaneously modeling a broad range of orbital periods, we can determine the critical value of $\alpha$ that divides these two modes of accretion, and also explore how the oligarchic/non-oligarchic accretion boundary affects the resulting distribution of protoplanets.
 
-Four wide-disk simulations are run in total (see table \ref{tab:sims}). In each case, the solid surface density follows a power law profile
+Four wide-disk simulations are run in total (see table \ref{tab:sim_properties}). In each case, the solid surface density follows a power law profile
 \begin{equation}
 	\Sigma(r) = \textrm{10 g cm}^{-2} \times A \left( \frac{M_{*}}{M_{\odot}} \right) \left( \frac{r}{\textrm{1 AU}} \right)^{-\delta}
 \end{equation}
-%\begin{equation}
-%	\Sigma(r) = \left( \frac{M_{*}}{M_{\odot}} \right) A \Sigma_{\mathrm{MMSN}} \left( \frac{r}{1 \mathrm{AU}} \right)^{-\delta},
-%\end{equation}
+
 where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g
 cm$^{-2}$ is the surface density of the minimum-mass solar nebula
 \citep{hayashi81} at 1 AU, $A$ is an enhancement factor and $\delta$ is the power law index.
 In the first case (fdHi), we model a disk that follows a MMSN power law slope ($\delta$ = 1.5), with the overall normalization enhanced by a factor of 100. This choice of normalization for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of $\Sigma(r)$.
 
-In all cases, the eccentricities and inclinations of the bodies are randomly drawn from a Rayleigh distribution, with $\left< e^{2} \right>^{1/2} = 2\left<i^{2} \right>^{1/2} = e_{eq}$ \citep{ida93}. The value of $e_{eq}$ is chosen such that the timescales for viscous stirring and aerodynamic gas drag on the planetesimals are in equilibrium. The viscous stirring timescale is given by \citet{ida93} as
+In all cases, the eccentricities and inclinations of the bodies are randomly drawn from a Rayleigh distribution, with $\left< e^{2} \right>^{1/2} = 2\left<i^{2} \right>^{1/2} = e_{eq}$ \citep{ida93}. \textbf{Following \citet{kokubo98},} the value of $e_{eq}$ is chosen such that the timescales for viscous stirring and aerodynamic gas drag on the planetesimals are in equilibrium. \textbf{Although this approach assumes that these two mechanisms are in balance, there is nothing preventing planetesimal accretion from getting underway before the disk is sufficiently hot to be limited by gas drag. However, as we showed in the previous section, the initial dynamical state of the planetesimals does not seem to affect the outcome of accretion, so it is safe to assume that the resulting distribution of protoplanets would remain unchanged had we started with a colder disk.} The viscous stirring timescale is given by \citet{ida93} as
 
 \begin{equation}\label{eq:vs_timescale}
     \tau_{vs}  = \frac{\left< e^2 \right>}{d \left< e^2 \right> / dt} \approx \frac{1}{40}\left(\frac{\Omega^{2} a^{3}}{2 G m_{pl}}\right)^{2} \frac{4 m_{pl} \langle e^{2} \rangle^{2}}{\Sigma a^{2} \Omega},
 \end{equation}
-where $\Omega$, $a$ and $e$ are the orbital frequencies, semimajor axes and eccentricities of the individual planetesimals. In the Stokes regime, the gas drag timescale is given by \citet{adachi76} as
+where $\Omega$, $a$ and $e$ are the orbital frequencies, semi-major axes and eccentricities of the individual planetesimals, \textbf{respectively}. In the Stokes regime, \textbf{where the mean-free path of the gas is much smaller than the solid particles, the gas can be treated as a fluid and} the drag timescale is given by \citet{adachi76} as
 \begin{equation}\label{eq:ts_stokes}
     t_{s} = \frac{2 m_{pl}}{C_{D} \pi r_{pl}^{2} \rho_{g} v_{g}},
 \end{equation}
@@ -549,14 +532,14 @@ boundaries, while also minimizing the number of `skipped' collisions.\footnote{I
 
 \subsection{Results}
 
-\begin{table}
-\caption{Final Properties of Full Disk Simulations}
-\begin{tabular}{lllll} \hline \hline
-Name     & $M_{PP}^a$ & $T_{int}^b$ & $T_{int 1}^c$ &  \\ \hline
-fdHi                 &  1.00                                                         & 456                              & 16,377  &  \\
-fdHiShallow    &  1.19                                                        & 456                              & 16,377  &  \\
-fdHiSteep       &  1.08                                                         & 456                              & 16,377 &  \\
-fdLo                &  1.77 $\times 10^{-3}$                                  & 3,713                              & 133,651 &  \\ \hline
+\begin{table*}
+\caption{Summary of Full Disk Simulations}
+\begin{tabular}{llllllllll} \hline \hline
+Name     & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\delta^{d}$ & $M_{PP}^a$ & $T_{int}^b$ & $T_{int 1}^c$ &  \\ \hline
+fdHi                 & $5 \times 10^{22}$ & 903,687 & 100                                                         & 1.5                              &  1.00                                                         & 456                              & 16,377  &  \\
+fdHiShallow    & $5 \times 10^{22}$ & 903,687 & 100                                                        & 0.5                              &  1.19                                                        & 456                              & 16,377  &  \\
+fdHiSteep       & $5 \times 10^{22}$ & 903,687 & 100                                                         & 2.5                              &  1.08                                                         & 456                              & 16,377 &  \\
+fdLo                & $5 \times 10^{22}$ & 45,185    & 1                                                             & 1.5                              &  1.77 $\times 10^{-3}$                                  & 3,713                              & 133,651 &  \\ \hline
 \end{tabular}
 \label{tab:sim_properties}
 \begin{flushleft}
@@ -564,7 +547,7 @@ fdLo                &  1.77 $\times 10^{-3}$                                  & 
 		       $^b$ Integration time [yr] \\
 		       $^c$ Rescaled integration time [yr]} \\
 \end{flushleft}
-\end{table}
+\end{table*}
 
 The timescales for embryo formation depend on
 the chosen surface density profile, along with the local orbital
