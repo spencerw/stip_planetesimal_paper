@@ -422,12 +422,14 @@ Four wide-disk simulations are run in total (see table \ref{tab:sim_properties})
 where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g
 cm$^{-2}$ is the surface density of the minimum-mass solar nebula
 \citep{hayashi81} at 1 AU, $A$ is an enhancement factor and $\delta$ is the power law index.
-In the first case (fdHi), we model a disk that follows a MMSN power law slope ($\delta$ = 1.5), with the overall normalization enhanced by a factor of 100. This choice of normalization for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of $\Sigma(r)$.
+In the first case (fdHi), we model a disk that follows a MMSN power law slope ($\delta$ = 1.5), with the overall normalization enhanced by a factor of 100. This choice of normalization for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. \textbf{The most current planetesimal formation models all involve streaming instabilities triggered by solid material concentrating at preferential locations in the disk. This can occur via zonal flows \citep{johansen2009b, simon12}, vortices \citep{klahr03}, or through mechanisms that produce a pressure bump in the gas disk, such as an ionization \citep{lyra08} or condensation front \citep{brauer08b, drkazowska13}, or even the perturbations from an existing planet \citep{shibaike20}. \citet{drkazowska18} showed that evolution of the snow line boundary can cause planetesimal formation over a significant area of the disk, producing mass concentrations at least as large as the ones we use here. We argue that this is a particularly attractive mechanism for widespread planetesimal formation around low-mass stars, as their extreme pre-main sequence evolution is particularly conducive to significant movement of the condensation fronts \citep{baraffe15}.} 
+
+Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of $\Sigma(r)$. \textbf{Although there is no way to reliably measure the uncertainty on the MMSN power law slope, \citet{chiang13} applied a similar analysis to a sample of Kepler multiplanet systems and found a variation of $\sim 0.2$. Sub-millimeter observations of the outer regions of cold protoplanetary disks find that $\delta$ can be as low as 0.5 \citep{mundy00, andrews09, andrews10}. Therefore, we vary $\delta$ by a value of $1.0$ relative to the MMSN value for the fdHiShallow and fdHiSteep simulations.}
 
 In all cases, the eccentricities and inclinations of the bodies are randomly drawn from a Rayleigh distribution, with $\left< e^{2} \right>^{1/2} = 2\left<i^{2} \right>^{1/2} = e_{eq}$ \citep{ida93}. \textbf{Following \citet{kokubo98},} the value of $e_{eq}$ is chosen such that the timescales for viscous stirring and aerodynamic gas drag on the planetesimals are in equilibrium. \textbf{Although this approach assumes that these two mechanisms are in balance, there is nothing preventing planetesimal accretion from getting underway before the disk is sufficiently hot to be limited by gas drag. However, as we showed in the previous section, the initial dynamical state of the planetesimals does not seem to affect the outcome of accretion, so it is safe to assume that the resulting distribution of protoplanets would remain unchanged had we started with a colder disk.} The viscous stirring timescale is given by \citet{ida93} as
 
 \begin{equation}\label{eq:vs_timescale}
-    \tau_{vs}  = \frac{\left< e^2 \right>}{d \left< e^2 \right> / dt} \approx \frac{1}{40}\left(\frac{\Omega^{2} a^{3}}{2 G m_{pl}}\right)^{2} \frac{4 m_{pl} \langle e^{2} \rangle^{2}}{\Sigma a^{2} \Omega},
+    t_{vs}  = \frac{\left< e^2 \right>}{d \left< e^2 \right> / dt} \approx \frac{1}{40}\left(\frac{\Omega^{2} a^{3}}{2 G m_{pl}}\right)^{2} \frac{4 m_{pl} \langle e^{2} \rangle^{2}}{\Sigma a^{2} \Omega},
 \end{equation}
 where $\Omega$, $a$ and $e$ are the orbital frequencies, semi-major axes and eccentricities of the individual planetesimals, \textbf{respectively}. In the Stokes regime, \textbf{where the mean-free path of the gas is much smaller than the solid particles, the gas can be treated as a fluid and} the drag timescale is given by \citet{adachi76} as
 \begin{equation}\label{eq:ts_stokes}
@@ -438,15 +440,15 @@ where $C_{D}$ is a drag coefficient of order unity, $\rho_{g}$ is the local gas 
 	\rho_{g} = \frac{\Sigma_{g}}{\sqrt{2 \pi} h_{g}} \exp\left[ -z^{2} / \left( 2 h_{g}^{2} \right) \right],
 \end{equation}
 where $\Sigma_{g}$ is the gas surface density (taken to be
-240 times the solid surface density \citep{hayashi81}, $h_{g} = c_{s} / \Omega$ is the local gas scale height and $z$ is the height above the disk midplane. The sound speed profile is given by $c_{s} = \sqrt{k_{B} T(r) / \left( \mu m_{H} \right)}$, where $k_{B}$ is Boltzmann's constant, $T(r) = T_{0} r^{-Q}$, $\mu = 2.34$ and $m_{h}$ is the mass of a hydrogen atom. For a protoplanetary disk around a typical M star, $T_{0} = 148$ K and $Q$ = 0.58 \citep{andrews05}.
+240 times the solid surface density \citep{hayashi81}, $h_{g} = c_{s} / \Omega$ is the local gas scale height and $z$ is the height above the disk midplane. The sound speed profile is given by $c_{s} = \sqrt{k_{B} T(r) / \left( \mu m_{H} \right)}$, where $k_{B}$ is Boltzmann's constant, $T(r) = T_{0} \left( r / 1 \textrm{AU} \right)^{-q}$, $\mu = 2.34$ and $m_{h}$ is the mass of a hydrogen atom. For a protoplanetary disk around a typical M star, $T_{0} = 148$ K and $q$ = 0.58 \citep{andrews05}.
 
 Finally, the headwind velocity of the gas, due to the fact that the gas disk is pressure supported, is given by
 
 \begin{equation}\label{eq:v_gas}
-	v_{g} = v_{k} \left[ 1 - \sqrt{ Q c_{s}^2 / v_{k}^2} \right],
+	v_{g} = v_{k} \left[ 1 - \sqrt{ q c_{s}^2 / v_{k}^2} \right],
 \end{equation}
 
-\noindent where $v_{k}$ is the local Keplerian velocity. As in section
+\noindent where $v_{k}$ is the local Keplerian velocity \textbf{(see eq. 4.30 of \citet{armitage20})}. As in section
 \ref{sec:narrow}, the argument of perihelion $\omega$, longitude of
 ascending node $\Omega$, and mean anomaly M for the planetesimals are drawn from a uniform distribution $\in [0, 2 \pi)$.
 

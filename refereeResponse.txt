@@ -191,12 +191,10 @@ I think Table 1 and Table 2 could be combined
 	Table 1 has been merged into table 2.
 
 490: How could such an enhancement in planetesimal surface density be achieved initially? Is this initial condition consistent with planetesimal formation models, e.g. Dra̧żkowska & Dullemond 2018, Lenz et al 2019.
-	Most planetesimal formation models invoke some sort of localized surface density enhancement to trigger the streaming instability. However, as the drazkowska paper shows, these preferential locations (in their case the snowline) can move, this spreading out super MMSN density planetesimals over a rather wide area.
-	TODO: What to mention in the paper about this?
+	This is briefly discussed in the introduction but we will expand upon it here. Most mechanisms involve dust traps or pressure bumps occuring at some preferential location in the disk which trigger the streaming instability. Dra̧żkowska & Dullemond 2018 show that a migrating snow line can actually trigger planetesimal formation over a fairly wide area, and also produce surface density enhancements at least as large as the ones we use. Given that low-mass stars have particularly extreme luminosity changes during the pre-main sequence (see Baraffe 2015), one can imagine that it might not be hard to trigger planetesimal formation over a wide area. This particular paragraph in the text has been expanded to discuss this.
 
 493: What is the motivation behind variation in the power-law index? Is there significant uncertainty in the MMSN power law index?
-	Chiang and Laughlin 2013 found that the MMEN power law varies between 1.6 and 1.8
-	Sub-mm observations of cold outer disks finds power law slopes as low as 0.5 (Mundy 2000, Andrews 2009, 2010). Alpha = 2.5 is chosen to increase the power law slope by the same interval in the other direction. TODO: Incorporate this into text
+	Chiang and Laughlin 2013 applied a similar analysis to Kepler multis and found that delta varies between 1.6 and 1.8. Sub-mm observations of cold outer disks finds power law slopes as low as 0.5 (Mundy 2000, Andrews 2009, 2010). Therefore, we vary delta by +/- 1.0 from the MMSN value. There is now a separate paragraph in the text explaining this
 499: Maybe elaborate on why this equilibrium is physical? Are there other works which use the same balance to inform initial conditions?
 	t_vs = t_gas is more of an upper limit on the eccentricity, although this is the same technique that Kokubo + Ida 1998 use to set up their initial conditions. It's certainly possible that the disk could have started out dynamically colder, although as we showed in figure 2, this doesn't seem to affect the resulting protoplanets. We have added a short discussion of these points to the text.
 504: missing respectively. And semi-major axes.
@@ -204,9 +202,13 @@ I think Table 1 and Table 2 could be combined
 505: When is the Stokes regime valid, and what does it mean?
 	In the Stokes regime, the mean free path of the gas is much smaller than the size of the bodies and the gas can be treated as a fluid. For conditions in a typical protoplanetary disk, Stokes drag is relevant for cm-sized bodies and larger. This has been added to the text.
 506: The letter tau is used for a timescale just above, but now it says t. I would recommend staying consistent. Tau tends to be used for dimensionless timescales, so I would probably go with t_s and t_vs.
+	tau_vs has been changed to t_vs in equation 7.
 511: Solid-to-gas surface density ratio of 1/240 seems very small, especially given that the authors are considering the solid surface density to already be enhanced by a factor of 100. Also, if the planetesimals are already formed, it is conceivable that the gas disk is already dissipating (especially so close in). I think the authors could be over-estimating the gas density by up to a factor of a 100, which means the stopping time would be a factor of 100 longer.
+	TODO: Fix
 516: I suggest using another symbol for the temperature power law, since Q is associated with the Toomre value of the disk, for example q. Also, this equation should read T(r) = T_0(r/1AU)^-q, right?
+	Q was changed to q to be consistent with the Andrews + Williams paper. the '/1AU' has been added to the T(r) equation.
 521: Where is that equation coming from? Maybe add reference.
+	This is equation 4.30 from Phil Armitage's 'Astrophysics of Planet Formation'. A reference has been added to the text.
 
 5.2. Gas Drag Force
 512: I think it would be very informative to calculate the dimensionless stopping time, i.e. the Stokes number of the planetesimals, I'm assuming that they are substantially above unity, which means that the bodies are essentially decoupled from the gas.
