@@ -54,6 +54,7 @@ Abstract
 	Correct, some text was added to clarify this.
 68: Add reference
 	Added a handful of references arguing that the asteroids, KBOs and Oort cloud bodies are leftover planetesimals.
+	See Duncan, Tremaine Quinn papers (particularly 1988 one + references?)
 72: Maybe elaborate on this. How long is the period of quiescence? How does this instability work?
 	We intentionally left this part vague as someone really needs to look into this more! There are three relevant timescales here:
 	1. The timescale for the instability itself (depends on the orbital properties of the embryos, see Chambers 98)
@@ -113,7 +114,7 @@ Also, I recommend adjusting the x-limits of the plot to correspond to the limits
 263: Again, I think the concept of Hill radius and tidal stability needs to be formally introduced earlier.
 	TODO: Introduce this formally earlier
 273: Wouldn't these bodies then be tidally disrupted, and therefore not exist? Alpha > 1 is certainly not true for any solar system bodies that I am aware of. I understand that the scaling of alpha predicts alpha >1 at some radius (which I would explicitly mention), but this just implies that inside this radius, bodies must have greater densities to not be disrupted.
-	Alpha = 1 doesn't correspond  to the roche limit (although they are close)! TODO: Maybe add a calculation here explaining this.
+	The distance at which alpha = 1 (a_alpha) and the Roche (a_roche) limit are similar, but not identical. For a rigid spherical body, a_roche ~ 0.88 a_alpha. Applying the hydrostatic correction, a_roche ~ 0.6 a_alpha. This is important, because it implies that the new growth mode presented in this paper should be relevant for ring systems! We will add a note of this in the text. I think some of the confusion comes from the fact that the Roche limit and the Hill sphere size are not derived using the same formalism.
 289: gravitational radius: is this physically motivated? Maybe reference
 	There is a physical explanation of r_g immediately below equation 5 in the text. Also added a reference to Ida 1990.
 296: beta > 1 means collision cross section > geometric and small gravitational focusing. I recommend explicitly stating what the physical intuition for beta < 1 is.
