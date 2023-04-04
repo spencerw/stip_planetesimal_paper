@@ -213,25 +213,34 @@ I think Table 1 and Table 2 could be combined
 
 5.2. Gas Drag Force
 512: I think it would be very informative to calculate the dimensionless stopping time, i.e. the Stokes number of the planetesimals, I'm assuming that they are substantially above unity, which means that the bodies are essentially decoupled from the gas.
+	Agreed. Describing things in terms of the Stokes number allows us to simplify this section a bit. For the initial planetesimals, St >> 1 at both the inner and outer disk edge Because St ~ m^1/3, we can guarantee that bodies will remain decoupled from the gas throughout the simulation. By discussing the Stokes number, we can also avoid having to compare the stopping time with the integration time of the simulations. These points are now all discussed in the text.
 536: Isolation mass lacks definition
+	We have removed any mention of the isolation mass here. The fact that St ~ m^1/3 is enough to guarantee that the gas and solids remain decoupled.
 
 5.3 Time-stepping Criterion
 554: footnote 2 can just go in the main text body.
+	Done
 584: footnote 3 can also go in the main text body.
+	Done
 584: Are there any works on the numerical robustness of this more efficient time-stepping scheme. While I'm inclined to believe that the error is only marginal, I think having some sort of test (or a reference to one) would make the results more steadfast.
-	No there arent. I've added an appendix that compares this timestepping scheme against a fixed timestep case. There appear to be no meaningful differences. TODO: Show mass distribution as differential or cumulative? Finish running sims
+	I'm fairly certain that we are the first ones to try this. I've added an appendix that compares this timestepping scheme against a fixed timestep case. There appear to be no meaningful differences. TODO: Show mass distribution as differential or cumulative?
 
 5.4 Results
 586: Maybe include reference to figure where this is shown
+	Figure 1 of Kokbubo 2002 shows this clearly. A reference to the paper has been added in the text.
 592: Is this really always true? Counterexample e.g. Emsenhuber et al 2021 and others.
+	The NGPPS models (along with the Clement 2020 paper) seem to be a couple of notable exceptions to this, although the embryo growth is not treated self-consistently leading up to the giant impact phase. We have added a mention of the Emsenhuber papers to the text.
 Table 2:
 What is the rescaled integration time?
+	TODO: Not sure where to explain table columns now?
+
 Figure 5:
 I think the bottom panel should have a log y-axis
 I would make the color of the dots consistent with Fig.2, where the final outcome is orange
 There could be numbers on the contours indicating the density of the initial condition.
 The meaning of the dashed line in the bottom panel could be indicated inside the figure itself.
 I'm confused by the statement "interior to the oligarchic growth region (around 60d)". Where does this definition come from? Is this defined by bodies exceeding the critical feeding size? If so the statement should be rephrased to make the causal connection clear.
+	
 606: How can a mass be expressed in units of feeding zone size?
 620: What is the intuition behind tilde b, how exactly is it defined? Since it is a dimensionless quantity, calling it an orbital separation is not intuitive to me. Can tilde b be converted to a physical size? Also, I struggle to interpret the critical tilde be of 2*sqrt(3). Do I understand correctly that a body with tilde b less than 2 sqrt(3) is associated with a feeding zone so small that close encounters are not possible, and thus are not expected to grow further?
 632: Why are the bodies expected to follow the tilde b = 2sqrt(3) from a theoretical perspective? Also, I'm unconvinced that the bodies do that at all in the presented simulations - they fall below this value but don't follow it.

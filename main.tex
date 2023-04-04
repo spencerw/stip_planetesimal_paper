@@ -457,7 +457,7 @@ ascending node $\Omega$, and mean anomaly M for the planetesimals are drawn from
 
 \subsection{Gas Drag Force}
 
-In addition to the mutual gravitational forces, a Stokes drag force due to the the gas disk is applied to each particle, following the prescription described in section 2.2.1 of \citet{morishima10}. For the initial mass planetesimals, the stopping time (see equation \ref{eq:ts_stokes}) at the inner edge of the disk is roughly 100 yr. Although this is a few orders of magnitude shorter than the integration time of the simulations, the Stokes drag force plays a fairly insignificant role as the bodies grow via mutual collisions. By the time the bodies reach isolation mass (roughly a tenth of an Earth mass), the stopping time at the inner disk edge exceeds 50,000 years. Although the aerodynamic gas drag is not expected to significantly alter the final protoplanet distribution, we include its effects here to be self-consistent with the initial conditions, which were constructed by balancing the effects of viscous stirring with gas drag.
+In addition to the mutual gravitational forces, a Stokes drag force due to the the gas disk is applied to each particle, following the prescription described in section 2.2.1 of \citet{morishima10}. For the initial mass planetesimals, the \textbf{Stokes number ($\textrm{St} = t_{s} \Omega$) at the inner and outer disk edge is roughly $2 \times 10^{5}$ and $10^{7}$, respectively. For $\tau_{s} \gg 1$, bodies are decoupled from the gas and are only weakly affected by it. Because $\tau_{s} \sim m^{1/3}$, the Stokes number grows as planetesimal accretion proceeds, and the drag force plays an increasingly minor role.} Although the aerodynamic gas drag is not expected to significantly alter the final protoplanet distribution, we include its effects here to be self-consistent with the initial conditions, which were constructed by balancing the effects of viscous stirring with gas drag.
 
 \subsection{Timestepping Criterion}
 
@@ -469,7 +469,7 @@ number of steps to follow planetesimal growth throughout the entire
 disk. For this reason, we use a multi-tiered timestepping scheme, in
 which particles are placed onto the nearest power of two timestep
 based on their most recently calculated gravitational
-acceleration.\footnote{This scheme is used on almost all works using ChaNGa,
+acceleration. \textbf{This scheme is used on almost all works using ChaNGa,
 and is common among large-scale simulation codes.}
 
 This more efficient scheme introduces two issues, however. Firstly,
@@ -490,7 +490,7 @@ correct this issue, we ignore collisions between bodies on different
 timesteps early in the simulation. We find that preventing
 multi-timestep collisions until after the maximum mass grows by a
 factor of 10 prevents any artifacts from developing at the timestep
-boundaries, while also minimizing the number of `skipped' collisions.\footnote{In the case of fdHi, only about 20 collisions out of an eventual 900,000 are ignored.} 
+boundaries, while also minimizing the number of `skipped' collisions. \textbf{In the case of the fdHi simulation, only about 20 collisions out of an eventual 900,000 are ignored. To verify that this timestepping scheme does not affect protoplanet growth, we tested an annulus of growing planetesimals with both fixed steps and our two-phase variable timestepping scheme. The results of these tests are shown in appendix \ref{sec:rung_egg}.}
 
 \begin{figure}
 \begin{center}
@@ -559,9 +559,9 @@ the chosen surface density profile, along with the local orbital
 timescale. Protoplanets form first at the inner edge of the disk,
 where the dynamical timescales are short. Growth proceeds in an
 inside-out fashion, with the outermost regions of the disk completing
-the protoplanet assembly phase last. This radial timescale dependence is not typically
+the protoplanet assembly phase last \textbf{((as an example, see figure 1 of \citet{kokubo02)}. This radial timescale dependence is not typically
 accounted for in planet formation simulations\footnote{Instead, the innermost protoplanets 
-patiently `wait' for this phase of evolution to complete everywhere in the disk}, and appears to be an
+patiently `wait' for this phase of evolution to complete everywhere in the disk} \textbf{(a notable exception being \citet{emsenhuber21a, emsenhuber21b})}, and appears to be an
 important component to forming realistic solar system analogs
 \citep{clement20}. As with the narrow annulus simulations, we stop the
 integration once the masses of protoplanets in the outermost region of
