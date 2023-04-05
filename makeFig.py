@@ -395,7 +395,7 @@ def plot_fulldisk_e_m_b():
 	l = np.logspace(np.log10(30), np.log10(np.max(H)), 10)
 	c = axes.contour(binsX, binsY, np.flipud(np.rot90(H)), colors='black', linewidths=0.2, levels=l)
 
-	axes.scatter(per.value, plVHi['e'], s=plVHi['mass']/refmass*1000, edgecolor='black', linewidth=0.4)
+	axes.scatter(per.value, plVHi['e'], s=plVHi['mass']/refmass*1000, edgecolor='black', linewidth=0.4, color='#ff7f0e')
 	axes.set_ylabel('Eccentricity')
 	axes.set_xlim(p_min, p_max)
 	axes.set_ylim(e_min, e_max)
@@ -409,10 +409,12 @@ def plot_fulldisk_e_m_b():
 	#m_iso_vhi1 = np.sqrt((2*np.pi*a_vals**2*btilde*surf_den)**3/(3*mCentralg))
 
 	axes = ax[1]
-	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), edgecolor='black', linewidth=0.4)
+	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), edgecolor='black', linewidth=0.4, color='#ff7f0e')
 	axes.axhline(2.*np.sqrt(3.), ls='--', color='gray')
 	#axes.axhline(10., ls='--', color='gray')
-	axes.set_ylim(0, 20)
+	axes.set_yscale('log')
+	axes.set_ylim(1, 20)
+	axes.text(70, 2*np.sqrt(3)*1.05, r'$\tilde{b} = 2 \sqrt{3}$ (Circular Orbit)', fontsize=12)
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'Required $\tilde{b}$')
 
@@ -1187,9 +1189,9 @@ def plot_rung_ecc():
 
 #plot_timescales()
 #plot_alpha_beta()
-plot_alpha_beta_evo()
+#plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
-#plot_fulldisk_e_m_b()
+plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
 #plot_surfden_profiles()

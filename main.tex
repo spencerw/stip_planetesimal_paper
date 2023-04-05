@@ -490,7 +490,7 @@ correct this issue, we ignore collisions between bodies on different
 timesteps early in the simulation. We find that preventing
 multi-timestep collisions until after the maximum mass grows by a
 factor of 10 prevents any artifacts from developing at the timestep
-boundaries, while also minimizing the number of `skipped' collisions. \textbf{In the case of the fdHi simulation, only about 20 collisions out of an eventual 900,000 are ignored. To verify that this timestepping scheme does not affect protoplanet growth, we tested an annulus of growing planetesimals with both fixed steps and our two-phase variable timestepping scheme. The results of these tests are shown in appendix \ref{sec:rung_egg}.}
+boundaries, while also minimizing the number of `skipped' collisions. \textbf{In the case of the fdHi simulation, only about 20 collisions out of an eventual 900,000 are ignored. To verify that this timestepping scheme does not affect protoplanet growth, we tested an annulus of growing planetesimals with both fixed steps and our two-phase variable timestepping scheme. The results of these tests are shown in appendix \ref{sec:rung_ecc}.}
 
 \begin{figure}
 \begin{center}
@@ -501,10 +501,9 @@ boundaries, while also minimizing the number of `skipped' collisions. \textbf{In
       of bodies at the end of the simulation. In the bottom panel, we show the
       feeding zone width (see equation \ref{eq:iso}) required to produce
       the final masses of the bodies. The dashed line indicates the feeding
-      zone size ($\tilde{b} = 2 \sqrt{3}$) expected for bodies on
-      circular orbits.
-      Interior to the oligarchic
-      growth region (around 60 d), the feeding zone sizes exceed this value.\label{fig:fulldisk_e_m}}
+      zone size expected for bodies on circular orbits. \textbf{For the shorter period bodies,
+      the feeding zone size exceeds this expected value, which indicates that oligarchic growth is
+      not operating here. This boundary occurs near roughly 60 d in orbital period.}\label{fig:fulldisk_e_m}}
 \end{center}
 \end{figure}
 
@@ -559,7 +558,7 @@ the chosen surface density profile, along with the local orbital
 timescale. Protoplanets form first at the inner edge of the disk,
 where the dynamical timescales are short. Growth proceeds in an
 inside-out fashion, with the outermost regions of the disk completing
-the protoplanet assembly phase last \textbf{((as an example, see figure 1 of \citet{kokubo02)}. This radial timescale dependence is not typically
+the protoplanet assembly phase last \textbf{(as an example, see figure 1 of \citet{kokubo02)}}. This radial timescale dependence is not typically
 accounted for in planet formation simulations\footnote{Instead, the innermost protoplanets 
 patiently `wait' for this phase of evolution to complete everywhere in the disk} \textbf{(a notable exception being \citet{emsenhuber21a, emsenhuber21b})}, and appears to be an
 important component to forming realistic solar system analogs
@@ -578,7 +577,7 @@ calculated according to \citet{kokubo02}
 \begin{equation}\label{eq:iso}
 	M = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2},
 \end{equation}
-where $M$ is taken to be the final mass of each body. Here, we assume that each embryo has reached its isolation mass, and 
+where $M$ is taken to be the final mass of each body. \textbf{The y-values in the bottom panel of figure \ref{fig:fulldisk_e_m} are calculated by solving equation \ref{eq:iso} for $\tilde{b}$, and inputting the initial surface density and final particle mass into the expression.} Here, we assume that each embryo has reached its isolation mass, and 
 that differences in mass are driven by differences in the initial surface density at the embryo's current location, along with the 
 size of its feeding zone, which is set by the dynamics relevant at that location in the disk. By plotting the derived value of $
 \tilde{b}$ as a function of orbital period, differences in the dynamical interactions at different locations of the disk are made more 
