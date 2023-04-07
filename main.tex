@@ -572,8 +572,7 @@ the initial (contours) and final (points) state of the simulation is
 shown in the orbital period-eccentricity plane. The size of the points
 indicates the relative mass of the bodies. In the bottom panel, the
 final masses of the bodies (in units of feeding zone size) are shown
-as a function of orbital period. The feeding zone size $\tilde{b}$ is
-calculated according to \citet{kokubo02}
+as a function of orbital period. The feeding zone size $\tilde{b}$ \textbf{is described in units of the local Hill radius and is} calculated according to \citet{kokubo02}
 \begin{equation}\label{eq:iso}
 	M = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2},
 \end{equation}
@@ -597,7 +596,7 @@ In section \ref{sec:narrow}, we postulated that the increased importance of inel
 region of the disk should lower the overall eccentricity of the protoplanets there. This behavior is not immediately apparent in the 
 top panel of figure \ref{fig:fulldisk_e_m}. There are, however, a couple of factors in the wide disk simulations that could make this 
 extra dynamical cooling mechanism difficult to see. Firstly, the initial eccentricity distributions of the inner and outer disk are 
-different because of the dependence of the viscous stirring and gas drag timescales on orbital period. Additionally, the 
+different because of the dependence of the viscous stirring and gas drag timescales on orbital period. \textbf{The mean eccentricity at the outer disk edge is 4x larger than at the inner disk edge.} Additionally, the 
 protoplanet formation timescales for the inner and outer disk are vastly different, making a comparison between these regions at 
 the same moment in time somewhat inappropriate.
 
@@ -612,8 +611,8 @@ planetesimal surface density is approaching an asymptotic value. In the inner di
 planetesimal population entirely depletes. In the outer disk, dynamical friction between the embryos and planetesimals 
 eventually throttles subsequent accretion and leaves $\sim$ 10 percent or more of the mass surface density as planetesimals. It 
 should be noted that in a typical oligarchic growth scenario, where protoplanets space themselves apart by 10 $r_{h}$ and settle 
-onto circular orbits (giving $\tilde{b} = 2 \sqrt{3}$), roughly 30 percent of the planetesimals should remain out of reach of the 
-protoplanets\footnote{A feeding zone width of $ \tilde{b} = 2 \sqrt{3}$ covers roughly 70 percent of the 10 $r_{h}$ space between the protoplanets.}.
+onto circular orbits (giving $\tilde{b} = 2 \sqrt{3}$), roughly 30 percent \textbf{($2\sqrt{3}/10 \simeq 0.3$)} of the planetesimals
+should remain out of reach of the protoplanets.
 
 Next, we investigate how the resulting planetesimal and protoplanet distribution
 changes as we vary the initial solid surface density profile.
@@ -621,7 +620,7 @@ The final orbital period-eccentricity state of the
 particles in the fdHi, fdHiSteep, fdHiShallow and fdLo simulations are shown in figure \ref{fig:surfden_profiles}, with point sizes 
 indicating the relative masses of the bodies. In all cases, the inner disk is largely depleted of planetesimals, while the outer disk 
 contains a bimodal population of planetesimals and embryos, with a clear separation in eccentricity between the two. Despite 
-having significantly different masses, the planetary embryos formed in all simulations have remarkably similar eccentricities. This 
+having significantly different masses, the \textbf{semimajor axis-eccentricity} distributions of the planetary embryos formed in all simulations \textbf{are} remarkably similar. This 
 is likely due to the fact that inelastic collisions play a more significant role where the solid surface density is highest, which 
 offsets the fact that the initial bodies started off in a dynamically hotter state (due to the increased effectiveness of viscous stirring). The only exception to this is the fdLo simulation, 
 where the resulting eccentricities are a couple orders of magnitude smaller. Inelastic damping likely plays an even more 

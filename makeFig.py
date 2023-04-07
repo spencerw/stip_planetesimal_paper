@@ -37,6 +37,7 @@ mCentral = 0.08
 mCentralg = (mCentral*u.M_sun).to(u.g)
 
 bins = np.linspace(0.01, 0.3, num_bins)
+perbins = 2*np.pi*np.sqrt((bins*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
 snap = pb.load('data/fullDiskVHia.ic')
 plVHiIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
@@ -640,35 +641,77 @@ def plot_surfden_b():
 	plVHiShe = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 	perShe = 2*np.pi*np.sqrt((plVHiShe['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
+	perbins1 = np.linspace(1, 100, 6)
+	perbincents = 0.5*(perbins1[1:] + perbins1[:-1])
+
+	periods = np.concatenate([per.value, perb.value, perc.value, perd.value, pere.value])
+	btildes = np.concatenate([get_btilde(plVHi, p_vhi_ic), get_btilde(plVHib, p_vhi_ic),
+		get_btilde(plVHic, p_vhi_ic), get_btilde(plVHid, p_vhi_ic), get_btilde(plVHie, p_vhi_ic)])
+	mass_mask = btildes > 1
+	fdhi_means, edges, binnumber, = stats.binned_statistic(periods[mass_mask], btildes[mass_mask], statistic='mean', bins=perbins1)
+	fdhi_std, edges, binnumber, = stats.binned_statistic(periods[mass_mask], btildes[mass_mask], statistic='std', bins=perbins1)
+
+	periodsSt = np.concatenate([perSt.value, perStb.value, perStc.value, perStd.value, perSte.value])
+	btildesSt = np.concatenate([get_btilde(plVHiSt, p_vhi_ic_st), get_btilde(plVHiStb, p_vhi_ic_st),
+		get_btilde(plVHiStc, p_vhi_ic_st), get_btilde(plVHiStd, p_vhi_ic_st), get_btilde(plVHiSte, p_vhi_ic_st)])
+	mass_mask = btildesSt > 1
+	fdhiSt_means, edges, binnumber, = stats.binned_statistic(periodsSt[mass_mask], btildesSt[mass_mask], statistic='mean', bins=perbins1)
+	fdhiSt_std, edges, binnumber, = stats.binned_statistic(periodsSt[mass_mask], btildesSt[mass_mask], statistic='std', bins=perbins1)
+
+	periodsSh = np.concatenate([perSh.value, perShb.value, perShc.value, perShd.value, perShe.value])
+	btildesSh = np.concatenate([get_btilde(plVHiSh, p_vhi_ic_sh), get_btilde(plVHiShb, p_vhi_ic_sh),
+		get_btilde(plVHiShc, p_vhi_ic_sh), get_btilde(plVHiShd, p_vhi_ic_sh), get_btilde(plVHiShe, p_vhi_ic_sh)])
+	mass_mask = btildesSh > 1
+	fdhiSh_means, edges, binnumber, = stats.binned_statistic(periodsSh[mass_mask], btildesSh[mass_mask], statistic='mean', bins=perbins1)
+	fdhiSh_std, edges, binnumber, = stats.binned_statistic(periodsSh[mass_mask], btildesSh[mass_mask], statistic='std', bins=perbins1)
+
+	periodsLo = np.concatenate([perLo.value])
+	btildesLo = np.concatenate([get_btilde(plLo, p_lo_ic)])
+	mass_mask = btildesLo > 1
+	fdLo_means, edges, binnumber, = stats.binned_statistic(periodsLo[mass_mask], btildesLo[mass_mask], statistic='mean', bins=perbins1)
+	fdLo_std, edges, binnumber, = stats.binned_statistic(periodsLo[mass_mask], btildesLo[mass_mask], statistic='std', bins=perbins1)
+
+
 	axes = ax[0]
 	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
-	axes.scatter(perb.value, get_btilde(plVHib, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
-	axes.scatter(perc.value, get_btilde(plVHic, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
-	axes.scatter(perd.value, get_btilde(plVHid, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
-	axes.scatter(pere.value, get_btilde(plVHie, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	axes.plot(perbincents, fdhi_means)
+	axes.fill_between(perbincents, fdhi_means - fdhi_std, fdhi_means + fdhi_std, color='blue', alpha=0.3)
+	axes.scatter(periods, btildes, label='fdHi', edgecolor='black', linewidth=0.4, color='blue')
+	#axes.scatter(perb.value, get_btilde(plVHib, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perc.value, get_btilde(plVHic, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perd.value, get_btilde(plVHid, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
+	#axes.scatter(pere.value, get_btilde(plVHie, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHi')
 	axes = ax[1]
-	axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
-	axes.scatter(perStb.value, get_btilde(plVHiStb, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
-	axes.scatter(perStc.value, get_btilde(plVHiStc, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
-	axes.scatter(perStd.value, get_btilde(plVHiStd, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
-	axes.scatter(perSte.value, get_btilde(plVHiSte, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	axes.plot(perbincents, fdhiSt_means)
+	axes.fill_between(perbincents, fdhiSt_means - fdhiSt_std, fdhiSt_means + fdhiSt_std, color='blue', alpha=0.3)
+	axes.scatter(periodsSt, btildesSt, label='fdSteep', edgecolor='black', linewidth=0.4, color='blue')
+	#axes.scatter(perStb.value, get_btilde(plVHiStb, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perStc.value, get_btilde(plVHiStc, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perStd.value, get_btilde(plVHiStd, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perSte.value, get_btilde(plVHiSte, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdHiSteep')
 	axes = ax[2]
-	axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
-	axes.scatter(perShb.value, get_btilde(plVHiShb, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
-	axes.scatter(perShc.value, get_btilde(plVHiShc, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
-	axes.scatter(perShd.value, get_btilde(plVHiShd, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
-	axes.scatter(perShe.value, get_btilde(plVHiShe, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	axes.plot(perbincents, fdhiSh_means)
+	axes.fill_between(perbincents, fdhiSh_means - fdhiSh_std, fdhiSh_means + fdhiSh_std, color='blue', alpha=0.3)
+	axes.scatter(periodsSh, btildesSh, label='fdShallow', edgecolor='black', linewidth=0.4, color='blue')
+	#axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perShb.value, get_btilde(plVHiShb, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perShc.value, get_btilde(plVHiShc, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perShd.value, get_btilde(plVHiShd, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
+	#axes.scatter(perShe.value, get_btilde(plVHiShe, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
-	rungs = np.arange(0, 7)
-	for rung in rungs:
-		axes.axvline(2**rung)
+	#rungs = np.arange(0, 7)
+	#for rung in rungs:
+		#axes.axvline(2**rung)
 	axes.set_title('fdHiShallow')
 	axes = ax[3]
-	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black', linewidth=0.4)
+	axes.plot(perbincents, fdLo_means)
+	axes.fill_between(perbincents, fdLo_means - fdLo_std, fdLo_means + fdLo_std, color='blue', alpha=0.3)
+	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', color='blue', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
 	axes.set_title('fdLo')
 
@@ -1191,12 +1234,12 @@ def plot_rung_ecc():
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
-plot_fulldisk_e_m_b()
+#plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-#plot_surfden_b()
+plot_surfden_b()
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
