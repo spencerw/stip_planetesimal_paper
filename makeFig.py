@@ -42,7 +42,7 @@ perbins = 2*np.pi*np.sqrt((bins*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 snap = pb.load('data/fullDiskVHia.ic')
 plVHiIC = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_vhi_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins, calc_x = lambda x: x['a'])
-snap = pb.load('data/fullDiskVHi1a.250000')
+snap = pb.load('data/fullDiskVHi1.250000')
 plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 p_vhi = pb.analysis.profile.Profile(plVHi.d, bins=bins, calc_x = lambda x: x['a'])
 perIC = 2*np.pi*np.sqrt((plVHiIC['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
@@ -772,12 +772,17 @@ def plot_smooth_acc():
 
 	nam = ['time', 'collType', 'iorder1', 'iorder2', 'm1', 'm2', 'r1', 'r2', 'x1x', 'x1y', 'x1z', 'x2x', 'x2y', 'x2z',  'v1x', 'v1y', 'v1z', \
 	'v2x', 'v2y', 'v2z', 'w1x', 'w1y', 'w1z', 'w2x', 'w2y', 'w2z']
-	df1 = pd.read_csv('data/fullDiskVHi.coll', names=nam, sep=' ', index_col=False)
-	df2 = pd.read_csv('data/fullDiskVHi1.coll', names=nam, sep=' ', index_col=False)
+	time = 0.05*248000/(2*np.pi)
+	df1 = pd.read_csv('data/fdvhia/fullDiskVHi.coll', names=nam, sep=' ', index_col=False)
+	df2 = pd.read_csv('data/fdvhia/fullDiskVHi1.coll', names=nam, sep=' ', index_col=False)
 	df = pd.concat([df1, df2])
-	df1_s, df1_d = np.loadtxt('data/fullDiskVHi_delete1', dtype='int', unpack=True)
-	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1][:num_oli]
-	a_iord_orig = plVHi['iord'][massive_ind]#prev_iorder(plVHi['iord'][massive_ind], len(plVHiIC), df1_d)
+	df = df[df['time'] <= time]
+
+	snap = pb.load('data/fdvhia/fullDiskVHi1.248000')
+	pl = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	df1_d, df1_s = np.loadtxt('data/fdvhia/delete1', dtype='int', unpack=True)
+	massive_ind = np.argsort(np.array(pl['mass']))[::-1]
+	massive_iord_orig = prev_iorder(pl['iord'][massive_ind], len(plVHiIC), df1_d)
 	mmin = np.min(df['m1'])
 
 	info = coll_info(df)
@@ -788,14 +793,14 @@ def plot_smooth_acc():
 	porb = np.zeros_like(xvals)
 
 	for oli_idx in range(int(num_oli)):
-		oli_iord = a_iord_orig[oli_idx]
-		porbit = p_orbit(plVHi['a'][massive_ind[oli_idx]])
+		oli_iord = massive_iord_orig[oli_idx]
+		porbit = p_orbit(pl['a'][massive_ind[oli_idx]])
 
 		mask = np.logical_or(df['iorder1'] == oli_iord, df['iorder2'] == oli_iord)
 		mask1 = np.logical_or(df['m1'][mask] <= mmin, df['m2'][mask] <= mmin)
-		frac = len(df[mask][mask1])*mmin/plVHi['mass'][massive_ind[oli_idx]]
+		frac = len(df[mask][mask1])*mmin/pl['mass'][massive_ind[oli_idx]]
 
-		xvals[oli_idx] = (plVHi['mass'][massive_ind[oli_idx]]*u.M_sun).to(u.M_earth).value
+		xvals[oli_idx] = (pl['mass'][massive_ind[oli_idx]]*u.M_sun).to(u.M_earth).value
 		yvals[oli_idx] = frac
 		porb[oli_idx] = porbit
 
@@ -818,14 +823,20 @@ def plot_acc_zones():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	with open('data/colltree.dat', 'rb') as f:
+	with open('data/fdvhia/tree.dat', 'rb') as f:
 		root = pickle.load(f)
 
-	time = 0.05*250000/(2*np.pi)
+	time = 0.05*248000/(2*np.pi)
 	# Grab the 20 most massive bodies to plot
-	massive_ind = np.argsort(np.array(plVHi['mass']))[::-1][:20]
-	pl = plVHi[massive_ind]
-	a_init = get_root_property(plVHiIC, pl, root, time, 'a')
+	snap = pb.load('data/fdvhia/fullDiskVHi1.248000')
+	pl = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	snap = pb.load('data/fdvhia/fullDiskVHia.ic')
+	plic = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+	df1_d, df1_s = np.loadtxt('data/fdvhia/delete1', dtype='int', unpack=True)
+	pl['iord'] = prev_iorder(pl['iord'], len(plic), df1_d)
+	massive_ind = np.argsort(np.array(pl['mass']))[::-1][:20]
+	pl = pl[massive_ind]
+	a_init = get_root_property(plic, pl, root, time, 'a')
 
 	fig, axes = plt.subplots(figsize=(16, 12))
 
@@ -843,7 +854,7 @@ def plot_acc_zones():
 		hist /= np.max(hist)/0.1
 		axes.plot(bins, hist+0.2*idx, drawstyle='steps-mid', lw=0.5)
 		axes.fill_between(bins, np.min(hist)+0.2*idx, hist+0.2*idx, alpha=0.5)
-		pl_p = p_orbit(plVHi['a'][massive_ind[i]])
+		pl_p = p_orbit(pl['a'][i])
 		axes.vlines(pl_p, np.min(hist)+0.2*idx, np.max(hist)+0.2*idx, lw=lw)
 		plt.gca().set_prop_cycle(None)
 		axes.set_xlabel('Orbital Period [d]')
@@ -853,7 +864,7 @@ def plot_acc_zones():
 
 	# Sort by semimajor axis beore plotting
 	indices = np.arange(0, 20)
-	sort_a_ind = np.argsort(plVHi['a'][massive_ind[indices]])
+	sort_a_ind = np.argsort(pl['a'])
 
 	for idx, i in enumerate(sort_a_ind):
 		oli_plot(i, idx)
@@ -1239,9 +1250,9 @@ def plot_rung_ecc():
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-plot_surfden_b()
+#plot_surfden_b()
 #plot_smooth_acc()
-#plot_acc_zones()
+plot_acc_zones()
 #plot_f6f4()
 #plot_f6f4_b()
 #plot_frag_ecc()

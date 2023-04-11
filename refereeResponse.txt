@@ -272,22 +272,30 @@ This figure could be improved if each line was colored by the semi-major axis of
 	Perhaps if we ran some of these simulations for longer, the embryos beyond 60d would all reach \tilde{b} = 2\sqrt{3}. But this requires an intractible number of timesteps, particularly for the fdSteep simulation, where the surface density in the outer disk is quite low. I think the best we can say here is that none of the embryos exceed \tilde{b} = 2\sqrt{3} which is consistent with the oligarchic growth model.
 702: Are they that similar? Maybe this statement can be more quantitative? To me it looks like the values fall below 2sqrt(3) at 40 days for fdHiShallow and at 70 days for fdLo. The interpretation that the boundary is only driven by the local value for alpha seems somewhat speculative. I'd also be interested how randomness affects this, i.e. if the simulation is initialized with a different random seed, by how much does the final distribution change?
 	We were saving these for the follow up paper, but we do have multiple versions of fdHi, fdSteep and fdShallow! These have now been added to figure 8. The added data does make it clear that the boundary is quite fuzzy. I've also plotted the mean and standard deviation of the \tilde{b} in a number of orbital period bins. I think this makes the accretion boundary a little more apparent. With the exception of maybe the fdShallow simulation, the locations in the disk where \tilde{b} drops below 2\sqrt{3} are broadly consistent, which supports our claim that the boundary location is driven by the local value of alpha.
+	TODO: Update text to recflect changes to figure.
 
 5.5. Assembly History of Embryos
 719: add references.
+	Done
 721: Does this distinction have analogies in galaxy formation? Also isn't this overly strict? I would expect that the initial population has quickly collided at least once, so most of the collisions will be major mergers under this definition. This seems to be supported by Fig. 9 where the smooth accretion fraction is always <10%.
+	TODO: Ask tom about this?
 724: Why are only the 100 largest bodies chosen? It seems more natural to me to choose a mass cut-off. Also, given that in Fig9 is plotting mass on a log-scale, I suggest just plotting the entire population including those planetesimals that remained relatively small and pristine. Also, why is the fdHi simulation chosen?
+	TODO: What else to include here? Everything?
 726: I think it could be explicitly stated that smooth accretion = minor mergers.
 730 & onwards: Can the authors quantify this trend? E.g., by making three linear fits (with error bars) for > 60d, < 60d and the full population. I'm in particular unconvinced that the trend for P > 60 days truly is flat, given the small sample size for larger bodies.
 Figure 9:
 Given that I'm skeptical about the 60 day boundary being clear and universal, I think this plot would be stronger if the bodies were colored by orbital period (in addition to the marker style indicating this boundary), and the plot would include a corresponding colorbar.
 The authors state "there is a decreasing correlation between smooth accretion fraction and mass, which suggests that most growth occurs between equal mass bodies". As far as I understand, this doesn't have to be the case. I would argue that more massive bodies require more time to build up and during later stages there are simply less primordial planetesimals left so collisions are just more likely to be major mergers.
 The authors state "indicating that accretion of planetesimals is important during all phases of the evolution", yet the smooth accreting fraction is only between 1-10% for all these bodies. Seems to me that for all bodies, regardless of mass and orbital period, major mergers are significantly more important - that is at least with the author's definition of major and minor merger.
+	I agree that 1-10% is a small fraction. The mass cutoff should definitely be larger. TODO: Change mass cutoff and hopefully the same scaling with mass remains.
 In the legend, I think "orbit" should be put in the subscript instead of P_orbit
 746: This is just because in the inner disk there are no primordial planetesimals left to build the more massive bodies, right?
+	No, the accretion mode should be qualitatively different, even before the planetesimals run out. TODO: Hopefully including more data in the plot and maybe increasing the mass cutoff for 'smooth' accretion will make this more obvious.
 750: use /citep[see][]{Kokubo}
+	Fixed
 756: I agree that the large bodies must've originated due to mergers with other embryos, but this is not really an explanation for why the feeding zone size doesn't match the theoretical value, no? Instead it's the lack of gravitational scattering, as the authors write above. Maybe the authors can clarify specifically why oligarchic growth models predict this feeding zone size, and also why gravitational scattering is suppressed in the inner disk (due to the lack of primordial planetesimals in the inner disk?).
 766: "One should note that [...]." This sentence can be deleted in my opinion.
+	Removed
 Figure 10:
 I suggest indicating the boundary between accretion modes in this figure. >60d orbits only include 4-5 bodies. However, to me it seems like the shape of the accretion zone is qualitatively the same until ~ 20 orbits, which strengthens my view that the 60d orbit boundary is not very clear at all.
 I suggest matching the x-axis limits the shown xdata.
