@@ -657,7 +657,7 @@ embryos mature.
 
 \begin{figure}
 \begin{center}
-    \includegraphics[width=0.5\textwidth]{figures/minor_frac.png}
+    \includegraphics[width=0.5\textwidth]{figures/minor_frac_100m.png}
     \caption{For the 100 most massive bodies at the end of the fdHi simulation, the fraction of their total mass attained through mergers with initial mass planetesimals (smooth accretion) as a function of total mass. Bodies that reside beyond the 60 day accretion boundary are shown with red crosses, while bodies interior to the boundary are shown with blue dots. For the short period bodies, there is a decreasing correlation between smooth accretion fraction and mass, which suggests that most growth occurs between equal mass bodies. For the bodies in the outer disk, this trend is flat, indicating that accretion of planetesimals is important during all phases of evolution.\label{fig:minor_frac}}
 \end{center}
 \end{figure}
@@ -692,12 +692,12 @@ region lies around 60 days in orbital period. As discussed in section \ref{sec:s
 set entirely by the local value of $\alpha$, which scales with both
 distance from the star and the bulk density of the planetesimals (see
 equation \ref{eq:alpha}). Because we chose to artificially inflate the
-collision cross section of the particles in our simulations, the bulk densities
+collision cross section of the particles in our simulations \textbf{by a factor of $f$}, the bulk densities
 of the particles are reduced, and the accretion boundary is shifted outward.
 However, the scaling relation between $\alpha$ and $\rho$ ($\alpha \sim \rho_{pl}^{-1/3}$) can be used
 to predict where this accretion boundary should lie in a disk with realistic-sized planetesimals. The simulations
 presented in this paper use a collision cross section enhancement factor of 6, which moves the boundary outward in orbital
-period by a factor of approximately 15. One would therefore expect the accretion boundary to lie near 5 days in orbital period
+period by a factor of approximately 15 \textbf{(For a fixed value of $\alpha$, equation \ref{eq:alpha} gives $a \sim r_{pl} \sim f$ and therefore $P_{orbit} \sim f^{-3/2}$)}. One would therefore expect the accretion boundary to lie near 5 days in orbital period
 for 3 g $cm^{-3}$ bodies.
 
 Although a simulation with $f=1$ is not computationally tractable, we
@@ -753,7 +753,11 @@ disk where planetesimals might be expected to form for a wide range of $\rho_{pl
 For the simulations presented in this work, every collision results in a perfect merger between pairs of bodies, with no loss
 of mass or energy. Although simpler and less computationally expensive to model, allowing every collision to produce a
 perfect merger might result in overly efficient growth, particularly in the innermost region of the disk where the encounter 
-velocities are largest. A proper way to handle this would be to allow for a range of collision outcomes, based on a semianalytic 
+velocities are largest. \textbf{Given that we have just shown that a distinctly non-oligarchic growth mode emerges in the inner disk when the 
+collision timescale is short relative to the gravitational scattering timescale, one might be concerned that a more realistic collision model would act 
+to lengthen the growth timescale enough for this condition to no longer be true. In the outer regions of the disk where oligarchic growth still 
+operates, more realistic collision models have been shown to simply lengthen the timescale for planetary embryos to form 
+\citep{wetherill93, leinhardt05}.} A proper way to handle this would be to allow for a range of collision outcomes, based on a semianalytic 
 model (see \citet{leinhardt12}). However, resolving collisional debris, or even prolonging growth by forcing high-velocity pairs of 
 bodies to bounce is too expensive to model, even with {\sc ChaNGa}.
 

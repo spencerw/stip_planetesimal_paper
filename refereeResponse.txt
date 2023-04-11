@@ -280,12 +280,15 @@ This figure could be improved if each line was colored by the semi-major axis of
 721: Does this distinction have analogies in galaxy formation? Also isn't this overly strict? I would expect that the initial population has quickly collided at least once, so most of the collisions will be major mergers under this definition. This seems to be supported by Fig. 9 where the smooth accretion fraction is always <10%.
 	TODO: Ask tom about this?
 724: Why are only the 100 largest bodies chosen? It seems more natural to me to choose a mass cut-off. Also, given that in Fig9 is plotting mass on a log-scale, I suggest just plotting the entire population including those planetesimals that remained relatively small and pristine. Also, why is the fdHi simulation chosen?
-	TODO: What else to include here? Everything?
+	The 100 body cutoff was chosen because the analysis script we were using the construct the collision history was rather slow when asked to include all ~10,000 particle in the snapshot. This has been optimized and all bodies are now included in figure 9. fdHi is chosen to be the 'fiducial' simulation for most of this paper. The initial conditions for fdHi require the least assumptions (MMSN profile with enough extra mass included to construct ~1 M_earth planets).
 726: I think it could be explicitly stated that smooth accretion = minor mergers.
 730 & onwards: Can the authors quantify this trend? E.g., by making three linear fits (with error bars) for > 60d, < 60d and the full population. I'm in particular unconvinced that the trend for P > 60 days truly is flat, given the small sample size for larger bodies.
+	As with figure 8, we have now included data from the other fdHi runs (using a different random seed). The P > 60d trend is now much more clearly flat.
 Figure 9:
 Given that I'm skeptical about the 60 day boundary being clear and universal, I think this plot would be stronger if the bodies were colored by orbital period (in addition to the marker style indicating this boundary), and the plot would include a corresponding colorbar.
+	TODO: Get rid of different marker types, apply diverging color map to points, with white centered at 60d
 The authors state "there is a decreasing correlation between smooth accretion fraction and mass, which suggests that most growth occurs between equal mass bodies". As far as I understand, this doesn't have to be the case. I would argue that more massive bodies require more time to build up and during later stages there are simply less primordial planetesimals left so collisions are just more likely to be major mergers.
+
 The authors state "indicating that accretion of planetesimals is important during all phases of the evolution", yet the smooth accreting fraction is only between 1-10% for all these bodies. Seems to me that for all bodies, regardless of mass and orbital period, major mergers are significantly more important - that is at least with the author's definition of major and minor merger.
 	I agree that 1-10% is a small fraction. The mass cutoff should definitely be larger. TODO: Change mass cutoff and hopefully the same scaling with mass remains.
 In the legend, I think "orbit" should be put in the subscript instead of P_orbit
@@ -304,20 +307,28 @@ I think "Fraction of planetesimals accreted" is a somewhat misleading descriptio
 Figure 11
 The y-axis label overlap
 I think the finding that the crossing of alpha = 0.1 in the bottom panel well matches the crossing of tilde b = 2 sqrt(3) is interesting and worth highlighting more, maybe with some vertical lines? Is there a meaning behind alpha = 0.1, i.e., is this coming from some analytical consideration? See my major comments
+	TODO: Include more sims in top panel of figure 11?
+
 
 6. Simplifying assumptions
 6.1 Collision cross section
 802: As I argued above, I'm unconvinced in this clear-cut boundary at 60 days. Maybe the authors could put a quantitative uncertainty to this number?
+	TODO
 816: I'm not following where the factor of 15 comes from. Maybe the authors can write down the explicit proportionality used to obtain this value.
+	For a fixed value of alpha, equation 4 gives a ~ r_pl ~ f. Therefore, P_orbit ~ f^{-3/2}.  This is now clarified in the text.
 821: How is this expected to change with f?
+	See previous comment.
 843: Maybe add reference to such short period planets.
+	TODO: What to reference here? Magnetic truncation radius?
 868: I'm not sure I fully follow this statement of the collision model. See my major comment above.
-
+	We have added a note here discussing the outcome of a potentially destructive collision model. As we mention in response to major comment #3, the local value of alpha is independent of particle size. So long as the solid mass is not ground down and removed from the system (radial drift, dust blowout, PR drag), the non-oligarchic growth mode should persist.
 Figure 12:
 Add a description of what green and orange means to the plot.
-
+	TODO
 901: Are the populations really indistinguishable? The authors could perform for example a Kolmogorov-Smirnov test to underline this statement. If not, I would suggest softening this statement.
+	KS value is large because of the extra planetesimals in the bounce-merge sim. TODO: Should I exclude these?
 912: The authors perform this collisional model test very close-in where residual planetesimal populations are suppressed anyways. Maybe the authors can comment on what would change (if anything) if this test was performed in the outer parts of the disks.
+	The purpose of testing the collision model at the inner part of the disk was to ensure that the delay in growth would not cause the gravitational scattering timescale to catch back up with the collision timescale (and thus cause oligarchic growth). In the outer part of the disk t_scatter >> t_collide, so a more realistic collision model would simply lengthen the timescale for embryo formation (see Wetherill + Stewart 1993, Leinhardt + Richardson 2005). We have added this discussion to the beginning of section 6.2 in the text.
 
 7. Summary and Discussion
 933: I would think the gravitational feedback still operates, just on a timescale that is much longer than the planetesimal accretion timescale that depletes the planetesimal supply.

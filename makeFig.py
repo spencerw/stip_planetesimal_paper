@@ -1,6 +1,7 @@
 #/bin/bash
 import matplotlib.pylab as plt
 import matplotlib as mpl
+from matplotlib import colors
 import numpy as np
 import pandas as pd
 import pynbody as pb
@@ -729,92 +730,110 @@ def plot_surfden_b():
 
 # Extract information about the 'surviving' members from a collision table
 def coll_info(df):
-    mass_mask = df['m1'].values >= df['m2'].values
+	mass_mask = df['m1'].values >= df['m2'].values
     
-    del_x = df['x1x'].values
-    del_x[mass_mask] = df['x2x'].values[mass_mask]
+	del_x = df['x1x'].values
+	del_x[mass_mask] = df['x2x'].values[mass_mask]
+
+	del_y = df['x1y'].values
+	del_y[mass_mask] = df['x2y'].values[mass_mask]
+
+	del_z = df['x1z'].values
+	del_z[mass_mask] = df['x2z'].values[mass_mask]
+
+	del_vx = df['v1x'].values
+	del_vx[mass_mask] = df['v2x'].values[mass_mask]
+
+	del_vy = df['v1y'].values
+	del_vy[mass_mask] = df['v2y'].values[mass_mask]
+
+	del_vz = df['v1z'].values
+	del_vz[mass_mask] = df['v2z'].values[mass_mask]
     
-    del_y = df['x1y'].values
-    del_y[mass_mask] = df['x2y'].values[mass_mask]
+	del_a, del_e, del_inc, del_omega, del_Omega, del_M = ko.cart2kep(del_x, del_y, del_z, del_vx, del_vy, del_vz, 0.08, 1e-20)
+
+	del_r = np.sqrt(del_x**2 + del_y**2, del_z**2)
+
+	del_mass = df['m1'].values
+	del_mass[mass_mask] = df['m2'].values[mass_mask]
     
-    del_z = df['x1z'].values
-    del_z[mass_mask] = df['x2z'].values[mass_mask]
-    
-    del_vx = df['v1x'].values
-    del_vx[mass_mask] = df['v2x'].values[mass_mask]
-    
-    del_vy = df['v1y'].values
-    del_vy[mass_mask] = df['v2y'].values[mass_mask]
-    
-    del_vz = df['v1z'].values
-    del_vz[mass_mask] = df['v2z'].values[mass_mask]
-    
-    del_a, del_e, del_inc, del_omega, del_Omega, del_M = ko.cart2kep(del_x, del_y, del_z, del_vx, del_vy, del_vz, 0.08, 1e-20)
-    
-    del_r = np.sqrt(del_x**2 + del_y**2, del_z**2)
-    
-    dvx = df['v1x'].values - df['v2x'].values
-    dvy = df['v1y'].values - df['v2y'].values
-    dvz = df['v1z'].values - df['v2z'].values
-    speed = np.sqrt(dvx**2 + dvy**2 + dvz**2)
-    vesc = np.sqrt((df['m1'].values+df['m2'].values)/(df['r1'].values + df['r2'].values))
-    
-    return {'a': del_a, 'e': del_e, 'inc': del_inc, 'omega': del_omega, 'Omega': del_Omega, 'M': del_M, \
-            'r': del_r,}
+	dvx = df['v1x'].values - df['v2x'].values
+	dvy = df['v1y'].values - df['v2y'].values
+	dvz = df['v1z'].values - df['v2z'].values
+	speed = np.sqrt(dvx**2 + dvy**2 + dvz**2)
+	vesc = np.sqrt((df['m1'].values+df['m2'].values)/(df['r1'].values + df['r2'].values))
+
+	return {'a': del_a, 'e': del_e, 'inc': del_inc, 'omega': del_omega, 'Omega': del_Omega, 'M': del_M, \
+			'r': del_r, 'mass': del_mass}
 
 def plot_smooth_acc():
 	file_str = 'figures/minor_frac.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
 
-	# For each embryo, fraction of mass accreted in planetesimals
-	num_oli = 100
-
 	nam = ['time', 'collType', 'iorder1', 'iorder2', 'm1', 'm2', 'r1', 'r2', 'x1x', 'x1y', 'x1z', 'x2x', 'x2y', 'x2z',  'v1x', 'v1y', 'v1z', \
 	'v2x', 'v2y', 'v2z', 'w1x', 'w1y', 'w1z', 'w2x', 'w2y', 'w2z']
-	time = 0.05*248000/(2*np.pi)
-	df1 = pd.read_csv('data/fdvhia/fullDiskVHi.coll', names=nam, sep=' ', index_col=False)
-	df2 = pd.read_csv('data/fdvhia/fullDiskVHi1.coll', names=nam, sep=' ', index_col=False)
-	df = pd.concat([df1, df2])
-	df = df[df['time'] <= time]
-
-	snap = pb.load('data/fdvhia/fullDiskVHi1.248000')
-	pl = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-	df1_d, df1_s = np.loadtxt('data/fdvhia/delete1', dtype='int', unpack=True)
-	massive_ind = np.argsort(np.array(pl['mass']))[::-1]
-	massive_iord_orig = prev_iorder(pl['iord'][massive_ind], len(plVHiIC), df1_d)
-	mmin = np.min(df['m1'])
-
-	info = coll_info(df)
-	p_coll = p_orbit(info['a'])
-
-	xvals = np.zeros(num_oli)
-	yvals = np.zeros_like(xvals)
-	porb = np.zeros_like(xvals)
-
-	for oli_idx in range(int(num_oli)):
-		oli_iord = massive_iord_orig[oli_idx]
-		porbit = p_orbit(pl['a'][massive_ind[oli_idx]])
-
-		mask = np.logical_or(df['iorder1'] == oli_iord, df['iorder2'] == oli_iord)
-		mask1 = np.logical_or(df['m1'][mask] <= mmin, df['m2'][mask] <= mmin)
-		frac = len(df[mask][mask1])*mmin/pl['mass'][massive_ind[oli_idx]]
-
-		xvals[oli_idx] = (pl['mass'][massive_ind[oli_idx]]*u.M_sun).to(u.M_earth).value
-		yvals[oli_idx] = frac
-		porb[oli_idx] = porbit
 
 	fig, axes = plt.subplots(figsize=(8,6))
-	mask = porb < 60
-	axes.scatter(xvals[~mask], yvals[~mask], color='r', marker='x', label='P_orbit > 60d')
-	axes.scatter(xvals[mask], yvals[mask], label='P_orbit < 60d', edgecolor='black', linewidth=0.4)
 	axes.set_xscale('log')
 	axes.set_yscale('log')
-	axes.set_ylim(1e-4, 1e-1)
-	axes.set_xlim(1e-3, 2)
+	axes.set_ylim(1e-2, 1)
+	axes.set_xlim(1e-4, 2)
 	axes.set_xlabel('Mass [M_earth]')
 	axes.set_ylabel('Smooth Accretion Mass Fraction')
-	axes.legend(loc=3)
+
+	def plot_smooth_sim(simname):
+		print(simname)
+		time = 0.05*248000/(2*np.pi)
+		df1 = pd.read_csv('data/fdvhi'+simname+'/fullDiskVHi.coll', names=nam, sep=' ', index_col=False)
+		df2 = pd.read_csv('data/fdvhi'+simname+'/fullDiskVHi1.coll', names=nam, sep=' ', index_col=False)
+		df = pd.concat([df1, df2])
+		df = df[df['time'] <= time]
+
+		snap = pb.load('data/fdvhi'+simname+'/fullDiskVHi1.248000')
+		pl = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+		df1_d, df1_s = np.loadtxt('data/fdvhi'+simname+'/delete1', dtype='int', unpack=True)
+		massive_ind = np.argsort(np.array(pl['mass']))[::-1]
+		massive_iord_orig = prev_iorder(pl['iord'][massive_ind], len(plVHiIC), df1_d)
+		mmin = 100*np.min(df['m1'])
+
+		info = coll_info(df)
+		p_coll = p_orbit(info['a'])
+		num_oli = len(pl)
+
+		xvals = np.zeros(num_oli)
+		yvals = np.zeros_like(xvals)
+		porb = np.zeros_like(xvals)
+
+		for oli_idx in range(int(num_oli)):
+			oli_iord = massive_iord_orig[oli_idx]
+			porbit = p_orbit(pl['a'][massive_ind[oli_idx]])
+
+			mask = np.logical_or(df['iorder1'] == oli_iord, df['iorder2'] == oli_iord)
+			mask1 = np.logical_or(df['m1'][mask] <= mmin, df['m2'][mask] <= mmin)
+			frac = np.sum(info['mass'][mask][mask1])/pl['mass'][massive_ind[oli_idx]]
+
+			xvals[oli_idx] = (pl['mass'][massive_ind[oli_idx]]*u.M_sun).to(u.M_earth).value
+			yvals[oli_idx] = frac
+			porb[oli_idx] = porbit
+
+		import matplotlib.cm as cm
+		divnorm = colors.TwoSlopeNorm(vmin=0, vcenter=60, vmax=100)
+		cbs = axes.scatter(xvals, yvals, edgecolor='black', linewidth=0.4, c=porb, cmap=cm.seismic, norm=divnorm)
+
+		#mask = porb < 60
+		#axes.scatter(xvals[~mask], yvals[~mask], color='r', marker='x', label='P_orbit > 60d')
+		#axes.scatter(xvals[mask], yvals[mask], label='P_orbit < 60d', color='blue', edgecolor='black', linewidth=0.4)
+		return cbs
+
+	cbs = plot_smooth_sim('a')
+	cbs = plot_smooth_sim('b')
+	cbs = plot_smooth_sim('c')
+	cbs = plot_smooth_sim('d')
+	cbs = plot_smooth_sim('e')
+
+	cb = fig.colorbar(cbs, ax=axes)
+	cb.set_label('Orbital Period [d]')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -1252,7 +1271,7 @@ def plot_rung_ecc():
 #plot_surfden_iso()
 #plot_surfden_b()
 #plot_smooth_acc()
-plot_acc_zones()
+#plot_acc_zones()
 #plot_f6f4()
 #plot_f6f4_b()
 #plot_frag_ecc()
