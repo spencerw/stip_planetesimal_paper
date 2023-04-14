@@ -186,8 +186,9 @@ I'd be interested in also having another panel that shows the evolution of just 
 	Done
 Table 1.
 I don't think the notes are necessary
+	Content from the notes has been added to the column headers in the table.
 I would probably put the planetesimal masses in units of Ceres
-	Where should I put the units?
+	As discussed above, we feel that Ceres masses are too asteroid-belt specific. Instead, we have chosen to display the planetesimal masses in M_earth.
 I think Table 1 and Table 2 could be combined
 	Table 1 has been merged into table 2.
 

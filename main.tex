@@ -536,21 +536,18 @@ boundaries, while also minimizing the number of `skipped' collisions. \textbf{In
 
 \subsection{Results}
 
+% tablesgenerator.com
 \begin{table*}
 \caption{Summary of Full Disk Simulations}
-\begin{tabular}{llllllllll} \hline \hline
-Name     & $m_{pl}^{a}$ & $N_{pl}^{b}$ & $A^{c}$ & $\delta^{d}$ & $M_{PP}^a$ & $T_{int}^b$ & $T_{int 1}^c$ &  \\ \hline
-fdHi                 & $5 \times 10^{22}$ & 903,687 & 100                                                         & 1.5                              &  1.00                                                         & 456                              & 16,377  &  \\
-fdHiShallow    & $5 \times 10^{22}$ & 903,687 & 100                                                        & 0.5                              &  1.19                                                        & 456                              & 16,377  &  \\
-fdHiSteep       & $5 \times 10^{22}$ & 903,687 & 100                                                         & 2.5                              &  1.08                                                         & 456                              & 16,377 &  \\
-fdLo                & $5 \times 10^{22}$ & 45,185    & 1                                                             & 1.5                              &  1.77 $\times 10^{-3}$                                  & 3,713                              & 133,651 &  \\ \hline
+\begin{tabular}{lccccccc} \hline \hline
+Simulation Name & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Initial Planetesimal \\ Mass ($M_{\odot}$)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Initial Planetesimal \\ Count\end{tabular}} & A   & d   & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Maximum Protoplanet\\ Mass ($M_{\odot}$)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Integration Time\\ (yr)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Rescaled Integration\\ Time (yr)\end{tabular}} \\
+\hline
+fdHi            & $8.37 \times 10^{-6}$                                                                                & 903,687                                                                                   & 100 & 1.5 & 1.0                                                                                              & 456                                                                                 & 16,377                                                                                       \\
+fdHiSteep       & $8.37 \times 10^{-6}$                                                                                & 903,687                                                                                   & 100 & 2.5 & 1.19                                                                                             & 456                                                                                 & 16,377                                                                                       \\
+fdHiShallow     & $8.37 \times 10^{-6}$                                                                                & 903,687                                                                                   & 100 & 0.5 & 1.08                                                                                             & 456                                                                                 & 16,377                                                                                       \\
+fdLo            & $8.37 \times 10^{-6}$                                                                                & 45,185                                                                                    & 1   & 1.5 & $1.77 \times 10^{-3}$                                                                              & 3,713                                                                               & 133,651                                  \\ \hline                                                   
 \end{tabular}
 \label{tab:sim_properties}
-\begin{flushleft}
-\textsc{Note} \\ {$^a$ Maximum protoplanet mass [$M_{earth}$] \\
-		       $^b$ Integration time [yr] \\
-		       $^c$ Rescaled integration time [yr]} \\
-\end{flushleft}
 \end{table*}
 
 The timescales for embryo formation depend on
