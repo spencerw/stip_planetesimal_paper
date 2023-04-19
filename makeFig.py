@@ -2,6 +2,7 @@
 import matplotlib.pylab as plt
 import matplotlib as mpl
 from matplotlib import colors
+import matplotlib.cm as cm
 import numpy as np
 import pandas as pd
 import pynbody as pb
@@ -19,6 +20,7 @@ simV = u.AU / simT
 
 from scipy import stats, optimize
 import KeplerOrbit as ko
+from profileTools import e_eq, rho_gas, v_gas, soundspeed, sma
 
 mpl.rcParams.update({'font.size': 18, 'font.family': 'STIXGeneral', 'mathtext.fontset': 'stix',
                             'image.cmap': 'viridis'})
@@ -153,7 +155,13 @@ def plot_timescales():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	# r in AU
+	# Values for M stars from Backus + Quinn 2016
+	q = 0.59
+	T0 = 130
+	mu = 2.34 # Hayashi 1981
+
+	C_D = 1
+
 	def surf_den(r):
 		sigma0 = 10 # g/cm^2
 		alpha = 3/2
@@ -162,21 +170,36 @@ def plot_timescales():
 	rhop = 3*u.g/u.cm**3
 	rp = (100*u.km).to(u.cm) # Timescale ratio is independent of size at fixed density
 	mp = 4/3*np.pi*rhop*rp**3
-
 	mstar = (1*u.M_sun).to(u.g)
-	p_bins = (np.logspace(0, 2)*u.d).to(u.s)
-	r_bins = ((p_bins/(2*np.pi))**2*G.cgs*mstar)**(1/3)
 
-	def timescale_ratio(eh):
-		Sigma = surf_den(r_bins.to(u.AU))
+	pvals = np.logspace(0, 2)
+	pvals_s = (pvals*u.d).to(u.s)
+	avals = sma(pvals_s.value, mstar.value)
+	avals_au = (avals*u.cm).to(u.AU).value
 
-		vk = np.sqrt(G.cgs*mstar/r_bins)
-		lnLam = 3
-		omega = 2*np.pi/p_bins
+	omega = 2*np.pi/pvals_s
+	Sigma = surf_den(avals_au*u.AU)
+
+	def calc_eqh(d_g):
+		cs = soundspeed(T0, mu, q, avals_au)
+		vgas = v_gas((mstar).to(u.M_sun).value, avals, cs, q)
+		rhogas = rho_gas(cs, omega, Sigma, d_g)
+		e_eq_vals = e_eq(omega, Sigma, mp, rp, C_D, vk, rhogas, vgas)
+		return e_eq_vals/(mp/(3*mstar))**(1/3)
+
+	fig, axes = plt.subplots(figsize=(8,6))
+
+	ehvals = np.logspace(0, 2)
+	trel_div_tcoll = np.zeros((len(pvals), len(ehvals)))
+	for idx in range(len(ehvals)):
+
+		vk = np.sqrt(G.cgs*mstar/(avals*u.cm))
+		lnLam = 5
+		omega = 2*np.pi/pvals_s
 		vesc = np.sqrt(G.cgs*mp/rp)
 
 		# Dispersion dominated boundary
-		ecc = eh*(mp/(3*mstar))**(1/3)
+		ecc = ehvals[idx]*(mp/(3*mstar))**(1/3)
 		inc = ecc/2
 		sigma = np.sqrt(5/8*ecc**2 + inc**2)*vk
 
@@ -186,17 +209,32 @@ def plot_timescales():
 		t_coll_vals = 1/(n*cross*sigma)
 		t_relax_vals = sigma**3/(n*np.pi*G.cgs**2*mp**2*lnLam)
 
-		return t_relax_vals/t_coll_vals
+		trel_div_tcoll[idx] = t_relax_vals/t_coll_vals
 
-	fig, axes = plt.subplots(figsize=(8,6))
-	ehvals = [16, 8, 4, 2, 1]
-	for idx, eh in enumerate(ehvals):
-		axes.plot(p_bins.to(u.d), timescale_ratio(eh), c='black', label=r'e$_{h}$ = '+str(eh), lw=lw)
-	axes.axhline(1, ls='--', color='gray')
+	cmap = mpl.cm.get_cmap('seismic', 100)
+	class MidPointLogNorm(mpl.colors.LogNorm):
+		def __init__(self, vmin=None, vmax=None, midpoint=None, clip=False):
+			mpl.colors.LogNorm.__init__(self,vmin=vmin, vmax=vmax, clip=clip)
+			self.midpoint=midpoint
+		def __call__(self, value, clip=None):
+			x, y = [np.log(self.vmin), np.log(self.midpoint), np.log(self.vmax)], [0, 0.5, 1]
+			return np.ma.masked_array(np.interp(np.log(value), x, y))
+
+	norm = MidPointLogNorm(vmin=np.min(trel_div_tcoll), midpoint=1.0, vmax=np.max(trel_div_tcoll))
+	cax = axes.pcolormesh(pvals, ehvals, np.flipud(np.rot90(trel_div_tcoll)), \
+							norm=norm, cmap=cmap)
 	axes.set_xscale('log')
 	axes.set_yscale('log')
+
+	cb = plt.colorbar(cax, ax=axes)
+	cb.set_label(r'$t_{relax}/t_{collision}$')
 	axes.set_xlabel('Orbital Period [d]')
-	axes.set_ylabel(r't$_{relax}$/t$_{coll}$')
+	axes.set_ylabel(r'$e_{h}$')
+
+	dust_to_gas = [1e-4, 1e-3, 1e-2, 1e-1, 1]
+	for dg in dust_to_gas:
+		yval = calc_eqh(dg).value
+		axes.plot(pvals, yval, color='white', lw=4, ls='--')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -468,14 +506,17 @@ def plot_pl_frac_time():
 	if not clobber and os.path.exists(file_str):
 		return
 
-	files = gl.glob1('data/', 'fullDiskVHi1.[0-9]*[0-9]')
-	files = ns.natsorted(files)
+	files = []#ns.natsorted(gl.glob1('data/','fullDiskVHi.[0-9]*[0-9]'))
+	files1 = ns.natsorted(gl.glob1('data/', 'fullDiskVHi1.[0-9]*[0-9]'))
+	files = np.concatenate([files, files1])
 
-	pbins = (np.linspace(1, 100, 10)*u.d).value
+	pbins = (np.linspace(1, 100, 20)*u.d).value
 	bins1 = ((((pbins*u.d).to(u.s)/(2*np.pi))**2*G.cgs*(mCentral*u.M_sun).to(u.g))**(1/3)).to(u.AU).value
 	prof_ic = pb.analysis.profile.Profile(plVHiIC.d, bins=bins1, calc_x = lambda x: x['a'])
 
-	files_sub = files
+	log_ind = np.unique(np.logspace(0, np.log10(len(files)), 40).astype(np.int32))
+	log_ind -= 1
+	files_sub = files[log_ind]
 
 	prof_arr = np.zeros((len(bins1)-1, len(files_sub)))
 	time_arr = np.zeros(len(files_sub))
@@ -483,7 +524,7 @@ def plot_pl_frac_time():
 	for idx, f in enumerate(files_sub):
 		snap = pb.load('data/'+f)
 		plVHi = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
-		mask = plVHi['mass'] <= 16*np.min(plVHi['mass'])
+		mask = plVHi['mass'] <= 100*np.min(plVHi['mass'])
 		p_vhi_m1 = pb.analysis.profile.Profile(plVHi[mask], bins=bins1)
 		p_vhi_m2 = pb.analysis.profile.Profile(plVHiIC, bins=bins1)
 
@@ -492,14 +533,8 @@ def plot_pl_frac_time():
 		prof_arr[:,idx] = (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 
 	fig, axes = plt.subplots(figsize=(8,4))
-
+	col = cm.jet(np.linspace(0, 1, len(pbins)))
 	for idx in range(len(bins1[:-1])):
-		if pbins[idx] < 60:
-			ls = '--'
-			lw1 = 2
-		else:
-			ls = '-'
-			lw1 = lw
 		tdyn_loc = pbins[idx]/(2*np.pi)
 
 		e_disp = prof_ic['e_disp'][idx]
@@ -515,12 +550,19 @@ def plot_pl_frac_time():
 
 		tacc_loc = 1/(n*sigma*v)
 
-		axes.plot(time_arr/tacc_loc, prof_arr[idx], color='black', linestyle=ls, lw=lw1)
+		mask = prof_arr[idx] > 0
+		cbs = axes.plot(time_arr[mask][1:]/tacc_loc, prof_arr[idx][mask][1:], \
+			lw=lw, color=col[idx])
 
 	axes.set_ylabel(r'$\sigma$ / $\Sigma$')
 	axes.set_xlabel('Time [Local Accretion Timescale]')
 	axes.set_xscale('log')
-	axes.set_xlim(1e-1, 1e2)
+	axes.set_xlim(4e-2, 40)
+
+	norm = colors.Normalize(vmin=0, vmax=100)
+	sm = cm.ScalarMappable(cmap=cm.jet, norm=norm)
+	cb = plt.colorbar(sm)
+	cb.set_label('Orbital Period [d]')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -645,75 +687,64 @@ def plot_surfden_b():
 	perbins1 = np.linspace(1, 100, 6)
 	perbincents = 0.5*(perbins1[1:] + perbins1[:-1])
 
+
 	periods = np.concatenate([per.value, perb.value, perc.value, perd.value, pere.value])
 	btildes = np.concatenate([get_btilde(plVHi, p_vhi_ic), get_btilde(plVHib, p_vhi_ic),
 		get_btilde(plVHic, p_vhi_ic), get_btilde(plVHid, p_vhi_ic), get_btilde(plVHie, p_vhi_ic)])
-	mass_mask = btildes > 1
-	fdhi_means, edges, binnumber, = stats.binned_statistic(periods[mass_mask], btildes[mass_mask], statistic='mean', bins=perbins1)
-	fdhi_std, edges, binnumber, = stats.binned_statistic(periods[mass_mask], btildes[mass_mask], statistic='std', bins=perbins1)
-
 	periodsSt = np.concatenate([perSt.value, perStb.value, perStc.value, perStd.value, perSte.value])
 	btildesSt = np.concatenate([get_btilde(plVHiSt, p_vhi_ic_st), get_btilde(plVHiStb, p_vhi_ic_st),
 		get_btilde(plVHiStc, p_vhi_ic_st), get_btilde(plVHiStd, p_vhi_ic_st), get_btilde(plVHiSte, p_vhi_ic_st)])
-	mass_mask = btildesSt > 1
-	fdhiSt_means, edges, binnumber, = stats.binned_statistic(periodsSt[mass_mask], btildesSt[mass_mask], statistic='mean', bins=perbins1)
-	fdhiSt_std, edges, binnumber, = stats.binned_statistic(periodsSt[mass_mask], btildesSt[mass_mask], statistic='std', bins=perbins1)
-
 	periodsSh = np.concatenate([perSh.value, perShb.value, perShc.value, perShd.value, perShe.value])
 	btildesSh = np.concatenate([get_btilde(plVHiSh, p_vhi_ic_sh), get_btilde(plVHiShb, p_vhi_ic_sh),
 		get_btilde(plVHiShc, p_vhi_ic_sh), get_btilde(plVHiShd, p_vhi_ic_sh), get_btilde(plVHiShe, p_vhi_ic_sh)])
-	mass_mask = btildesSh > 1
-	fdhiSh_means, edges, binnumber, = stats.binned_statistic(periodsSh[mass_mask], btildesSh[mass_mask], statistic='mean', bins=perbins1)
-	fdhiSh_std, edges, binnumber, = stats.binned_statistic(periodsSh[mass_mask], btildesSh[mass_mask], statistic='std', bins=perbins1)
-
 	periodsLo = np.concatenate([perLo.value])
 	btildesLo = np.concatenate([get_btilde(plLo, p_lo_ic)])
-	mass_mask = btildesLo > 1
-	fdLo_means, edges, binnumber, = stats.binned_statistic(periodsLo[mass_mask], btildesLo[mass_mask], statistic='mean', bins=perbins1)
-	fdLo_std, edges, binnumber, = stats.binned_statistic(periodsLo[mass_mask], btildesLo[mass_mask], statistic='std', bins=perbins1)
-
 
 	axes = ax[0]
 	axes.scatter(per.value, get_btilde(plVHi, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
-	axes.plot(perbincents, fdhi_means)
-	axes.fill_between(perbincents, fdhi_means - fdhi_std, fdhi_means + fdhi_std, color='blue', alpha=0.3)
-	axes.scatter(periods, btildes, label='fdHi', edgecolor='black', linewidth=0.4, color='blue')
+	#axes.plot(perbincents, fdhi_means)
+	#axes.fill_between(perbincents, fdhi_means - fdhi_std, fdhi_means + fdhi_std, color='blue', alpha=0.3)
+	axes.scatter(periods, btildes, label='fdHi', edgecolor='black', linewidth=0.4, color='orange')
 	#axes.scatter(perb.value, get_btilde(plVHib, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perc.value, get_btilde(plVHic, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perd.value, get_btilde(plVHid, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
 	#axes.scatter(pere.value, get_btilde(plVHie, p_vhi_ic), label='fdHi', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
+	axes.axhline(10, ls='--', color='gray')
 	axes.set_title('fdHi')
 	axes = ax[1]
 	#axes.scatter(perSt.value, get_btilde(plVHiSt, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
-	axes.plot(perbincents, fdhiSt_means)
-	axes.fill_between(perbincents, fdhiSt_means - fdhiSt_std, fdhiSt_means + fdhiSt_std, color='blue', alpha=0.3)
-	axes.scatter(periodsSt, btildesSt, label='fdSteep', edgecolor='black', linewidth=0.4, color='blue')
+	#axes.plot(perbincents, fdhiSt_means)
+	#axes.fill_between(perbincents, fdhiSt_means - fdhiSt_std, fdhiSt_means + fdhiSt_std, color='blue', alpha=0.3)
+	axes.scatter(periodsSt, btildesSt, label='fdSteep', edgecolor='black', linewidth=0.4, color='orange')
 	#axes.scatter(perStb.value, get_btilde(plVHiStb, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perStc.value, get_btilde(plVHiStc, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perStd.value, get_btilde(plVHiStd, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perSte.value, get_btilde(plVHiSte, p_vhi_ic_st), label='fdSteep', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
+	axes.axhline(10, ls='--', color='gray')
 	axes.set_title('fdHiSteep')
 	axes = ax[2]
-	axes.plot(perbincents, fdhiSh_means)
-	axes.fill_between(perbincents, fdhiSh_means - fdhiSh_std, fdhiSh_means + fdhiSh_std, color='blue', alpha=0.3)
-	axes.scatter(periodsSh, btildesSh, label='fdShallow', edgecolor='black', linewidth=0.4, color='blue')
+	#axes.plot(perbincents, fdhiSh_means)
+	#axes.fill_between(perbincents, fdhiSh_means - fdhiSh_std, fdhiSh_means + fdhiSh_std, color='blue', alpha=0.3)
+	axes.scatter(periodsSh, btildesSh, label='fdShallow', edgecolor='black', linewidth=0.4, color='orange')
 	#axes.scatter(perSh.value, get_btilde(plVHiSh, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perShb.value, get_btilde(plVHiShb, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perShc.value, get_btilde(plVHiShc, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perShd.value, get_btilde(plVHiShd, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	#axes.scatter(perShe.value, get_btilde(plVHiShe, p_vhi_sh), label='fdShallow', edgecolor='black', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
+	axes.axhline(10, ls='--', color='gray')
 	#rungs = np.arange(0, 7)
 	#for rung in rungs:
 		#axes.axvline(2**rung)
 	axes.set_title('fdHiShallow')
 	axes = ax[3]
-	axes.plot(perbincents, fdLo_means)
-	axes.fill_between(perbincents, fdLo_means - fdLo_std, fdLo_means + fdLo_std, color='blue', alpha=0.3)
-	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', color='blue', linewidth=0.4)
+	#axes.plot(perbincents, fdLo_means)
+	#axes.fill_between(perbincents, fdLo_means - fdLo_std, fdLo_means + fdLo_std, color='blue', alpha=0.3)
+	axes.scatter(perLo.value, get_btilde(plLo, p_lo_ic), label='fdLo', edgecolor='black', color='orange', linewidth=0.4)
 	axes.axhline(2*np.sqrt(3), ls='--', color='gray')
+	axes.axhline(10, ls='--', color='gray')
 	axes.set_title('fdLo')
 
 	axes.set_xlim(-5, 100)
@@ -778,7 +809,7 @@ def plot_smooth_acc():
 	axes.set_xscale('log')
 	axes.set_yscale('log')
 	axes.set_ylim(1e-2, 1)
-	axes.set_xlim(1e-4, 2)
+	axes.set_xlim(1e-3, 2)
 	axes.set_xlabel('Mass [M_earth]')
 	axes.set_ylabel('Smooth Accretion Mass Fraction')
 
@@ -818,12 +849,9 @@ def plot_smooth_acc():
 			porb[oli_idx] = porbit
 
 		import matplotlib.cm as cm
-		divnorm = colors.TwoSlopeNorm(vmin=0, vcenter=60, vmax=100)
-		cbs = axes.scatter(xvals, yvals, edgecolor='black', linewidth=0.4, c=porb, cmap=cm.seismic, norm=divnorm)
+		cbs = axes.scatter(xvals, yvals, edgecolor='black', \
+			linewidth=0.4, c=porb, cmap=cm.jet, vmin=0.0, vmax=100.0, marker='o')
 
-		#mask = porb < 60
-		#axes.scatter(xvals[~mask], yvals[~mask], color='r', marker='x', label='P_orbit > 60d')
-		#axes.scatter(xvals[mask], yvals[mask], label='P_orbit < 60d', color='blue', edgecolor='black', linewidth=0.4)
 		return cbs
 
 	cbs = plot_smooth_sim('a')
@@ -838,6 +866,60 @@ def plot_smooth_acc():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 def plot_acc_zones():
+	file_str = 'figures/acc_zones.' + fmt
+	if not clobber and os.path.exists(file_str):
+		return
+
+	xvals = []
+	yvals = []
+	svals = []
+
+	fig, axes = plt.subplots(figsize=(16, 12))
+	histbins = np.linspace(0.5, 1.5, 200)
+
+	def get_data(sim):
+		with open('data/fdvhi'+sim+'/tree.dat', 'rb') as f:
+			root = pickle.load(f)
+
+		time = 0.05*248000/(2*np.pi)
+		# Grab the 20 most massive bodies to plot
+		snap = pb.load('data/fdvhi'+sim+'/fullDiskVHi1.248000')
+		pl = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+		snap = pb.load('data/fdvhi'+sim+'/fullDiskVHi'+sim+'.ic')
+		plic = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
+		df1_d, df1_s = np.loadtxt('data/fdvhi'+sim+'/delete1', dtype='int', unpack=True)
+		pl['iord'] = prev_iorder(pl['iord'], len(plic), df1_d)
+		massive_ind = np.argsort(np.array(pl['mass']))[::-1][:20]
+		pl = pl[massive_ind]
+		a_init = get_root_property(plic, pl, root, time, 'a')
+
+		# plot porb vs offset between porb and mean porb of accretion zone
+
+		sort_a_ind = np.argsort(pl['a'])
+		for idx, i in enumerate(sort_a_ind):
+			pl_p = p_orbit(pl['a'][i])
+			xvals.append(pl_p)
+			child_p = p_orbit(a_init[i])
+			yvals.append((pl_p-np.mean(child_p))/pl_p)
+			svals.append(pl['mass'][i]/np.min(plic['mass']))
+
+
+	get_data('a')
+	get_data('b')
+	get_data('c')
+	get_data('d')
+	get_data('e')
+
+	# TODO: Include binned statistic fit with mean and std?
+
+	axes.scatter(xvals, yvals, s=np.asarray(svals)*0.01, edgecolor='black')
+	axes.set_xlabel('Orbital Period [d]')
+	axes.set_ylabel(r'$\left( P - \left< P_{acc} \right> \right) / P_{acc}$')
+	axes.axhline(0, ls='--', lw=lw)
+
+	plt.savefig(file_str, format=fmt, bbox_inches='tight')
+
+def plot_acc_zones_1():
 	file_str = 'figures/acc_zones.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
@@ -861,12 +943,18 @@ def plot_acc_zones():
 
 	s = 1000
 	amin, amax = 0.05, 0.2
-	histbins = np.logspace(0, 2, 200)#np.linspace(0, 100, 200)
+	histbins = np.linspace(0, 100, 200)
 
 	def p_orbit(a):
 		return ((np.sqrt(a**3/mCentral))*u.yr).to(u.d).value
 
 	def oli_plot(i, idx):
+		print((pl['mass'][i]*u.M_sun).to(u.M_earth).value)
+		m0 = (np.min(plic['mass'])*u.M_sun).to(u.M_earth).value
+		print(len(a_init[i])*m0)
+		print(len(a_init[i]))
+		print('******')
+
 		child_p = p_orbit(a_init[i])
 		hist, bins = np.histogram(child_p, bins=histbins, density=True)
 		bins = 0.5*(bins[1:] + bins[:-1])
@@ -879,10 +967,9 @@ def plot_acc_zones():
 		axes.set_xlabel('Orbital Period [d]')
 		axes.set_ylabel('Fraction of Planetesimals Accreted')
 		axes.set_yticks([])
-		axes.set_xscale('log')
+		#axes.set_xscale('log')
 
 	# Sort by semimajor axis beore plotting
-	indices = np.arange(0, 20)
 	sort_a_ind = np.argsort(pl['a'])
 
 	for idx, i in enumerate(sort_a_ind):
@@ -1269,7 +1356,7 @@ def plot_rung_ecc():
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-#plot_surfden_b()
+plot_surfden_b()
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
