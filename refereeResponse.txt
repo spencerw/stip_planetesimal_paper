@@ -98,13 +98,11 @@ Abstract
 	e_h can be thought of as the radial excursion of the body's orbit in units of its Hill radius. For e_h > 1, the random velocity of a body dominates over the velocity difference due to the shearing of the disk (over a separation of 1 r_h) and encounters between bodies can be treated with a two-body formalism. We have decided to remove any mention of e_h here, and instead save this definition for section 4 (TODO: define in section 4), where it is next mentioned.
 Figure .1:
 Since this is an analytical plot, I think one could color the entire parameter space according to the ratio t_relax/t_coll. Currently, it may suggest that the plotted values for e_h are chosen for a particular reason.
-	Get rid of the legend, explain that e_h values increase from bottom to top.
+	The y axis now represents e_h, and the space on the plot is colored by t_relax/t_coll.
 Also, I think it would be nice to have a reference for what values of e_h are standard for certain disk conditions, i.e. how outrageous would it be to have a e_h = 16? Are all disks like that? Or do we expect e_h = 1 as the standard?
-	Not sure if there is going to be a reference for this. Equilibrium e_h depends on particle mass and gas density. Could try to plot things in terms of that instead. (Maybe fix rho_gas and vary mass?)
+	e_h of order ~10 is pretty standard. Following Kokubo 2002, we choose e_h so that the viscous stirring and gas drag timescales are equal. The equilibirum value of e_h then depends on the local solid and gas density, and will vary a bit with orbital period. In all of the simulations presented in this paper, the equilibrium value for e_h ranges between ~5 and ~50. We have overplotted some curves in figure 1 to show the equilibrium value of e_h as a function of orbital period for various values of the dust-gas ratio (assuming a MMSN solid surface density profile). TODO: Center white on colormap at 1
 Also, I recommend adjusting the x-limits of the plot to correspond to the limits of the orbital period.
 	Done
-
-
 
 2.2 Planetesimal Size and Extent of Hill Sphere
 253: "will remain proportional" - Proportional to what?
@@ -279,18 +277,21 @@ This figure could be improved if each line was colored by the semi-major axis of
 719: add references.
 	Done
 721: Does this distinction have analogies in galaxy formation? Also isn't this overly strict? I would expect that the initial population has quickly collided at least once, so most of the collisions will be major mergers under this definition. This seems to be supported by Fig. 9 where the smooth accretion fraction is always <10%.
-	TODO: Ask tom about this?
+	In galaxy formation simulations, 'smooth' accretion is considered to be anything at or below the resolution limit. Your point about the smooth accretion fraction always being small due to this overly strict cutoff is a good one. We have reconstructed figure 9 using a mass cutoff of 100 m_0 for major/minor collisions.
 724: Why are only the 100 largest bodies chosen? It seems more natural to me to choose a mass cut-off. Also, given that in Fig9 is plotting mass on a log-scale, I suggest just plotting the entire population including those planetesimals that remained relatively small and pristine. Also, why is the fdHi simulation chosen?
-	The 100 body cutoff was chosen because the analysis script we were using the construct the collision history was rather slow when asked to include all ~10,000 particle in the snapshot. This has been optimized and all bodies are now included in figure 9. fdHi is chosen to be the 'fiducial' simulation for most of this paper. The initial conditions for fdHi require the least assumptions (MMSN profile with enough extra mass included to construct ~1 M_earth planets).
+	The 100 body cutoff was chosen because the analysis script we were using the construct the collision history was rather slow when asked to include all ~10,000 particles in the snapshot. This has been optimized and all bodies larger than 100 m_0 are now included in figure 9. fdHi is chosen to be the 'fiducial' simulation for most of this paper. The initial conditions for fdHi require the least assumptions (MMSN profile with enough extra mass included to construct ~1 M_earth planets).
 726: I think it could be explicitly stated that smooth accretion = minor mergers.
+	TODO: How to address this?
 730 & onwards: Can the authors quantify this trend? E.g., by making three linear fits (with error bars) for > 60d, < 60d and the full population. I'm in particular unconvinced that the trend for P > 60 days truly is flat, given the small sample size for larger bodies.
 	As with figure 8, we have now included data from the other fdHi runs (using a different random seed). The P > 60d trend is now much more clearly flat.
 Figure 9:
 Given that I'm skeptical about the 60 day boundary being clear and universal, I think this plot would be stronger if the bodies were colored by orbital period (in addition to the marker style indicating this boundary), and the plot would include a corresponding colorbar.
-	TODO: Get rid of different marker types, apply diverging color map to points, with white centered at 60d
+	The mass cut has been increased (100 m_0), points are now colored by orbital period and the 60d boundary is indicated by a different marker style. 
 The authors state "there is a decreasing correlation between smooth accretion fraction and mass, which suggests that most growth occurs between equal mass bodies". As far as I understand, this doesn't have to be the case. I would argue that more massive bodies require more time to build up and during later stages there are simply less primordial planetesimals left so collisions are just more likely to be major mergers.
+	See updated version of figure 9. After including data from more simulations and coloring the points by orbital period, it is clear that there is a difference between the smooth accretion fraction of bodies in the inner disk, compared to the outer disk. In particular, outer disk bodies all have fairly large mass fractions, which implies that they grow in isolation.
 
 The authors state "indicating that accretion of planetesimals is important during all phases of the evolution", yet the smooth accreting fraction is only between 1-10% for all these bodies. Seems to me that for all bodies, regardless of mass and orbital period, major mergers are significantly more important - that is at least with the author's definition of major and minor merger.
+	I think we need to loosen our definition what a 'planetesimal' is here. 
 	I agree that 1-10% is a small fraction. The mass cutoff should definitely be larger. TODO: Change mass cutoff and hopefully the same scaling with mass remains.
 In the legend, I think "orbit" should be put in the subscript instead of P_orbit
 746: This is just because in the inner disk there are no primordial planetesimals left to build the more massive bodies, right?
