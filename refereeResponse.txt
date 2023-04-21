@@ -166,6 +166,7 @@ I would express the mass in units of e.g. Ceres
 	This comment must be referring to figure 4? If so, 'm_max' in the text has been changed to 'M'.
 Figure 4:
 Why don't the simulations start all with m_max/m = 1?
+	This is because m_max/m = 1 at T=0 and we have time plotted on a log scale. We have modified the x window of this figure so that the phase before the first snapshot (where the m_max/m values appear flat) is not visible.
 I'd be interested in also having another panel that shows the evolution of just M_max and <m> (maybe in solid and dashed lines) for the four simulations. That would also underscore that the turnover is driven by an increase in <m> rather than m_max.
 	We have now added a second panel to figure 4 which shows the evolution of these quantities separately. Todo: Units? Why does the max mass decrease for case a?
 
@@ -235,7 +236,9 @@ What is the rescaled integration time?
 
 Figure 5:
 I think the bottom panel should have a log y-axis
+	Can you elaborate on why the bottom panel needs a log y-axis? The way \tilde_b is defined, a linear scale on this plot translates to a non-linear scale for mass already.
 I would make the color of the dots consistent with Fig.2, where the final outcome is orange
+	Done
 There could be numbers on the contours indicating the density of the initial condition.
 The meaning of the dashed line in the bottom panel could be indicated inside the figure itself.
 I'm confused by the statement "interior to the oligarchic growth region (around 60d)". Where does this definition come from? Is this defined by bodies exceeding the critical feeding size? If so the statement should be rephrased to make the causal connection clear.
@@ -334,19 +337,35 @@ Add a description of what green and orange means to the plot.
 
 7. Summary and Discussion
 933: I would think the gravitational feedback still operates, just on a timescale that is much longer than the planetesimal accretion timescale that depletes the planetesimal supply.
+	Agreed. We have changed 'does not operate' to 'does not a play a significant role'.
 942: Refer to the section where this is discussed.
+	Done
 946: alpha is already reviewed in the paragraph above
+	The last sentence of the previous paragraph (which mentions alpha) has been removed.
 952: non-negligible is not very precise . Maybe change to while "alpha close to unity"
+	'Non-negligible' has been changed to 'alpha close to unity'
 954: Refer to figure where this is shown. I think Fig.2? Also "the same" is very strong. Maybe "very similar" instead.
+	A reference to figure 2 has been added here. 'The same' has been has been changed to 'very similar'.
 959: Sentence is currently implying that the boundary location is set by the distance to the star which doesn't really work in my opinion. Maybe just delete "and therefore the location of the boundary between these accretion modes" as this becomes clear with the subsequent sentence anyways.
+	Done
 965: I think this is too strong a statement. See my previous comments. I think the subsequent sentence "Although [...]" is more appropriate.
+	We have changed 'is independent' to 'does not strongly depend'.
 972: Refer to Fig. 10.
+	TODO: Fig 9 and 10 have been changed
 978: Missing a verb, maybe "differs" ? Also the second part of the sentence "along with [...]" seems odd to me. Maybe rephrase it in two sentences?
+	The first sentence of this paragraph has been split into two parts.
 986: Is there a reference for this? It does not seem obvious to me. See my previous comments.
+	See figure 8 of Leinhardt 2015. The majority of constructive collisions are partial accretion events. A reference has been added to this in the text.
 996: what bulk density? Maybe also rephrase to a less strong statement, e.g., "[...] bulk density, our results suggest that the boundary is located around 5 days in orbital period."
+	Rocky material should have a bulk density of 3 g/cc. This is now specified in the text. The statement about the boundary location has been made less strong as per the referee's suggestion.
 998: I recommend introducing a subsection heading here, for clarity.
+	A subsection heading referencing satellitesimal accretion has been added
 999: Maybe add references of what values for alpha typically were used?
+	There aren't many planetesimal accretion papers that mention \alpha, but Lithwick 2014 is one that specifically assumes that \alpha << 1 for their calculations. We have mentioned that here.
 1000: This sentence is somewhat odd to me. Yes, alpha = 1 are the largest bodies stable under tidal gravity, however, this applies not just to circumplanetary disks but also for the circumstellar planetesimals the authors investigated in their work. Because of this, it doesn't seem like this statement is an appropriate segue to circumplanetary disks. I suggest separating this paragraph as a subsection under a heading such as "high-alpha accretion in circumplanetary disks".
 1003: delete "small"
+	Done
 1007: Can the authors clarify the relevance of the inclusion of spiral density wave interactions?
+	The point here is that there are some additional dynamical mechanisms at play in these moon formation simulations. At least near the Roche limit, this is a distinctly non-local process, unlike the accretion modes that we demonstrated in this paper. Some extra clarification has been added to the text here.
 1018: I recommend defining R_U for readers unfamiliar with Ida et al 2020, e.g., by summarizing that Ida et al 2020 considered a circumplanetary disk around Uranus.
+	Since it is only mentioned in one place, we have replaced R_U with 'planetary radii'.

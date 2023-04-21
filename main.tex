@@ -672,12 +672,12 @@ embryos mature.
 \end{center}
 \end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-    \includegraphics[width=\textwidth]{figures/acc_zones.png}
+    \includegraphics[width=0.5\textwidth]{figures/acc_zones.png}
     \caption{For the 20 most massive bodies at the end of the fdHi simulation, the relative shape of the accretion zones for each body are shown. The hash marks indicate the present position of the body. The histograms indicate the initial locations of the planetesimals that were used to assemble a body.\label{fig:acc_zones}}
 \end{center}
-\end{figure*}
+\end{figure}
 
 The variation in smooth accretion fraction with mass for the short period bodies suggests that the planetesimal and embryo populations interact differently than those in the outer disk. Exterior to the 60 day accretion mode boundary, the growing embryos continue to accrete planetesimals as they near their final mass. Inside the boundary, however, later growth events tend to be dominated by embryo-embryo collisions, and the smooth accretion fraction drops as mergers with planetesimals play a less significant role. Gravitational scattering between embryos and planetesimals is a key ingredient for orbital repulsion \citep{kokubo98}, and so a lack of gravitational scattering in the inner disk should prevent the embryos from settling onto neatly-spaced, isolated orbits. As we showed in figure \ref{fig:surfden_b}, the embryos in the inner disk appear to reach well beyond the typical feeding zone size predicted by an oligarchic growth model. Figure \ref{fig:minor_frac} suggests that the extra mass here obtain comes from mergers with the other nearby embryos.
 
@@ -819,28 +819,23 @@ remaining planetesimals and results in a dynamically cold population
 of embryos with a modest amount of residual planetesimals. This
 corresponds to the ``oligarchic growth'' case revealed by \citep{kokubo98}, which is often used as a starting point for late-stage 
 accretion models (e.g. \citet{kokubo02, raymond05, raymond06}). In the second mode, the gravitational feedback does not 
-operate, embryos quickly sweep up all planetesimals, and grow larger and less uniformly spaced than those produced by 
-oligarchic growth. The distinction between these modes is determined
-by the ratio between the physical size of the bodies and their 
-Hill radius, which sets the relative contribution of close gravitational encounters and collisions to the dynamical evolution of the 
-disk.
+\textbf{play a significant role}, embryos quickly sweep up all planetesimals, and grow larger and less uniformly spaced than those produced by 
+oligarchic growth.
 
 We have demonstrated the outcome of both accretion modes through a
-simple parameter study using a narrow annulus of planetesimals. The initial planetesimal distribution can be described in terms of two dimensionless 
+simple parameter study using a narrow annulus of planetesimals \textbf{(section \ref{sec:narrow})}. The initial planetesimal distribution can be described in terms of two dimensionless 
 constants, $\alpha$ and $\beta$, which describe the ratio between the physical radius of the planetesimals and the Hill ($r_{h}$) 
 and gravitational ($r_{g}$) radius, respectively. For a fixed planetesimal composition, $\alpha$ scales with the orbital period and 
-$\beta$ scales with the level of dynamical excitation of the disk. We showed that $\alpha \ll 1$ leads to oligarchic growth, while a 
-non-negligible $\alpha$ produces this newly revealed non-oligarchic growth mode. Within this non-oligarchic mode, we find that 
-the resulting masses and eccentricities of the embryos come out the same, regardless of the initial value of $\beta$.
+$\beta$ scales with the level of dynamical excitation of the disk. We showed that $\alpha \ll 1$ leads to oligarchic growth, while \textbf{an $\alpha$ close to unity} produces this newly revealed non-oligarchic growth mode \textbf{(see figure \ref{fig:alpha_beta})}. Within this non-oligarchic mode, we find that 
+the resulting masses and eccentricities of the embryos come out \textbf{very similar}, regardless of the initial value of $\beta$.
 
 So long as the density of the bodies do not significantly change as
-their mass distribution evolves, this ratio, and therefore the
-location of the boundary between these accretion modes is set entirely by the distance
+their mass distribution evolves, this ratio is set entirely by the distance
 from the star. Because both the physical and Hill radii of the bodies
 grows as $M^{1/3}$, the growth mode boundary remains stationary
  in the disk during the planetesimal accretion process.
  
-We have verified that the growth boundary location is independent of the
+We have verified that the growth boundary location \textbf{does not strongly depend} of the
 solid surface density distribution by testing the outcome of the planetesimal
 accretion process for a variety of solid
 profiles. Although altering the surface density does affect the
@@ -850,28 +845,31 @@ In addition, the sizes of the feeding zones, along with qualitative differences 
 accretion history of embryos on both sides of the boundary provide further evidence to
 suggest that oligarchic growth is not operating in the inner disk.
 
-Finally, we examined the way in which our simplifying assumption of perfect accretion, along with the enhancement of the 
-collision cross sections to speed up the simulations might alter the emergence and location of the non-oligarchic growth region. 
+\textbf{Finally, we have examined how our assumption of perfect accretion, along with the collision cross section enhancement used, might alter our results. 
+We verified that these modifications, meant to make the simulations less computationally expensive, would still allow for the emergence of this 
+non-oligarchic growth mode.}
 We showed that a much more restrictive collision model, in which only low-velocity collisions produce a merger, still allows for 
 this growth mode to occur at the innermost part of the disk, where encounter speeds are most vigorous. In a real planet-forming 
-disk, partial accretion events should allow growth to happen more quickly than what was seen in this test case, so this growth 
+disk, partial accretion events should allow growth to happen more quickly than what was seen in this test case \textbf{(see figure 8 of \citet{leinhardt15})}, so this growth 
 mode should certainly still occur. We also showed that the collision cross section enhancement moves the accretion boundary 
 outward. We verified this by deriving a scaling relation between the boundary location and the bulk density of the planetesimals, 
 and showing that the boundary moves to the predicted location when running a simulation with a slightly smaller inflation factor. 
-For rocky planetesimals with a realistic bulk density, this boundary should lie around 5 days in orbital period.
+For rocky planetesimals with a realistic bulk density \textbf{3 g $cm^{-3}$}, \textbf{our results suggest that} this boundary should lie around 5 days in orbital period.
+
+\subsection{Connections to Satellitesimal Accretion}
 
 To date, there have been no other studies of planetesimal accretion
-with such a large value of $\alpha$. However, a value of $\alpha = 1$
+with such a large value of $\alpha$. \textbf{Typically, it is assumed that $\alpha \ll 1$ (e.g. \citet{lithwick14}), which is certainly true for material at and beyond the Earth's orbit.} However, a value of $\alpha = 1$
 corresponds to the Roche limit of a three-body system, and so one
 might wonder this high-$\alpha$ accretion mode might be relevant for a
-circumplanetary accretion. There is a small collection of previous works
+circumplanetary accretion. There is a collection of previous works
 which use N-body methods to examine in-situ satellitesimal accretion
 \citep{ida97, richardson00, kokubo00b, ida20}, although some of these simulations involve a complex interaction between spiral 
-density waves formed inside of the Roche limit and the material exterior to it. \citet{ida97} was able to form 1-2
+density waves formed inside of the Roche limit and the material exterior to it\textbf{, making the dynamics driving accretion distinctly non-local, in contrast to what we have presented in this work}. \citet{ida97} was able to form 1-2
 large moons just exterior to the Roche limit, depending on the extent of the disk with very little satellitesimal material left over. 
 The widest disk they modeled extended out to $\alpha = 0.5$. Qualitatively, this result is very similar to the short period 
 planetesimal accretion mode observed in our simulations. \citet{ida20} modeled a much wider satellitesimal disk, which extends 
-out to about $\alpha \approx 0.05$. Inside to the $\alpha = 0.1$ accretion boundary (which lies near $15 R_{U}$ in figure 1 of 
+out to about $\alpha \approx 0.05$. Inside to the $\alpha = 0.1$ accretion boundary (which lies near 15 \textbf{planetary radii} in figure 1 of 
 \citet{ida20}), bodies grow beyond the isolation mass, while the opposite is true on the other side of the boundary. In addition, a 
 residual population of satellitesimals is still present beyond the boundary, which suggests that oligarchic growth is indeed 
 operating only on the far side.
