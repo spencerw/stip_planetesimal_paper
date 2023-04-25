@@ -8,32 +8,30 @@ Major Comments
 In summary, to me it seems like the presented simulations are much more indicative of the mode of accretion somewhat smoothly changing from oligarchic to 'high-alpha' as alpha is increased, and that it is therefore challenging defining a clear boundary between the two modes.
 I suggest that the authors either soften their statements on this, or present additional, quantitative arguments supporting their claims about the universality of this sharp boundary.
 
-	Update figure 6 to show the time evolution in units of the local collision timescale. After doing so, the oligarchic curves lie on top of each other, and the inner non-oligarchic ones don't. This implies two qualitatively different accretion modes.
+	To address this concern, we have run four more versions of the fdHi, fdHiSteep and fdHiShallow simulations using different random number seeds. These are first shown in figure 8 and it is now much more clear that the accretion bounary (defined by the orbital period at which \tilde{b} crosses 2\sqrt{3}) is quite fuzzy and lies somewhere between ~40 and ~70 days, like the referee suggests.
 
-	Update figure 8 to show multiple versions of each simulation. Gives a much clearer estimate of the error bars on the P=60d estimate.
+	We have also modified figure 6 to address the referee's concern that differences in the evolution of the planetesimal surface density as a function of orbital period are simply driven by the local dynamical time. We have rescaled the x-axis to be in units of the local accretion timescale (measured at the beginning of the simulation). We have also colored the curves by orbital period, rather than applying a hard cut at 60 days. Upon doing so, it is now apparent that all of the orbital period bins exterior to ~40 days follow a self-similar trajectory in this space. Interior to 40 days, the planetesimal surface density actually depletes slower, relative to the initial local accretion time (why?)
 
+	We have also modified figure 9 to include all 5 iterations of the fdHi, fdHiSteep and fdHiShallow simulations, in addition to removing the hard cut at 60 days and instead coloring the points by final orbital period. In all cases, there is a clear qualitative shift in the behavior of accretion interior to ~40 days.
+
+	I think these changes all support the referee's feeling that the accretion mode boundary is not as sharply defined as we had originally suggested. Instead, the accretion seems to behave in a fully non-oligarchic way interior to ~40 days, and the transition between non-oligarcic and oligarchic growth seems to happen between ~40-70 days. We have softened some of our statements about the accretion mode boundary in the revised version of the paper.
 
 2) Related to my first point, I think a very interesting, yet somewhat unanswered question is what alpha exactly corresponds to the transition between accretion modes. The authors allude to alpha = 0.1 being of importance, but this choice currently feels somewhat arbitrary. For example, in Figure 11, the authors show the alpha profile for their simulations and show that alpha falling below 0.1 approximately corresponds to tilde b of the largest bodies falling below the critical value of 2sqrt(3). Is there a specific reason for this? Or is this what motivates the choice of alpha = 0.1 in the first place? If so, I think this is an interesting finding, because it allows for a direct prediction of the dominant mode of accretion given the size and location of a planetesimal. Also, how consistent is this alpha = 0.1 value with the simulations with different surface density power laws listed in Table 2?
 I recommend that this, in my opinion, quite interesting point is discussed in more detail in the manuscript.
+
+	As we discussed above, it is now more clear that the accretion mode transition happens between 40-70 days. This corresponds to alpha = 0.2-0.1 and appears to be true for all of the initial solid surface density profiles we have chosen A detailed study of three-body encounters with different values of alpha would help elucidate why alpha ~ 1e-1 is so special, but is definitely beyond the scope of this paper. At the very least, the derived scaling relation between alpha and bulk density is useful for predicting how this 40-70 boundary moves after the artifical enhancement to the collision cross sections are removed.
+
 The authors utilize a simplified collision model in which each collision results in a merger. They also perform a test with a merge-bounce model in which some collisions result in an inelastic bounce rather than a merger. They argue that physical collisions are somewhere in-between, and, given that there is little qualitative difference between only-mergers and bounce-merger models, the model outcome should well represent the outcome of physical collisions.
-
-	alpha = 0.1 entirely comes from looking at figure 11. It is simply the location in the disk where the feeding zones settle down to 2*sqrt(3). alpha < 0.1 roughly corresponds to "alpha << 1". Show the b_tilde plots alongsize the alpha curve for the other simulations.
-
 
 3) I am unconvinced that the test of the collision model indeed is an extreme case. In particular, I'm imagining a very destructive, inelastic collision such that all fragments are smaller than the original bodies. Say the fragments follow a power law distribution assuming a collisional cascade (see Dohnanyi 1969, Zvyagina et al 1974). It's not obvious to me that resupplying smaller bodies to the planetesimal population this way would not impact the merger history. In the extreme case, the entire embryo population would be grinded down by destructive collisions. The authors' bounce-merge model, is essentially equivalent to less efficient, but ultimately constructive planetesimal accretion (thus leading to a prolonged runaway growth phase as shown in Fig. 13). If smaller collisional fragments are re-supplied this could have for example consequences for orbital repulsion and gravitational scattering, which as the authors argue in Sect. 5 requires the presence of smaller planetesimals.
 Could the authors comment on this? Maybe the authors can argue why collisions are not expected to be destructive, and clarify why resupplying smaller bodies does not affect the subsequent evolution of the system.
 
-	Accretion mode is size independent (only depends on density and orbital period), so the growth for smaller bodies should behave exactly the same. No chance of enhanced orbital repulsion or scattering with smaller bodies. The other concern to adress would be whether material gets ground down and removed faster than the embryos can grow. Need to compare the growth timescale and calculate some sort of mass removal timescale (look into this).
-
-	Mass removal mechanisms: grinding to meter sizes, radial drift
-							 grinding to cm size, pr drag
-							 grinding to micron size, dust blowout
-
+	Assuming the embryos are able to eventually grow to full size, the size of the fragments being fed shouldn't matter. This is because the alpha value of a body is completely independent of its size (r_pl and r_hill both scale with M^1/3). Therefore, a 1m body will fill the same fraction of its Hill sphere as a 100km body, so long as they are made of the same material. I would expect that this non-oligarchic accretion mode would behave very similarly had we used a collision model that allowed for destructive interactions. So long as radial drift does not start removing a significant amount of these smaller bodies, destructive collisions should only act to lengthen the growth timescale. TODO: Discusss this in the paper? Do we need to worry about inelastic damping here?
 
 4) I think the introduction of several physical concepts warrants additional clarification for accessibility and clarity of the manuscript, and sometimes also lack concrete definitions. In particular, this includes isolation mass, the concepts of tidal stability and Hill radius, the eccentricity dispersion e_h, and the exact definition of tilde b. See my specific comments below.
 
-Where should I put these?
-
+	Hill radius, along with hill eccentricity and inclination, are now formally defined in section 2.1
+	TODO: Formally introduce isolation mass and b_tilde in section 2.1.
 
 5) I have some suggestions for improving the presentation of the results in Figures, to make the science result more clear and intuitively obtainable. In my specific comments below, I included suggestions for the figures.
 
@@ -53,14 +51,9 @@ Abstract
 26: How large are these solids? I assume this is referencing micron sized dust-grains?
 	Correct, some text was added to clarify this.
 68: Add reference
-	Added a handful of references arguing that the asteroids, KBOs and Oort cloud bodies are leftover planetesimals.
-	See Duncan, Tremaine Quinn papers (particularly 1988 one + references?)
+	Added a handful of references arguing that the asteroids, KBOs and Oort cloud bodies are leftover planetesimals, based on dynamical arguments.
 72: Maybe elaborate on this. How long is the period of quiescence? How does this instability work?
-	We intentionally left this part vague as someone really needs to look into this more! There are three relevant timescales here:
-	1. The timescale for the instability itself (depends on the orbital properties of the embryos, see Chambers 98)
-	2. Dynamical friction between protoplanets and planetesimals. This will shut off once the planetesimals are either scattered away, or slowly accreted onto the embryos. Not sure what the timescale for this would be. Note that this shouldn't operate at short period according to this work!
-	3. Tidal eccentricity damping of the embryos due to the gas disk. Should shut off once the gas disk disperses on ~Myr timescales (Beckwith + Sargent 1996).
-	TODO: decide what to add to the text here.
+	Initially, tidal interactions between the gas disk and the protoplanets keep eccentricities and inclinations low. As the gas disk dissipates, this damping mechanism goes away and secular resonances drive large-scale oscillations in the orbital parameters of the protoplanets. The gas disk dissipates on ~Myr timescales, and the gravitational perturbations operate on 10^5 yr timescales, so the total period of quiescence lasts a few Myr. This is now described in the text and a few references have been added.
 88: Add reference maybe.
 	I don't know of any references which have tested the applicability of statistical methods during the oligarchic growth phase, but maybe some clarification would help. The runaway growth phase produces a small number of large bodies, which eventually interact and terminate runaway growth (Ida + Makino 1993, Kokubo + Ida 1995). Given how few oligarchs are produced, one would not expect particle-in-a-box methods to be a good approach here. We've clarified this in the text as well.
 99: Capitalize "Systems of Tightly-packed Inner Planets"
@@ -95,12 +88,12 @@ Abstract
 226: Maybe clarify that growth timescale equals collision time scale.
 	We have replaced 'growth' with 'collision' here, and done the same elsewhere in the paper for consistency
 238: The eccentricity dispersion e_h is never defined anywhere. It is unclear to me what scaling e_h with the Hill-factor means physically.
-	e_h can be thought of as the radial excursion of the body's orbit in units of its Hill radius. For e_h > 1, the random velocity of a body dominates over the velocity difference due to the shearing of the disk (over a separation of 1 r_h) and encounters between bodies can be treated with a two-body formalism. We have decided to remove any mention of e_h here, and instead save this definition for section 4 (TODO: define in section 4), where it is next mentioned.
+	e_h and i_h are now defined immediately after equation 1.
 Figure .1:
 Since this is an analytical plot, I think one could color the entire parameter space according to the ratio t_relax/t_coll. Currently, it may suggest that the plotted values for e_h are chosen for a particular reason.
-	The y axis now represents e_h, and the space on the plot is colored by t_relax/t_coll.
+	The y axis now represents e_h, and the space on the plot is colored by t_relax/t_coll. Rather than choosing arbitrary values of e_h, we have overplotted curves which represent the equilibirum eccentricity (setting the viscous stirring timescale equal to the gas drag timescale) of solids as a function of orbital period. Here, the free parameter plotted is now the dust to gas ratio, which shortens the viscous stirring time as it is increased.
 Also, I think it would be nice to have a reference for what values of e_h are standard for certain disk conditions, i.e. how outrageous would it be to have a e_h = 16? Are all disks like that? Or do we expect e_h = 1 as the standard?
-	e_h of order ~10 is pretty standard. Following Kokubo 2002, we choose e_h so that the viscous stirring and gas drag timescales are equal. The equilibirum value of e_h then depends on the local solid and gas density, and will vary a bit with orbital period. In all of the simulations presented in this paper, the equilibrium value for e_h ranges between ~5 and ~50. We have overplotted some curves in figure 1 to show the equilibrium value of e_h as a function of orbital period for various values of the dust-gas ratio (assuming a MMSN solid surface density profile). TODO: Center white on colormap at 1
+	See previous comment
 Also, I recommend adjusting the x-limits of the plot to correspond to the limits of the orbital period.
 	Done
 
@@ -108,11 +101,11 @@ Also, I recommend adjusting the x-limits of the plot to correspond to the limits
 253: "will remain proportional" - Proportional to what?
 	Changed the wording to 'ratio between the relaxation and collision timescale remains constant' to clarify this.
 254: but this doesn't have to be the case at all orbital periods, right? Given Fig.1 it seems clear that outside of 1AU, and especially for the Kuiper Belt this condition seems to be fulfilled.
-	Exactly! That's the point we're getting at here. (TODO: do I need to clarify something in the paper here?)
+	Exactly! Unless you are modeling planetesimal accretion at orbital periods shorter than that of Mercury, t_coll >> t_relax is going to be true. Please let us know if something needs to be clarified here.
 263: Again, I think the concept of Hill radius and tidal stability needs to be formally introduced earlier.
-	TODO: Introduce this formally earlier
+	These concepts are now formally discussed in section 2.1
 273: Wouldn't these bodies then be tidally disrupted, and therefore not exist? Alpha > 1 is certainly not true for any solar system bodies that I am aware of. I understand that the scaling of alpha predicts alpha >1 at some radius (which I would explicitly mention), but this just implies that inside this radius, bodies must have greater densities to not be disrupted.
-	The distance at which alpha = 1 (a_alpha) and the Roche (a_roche) limit are similar, but not identical. For a rigid spherical body, a_roche ~ 0.88 a_alpha. Applying the hydrostatic correction, a_roche ~ 0.6 a_alpha. This is important, because it implies that the new growth mode presented in this paper should be relevant for ring systems! We will add a note of this in the text. I think some of the confusion comes from the fact that the Roche limit and the Hill sphere size are not derived using the same formalism.
+	Yes, the rigid body Roche limit corresponds to alpha = 1, although applying the hydrostatic correction moves a_roche inwards by about 60%. This is interesting because this accretion mode could potentially be relevant for ring systems! (TODO: Is this worth discussing in the text?)
 289: gravitational radius: is this physically motivated? Maybe reference
 	There is a physical explanation of r_g immediately below equation 5 in the text. Also added a reference to Ida 1990.
 296: beta > 1 means collision cross section > geometric and small gravitational focusing. I recommend explicitly stating what the physical intuition for beta < 1 is.
@@ -138,11 +131,11 @@ I think this section could be improved by having a schematic of the three sizes,
 
 Figure.2: Some suggestions to improve this figure are:
 A reference planetesimal size that shows what mass a circle has
-	Might skip this, want to keep everything in dimensionless units here TODO: decide
+	Added
 Horizontal lines in each panel showing where e_h is
 	Might skip this, depending on whether I remove the e_h lines from figure 1. TODO
 Maybe consider having beta value as a column label and alpha value as a row label. I would also explicitly state the values for alpha.
-
+	Added
 I would also probably label the four panels / cases a,b,c,d and then refer as such in the text body
 	Done
 
@@ -154,12 +147,16 @@ I would also probably label the four panels / cases a,b,c,d and then refer as su
 400: Small alpha large beta does not look dynamically cooler than large alpha large beta to me. In fact, the opposite.
 	You are correct! This is a mistake in the text (replaced 'latter' with 'former').
 402: I don't really understand why small alpha small beta leads to so many dynamically hot bodies, both planetesimals and protoplanets. Maybe the authors can elaborate.
-	When alpha and beta are both small, the gravitational stirring timescale is very short and the disk quickly heats up. Because the stirring timescale goes as v^{1/4} (TODO: reference), the scattering slows down as the disk gets hotter. So runaway growth doesn't really kick in until after the eccentricities have grown enough that stirring slows down. I think this is why the initial choice of beta doesn't really seem to affect the final dynamical state of the disk in figure 2. This is also why the initial choice of e_h isn't very consistent across planetesimal accretion studies (cite some examples). TODO: Let's add another paragraph discussing this here.
+	TODO: Is this not talking about small alpha, large beta as well? They look about the same to me
+	The small alpha disks ends up the hottest because of two effects:
+		1. Less collisions overall, so less inelastic damping to remove energy
+		2. Physically smaller bodies, so close encounters are more likely to result in gravitational
+		scattering, which converts the overall shearing motion of the disk into random motion
 
 Figure 3:
 Again, I really think labeling the cases would be helpful.
 I would express the mass in units of e.g. Ceres
-	Todo: Push back on this? Use dimensionless units for this section.
+	Todo: Lets use Earth units. Ceres is too asteroid-belt specific.
 406: I'm not sure about "significantly" larger. The biggest body in large alpha, small beta is about a factor 3 more massive than in small alpha, small beta. This is only a factor of 1.4 in size.
 	The text now says 'a factor of a few larger'
 415: the y-label in Fig.6 does not match the description in the text
@@ -171,10 +168,11 @@ I'd be interested in also having another panel that shows the evolution of just 
 	We have now added a second panel to figure 4 which shows the evolution of these quantities separately. Todo: Units? Why does the max mass decrease for case a?
 
 418: I would specifically state that for the large alpha cases runaway growth only occurs at the start, to avoid initial confusion that the slope turns around when the planetesimal supply is depleted.
+
 435: Is this true? I was under the impression that the residual planetesimal population remains? I think this does not seem consistent with the rest of the work...?
-	TODO: Change the wording here. Maybe this isnt true. Would the growth mode simply 'flatten' out here?
+	'Depleted' is maybe not the right phrase to use here. Through a combination of depletion and scattering onto high eccentricity orbits (in which gravitational focusing is almost completely supressed), the planetesimal accretion timescale should eventually become longer than the age of the system, so the rest of the population is effectively frozen out. This is now explained in the text.
 446: What exactly does alpha being non-negligible mean? Given that alpha is always less than unity, what alpha value marks the transition of the oligarchic growth regime vs, consumption regime? See major comment.
-	This is a good point, and I'm not sure if we have a definitive answer. Inspecting figure 11, theh transition seems to occur near alpha ~ 0.1. I think the best thing to do here is to state the converse: for alpha << 1, most encounters result in scattering and you get oligarchic growth. The key finding from this section is that oligarchic growth does not occur when alpha is not << 1. The text has been updated to reflect this.
+	This is a good point, and I'm not sure if we have a definitive answer. I think the best thing to do here is to state the converse: for alpha << 1, most encounters result in scattering and you get oligarchic growth. The key finding from this section is that oligarchic growth does not occur when alpha is not << 1. The text has been updated to reflect this.
 
 
 5. Full disk Simulation
@@ -324,7 +322,7 @@ I think the finding that the crossing of alpha = 0.1 in the bottom panel well ma
 821: How is this expected to change with f?
 	See previous comment.
 843: Maybe add reference to such short period planets.
-	TODO: What to reference here? Magnetic truncation radius?
+	A reference has been added to Mulders 2018.
 868: I'm not sure I fully follow this statement of the collision model. See my major comment above.
 	We have added a note here discussing the outcome of a potentially destructive collision model. As we mention in response to major comment #3, the local value of alpha is independent of particle size. So long as the solid mass is not ground down and removed from the system (radial drift, dust blowout, PR drag), the non-oligarchic growth mode should persist.
 Figure 12:

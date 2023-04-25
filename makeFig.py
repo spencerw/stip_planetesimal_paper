@@ -24,6 +24,7 @@ from profileTools import e_eq, rho_gas, v_gas, soundspeed, sma
 
 mpl.rcParams.update({'font.size': 18, 'font.family': 'STIXGeneral', 'mathtext.fontset': 'stix',
                             'image.cmap': 'viridis'})
+mpl.rcParams['mathtext.default'] = 'regular'
 
 simT = u.year/(2*np.pi)
 simV = u.AU/simT
@@ -228,15 +229,19 @@ def plot_timescales():
 	axes.set_xscale('log')
 	axes.set_yscale('log')
 
+	#cb = plt.colorbar(cm.ScalarMappable(norm=norm, cmap=cmap), ax=axes)
 	cb = plt.colorbar(cax, ax=axes)
 	cb.set_label(r'$t_{relax}/t_{collision}$')
 	axes.set_xlabel('Orbital Period [d]')
 	axes.set_ylabel(r'$e_{h}$')
 
 	dust_to_gas = [1e-4, 1e-3, 1e-2, 1e-1, 1]
-	for dg in dust_to_gas:
+	labels = [r'$\epsilon = 10^{-4}$', '$\epsilon = 10^{-3}$', '$\epsilon = 10^{-2}$',\
+	'$\epsilon = 10^{-1}$', '$\epsilon = 1$']
+	for idx, dg in enumerate(dust_to_gas):
 		yval = calc_eqh(dg).value
 		axes.plot(pvals, yval, color='white', lw=4, ls='--')
+		axes.text(1.5, yval[0]*0.9, labels[idx], rotation=15, color='white', ha='center', va='center')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -251,8 +256,8 @@ def plot_alpha_beta():
 		pl0 = ko.orb_params(snap0, isHelio=True, mCentral=mcen)
 		snap = pb.load('data/'+prefix+'.end')
 		pl = ko.orb_params(snap, isHelio=True, mCentral=mcen)
-		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/np.max(pl['mass'])*500)
-		ax.scatter(pl['a'], pl['e'], s=pl['mass']/np.max(pl['mass'])*500, edgecolor='black')
+		ax.scatter(pl0['a'], pl0['e'], s=pl0['mass']/refmass*1e4)
+		ax.scatter(pl['a'], pl['e'], s=pl['mass']/refmass*1e4, edgecolor='black')
 		ax.text(0.7, 0.95, title, transform=ax.transAxes, ha='center', va='center')
 
 	fig, ax = plt.subplots(figsize=(16,12), nrows=2, ncols=2, sharex=True, sharey=True)
@@ -268,6 +273,17 @@ def plot_alpha_beta():
 	ax[1][1].set_yscale('log')
 	ax[1][1].set_xlim(0.9, 1.1)
 	ax[1][1].set_ylim(1e-5, 0.3)
+
+	l1 = plt.scatter([],[], edgecolor='black', color=orange, s=(1e-2*u.M_earth).to(u.M_sun).value/refmass*1e3)
+	l2 = plt.scatter([],[], edgecolor='black', color=orange, s=(1e-1*u.M_earth).to(u.M_sun).value/refmass*1e3)
+	l3 = plt.scatter([],[], edgecolor='black', color=orange, s=(1*u.M_earth).to(u.M_sun).value/refmass*1e3)
+	labels = ['0.01 M_earth', '0.1 M_earth', '1 M_earth']
+	ax[0][0].legend(handles=[l1, l2, l3], labels=['0.01 M_earth', '0.1 M_earth', '1 M_earth'], loc=2)
+
+	ax[0][0].set_ylabel(r'Large $\alpha$')
+	ax[1][0].set_ylabel(r'Small $\alpha$')
+	ax[1][0].set_xlabel(r'Small $\beta$')
+	ax[1][1].set_xlabel(r'Large $\beta$')
 
 	fig.supxlabel('Semimajor Axis [AU]')
 	fig.supylabel('Eccentricity')
@@ -1189,7 +1205,9 @@ def plot_f6f4_b():
 	alpha10g = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
 	#axes.semilogy(prof_perIC, alpha, ls=':')
 
-	axes.fill_between(prof_perIC, alpha1g, alpha10g, alpha=0.5)
+	print(prof_perIC, alpha1g, alpha10g)
+
+	axes.fill_between(prof_perIC.value, alpha1g, alpha10g, alpha=0.5)
 
 	axes.axhline(0.1, ls='--', color='gray')
 	axes.set_xlabel('Orbital Period [d]')
@@ -1216,7 +1234,7 @@ def plot_frag_ecc():
 	plF = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 	perF = 2*np.pi*np.sqrt((plF['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
-	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
+	fig, ax = plt.subplots(figsize=(8,12), nrows=3)
 	axes = ax[0]
 	axes.scatter(per0, pl0['e'], s=pl0['mass']/np.min(pl0['mass'])*0.1)
 	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*1, edgecolor='black', linewidth=0.4)
@@ -1230,18 +1248,38 @@ def plot_frag_ecc():
 	axes.plot([], [])
 
 	q1 = (plNf['mass']*u.M_sun).to(u.g).value
-	hist, bins = np.histogram(q1, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
+	bins2use = np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1)))
+	hist, bins = np.histogram(q1, bins=bins2use)
 	bins = 0.5*(bins[1:] + bins[:-1])
-	axes.plot(bins, np.cumsum(hist), linewidth=lw)
+	y1 = np.cumsum(hist)
+	axes.plot(bins, y1, linewidth=lw)
 
 	q2 = (plF['mass']*u.M_sun).to(u.g).value
-	hist, bins = np.histogram(q2, bins=np.logspace(np.min(np.log10(q2)), np.max(np.log10(q2))))
+	hist, bins = np.histogram(q2, bins=bins2use)
 	bins = 0.5*(bins[1:] + bins[:-1])
-	axes.plot(bins, np.cumsum(hist), linewidth=lw)
+	y2 = np.cumsum(hist)
+	axes.plot(bins, y2, linewidth=lw)
 
 	axes.set_xlabel('Mass [g]')
 	axes.set_ylabel('N (<M)')
 	axes.set_xscale('log')
+
+	axes = ax[2]
+	axes.plot([],[])
+	axes.fill_between([], [], [], step='mid', alpha=0.5)
+	q1 = (plNf['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q1, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	axes.fill_between(bins, 0, hist, step='mid', alpha=0.5)
+	axes.set_yticks([])
+
+	q1 = (plF['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q1, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	axes.fill_between(bins, 0, hist, step='mid', alpha=0.5)
+	axes.set_yticks([])
+	axes.set_xscale('log')
+	#axes.set_yscale('log')
 
 	fig.tight_layout()
 
@@ -1351,7 +1389,7 @@ def plot_rung_ecc():
 	plF = ko.orb_params(snap, isHelio=True, mCentral=mCentral)
 	perF = 2*np.pi*np.sqrt((plF['a']*u.AU).to(u.cm)**3/(G.cgs*mCentralg)).to(u.d)
 
-	fig, ax = plt.subplots(figsize=(8,8), nrows=2)
+	fig, ax = plt.subplots(figsize=(8,12), nrows=3)
 	axes = ax[0]
 	axes.scatter(per0, pl0['e'], s=pl0['mass']/np.min(pl0['mass'])*0.1)
 	axes.scatter(perNf, plNf['e'], s=plNf['mass']/np.min(pl0['mass'])*0.1, edgecolor='black', linewidth=0.4)
@@ -1362,6 +1400,26 @@ def plot_rung_ecc():
 	axes.set_ylabel('Eccentricity')
 
 	axes = ax[1]
+	axes.plot([], [])
+	axes.fill_between([], [], [], step='mid', alpha=0.5)
+
+	q1 = (plNf['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q1, bins=np.logspace(np.min(np.log10(q1)), np.max(np.log10(q1))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	axes.plot(bins, np.cumsum(hist), linewidth=lw)
+	axes.set_yticks([])
+
+	q2 = (plF['mass']*u.M_sun).to(u.g).value
+	hist, bins = np.histogram(q2, bins=np.logspace(np.min(np.log10(q2)), np.max(np.log10(q2))))
+	bins = 0.5*(bins[1:] + bins[:-1])
+	axes.plot(bins, np.cumsum(hist), linewidth=lw)
+	axes.set_yticks([])
+
+	axes.set_xlabel('Mass [g]')
+	axes.set_ylabel('N (<M)')
+	axes.set_xscale('log')
+
+	axes = ax[2]
 	axes.plot([], [])
 	axes.fill_between([], [], [], step='mid', alpha=0.5)
 
@@ -1384,7 +1442,7 @@ def plot_rung_ecc():
 	axes.set_xscale('log')
 
 	axes.set_xlabel('Mass [g]')
-	axes.set_ylabel('N (<M)')
+	axes.set_ylabel('dn/dm')
 	axes.set_xscale('log')
 
 	fig.tight_layout()
@@ -1393,7 +1451,7 @@ def plot_rung_ecc():
 
 #plot_timescales()
 #plot_alpha_beta()
-#plot_alpha_beta_evo()
+plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
 #plot_fulldisk_e_m_b()
 #plot_alpha_pl_frac()
@@ -1402,7 +1460,7 @@ def plot_rung_ecc():
 #plot_surfden_iso()
 #plot_surfden_b()
 #plot_smooth_acc()
-plot_acc_zones()
+#plot_acc_zones()
 #plot_f6f4()
 #plot_f6f4_b()
 #plot_frag_ecc()
