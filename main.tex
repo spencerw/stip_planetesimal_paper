@@ -136,16 +136,16 @@ taken to the rms velocity, which can be related to the eccentricity and inclinat
 \end{equation}
 
 \textbf{The dynamical interactions between growing planetesimals can be somewhat simplified by scaling the orbital elements of the bodies by
-a Hill factor}
+the Hill radius}
 
 \begin{equation}\label{eq:hillfac}
-	h = \left(\frac{m_{pl}}{3 M_{*}}\right)^{1/3}, 
+	r_{h} = \left(\frac{m_{pl}}{3 M_{*}}\right)^{1/3}, 
 \end{equation}
 
-\textbf{\noindent where $M_{*}$ is the mass of the central star. With this definition, $r_{h} = h a$ is the Hill radius of a body, which is the distance where the gravity of the growing planetesimal dominates over the gravity of the star. Using equation \ref{eq:hillfac}, the eccentricity, inclination and separation between orbiting bodies can be defined as}
+\textbf{\noindent where $M_{*}$ is the mass of the central star. The Hill radius of a body gives distance where the gravity of the growing planetesimal dominates over the gravity of the star. Using equation \ref{eq:hillfac}, the eccentricity, inclination and separation between orbiting bodies can be defined as}
 
 \begin{equation}\label{eq:hillorb}
-	e_{h} = \frac{a e}{h}, \: i_{h} = \frac{a i}{h}, \: b = \frac{a_{2} - a_{1}}{h}.
+	e_{h} = \frac{a e}{r_{h}}, \: i_{h} = \frac{a i}{r_{h}}, \: b = \frac{a_{2} - a_{1}}{r_{h}}.
 \end{equation}
 
 \textbf{Using this formalism, $e_{h}$ and $i_{h}$ describe the radial and vertical excursions of an orbiting body in units of its Hill radius. For $e_{h} > 1$, the random velocity dispersion dominates over the shearing motion over a separation of $1 r_{h}$ and encounters can be treated with a two-body formalism.}
@@ -158,7 +158,13 @@ Assuming that every collision results in a perfect merger, the growth rate of a 
 In the case where the collision cross section depends only
 on the physical size of the planetesimals, the growth scales sub-linearly
 with mass and the mass distribution is expected to evolve in an
-``orderly'' fashion, in which mass ratios between bodies tend toward unity. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, $\Gamma = \pi r_{pl}^2 \left( 1 + v_{esc}^2 / v^2 \right)$ \citep{safronov69}, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
+``orderly'' fashion, in which mass ratios between bodies tend toward unity. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, 
+
+\begin{equation}\label{eq:gravfocus}
+	\Gamma = \pi r_{pl}^2 \left( 1 + v_{esc}^2 / v^2 \right)
+\end{equation}
+
+\citep{safronov69}, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
 
 In the limit that $v_{esc} \gg v$, it can be shown that $dM/dt \propto
 M^{4/3}$, which implies a runaway scenario where growth
@@ -206,9 +212,19 @@ as a function of orbital period. Here, the encounter velocity is
 described by equation \ref{eq:ecc_vel}. For
 simplicity, we assume that $\left< e^2 \right>^{1/2} = 2\left< i^2
 \right>^{1/2}$ \citep{ida93a} and that the eccentricity dispersion is
-constant with orbital period. The horizontal
-dashed line indicates where $t_{relax} = t_{coll}$. The timescale
-criterion for oligarchic growth is only satisfied in regions where the
+constant with orbital period. \textbf{The coloring indicates the ratio between
+$t_{relax}$ and $t_{coll}$. The dashed lines denote the eccentricity at which the
+random encounter velocity (calculated according to equation \ref{eq:ecc_vel}) is
+equal to the mutual escape velocity of the bodies. This is shown for planetesimals
+with an internal density of $3 g cm^{-3}$ ranging from 10 to 200km in size.}
+
+\textbf{A physically realistic value of $e_{h}$ for a population of planetesimals is going to depend on the structure
+of the gaseous disk (which we will address in section \ref{sec:fulldisk}). However, the eccentricity
+dispersion will typically increase over time until $\left< v^{2} \right>^{1/2} = v_{esc}$ and this is
+often used to construct the initial conditions (e.g. \citet{barnes09}). Therefore, the curves in this figure
+should be interpreted as upper limits.}
+
+The timescale criterion for oligarchic growth is only satisfied in regions where the
 disk is sufficiently dynamically cold and the orbital period is
 sufficiently long. In sections \ref{sec:narrow} and \ref{sec:fulldisk}
 we will explore the behavior and outcome of planetesimal accretion in regions where this criterion is \textit{not} satisfied. 
@@ -218,11 +234,13 @@ we will explore the behavior and outcome of planetesimal accretion in regions wh
     \includegraphics[width=0.5\textwidth]{figures/timescales.png}
     \caption{The ratio between the two-body relaxation and collision
       timescale for a population of equal-mass planetesimals with an
-      internal density of 3 g cm$^{-3}$ and an eccentricity dispersion
-      characterized by $e_h$. \textbf{The dashed curves show the equilibirum eccentricity ($t_{vs} = t_{gas}$) for various values of the gas to dust ratio $\epsilon$.}
-      Only in regions where $t_{relax} \gg t_{coll}$ can 
-      the velocity distribution respond to changes in the mass of the bodies such
-      that oligarchic growth can operate. This condition is no longer satisfied for a dynamically hot disk at sufficiently short orbital periods.\label{fig:timescales}}
+      internal density of 3 g cm$^{-3}$. \textbf{The dashed curves show 
+      the value of $e_{h}$ for which the random velocity dispersion is equal
+      to the escape velocity of the planetesimals for a range of sizes.} Only
+      in regions where $t_{relax} \gg t_{coll}$ can the velocity distribution 
+      respond to changes in the mass of the bodies such that oligarchic 
+      growth can operate. This condition is no longer satisfied for a 
+      dynamically hot disk at sufficiently short orbital periods.\label{fig:timescales}}
 \end{center}
 \end{figure}
 
@@ -548,18 +566,20 @@ boundaries, while also minimizing the number of `skipped' collisions. \textbf{In
 
 \subsection{Results}
 
-% tablesgenerator.com
 \begin{table*}
+\begin{center}
 \caption{Summary of Full Disk Simulations}
 \begin{tabular}{lccccccc} \hline \hline
-Simulation Name & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Initial Planetesimal \\ Mass ($M_{\odot}$)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Initial Planetesimal \\ Count\end{tabular}} & A   & d   & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Maximum Protoplanet\\ Mass ($M_{\odot}$)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Integration Time\\ (yr)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Rescaled Integration\\ Time (yr)\end{tabular}} \\
-\hline
-fdHi            & $8.37 \times 10^{-6}$                                                                                & 903,687                                                                                   & 100 & 1.5 & 1.0                                                                                              & 456                                                                                 & 16,377                                                                                       \\
-fdHiSteep       & $8.37 \times 10^{-6}$                                                                                & 903,687                                                                                   & 100 & 2.5 & 1.19                                                                                             & 456                                                                                 & 16,377                                                                                       \\
-fdHiShallow     & $8.37 \times 10^{-6}$                                                                                & 903,687                                                                                   & 100 & 0.5 & 1.08                                                                                             & 456                                                                                 & 16,377                                                                                       \\
-fdLo            & $8.37 \times 10^{-6}$                                                                                & 45,185                                                                                    & 1   & 1.5 & $1.77 \times 10^{-3}$                                                                              & 3,713                                                                               & 133,651                                  \\ \hline                                                   
-\end{tabular}
+Simulation Name & $m_{pl} [M_{\earth}]$ &$N_{pl}$ & A & d & $M_{PP}  [M_{\earth}]$ & $T_{int} [yr]$ & $T_{int, 1} [yr]$ \\ \hline
+fdHi              & $8.37 \times 10^{-6}$ & 903,687 & 100 & 1.5 & 1.00 & 456 & 16,377  \\
+fdHiSteep    & $8.37 \times 10^{-6}$ & 903,687 & 100 & 2.5 & 1.19 & 456 & 16,377  \\
+fdHiShallow & $8.37 \times 10^{-6}$ & 903,687 & 100 & 0.5 & 1.08 & 456 & 16,377 \\
+fdLo             & $8.37 \times 10^{-6}$ & 45,185  & 1      & 1.5 & $1.77 \times 10^{-3}$ & 3,713 & 133,651 \\ \hline
+\end{tabular}\\
+A summary of the four `full disk' simulations presented in section \ref{sec:fulldisk}. $m_{pl}$ and $N_{pl}$ are the initial masses and number of planetesimals. $A$ and $d$ is the initial power law normalization and slope of the solids in the disk. $M_{PP}$ is the maximum protoplanet mass at the end of the simulation and $T_{int}$ is the amount of time each simulation was integrated. $T_{int, 1}$ is the integration time scaled by a factor of $f^{2}$, which accounts for the fact that the accretion timescale has been shortened by the inflated collision cross sections.
 \label{tab:sim_properties}
+\end{center}
+Text goes here
 \end{table*}
 
 The timescales for embryo formation depend on
@@ -617,9 +637,11 @@ $\sigma/\Sigma$ is plotted as a function of time in 10 orbital period
 bins, each with a width of 10 days. \textbf{To determine whether the evolution of the planetesimal surface density behaves self-similarly across the disk,
 we normalize the time values in each bin by the local accretion timescale at the beginning of the simulation, which is given by}
 
-\begin{equation}\ref{eq:acctime}
-	t_{acc} = \frac{1}{n \sigma_0 v} = (calculate the rest of this on paper to simplify).
+\begin{equation}\label{eq:acctime}
+	t_{acc} = \left( n \Gamma v \right)^{-1} = \left( \frac{\Sigma_{0} \Omega}{2 m_{pl}} \Gamma \right)^{-1},
 \end{equation}
+
+\noindent \textbf{where we have assumed the local number density of particles n is set by the surface density and the local scale height of the disk. The effective collision cross section is set by gravitational focusing and is given by equation \ref{eq:gravfocus}.}
 
 \textbf{The color of the curves indicate the orbital period bin which is being measured. From about 40 to 100 days in orbital period, the planetesimal surface density 
 follows a similar trajectory as accretion proceeds. Interior to about 40 days, however, the rate at which $\sigma$ decays actually beings to decrease for the shortest 
