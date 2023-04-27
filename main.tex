@@ -145,7 +145,7 @@ the Hill radius}
 \textbf{\noindent where $M_{*}$ is the mass of the central star. The Hill radius of a body gives distance where the gravity of the growing planetesimal dominates over the gravity of the star. Using equation \ref{eq:hillfac}, the eccentricity, inclination and separation between orbiting bodies can be defined as}
 
 \begin{equation}\label{eq:hillorb}
-	e_{h} = \frac{a e}{r_{h}}, \: i_{h} = \frac{a i}{r_{h}}, \: b = \frac{a_{2} - a_{1}}{r_{h}}.
+	e_{h} = \frac{a e}{r_{h}}, \: i_{h} = \frac{a i}{r_{h}}, \: \tilde{b} = \frac{a_{2} - a_{1}}{r_{h}}.
 \end{equation}
 
 \textbf{Using this formalism, $e_{h}$ and $i_{h}$ describe the radial and vertical excursions of an orbiting body in units of its Hill radius. For $e_{h} > 1$, the random velocity dispersion dominates over the shearing motion over a separation of $1 r_{h}$ and encounters can be treated with a two-body formalism.}
@@ -202,6 +202,23 @@ by a factor of $\sim 50-100$
 \citep{ida93} a phase of less vigorous ``oligarchic'' 
 growth commences, in which the largest bodies continue to 
 accrete planetesimals at similar rates, independent of mass.
+
+\textbf{Regardless of the mechanism that eventually limits the growth of the planetary embryos, a maximum estimate for the masses produced during this 
+stage of accretion can be obtained using the initial solid surface density profile. A growing protoplanet will eventually accrete material within a distance
+$b = \tilde{b} r_{h}$ of its orbit. The total mass of planetesimals within this feeding zone is then $2 \pi a \left(2 \tilde{b} r_{h} \right) \Sigma_{pl}$, where a is the semimajor axis of the growing protoplanet and $\Sigma_{pl}$ is the initial local planetesimal surface density. The ``'isolation mass'' of the protoplanet can then be obtained by setting the protoplanet mass equal to the total mass of planetesimals within the feeding zone such that}
+
+\begin{equation}\label{eq:iso_mass1}
+	M_{iso} = 4 \pi a^{2} \tilde{b} \left(\frac{M_{iso}}{3 M_{*}} \right)^{1/3} \Sigma_{pl}.
+\end{equation}
+
+\noindent \textbf{Solving for $M_{iso}$ gives}
+
+\begin{equation}\label{eq:iso}
+	M_{iso} = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2}.
+\end{equation}
+
+\noindent \textbf{For bodies on circular, non-inclined orbits, $\tilde{b} = 2 \sqrt{3}$ is the smallest orbital separation that produces a non-negative
+Jacobi energy and permits a close encounter \citep{nakazawa88}. This value of $\tilde{b}$ is typically used to calculate the final isolation mass of a protoplanet, as oligarchic growth tends to ensure that embryos stay on near-circular orbits as they grow.}
 
 The picture described above relies upon \textbf{a} crucial assumption, which
 is that the mass distribution evolves slowly enough for gravitational stirring to maintain energy equipartition. In other words, the relaxation timescale must remain short relative to the \textbf{collision} timescale. For typical conditions near the terrestrial region of the solar system, this timescale condition is satisfied. Due to the steep dependence of the relaxation time on encounter velocity, however, this condition can easily be violated at shorter orbital periods.
@@ -588,8 +605,7 @@ timescale. Protoplanets form first at the inner edge of the disk,
 where the dynamical timescales are short. Growth proceeds in an
 inside-out fashion, with the outermost regions of the disk completing
 the protoplanet assembly phase last \textbf{(as an example, see figure 1 of \citet{kokubo02)}}. This radial timescale dependence is not typically
-accounted for in planet formation simulations\footnote{Instead, the innermost protoplanets 
-patiently `wait' for this phase of evolution to complete everywhere in the disk} \textbf{(a notable exception being \citet{emsenhuber21a, emsenhuber21b})}, and appears to be an
+accounted for in planet formation simulations \textbf{(a notable exception being \citet{emsenhuber21a, emsenhuber21b})}, and appears to be an
 important component to forming realistic solar system analogs
 \citep{clement20}. As with the narrow annulus simulations, we stop the
 integration once the masses of protoplanets in the outermost region of
@@ -601,17 +617,12 @@ the initial (contours) and final (points) state of the simulation is
 shown in the orbital period-eccentricity plane. The size of the points
 indicates the relative mass of the bodies. In the bottom panel, the
 final masses of the bodies (in units of feeding zone size) are shown
-as a function of orbital period. The feeding zone size $\tilde{b}$ \textbf{is described in units of the local Hill radius and is} calculated according to \citet{kokubo02}
-\begin{equation}\label{eq:iso}
-	M = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2},
-\end{equation}
-where $M$ is taken to be the final mass of each body. \textbf{The y-values in the bottom panel of figure \ref{fig:fulldisk_e_m} are calculated by solving equation \ref{eq:iso} for $\tilde{b}$, and inputting the initial surface density and final particle mass into the expression.} Here, we assume that each embryo has reached its isolation mass, and 
+as a function of orbital period. \textbf{The y-values in the bottom panel of figure \ref{fig:fulldisk_e_m} are calculated by solving equation \ref{eq:iso2} for $\tilde{b}$, and inputting the initial surface density and final particle mass into the expression.} Here, we assume that each embryo has reached its isolation mass, and 
 that differences in mass are driven by differences in the initial surface density at the embryo's current location, along with the 
 size of its feeding zone, which is set by the dynamics relevant at that location in the disk. By plotting the derived value of $
 \tilde{b}$ as a function of orbital period, differences in the dynamical interactions at different locations of the disk are made more 
-clearly visible. For two bodies on circular, non-inclined orbits,  $\tilde{b} = 2
-\sqrt{3}$ (indicated by the horizontal dashed line) is the smallest orbital separation that produces a non-negative Jacobi energy
-and permits a close encounter (see \citet{naka88}). In typical oligarchic growth simulations \citep{kokubo98}, protoplanets tend 
+clearly visible. \textbf{The feeding zone size $\tilde{b} = 2 \sqrt{3}$ permitted by bodies on circular, non-inclined orbits \citep{nazakawa88} is shown by the
+horizontal dashed line.} In typical oligarchic growth simulations \citep{kokubo98}, protoplanets tend 
 to space themselves apart by $\tilde{b} = 10$, although it should be noted that they do not consume all of the planetesimals 
 within this distance.
 
