@@ -1,6 +1,5 @@
 \documentclass[twocolumn,linenumbers]{aastex63}
 \usepackage{natbib}
-\usepackage[LGRgreek]{mathastext}
 %\definecolor{orcidlogocol}{HTML}{A6CE39}
 \bibliographystyle{aasjournal}
 
@@ -19,7 +18,7 @@ Formation models in which terrestrial bodies grow via the pairwise
 accretion of planetesimals have been reasonably successful at
 reproducing the general properties of the solar system, including
 small body populations. However, planetesimal accretion has not yet
-been fully explored in the context of the wide variety of recently discovered extrasolar planetary systems,
+been fully explored in the context of the \textbf{wide variety} of recently discovered extrasolar planetary systems,
 particularly those that host short-period terrestrial planets. In this work, we
 use direct N-body simulations to explore and understand the growth of
 planetary embryos from planetesimals in disks extending down to
@@ -29,13 +28,13 @@ to embryo masses that are much larger than the classical
 isolation mass. For rocky bodies, the physical size of the object
 begins to occupy a significant fraction of its Hill sphere towards the inner edge of the disk. In this regime, most close encounters
 result in collisions, rather than scattering, and the system does not
-develop a bimodal population of dynamically hot planetesimals and
+develop a bimodal population \textbf{of} dynamically hot planetesimals and
 dynamically cold oligarchs, like is seen in previous studies. The highly
 efficient accretion seen at short orbital periods implies that systems
 of tightly-packed inner planets should be almost completely devoid of
 any residual small bodies. We demonstrate the robustness of our
 results to assumptions about the initial disk model, and also
-investigate the effects that our simplified collision model has on the emergence
+investigate \textbf{the effects} that our simplified collision model has on the emergence
 of this non-oligarchic growth mode in a planet forming disk.
 \end{abstract}
 
@@ -44,7 +43,7 @@ of this non-oligarchic growth mode in a planet forming disk.
 Planetesimal accretion is a key phase in the terrestrial planet growth
 process, bridging the gap from kilometer-sized bodies up to roughly
 moon-sized objects known as planetary embryos. In the earliest stages
-of the planet formation process, beginning from $\mu$m sizes, aerodynamic forces dominate the
+of the planet formation process, \textbf{beginning from $\mu$m sizes,} aerodynamic forces dominate the
 growth and evolution of the solids and statistical models
 \citep{johansen14, birnstiel16} are appropriate to describe how these
 numerous, small bodies coagulate. 
@@ -130,7 +129,7 @@ $n = \Sigma_{pl} \Omega / 2 m_{pl} v$ (where we have assumed that the scale heig
 collision cross section and $v$ is the typical encounter velocity
 between planetesimals.
 For a swarm of planetesimals on randomly oriented orbits, $v$ is typically
-taken to the rms velocity, which can be related to the eccentricity and inclination distribution $(e, i)$ in the following way \citep{lissauer93}:
+taken to the rms velocity $\left< v^{2} \right>^{1/2}$, which can be related to the eccentricity and inclination distribution $(e, i)$ in the following way \citep{lissauer93}:
 \begin{equation}\label{eq:ecc_vel}
 	\left< v^{2} \right>^{1/2} = \left( \frac{5}{4} \left< e^{2} \right>^{1/2} + \left< i^{2} \right>^{1/2}  \right) v_{k}.
 \end{equation}
@@ -214,7 +213,7 @@ $b = \tilde{b} r_{h}$ of its orbit. The total mass of planetesimals within this 
 \noindent \textbf{Solving for $M_{iso}$ gives}
 
 \begin{equation}\label{eq:iso}
-	M_{iso} = \left[ \frac{\left( 2 \pi a^2 \Sigma \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2}.
+	M_{iso} = \left[ \frac{\left( 2 \pi a^2 \Sigma_{pl} \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2}.
 \end{equation}
 
 \noindent \textbf{For bodies on circular, non-inclined orbits, $\tilde{b} = 2 \sqrt{3}$ is the smallest orbital separation that produces a non-negative
@@ -376,9 +375,9 @@ their Hill spheres?
 To answer these questions, we run a series of simulations in which a
 narrow annulus of planetesimals orbits a star. The values of $\alpha$
 and $\beta$ are varied individually. 4000 planetesimals with
-individual masses of $5 \times 10^{23}$ g are placed with semimajor
+individual masses of \textbf{$8.37 \times 10^{-5} M_{\earth}$ } are placed with semimajor
 axes drawn \textbf{from a uniform distribution} between 0.95 and 1.05 AU about a 1 $M_{\odot}$
-star. The argument of perihelion, $\omega$, longitude of ascending node,
+star. \textbf{In total, the disk contains $\sim$ 0.33 $M_{\earth}$ of material.} The argument of perihelion, $\omega$, longitude of ascending node,
 $\Omega$, and mean anomaly, M, for each body is drawn from a uniform
 distribution $\in [0, 2 \pi)$. The inclinations and eccentricities are drawn
 from a Rayleigh distribution with
@@ -386,9 +385,11 @@ $\left< i^{2} \right> = 1/2 \left< e^{2} \right>$ \citep{ida93a}.
 
 In the ``fiducial'' case, we give the bodies a bulk density of 3 g
 cm$^{-3}$, and $\left< e^{2} \right>^{1/2} = 4 e_{h}$, which corresponds to $\alpha = 3.6 \times 10^{-2}$ and $\beta = 3.4 \times 
-10^{-3}$. These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. 
+10^{-3}$. \textbf{This corresponds to a radius of 341 km} These parameters are chosen to match the initial conditions of \citet{kokubo98}, which gave rise to oligarchic growth. 
 To vary the value of $\alpha$, we alter the bulk density of the particles. In the high-$\alpha$ case, the bulk density is reduced by 
-a factor of $\sim$ 7100, which produces $\alpha = 1$. \textbf{In this case, a planetesimal completely fills its Hill sphere, and one should expect no strong gravitational scattering to occur.} To vary $\beta$, the eccentricity dispersion is increased. For the high-$
+a factor of $\sim$ 7100, which produces $\alpha = 1$. \textbf{This corresponds to a bulk density of $4.2 \times 10^{-4}$ g cm$^{-3}$ and a radius of 6,500 km. 
+Although this is most certainly unphysical, the purpose of this modification is to have a planetesimal completely fills its Hill sphere so that no strong 
+gravitational scattering should occur.} To vary $\beta$, the eccentricity dispersion is increased. For the high-$
 \beta$ case, $\left< e^{2} \right>^{1/2}$ is increased to $1500 e_{h}$, which corresponds to $\beta = 15,000$. \textbf{This is the largest value of $\beta$ that permits a particle at 1 AU to still have an apocenter and pericenter distance that lies within the boundaries of the disk.}
 
 \textbf{This choice of $\beta$ places the system firmly in the $v > v_{esc}$ regime, while still allowing growth to occur in a reasonable number of timesteps.}
@@ -652,7 +653,7 @@ we normalize the time values in each bin by the local accretion timescale at the
 	t_{acc} = \left( n \Gamma v \right)^{-1} = \left( \frac{\Sigma_{0} \Omega}{2 m_{pl}} \Gamma \right)^{-1},
 \end{equation}
 
-\noindent \textbf{where we have assumed the local number density of particles n is set by the surface density and the local scale height of the disk. The effective collision cross section is set by gravitational focusing and is given by equation \ref{eq:gravfocus}.}
+\noindent \textbf{where we have assumed the local number density of particles n is set by the surface density and the local scale height of the disk (see section \ref{sec:theory}). The effective collision cross section is set by gravitational focusing and is given by equation \ref{eq:gravfocus}.}
 
 \textbf{The color of the curves indicate the orbital period bin which is being measured. From about 40 to 100 days in orbital period, the planetesimal surface density 
 follows a similar trajectory as accretion proceeds. Interior to about 40 days, however, the rate at which $\sigma$ decays actually beings to decrease for the shortest 
