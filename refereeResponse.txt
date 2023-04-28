@@ -1,14 +1,15 @@
-cript at hand presents a numerical study of planetesimal accretion. The authors identify a novel mode of accretion that operates if the primary's radius is a significant fraction of its hill-radius - a criterion the authors find to be met at short orbital periods in circumstellar disks. This new accretion mode is shown to be highly efficient, resulting in several large planetary embryos and a depletion of the primordial planetesimal formation, and is therefore distinct from bimodal planetesimal distribution that is the end product of an oligarchic growth phase.
+Spencer TODOs:
+	Schematic showing physical meaning of r_pl, r_h and r_g for different alpha, beta values
+	Non-italiczed math subscripts (do this for figures too)
+	How to properly align text for the 'note' underneath table 1?
+	Centering of white in figure 1 colorbar is wrong (colormap on plot is correctly scaled, however)
+	Fix M_earth in figure labels
+
+We appreciate the referee's thorough and careful comments. We will address concerns with the manuscript one by one, with the original comment listed first, followed by our response (indented).
+
+The manuscript at hand presents a numerical study of planetesimal accretion. The authors identify a novel mode of accretion that operates if the primary's radius is a significant fraction of its hill-radius - a criterion the authors find to be met at short orbital periods in circumstellar disks. This new accretion mode is shown to be highly efficient, resulting in several large planetary embryos and a depletion of the primordial planetesimal formation, and is therefore distinct from bimodal planetesimal distribution that is the end product of an oligarchic growth phase.
 
 I find the presented research to be innovative, interesting, and valuable for the scientific community. However, before I can recommend the manuscript for publication, I believe there are several areas that require improvement. Specifically, I suggest that the authors address the five major comments outlined below to ensure that the findings are properly supported and effectively communicated. I also include a detailed list of specific notes, comments and questions that I suggest the authors consider when revising the manuscript. I appreciate the authors' work and look forward to seeing the progress on the manuscript.
-
-TODOs:
-	Dont italicze math subscripts (do this for figures too)
-	Discussion of Roche limit at end of section 2
-	Centering of note text under table 1
-	Centering of white in figure 1 colorbar (colormap on plot is correctly scaled)
-	Add a note explaing why no fdLo on the collision plots
-	Explanation of \tilde{b} in section 5 ok?
 
 Major Comments
 
@@ -22,7 +23,7 @@ I suggest that the authors either soften their statements on this, or present ad
 
 	We have also modified figure 9 to include all 5 iterations of the fdHi, fdHiSteep and fdHiShallow simulations. We have also removed the hard cut at 60 days and instead colored the points by final orbital period of each body. In all cases, there is a clear qualitative shift in the behavior of accretion interior to ~40 days.
 
-	I think these changes all support the referee's feeling that the accretion mode boundary is not as sharply defined as originally suggested. Instead, the accretion seems to behave in a fully non-oligarchic way interior to ~40 days, and the transition between non-oligarcic and oligarchic growth seems to happen between ~40-70 days. We have softened some of our statements about the accretion mode boundary in the revised version of the paper.
+	I think these changes all support the referee's intuition that the accretion mode boundary is not as sharply defined as originally suggested. Instead, the accretion seems to behave in a fully non-oligarchic way interior to ~40 days, and the transition between non-oligarcic and oligarchic growth seems to happen between ~40-70 days. We have softened some of our statements about the accretion mode boundary in the revised version of the paper.
 
 2) Related to my first point, I think a very interesting, yet somewhat unanswered question is what alpha exactly corresponds to the transition between accretion modes. The authors allude to alpha = 0.1 being of importance, but this choice currently feels somewhat arbitrary. For example, in Figure 11, the authors show the alpha profile for their simulations and show that alpha falling below 0.1 approximately corresponds to tilde b of the largest bodies falling below the critical value of 2sqrt(3). Is there a specific reason for this? Or is this what motivates the choice of alpha = 0.1 in the first place? If so, I think this is an interesting finding, because it allows for a direct prediction of the dominant mode of accretion given the size and location of a planetesimal. Also, how consistent is this alpha = 0.1 value with the simulations with different surface density power laws listed in Table 2?
 I recommend that this, in my opinion, quite interesting point is discussed in more detail in the manuscript.
@@ -34,11 +35,11 @@ The authors utilize a simplified collision model in which each collision results
 3) I am unconvinced that the test of the collision model indeed is an extreme case. In particular, I'm imagining a very destructive, inelastic collision such that all fragments are smaller than the original bodies. Say the fragments follow a power law distribution assuming a collisional cascade (see Dohnanyi 1969, Zvyagina et al 1974). It's not obvious to me that resupplying smaller bodies to the planetesimal population this way would not impact the merger history. In the extreme case, the entire embryo population would be grinded down by destructive collisions. The authors' bounce-merge model, is essentially equivalent to less efficient, but ultimately constructive planetesimal accretion (thus leading to a prolonged runaway growth phase as shown in Fig. 13). If smaller collisional fragments are re-supplied this could have for example consequences for orbital repulsion and gravitational scattering, which as the authors argue in Sect. 5 requires the presence of smaller planetesimals.
 Could the authors comment on this? Maybe the authors can argue why collisions are not expected to be destructive, and clarify why resupplying smaller bodies does not affect the subsequent evolution of the system.
 
-	Assuming the embryos are able to eventually grow to full size, the size of the fragments shouldn't matter. This is because the alpha value of a body is completely independent of its size (r_pl and r_hill both scale with M^1/3). Therefore, a 1m body will fill the same fraction of its Hill sphere as a 100km body, so long as they are made of the same material. I would expect that this non-oligarchic accretion mode would behave very similarly had we used a collision model that allowed for destructive interactions. So long as radial drift does not start removing a significant amount of these smaller bodies, destructive collisions should only act to lengthen the growth timescale. TODO: Discusss this in the paper? Do we need to worry about inelastic damping here?
+	Assuming the embryos are able to eventually grow to full size, the size of the fragments shouldn't matter. This is because the alpha value of a body is completely independent of its size (r_pl and r_hill both scale with M^1/3). Therefore, a 1m body will fill the same fraction of its Hill sphere as a 100km body, so long as they are made of the same material. I would expect that this non-oligarchic accretion mode would behave very similarly had we used a collision model that allowed for destructive interactions. So long as radial drift does not start removing a significant amount of these smaller bodies, destructive collisions should only act to lengthen the growth timescale. TODO: Does this need to be discussed in the paper? Do we need to worry about inelastic damping here?
 
 4) I think the introduction of several physical concepts warrants additional clarification for accessibility and clarity of the manuscript, and sometimes also lack concrete definitions. In particular, this includes isolation mass, the concepts of tidal stability and Hill radius, the eccentricity dispersion e_h, and the exact definition of tilde b. See my specific comments below.
 
-	Hill radius, e_h, i_h \tilde{b} and isolation mass, are now formally defined in section 2.1.
+	The concepts of Hill radius, e_h, i_h \tilde{b} and isolation mass, are now formally defined in section 2.1.
 
 5) I have some suggestions for improving the presentation of the results in Figures, to make the science result more clear and intuitively obtainable. In my specific comments below, I included suggestions for the figures.
 
@@ -110,7 +111,7 @@ Also, I recommend adjusting the x-limits of the plot to correspond to the limits
 263: Again, I think the concept of Hill radius and tidal stability needs to be formally introduced earlier.
 	These concepts are now formally discussed in section 2.1
 273: Wouldn't these bodies then be tidally disrupted, and therefore not exist? Alpha > 1 is certainly not true for any solar system bodies that I am aware of. I understand that the scaling of alpha predicts alpha >1 at some radius (which I would explicitly mention), but this just implies that inside this radius, bodies must have greater densities to not be disrupted.
-	Yes, the rigid body Roche limit corresponds to alpha = 1, although applying the hydrostatic correction moves a_roche inwards by about 60%. This is interesting because this accretion mode could potentially be relevant for ring systems! TODO: update
+	Yes, the rigid body Roche limit corresponds to alpha = 1, although applying the hydrostatic correction moves a_roche inwards by about 60%. This is interesting because this accretion mode could potentially be relevant for ring systems! This is now noted in the text.
 289: gravitational radius: is this physically motivated? Maybe reference
 	There is a physical explanation of r_g immediately below equation 5 in the text. Also added a reference to Ida 1990.
 296: beta > 1 means collision cross section > geometric and small gravitational focusing. I recommend explicitly stating what the physical intuition for beta < 1 is.
@@ -254,15 +255,13 @@ The meaning of the dashed line in the bottom panel could be indicated inside the
 I'm confused by the statement "interior to the oligarchic growth region (around 60d)". Where does this definition come from? Is this defined by bodies exceeding the critical feeding size? If so the statement should be rephrased to make the causal connection clear.
 	The y axis on the bottom panel of figure 5 is now log-scaled. Point colors in both panels have been changed to orange, to be consistent with figure 2. The dashed line in the bottom panel is now labeled. Yes, we are defining the oligarchic growth region to be the region where \tilde{b}_required <= 2\sqrt{3}. The last sentence in the figure caption has been rephrased to make this clearer.
 606: How can a mass be expressed in units of feeding zone size?
-	We are solving equation 11 for \tilde{b} and using the initial local surface density, along with the final particle mass to calculate the feeding zone size. We tried to explain this starting on line 611, but it sounds like some further clarification is needed. Some additional text has been added to the paragraph following equation 11 to explain where the value for \tilde{b} comes from.
+	The added explanation of Hill radius, \tilde{b} and isolation mass in section 2.1 hopefully makes this more clear now. See equation 8 in the revised manuscript. We have solved this equation for \tilde{b}, and use the present mass of the body as M_iso. One way to interpret this is the following: for a protoplanet with semimajor axis a, it must have carved an annulus of width \tilde{b} out of the planetestimal disk, where the initial local solid surface density was \Sigma_pl, in order to obtain its current mass M. This is also explained in the text alongside the description of figure 5.
 620: What is the intuition behind tilde b, how exactly is it defined? Since it is a dimensionless quantity, calling it an orbital separation is not intuitive to me. Can tilde b be converted to a physical size? Also, I struggle to interpret the critical tilde be of 2*sqrt(3). Do I understand correctly that a body with tilde b less than 2 sqrt(3) is associated with a feeding zone so small that close encounters are not possible, and thus are not expected to grow further?
-	This is buried in some of the references in this section (Nazakawa + Ida 1988, Kokubo 1998, Kokubo 2002), but I'm realizing this is not stated explicitly anywhere in the paper so I will do so: \tilde{b} is a length in units of the local Hill radius. 
-	The \tilde{b} = 2\sqrt{3} value is important because this is the smallest possible feeding zone size that a body can have. As eccentricity decreases, the feeding zone size decreases, but has a minimum value of 2\sqrt{3} for (e,i) = (0,0) (See section 6 of Nazakawa + Ida 1988 for an explanation as to why). Therefore, a protoplanet undergoing oligarchic growth (in which gravitational scattering events are frequent and keeps the largest bodies on circular orbits) will not accrete more than 2\sqrt{3}*r_h*Sigma worth of material from its surroundings. The key takeaway from the bottom panel of figure 5 is that there are bodies interior to 60d that must have accreted material from a much wider annulus than this, and so oligarchic growth is not operating here.
-	TODO: Update text somewhere?
+	See our additions to section 2.1, along with our response to the previous comment. To address your question, feeding zone size scales with eccentricity, but takes on a minimum value of 2\sqrt{3} for e, i = 0. Because oligarchic growth tends to maintain low eccentricity, low inclination orbits, we can be sure that this accretion mode is likely not operating wherever \tilde{b} > 2 \sqrt{3}.
 632: Why are the bodies expected to follow the tilde b = 2sqrt(3) from a theoretical perspective? Also, I'm unconvinced that the bodies do that at all in the presented simulations - they fall below this value but don't follow it.
-	See response to 620. You are right that the outer disk bodies do not all reach \tilde{b} = 2\sqrt{3}. TODO: Should probably mention that this should be interpreted as a maximum. Not feasible to run the outer disk to completetion (especially in the fdSteep case).
+	See responses to previous concerns, along with the additional simulation data added to figure 8.
 640: If anything the opposite seems to be true, no? Maybe have a specific value for the expected eccentricity of protoplanets with and without inelastic damping.
-	TODO
+	Yes, the protoplanets in the inner disk seem to have heated up. For a collection of 1 M_earth bodies, <v^2>^{1/2} = v_esc corresponds to <e^2>^{1/2} = 0.05, which roughly matches the dynamical excitation of the innermost bodies. I'm not sure of a way to estimate the expected eccentricity without inelastic damping, but it seems safe to conclude that the inner protoplanets have heated themselves up via self-stirring. This is now explained in the text.
 644: If I look at the contour map by eye, the eccentricity distribution doesn't seem all that different in the inner vs outer disk. Maybe the difference can be quantified?
 	You are right that the variation in eccentricity is not huge. For the model used by our initial condition generator, the mean eccentricity is a factor of 4x larger at the outer disk edge, compared to the inner disk edge. This is now stated in the text.
 647: This is an interesting point. I'd be interested in seeing a comparison between inner and outer disk accounting for that difference in time scales. Is it possible to include such a comparison maybe with a figure?
@@ -281,8 +280,7 @@ This figure could be improved if each line was colored by the semi-major axis of
 701: Again, I don't see that the value for tilde b approaches 2sqrt(3) beyond P=60d orbits. The bodies have smaller feeding zones than tilde b = 2sqrt(3)
 	Perhaps if we ran some of these simulations for longer, the embryos beyond 60d would all reach \tilde{b} = 2\sqrt{3}. But this requires an intractible number of timesteps, particularly for the fdSteep simulation, where the surface density in the outer disk is quite low. I think the best we can say here is that none of the embryos exceed \tilde{b} = 2\sqrt{3} which is consistent with the oligarchic growth model.
 702: Are they that similar? Maybe this statement can be more quantitative? To me it looks like the values fall below 2sqrt(3) at 40 days for fdHiShallow and at 70 days for fdLo. The interpretation that the boundary is only driven by the local value for alpha seems somewhat speculative. I'd also be interested how randomness affects this, i.e. if the simulation is initialized with a different random seed, by how much does the final distribution change?
-	We were saving these for the follow up paper, but we do have multiple versions of fdHi, fdSteep and fdShallow! These have now been added to figure 8. The added data does make it clear that the boundary is quite fuzzy. I've also plotted the mean and standard deviation of the \tilde{b} in a number of orbital period bins. I think this makes the accretion boundary a little more apparent. With the exception of maybe the fdShallow simulation, the locations in the disk where \tilde{b} drops below 2\sqrt{3} are broadly consistent, which supports our claim that the boundary location is driven by the local value of alpha.
-	TODO: Update text to recflect changes to figure.
+	We have now included four more versions of the fdHi, fdHiSteep and fdHiShallow simulations in this figure. Your intuition appears correct that the boundary is rather fuzzy (somewhere between 40 and 70 days). The orbital period at which \tilde{b} reaches 2\sqrt{3} does appear to be broadly consistent across all simulations, however.
 
 5.5. Assembly History of Embryos
 719: add references.
@@ -292,7 +290,7 @@ This figure could be improved if each line was colored by the semi-major axis of
 724: Why are only the 100 largest bodies chosen? It seems more natural to me to choose a mass cut-off. Also, given that in Fig9 is plotting mass on a log-scale, I suggest just plotting the entire population including those planetesimals that remained relatively small and pristine. Also, why is the fdHi simulation chosen?
 	The 100 body cutoff was chosen because the analysis script we were using the construct the collision history was rather slow when asked to include all ~10,000 particles in the snapshot. This has been optimized and all bodies larger than 100 m_0 are now included in figure 9. fdHi is chosen to be the 'fiducial' simulation for most of this paper. The initial conditions for fdHi require the least assumptions (MMSN profile with enough extra mass included to construct ~1 M_earth planets).
 726: I think it could be explicitly stated that smooth accretion = minor mergers.
-	TODO: How to address this?
+	Done
 730 & onwards: Can the authors quantify this trend? E.g., by making three linear fits (with error bars) for > 60d, < 60d and the full population. I'm in particular unconvinced that the trend for P > 60 days truly is flat, given the small sample size for larger bodies.
 	As with figure 8, we have now included data from the other fdHi runs (using a different random seed). The P > 60d trend is now much more clearly flat.
 Figure 9:
@@ -319,7 +317,7 @@ I think "Fraction of planetesimals accreted" is a somewhat misleading descriptio
 Figure 11
 The y-axis label overlap
 I think the finding that the crossing of alpha = 0.1 in the bottom panel well matches the crossing of tilde b = 2 sqrt(3) is interesting and worth highlighting more, maybe with some vertical lines? Is there a meaning behind alpha = 0.1, i.e., is this coming from some analytical consideration? See my major comments
-	TODO: Include more sims in top panel of figure 11?
+	We have added an orange and blue vertical line through both panels of this figure that highlights the match between the crossing of \tilde{b} = 2 \sqrt{3} and \alpha = 0.1. Without a detailed numerical study of three-body encounters with various values of \alpha, there is not much we can say about why \alpha > 0.1 is special, other than the fact that r_pl begins to take up a significant amount of the Hill sphere.
 
 
 6. Simplifying assumptions

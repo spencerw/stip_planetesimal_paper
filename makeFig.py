@@ -308,6 +308,14 @@ def plot_alpha_beta():
 	print('e_h = 1 corresponds to e = ' + str(e1))
 	print('v = v_esc corresponds to e = ' + str(e_esc))
 
+	mp = (0.8*u.M_earth).to(u.g).value
+	rhop = 3
+	rp = (3*mp/(4*np.pi*rhop))**(1/3)
+	vesc = np.sqrt(G.cgs.value*mp/rp)
+	vk = np.sqrt(G.cgs.value*0.08*mstar/(0.01*u.AU).to(u.cm).value)
+	e_esc_pp = vesc/vk
+	print('v = v_esc for protoplanets corresponds to e = ' + str(e_esc_pp))
+
 	rhop = 3.0/7100
 	rp = (3*mp/(4*np.pi*rhop))**(1/3)
 	vesc = np.sqrt(G.cgs.value*mp/rp)
@@ -1178,6 +1186,8 @@ def plot_f6f4_b():
 
 	fig, ax = plt.subplots(figsize=(8,8), nrows=2, sharex=True)
 
+	p1, p2 = 35, 60
+
 	axes = ax[0]
 
 	#surf_den = (p_vhi_ic['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
@@ -1200,6 +1210,9 @@ def plot_f6f4_b():
 	axes.set_xlim(-5, 100)
 	axes.set_ylabel(r'Required $\tilde{b}$')
 	axes.legend()
+
+	axes.axvline(p1, ls='--', color=orange)
+	axes.axvline(p2, ls='--', color=blue)
 
 	axes = ax[1]
 	f = 6
@@ -1229,7 +1242,8 @@ def plot_f6f4_b():
 	alpha10g = r_pl_varyrho/(p_vhi_ic['a']*(m_pl/(3*mCentral))**(1/3))
 	#axes.semilogy(prof_perIC, alpha, ls=':')
 
-	print(prof_perIC, alpha1g, alpha10g)
+	axes.axvline(p1, ls='--', color=orange)
+	axes.axvline(p2, ls='--', color=blue)
 
 	axes.fill_between(prof_perIC.value, alpha1g, alpha10g, alpha=0.5)
 
@@ -1473,8 +1487,8 @@ def plot_rung_ecc():
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
-#plot_f6f4_b()
+plot_f6f4_b()
 #plot_frag_ecc()
 #plot_frag_evo()
 #plot_frag_acc_zones()
-plot_rung_ecc()
+#plot_rung_ecc()
