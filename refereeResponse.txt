@@ -2,6 +2,14 @@ cript at hand presents a numerical study of planetesimal accretion. The authors 
 
 I find the presented research to be innovative, interesting, and valuable for the scientific community. However, before I can recommend the manuscript for publication, I believe there are several areas that require improvement. Specifically, I suggest that the authors address the five major comments outlined below to ensure that the findings are properly supported and effectively communicated. I also include a detailed list of specific notes, comments and questions that I suggest the authors consider when revising the manuscript. I appreciate the authors' work and look forward to seeing the progress on the manuscript.
 
+TODOs:
+	Dont italicze math subscripts (do this for figures too)
+	Discussion of Roche limit at end of section 2
+	Centering of note text under table 1
+	Centering of white in figure 1 colorbar (colormap on plot is correctly scaled)
+	Add a note explaing why no fdLo on the collision plots
+	Explanation of \tilde{b} in section 5 ok?
+
 Major Comments
 
 1) I am unconvinced that the orbital period of P = 60 days is such a clear-cut, and universal boundary between oligarchic accretion mode and the new 'high-alpha' accretion mode. As far as I understand, the authors motivate this value mainly from their fdHi simulation e.g. Fig. 5, when the value for tilde b of the largest bodies falls below the critical value of 2sqrt(3). I would naively argue that for fdHiShallow and for fdLow, this is happening at ~40 and ~70 days respectively (Fig. 8). A key feature of the oligarchic growth mode seems to be the production of a bimodal distribution of bodies. Even for fdHi, this is the case up to an inner orbit of P = 10 d. Next, in Fig.6 which plots the evolution of the primordial planetesimal surface density, I do not see a clear qualitatively different behavior between the curves for 50 and 60 orbits, vs the curves for 60 or 70 orbits. Yes, the depletion of planetesimals becomes more rapid the more one moves towards the star, but to first order, I would imagine this is just due to dynamical timescales becoming shorter. In addition, the authors argue that the shape of the accretion zone changes outside vs inside of P=60d. I agree that there is a qualitative change, but to me, this change happens only at 10-20 orbits. Lastly, it seems to me that the value for the boundary could be quite sensitive to the random seed. If for example in the fdHi simulation the body at ~ 55d had a tilde b of less than 2sqrt(3), then one could immediately argue that that P~40d-50d is a more appropriate value for the location of the accretion mode transition.
@@ -132,30 +140,30 @@ Figure.2: Some suggestions to improve this figure are:
 A reference planetesimal size that shows what mass a circle has
 	Added
 Horizontal lines in each panel showing where e_h is
-	Might skip this, depending on whether I remove the e_h lines from figure 1. TODO
+	Alongside the text describing this figure, we have added a note describing where e_h = 1 (the boundary between shear and dispersion dominated encounters) and <v^2>^{1/2} = v_esc lies in eccentricity space. These should be interpreted as rough lower and upper limits for reasonable values of the planetesimal eccentrities.
 Maybe consider having beta value as a column label and alpha value as a row label. I would also explicitly state the values for alpha.
 	Added
 I would also probably label the four panels / cases a,b,c,d and then refer as such in the text body
 	Done
 
 391: Why would this because there are no high eccentricity planetesimals. Isn't the fact that there is no residual population not already evidence that encounters are accreting rather than scattering? Also, isn't this also not just very expected since alpha exactly quantifies the relative importance of scattering vs accretion?
-	I'm assuming this is referring to the statement that begins with 'The lack of high eccentricity planetesimals...'. I think you must be misinterpreting what we said in the text here, because it sounds like we are both making the same point. When we turn up alpha, the high eccentricity planetesimals dissapear. This is expected, because large alpha makes gravitational scattering difficult, so those bodies that undergo close encounters end up being accreted by the protoplanets, rather than getting kicked onto high eccentricity orbits. If there is something that needs to be clarified in the text, please let us know!
+	The point we were trying to make was this: Had scattering been more important than accretion, not only would there still be planetesimals left over, but they would have been moved to higher eccentricity orbits. Although in the case of small alpha, large beta, it appears as if the embryos instead cool off relative to the planetesimals. We have reworded this to say 'the lack of high eccentricity planetesimals, relative to the protoplanets'.
 
 394: small alpha, large beta doesn't look dynamically cool to me.
-	This should have been referring to the dynamical state of the growing protoplanets, relative to the initial eccentricities of the planetesimals. This has now been clarified in the text.
+	Related to the last point, this is referring to the dynamical state of the protoplanets, relative to the initial planetesimals. This has now been clarified in the text.
 400: Small alpha large beta does not look dynamically cooler than large alpha large beta to me. In fact, the opposite.
-	You are correct! This is a mistake in the text (replaced 'latter' with 'former').
+	This is a mistake in the text (replaced 'latter' with 'former').
 402: I don't really understand why small alpha small beta leads to so many dynamically hot bodies, both planetesimals and protoplanets. Maybe the authors can elaborate.
-	TODO: Is this not talking about small alpha, large beta as well? They look about the same to me
+	Is this specifically referring to small alpha, small beta (and not small alpha, large beta)? The final eccentricities of the planetesimals and protoplanets look about the same to me.
 	The small alpha disks ends up the hottest because of two effects:
 		1. Less collisions overall, so less inelastic damping to remove energy
-		2. Physically smaller bodies, so close encounters are more likely to result in gravitational
-		scattering, which converts the overall shearing motion of the disk into random motion
+		2. Close encounters are more likely to result in a scattering event,
+		which converts the overall shearing motion of the disk into random motion
 
 Figure 3:
 Again, I really think labeling the cases would be helpful.
 I would express the mass in units of e.g. Ceres
-	Todo: Lets use Earth units. Ceres is too asteroid-belt specific.
+	We feel that Ceres masses are a little too asteroid belt-specific. We have instead chosen to describe the masses in M_earth.
 406: I'm not sure about "significantly" larger. The biggest body in large alpha, small beta is about a factor 3 more massive than in small alpha, small beta. This is only a factor of 1.4 in size.
 	The text now says 'a factor of a few larger'
 415: the y-label in Fig.6 does not match the description in the text
@@ -164,9 +172,10 @@ Figure 4:
 Why don't the simulations start all with m_max/m = 1?
 	This is because m_max/m = 1 at T=0 and we have time plotted on a log scale. We have modified the x window of this figure so that the phase before the first snapshot (where the m_max/m values appear flat) is not visible.
 I'd be interested in also having another panel that shows the evolution of just M_max and <m> (maybe in solid and dashed lines) for the four simulations. That would also underscore that the turnover is driven by an increase in <m> rather than m_max.
-	We have now added a second panel to figure 4 which shows the evolution of these quantities separately. Todo: Units? Why does the max mass decrease for case a?
+	We have now added a second panel to figure 4 which shows the evolution of these quantities separately. It is now clear that the turnover of the blue and orange curves on the original plot are driven by a continued increase in <m>. This is now stated in the text as well.
 
 418: I would specifically state that for the large alpha cases runaway growth only occurs at the start, to avoid initial confusion that the slope turns around when the planetesimal supply is depleted.
+	This is now stated in the text.
 
 435: Is this true? I was under the impression that the residual planetesimal population remains? I think this does not seem consistent with the rest of the work...?
 	'Depleted' is maybe not the right phrase to use here. Through a combination of depletion and scattering onto high eccentricity orbits (in which gravitational focusing is almost completely supressed), the planetesimal accretion timescale should eventually become longer than the age of the system, so the rest of the population is effectively frozen out. This is now explained in the text.
@@ -182,7 +191,7 @@ I'd be interested in also having another panel that shows the evolution of just 
 	Done
 Table 1.
 I don't think the notes are necessary
-	Content from the notes has been added to the column headers in the table.
+	We could use some clarification here. Is this because the variables in table 1 are already defined elsewhere in the text? Or should we incorporate the information from the notes in some other way?
 I would probably put the planetesimal masses in units of Ceres
 	As discussed above, we feel that Ceres masses are too asteroid-belt specific. Instead, we have chosen to display the planetesimal masses in M_earth.
 I think Table 1 and Table 2 could be combined
@@ -194,7 +203,7 @@ I think Table 1 and Table 2 could be combined
 493: What is the motivation behind variation in the power-law index? Is there significant uncertainty in the MMSN power law index?
 	Chiang and Laughlin 2013 applied a similar analysis to Kepler multis and found that delta varies between 1.6 and 1.8. Sub-mm observations of cold outer disks finds power law slopes as low as 0.5 (Mundy 2000, Andrews 2009, 2010). Therefore, we vary delta by +/- 1.0 from the MMSN value. There is now a separate paragraph in the text explaining this
 499: Maybe elaborate on why this equilibrium is physical? Are there other works which use the same balance to inform initial conditions?
-	t_vs = t_gas is more of an upper limit on the eccentricity, although this is the same technique that Kokubo + Ida 1998 use to set up their initial conditions. It's certainly possible that the disk could have started out dynamically colder, although as we showed in figure 2, this doesn't seem to affect the resulting protoplanets. We have added a short discussion of these points to the text.
+	t_vs = t_gas is more of an upper limit on the eccentricity, although this is the same technique that Kokubo 2002 uses to set up the initial conditions. It's certainly possible that the disk could have started out dynamically colder, although as we showed in figure 2, this doesn't seem to affect the resulting protoplanets. We have added a short discussion about this to the text.
 504: missing respectively. And semi-major axes.
 	Fixed
 505: When is the Stokes regime valid, and what does it mean?
@@ -202,11 +211,15 @@ I think Table 1 and Table 2 could be combined
 506: The letter tau is used for a timescale just above, but now it says t. I would recommend staying consistent. Tau tends to be used for dimensionless timescales, so I would probably go with t_s and t_vs.
 	tau_vs has been changed to t_vs in equation 7.
 511: Solid-to-gas surface density ratio of 1/240 seems very small, especially given that the authors are considering the solid surface density to already be enhanced by a factor of 100. Also, if the planetesimals are already formed, it is conceivable that the gas disk is already dissipating (especially so close in). I think the authors could be over-estimating the gas density by up to a factor of a 100, which means the stopping time would be a factor of 100 longer.
-	TODO: Fix
+	A d/g ratio of 1/240 is the value inferred for the inner solar system using the original MMSN analysis in Hayashi 1981. However, we agree that there is a rather large range of possibilities for the actual gas surface density, given that there are no direct measurements of Sigma_gas for the inner regions of a planet-forming disk (and it isn't clear exactly when the planet formation process should start). A variation in the gas surface density of by factor of 100 could either make gas drag entirely unimportant, or act to completely remove solids from the inner disk, in which case we wouldn't be able to form any protoplanets.
+
+	As is done by Hansen + Murray 2012, we will assume that the gas profile follows something resembling the MMSN and the various solid surface density profiles we test broadly account for the different mechanisms that might act to deliver enough solid material to the inner disk.
+
+	These points are now discussed at the end of section 5.1
 516: I suggest using another symbol for the temperature power law, since Q is associated with the Toomre value of the disk, for example q. Also, this equation should read T(r) = T_0(r/1AU)^-q, right?
 	Q was changed to q to be consistent with the Andrews + Williams paper. the '/1AU' has been added to the T(r) equation.
 521: Where is that equation coming from? Maybe add reference.
-	This is equation 4.30 from Phil Armitage's 'Astrophysics of Planet Formation'. A reference has been added to the text.
+	This is equation 4.30 from 'Astrophysics of Planet Formation' by Phil Armitage. A reference has been added to the text.
 
 5.2. Gas Drag Force
 512: I think it would be very informative to calculate the dimensionless stopping time, i.e. the Stokes number of the planetesimals, I'm assuming that they are substantially above unity, which means that the bodies are essentially decoupled from the gas.
@@ -220,7 +233,7 @@ I think Table 1 and Table 2 could be combined
 584: footnote 3 can also go in the main text body.
 	Done
 584: Are there any works on the numerical robustness of this more efficient time-stepping scheme. While I'm inclined to believe that the error is only marginal, I think having some sort of test (or a reference to one) would make the results more steadfast.
-	I'm fairly certain that we are the first ones to try this. I've added an appendix that compares this timestepping scheme against a fixed timestep case. There appear to be no meaningful differences. TODO: Show mass distribution as differential or cumulative?
+	I'm fairly certain that we are the first ones to try this. I've added an appendix that compares this timestepping scheme against a fixed timestep case. There appear to be no meaningful differences.
 
 5.4 Results
 586: Maybe include reference to figure where this is shown
@@ -229,11 +242,11 @@ I think Table 1 and Table 2 could be combined
 	The NGPPS models (along with the Clement 2020 paper) seem to be a couple of notable exceptions to this, although the embryo growth is not treated self-consistently leading up to the giant impact phase. We have added a mention of the Emsenhuber papers to the text.
 Table 2:
 What is the rescaled integration time?
-	TODO: Not sure where to explain table columns now?
+	Because we inflated the collision cross sections by a factor of 6, the growth timescale was shortened by a factor of 36. The rescaled integration time is the actual integration time multiplied by this factor. This is explained in the note underneath the table.
 
 Figure 5:
 I think the bottom panel should have a log y-axis
-	Can you elaborate on why the bottom panel needs a log y-axis? The way \tilde_b is defined, a linear scale on this plot translates to a non-linear scale for mass already.
+	TODO: I dont think this is necessary? If I make this change, do I need to do the same thing for figure 8? The way \tilde_b is defined we are already showing mass in a non-linear way.
 I would make the color of the dots consistent with Fig.2, where the final outcome is orange
 	Done
 There could be numbers on the contours indicating the density of the initial condition.
@@ -253,12 +266,10 @@ I'm confused by the statement "interior to the oligarchic growth region (around 
 644: If I look at the contour map by eye, the eccentricity distribution doesn't seem all that different in the inner vs outer disk. Maybe the difference can be quantified?
 	You are right that the variation in eccentricity is not huge. For the model used by our initial condition generator, the mean eccentricity is a factor of 4x larger at the outer disk edge, compared to the inner disk edge. This is now stated in the text.
 647: This is an interesting point. I'd be interested in seeing a comparison between inner and outer disk accounting for that difference in time scales. Is it possible to include such a comparison maybe with a figure?
-	Yes! See our updated version of figure 6. The time is now shown in units of the local accretion timescale, and it is now apparent that the planetesimal surface density curves all follow the same trajectory exterior of 60d.
+	Yes! See our updated version of figure 6. The time is now shown in units of the local accretion timescale, and it is now apparent that the planetesimal surface density curves all follow the same trajectory outside of about 40d. In a rather counter-intuitive fashion, planetesimals actually appear to deplete more slowly (relative to the initial planetesimal-planetesimal accretion time) at short period. The lack of gravitational scattering in the inner disk means that embryos do not exhibit any 'mass preference' in who they collide with.
 Figure 6:
 This figure could be improved if each line was colored by the semi-major axis of the radius bin, and if there was a corresponding colorbar. The difference between the 60 day boundary could still be indicated with an additional line.
 	See our response to the previous concern, along with our response to major comment #1.
-	TODO: Update text to reflect changes to figure 6.
-	TODO: Run fdhi for a thousand steps at higher output cadence, so the innermost curve starts sooner
 665: I struggle to see that there is a significant qualitative difference in the behavior in the lines just inside and just outside the boundary of 60 orbits. The first dashed line also seems to converge to a sigma/Sigma \sim 5 %, not much below the first solid line.
 	See our response to the previous concern, along with our response to major comment #1.
 668: add reference. Also footnote 5 can probably go in the main text. Can the authors provide an equation that converts tilde b to units of r_h?
@@ -291,11 +302,10 @@ The authors state "there is a decreasing correlation between smooth accretion fr
 	See updated version of figure 9. After including data from more simulations and coloring the points by orbital period, it is clear that there is a difference between the smooth accretion fraction of bodies in the inner disk, compared to the outer disk. In particular, outer disk bodies all have fairly large mass fractions, which implies that they grow in isolation.
 
 The authors state "indicating that accretion of planetesimals is important during all phases of the evolution", yet the smooth accreting fraction is only between 1-10% for all these bodies. Seems to me that for all bodies, regardless of mass and orbital period, major mergers are significantly more important - that is at least with the author's definition of major and minor merger.
-	I think we need to loosen our definition what a 'planetesimal' is here. 
-	I agree that 1-10% is a small fraction. The mass cutoff should definitely be larger. TODO: Change mass cutoff and hopefully the same scaling with mass remains.
+	This statement makes a little more sense after broadening or definition of 'minor mergers' to include m < 100 m_0.
 In the legend, I think "orbit" should be put in the subscript instead of P_orbit
 746: This is just because in the inner disk there are no primordial planetesimals left to build the more massive bodies, right?
-	No, the accretion mode should be qualitatively different, even before the planetesimals run out. TODO: Hopefully including more data in the plot and maybe increasing the mass cutoff for 'smooth' accretion will make this more obvious.
+	After coloring the points by orbital period, its clear that this isn't the case. In the inner disk, there is a huge amount of variation in the smooth accretion fraction for a given mass. This suggests that inner disk protoplanets collide with any and everything, while the outer disk protoplanets tend to avoid each other. We have altered the wording of this sentence to reflect this.
 750: use /citep[see][]{Kokubo}
 	Fixed
 756: I agree that the large bodies must've originated due to mergers with other embryos, but this is not really an explanation for why the feeding zone size doesn't match the theoretical value, no? Instead it's the lack of gravitational scattering, as the authors write above. Maybe the authors can clarify specifically why oligarchic growth models predict this feeding zone size, and also why gravitational scattering is suppressed in the inner disk (due to the lack of primordial planetesimals in the inner disk?).
@@ -315,7 +325,7 @@ I think the finding that the crossing of alpha = 0.1 in the bottom panel well ma
 6. Simplifying assumptions
 6.1 Collision cross section
 802: As I argued above, I'm unconvinced in this clear-cut boundary at 60 days. Maybe the authors could put a quantitative uncertainty to this number?
-	TODO
+	The additional simulations included in figure 8, along with the difference in accretion characteristics near ~30-40d (see figures 9 and 10) suggests that the boundary lies somewhere between 40 and 70 days. This is now stated here in the text.
 816: I'm not following where the factor of 15 comes from. Maybe the authors can write down the explicit proportionality used to obtain this value.
 	For a fixed value of alpha, equation 4 gives a ~ r_pl ~ f. Therefore, P_orbit ~ f^{-3/2}.  This is now clarified in the text.
 821: How is this expected to change with f?
@@ -326,9 +336,9 @@ I think the finding that the crossing of alpha = 0.1 in the bottom panel well ma
 	We have added a note here discussing the outcome of a potentially destructive collision model. As we mention in response to major comment #3, the local value of alpha is independent of particle size. So long as the solid mass is not ground down and removed from the system (radial drift, dust blowout, PR drag), the non-oligarchic growth mode should persist.
 Figure 12:
 Add a description of what green and orange means to the plot.
-	TODO
+	A legend depicting the colors has been added to the top panel of the plot.
 901: Are the populations really indistinguishable? The authors could perform for example a Kolmogorov-Smirnov test to underline this statement. If not, I would suggest softening this statement.
-	KS value is large because of the extra planetesimals in the bounce-merge sim. TODO: Should I exclude these?
+	A KS test yields a p-value of 1e-5 for these distributions, although excluding the handful of initial planetesimals yields a p-value of 0.1. We therefore conclude that the distribution of protoplanets are indistinguishable, although the bounce-merge model does produce a small amount of residual planetesimals. This is now stated in the text.
 912: The authors perform this collisional model test very close-in where residual planetesimal populations are suppressed anyways. Maybe the authors can comment on what would change (if anything) if this test was performed in the outer parts of the disks.
 	The purpose of testing the collision model at the inner part of the disk was to ensure that the delay in growth would not cause the gravitational scattering timescale to catch back up with the collision timescale (and thus cause oligarchic growth). In the outer part of the disk t_scatter >> t_collide, so a more realistic collision model would simply lengthen the timescale for embryo formation (see Wetherill + Stewart 1993, Leinhardt + Richardson 2005). We have added this discussion to the beginning of section 6.2 in the text.
 
@@ -348,7 +358,7 @@ Add a description of what green and orange means to the plot.
 965: I think this is too strong a statement. See my previous comments. I think the subsequent sentence "Although [...]" is more appropriate.
 	We have changed 'is independent' to 'does not strongly depend'.
 972: Refer to Fig. 10.
-	TODO: Fig 9 and 10 have been changed
+	A reference has been added to figures 9 and 10.
 978: Missing a verb, maybe "differs" ? Also the second part of the sentence "along with [...]" seems odd to me. Maybe rephrase it in two sentences?
 	The first sentence of this paragraph has been split into two parts.
 986: Is there a reference for this? It does not seem obvious to me. See my previous comments.
