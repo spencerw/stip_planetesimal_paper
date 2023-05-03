@@ -2,7 +2,6 @@ Spencer TODOs:
 	Schematic showing physical meaning of r_pl, r_h and r_g for different alpha, beta values
 	Non-italiczed math subscripts (do this for figures too)
 	How to properly align text for the 'note' underneath table 1?
-	Centering of white in figure 1 colorbar is wrong (colormap on plot is correctly scaled, however)
 
 We appreciate the referee's thorough and careful comments. We will address concerns with the manuscript one by one, with the original comment listed first, followed by our response (indented).
 

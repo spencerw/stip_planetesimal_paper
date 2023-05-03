@@ -224,7 +224,9 @@ def plot_timescales():
 			x, y = [np.log(self.vmin), np.log(self.midpoint), np.log(self.vmax)], [0, 0.5, 1]
 			return np.ma.masked_array(np.interp(np.log(value), x, y))
 
-	norm = MidPointLogNorm(vmin=np.min(trel_div_tcoll), midpoint=1.0, vmax=np.max(trel_div_tcoll))
+	# Matplotlib bug: the midpoint on the colorbar has to be exactly in the center
+	# of min and max, otherwise the colorbar doesnt match the colormap
+	norm = MidPointLogNorm(vmin=np.min(1e-3), midpoint=1.0, vmax=np.max(1e3))
 	cax = axes.pcolormesh(pvals, ehvals, np.flipud(np.rot90(trel_div_tcoll)), \
 							norm=norm, cmap=cmap)
 	axes.set_xscale('log')
@@ -1471,7 +1473,7 @@ def plot_rung_ecc():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-#plot_timescales()
+plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
@@ -1481,7 +1483,7 @@ def plot_rung_ecc():
 #plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_surfden_b()
-plot_smooth_acc()
+#plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
 #plot_f6f4_b()
