@@ -3,7 +3,6 @@ Spencer TODOs:
 	Non-italiczed math subscripts (do this for figures too)
 	How to properly align text for the 'note' underneath table 1?
 	Centering of white in figure 1 colorbar is wrong (colormap on plot is correctly scaled, however)
-	Fix M_earth in figure labels
 
 We appreciate the referee's thorough and careful comments. We will address concerns with the manuscript one by one, with the original comment listed first, followed by our response (indented).
 

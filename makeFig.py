@@ -283,8 +283,8 @@ def plot_alpha_beta():
 	l1 = plt.scatter([],[], edgecolor='black', color=orange, s=(1e-2*u.M_earth).to(u.M_sun).value/refmass*1e3)
 	l2 = plt.scatter([],[], edgecolor='black', color=orange, s=(1e-1*u.M_earth).to(u.M_sun).value/refmass*1e3)
 	l3 = plt.scatter([],[], edgecolor='black', color=orange, s=(1*u.M_earth).to(u.M_sun).value/refmass*1e3)
-	labels = ['0.01 M_earth', '0.1 M_earth', '1 M_earth']
-	ax[0][0].legend(handles=[l1, l2, l3], labels=['0.01 M_earth', '0.1 M_earth', '1 M_earth'], loc=2)
+	labels = [r'0.01 M$_{\oplus}$', r'0.1 M$_{\oplus}$', r'1 M$_{\oplus}$']
+	ax[0][0].legend(handles=[l1, l2, l3], labels=labels, loc=2)
 
 	ax[0][0].set_ylabel(r'Large $\alpha$')
 	ax[1][0].set_ylabel(r'Small $\alpha$')
@@ -900,7 +900,6 @@ def plot_smooth_acc():
 		cbs = ax.scatter(xvals, yvals, edgecolor='black', \
 			linewidth=0.4, c=porb, cmap=cm.jet, vmin=0.0, vmax=100.0, marker='o')
 
-		axes.set_xlabel('Mass [M_earth]')
 		axes.set_ylabel('Smooth Accretion Mass Fraction')
 
 		return cbs
@@ -934,6 +933,8 @@ def plot_smooth_acc():
 	cbs = plot_smooth_sim(axes, 'fdvhishallowe', 313000)
 	cb = fig.colorbar(cbs, ax=axes)
 	cb.set_label('Orbital Period [d]')
+
+	axes.set_xlabel(r'Mass [M$_{\oplus}$]')
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
@@ -1300,7 +1301,7 @@ def plot_frag_ecc():
 	axes.set_xscale('log')
 	axes.set_yscale('log')
 
-	axes.set_xlabel('Mass [M_earth]')
+	axes.set_xlabel(r'Mass [M$_{\oplus}$]')
 	axes.set_ylabel('dn/dm')
 
 	stat, pval = stats.kstest(q1, q2)
@@ -1454,11 +1455,7 @@ def plot_rung_ecc():
 	axes.set_yticks([])
 	axes.set_xscale('log')
 
-	axes.set_xlabel('Mass [g]')
-	axes.set_ylabel('dn/dm')
-	axes.set_xscale('log')
-
-	axes.set_xlabel('Mass [M_earth]')
+	axes.set_xlabel(r'Mass [M$_{\oplus}$]')
 	axes.set_ylabel('dn/dm')
 
 	stat, pval = stats.kstest(q1, q2)
@@ -1484,10 +1481,10 @@ def plot_rung_ecc():
 #plot_surfden_profiles()
 #plot_surfden_iso()
 #plot_surfden_b()
-#plot_smooth_acc()
+plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
-plot_f6f4_b()
+#plot_f6f4_b()
 #plot_frag_ecc()
 #plot_frag_evo()
 #plot_frag_acc_zones()
