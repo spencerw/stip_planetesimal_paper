@@ -4,7 +4,17 @@
 \bibliographystyle{aasjournal}
 \usepackage{tabularx}
 
+% upright subscripts in math mode
+\def\subinrm#1{\sb{\mathrm{#1}}}
+{\catcode`\_=13 \global\let_=\subinrm}
+\mathcode`_="8000
+\def\supinrm#1{\sp{\mathrm{#1}}}
+{\catcode`\^=13 \global\let^=\supinrm}
+\mathcode`^="8000
+\def\upsubscripts{\catcode`\_=12 } \def\normalsubscripts{\catcode`\_=8 }
+\def\upsupscripts{\catcode`\^=12 } \def\normalsupscripts{\catcode`\^=7 }
 \begin{document}
+\upsubscripts
 
 \title{PLANETESIMAL ACCRETION AT SHORT ORBITAL PERIODS}
 
