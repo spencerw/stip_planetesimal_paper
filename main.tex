@@ -2,6 +2,7 @@
 \usepackage{natbib}
 %\definecolor{orcidlogocol}{HTML}{A6CE39}
 \bibliographystyle{aasjournal}
+\usepackage{tabularx}
 
 \begin{document}
 
@@ -596,17 +597,18 @@ boundaries, while also minimizing the number of `skipped' collisions. \textbf{In
 \begin{table*}
 \begin{center}
 \caption{Summary of Full Disk Simulations}
-\begin{tabular}{lccccccc} \hline \hline
+\begin{tabularx}{1.0\textwidth}{l@{\extracolsep{\fill}}ccccccc} \hline \hline
 Simulation Name & $m_{pl} [M_{\earth}]$ &$N_{pl}$ & A & $\delta$ & $M_{PP}  [M_{\earth}]$ & $T_{int} [yr]$ & $T_{int, 1} [yr]$ \\ \hline
 fdHi              & $8.37 \times 10^{-6}$ & 903,687 & 100 & 1.5 & 1.00 & 456 & 16,377  \\
 fdHiSteep    & $8.37 \times 10^{-6}$ & 903,687 & 100 & 2.5 & 1.19 & 456 & 16,377  \\
 fdHiShallow & $8.37 \times 10^{-6}$ & 903,687 & 100 & 0.5 & 1.08 & 456 & 16,377 \\
 fdLo             & $8.37 \times 10^{-6}$ & 45,185  & 1      & 1.5 & $1.77 \times 10^{-3}$ & 3,713 & 133,651 \\ \hline
-\end{tabular}\\
+\end{tabularx}\\
+\begin{flushleft}
 \textit{Note:} A summary of the four `full disk' simulations presented in section \ref{sec:fulldisk}. $m_{pl}$ and $N_{pl}$ are the initial masses and number of planetesimals. $A$ and $d$ is the initial power law normalization and slope of the solids in the disk. $M_{PP}$ is the maximum protoplanet mass at the end of the simulation and $T_{int}$ is the amount of time each simulation was integrated. $T_{int, 1}$ is the integration time scaled by a factor of $f^{2}$, which accounts for the fact that the accretion timescale has been shortened by the inflated collision cross sections.
+\end{flushleft}
 \label{tab:sim_properties}
 \end{center}
-Text goes here
 \end{table*}
 
 The timescales for embryo formation depend on
