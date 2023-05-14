@@ -140,7 +140,7 @@ $n = \Sigma_{pl} \Omega / 2 m_{pl} v$ (where we have assumed that the scale heig
 collision cross section and $v$ is the typical encounter velocity
 between planetesimals.
 For a swarm of planetesimals on randomly oriented orbits, $v$ is typically
-taken to the rms velocity $\left< v^{2} \right>^{1/2}$, which can be related to the eccentricity and inclination distribution $(e, i)$ in the following way \citep{lissauer93}:
+taken to be the rms velocity, $\left< v^{2} \right>^{1/2}$, which can be related to the eccentricity and inclination distribution $(e, i)$ in the following way \citep{lissauer93}:
 \begin{equation}\label{eq:ecc_vel}
 	\left< v^{2} \right>^{1/2} = \left( \frac{5}{4} \left< e^{2} \right>^{1/2} + \left< i^{2} \right>^{1/2}  \right) v_{k}.
 \end{equation}
@@ -151,7 +151,6 @@ the Hill radius}
 \begin{equation}\label{eq:hillfac}
 	r_{h} = \left(\frac{m_{pl}}{3 M_{*}}\right)^{1/3}, 
 \end{equation}
-
 \textbf{\noindent where $M_{*}$ is the mass of the central star. The Hill radius of a body describes the size scale over which the gravity of the growing planetesimal dominates over the gravity of the star. Using equation \ref{eq:hillfac}, the eccentricity, inclination and separation between orbiting bodies can be defined as}
 
 \begin{equation}\label{eq:hillorb}
@@ -164,16 +163,13 @@ Assuming that every collision results in a perfect merger, the growth rate of a 
 \begin{equation}\label{eq:growth}
 	\frac{1}{M}\frac{dM}{dt} = \frac{\Sigma \Omega}{2 m_{pl}} \Gamma.
 \end{equation}
-
 \noindent In the case where the collision cross section depends only
 on the physical size of the planetesimals, the growth scales sub-linearly
 with mass and the mass distribution is expected to evolve in an
 ``orderly'' fashion, in which mass ratios between bodies tend toward unity. However, bodies larger than $\sim 100$ km in size are expected to exert a significant gravitational force on each other during encounters and the collision cross section depends on both the size of the bodies and their encounter velocities. In this case, 
-
 \begin{equation}\label{eq:gravfocus}
 	\Gamma = \pi r_{pl}^2 \left( 1 + v_{esc}^2 / v^2 \right)
 \end{equation}
-
 \citep{safronov69}, where $v_{esc}$ is the escape velocity from the two bodies at the point of contact.
 
 In the limit that $v_{esc} \gg v$, it can be shown that $dM/dt \propto
@@ -215,18 +211,16 @@ accrete planetesimals at similar rates, independent of mass.
 
 \textbf{Regardless of the mechanism that eventually limits the growth of the planetary embryos, a maximum estimate for the masses produced during this 
 stage of accretion can be obtained using the initial solid surface density profile. A growing protoplanet will eventually accrete material within a distance
-$b = \tilde{b} r_{h}$ of its orbit. The total mass of planetesimals within this distance is then $2 \pi a \left(2 \tilde{b} r_{h} \right) \Sigma_{pl}$, where a is the semimajor axis of the growing protoplanet. The ``isolation mass'' of the protoplanet can then be obtained by setting the protoplanet mass equal to the total mass of planetesimals within accretionary reach such that}
-
+$b = \tilde{b} r_{h}$ of its orbit. The total mass of planetesimals
+within this distance is then $2 \pi a \left(2 \tilde{b} r_{h} \right)
+\Sigma_{pl}$, where $a$ is the semimajor axis of the growing protoplanet. The ``isolation mass'' of the protoplanet can then be obtained by setting the protoplanet mass equal to the total mass of planetesimals within accretionary reach such that}
 \begin{equation}\label{eq:iso_mass1}
 	M_{iso} = 4 \pi a^{2} \tilde{b} \left(\frac{M_{iso}}{3 M_{*}} \right)^{1/3} \Sigma_{pl}.
 \end{equation}
-
 \noindent \textbf{Solving for $M_{iso}$ gives}
-
 \begin{equation}\label{eq:iso}
 	M_{iso} = \left[ \frac{\left( 2 \pi a^2 \Sigma_{pl} \tilde{b} \right)^3}{3 M_{*}} \right]^{1/2}.
 \end{equation}
-
 \noindent \textbf{For bodies on circular, non-inclined orbits, $\tilde{b} = 2 \sqrt{3}$ is the smallest orbital separation that produces a non-negative
 Jacobi energy and permits a close encounter \citep{naka88}. This value of $\tilde{b}$ is typically used to calculate the final isolation mass of a protoplanet because oligarchic growth tends to maintain near-circular orbits for the growing protoplanets.}
 
@@ -303,7 +297,7 @@ We also introduce a second dimensionless quantity, which relates the physical si
 \begin{equation}\label{eq:beta}
 	\beta = \frac{r_{pl}}{r_{g}}.
 \end{equation}
-where $r_{g} = G m_{pl} / v^{2}$ is the gravitational radius of a body (see eq 4.1 of \citet{ida90}). Encounters between bodies inside of a distance of $r_{g}$ result in significant deflections of their trajectories. It should be noted that the gravitational focusing enhancement factor $v^{2}/v_{esc}^{2}$ is equal to 1 for $\beta = 1$. In the case where $r_{g}$ is smaller than the size of a planetesimal, the gravitational focusing enhancement factor will be between 0 and 1 and the collision cross section is mostly set by the geometric value. \textbf{For very large values of $r_{g}$ ($\beta \gg 1$), the effective collision cross section is almost entirely set by gravitational scattering.}
+where $r_{g} = G m_{pl} / v^{2}$ is the gravitational radius of a body (see eq 4.1 of \citet{ida90}). Encounters between bodies inside of a distance of $r_{g}$ result in significant deflections of their trajectories. It should be noted that the gravitational focusing enhancement factor $v^{2}/v_{esc}^{2}$ is equal to 1 for $\beta = 1$. In the case where $r_{g}$ is smaller than the size of a planetesimal, the gravitational focusing enhancement factor will be between 0 and 1 and the collision cross section is mostly set by the geometric value. \textbf{For very large values of $r_{g}$ ($\beta \ll 1$), the effective collision cross section is almost entirely set by gravitational scattering.}
 
 These scaling considerations motivate the range of parameters we choose for the numerical experiments presented in the next section, where we aim to understand where and when runaway and oligarchic growth can operate.
 
@@ -481,10 +475,9 @@ Four wide-disk simulations are run in total (see table \ref{tab:sim_properties})
 \begin{equation}
 	\Sigma(r) = \textrm{10 g cm}^{-2} \times A \left( \frac{M_{*}}{M_{\odot}} \right) \left( \frac{r}{\textrm{1 AU}} \right)^{-\delta}
 \end{equation}
-
-where $M_{*}$ is the mass of the central star, $\Sigma_{MMSN} = 10$ g
+where $M_{*}$ is the mass of the central star, 10 g
 cm$^{-2}$ is the surface density of the minimum-mass solar nebula
-\citep{hayashi81} at 1 AU, $A$ is an enhancement factor and $\delta$ is the power law index.
+\citep[MMSN]{hayashi81} at 1 AU, $A$ is an enhancement factor and $\delta$ is the power law index.
 In the first case (fdHi), we model a disk that follows a MMSN power law slope ($\delta$ = 1.5), with the overall normalization enhanced by a factor of 100. This choice of normalization for the solid surface density profile appears necessary in order to reproduce many observed short period terrestrial worlds in-situ \citep{hansen12}. \textbf{The most current planetesimal formation models all involve streaming instabilities triggered by solid material concentrating at preferential locations in the disk. This can occur via zonal flows \citep{johansen2009b, simon12}, vortices \citep{klahr03}, or through mechanisms that produce a pressure bump in the gas disk, such as an ionization \citep{lyra08} or condensation front \citep{brauer08b, drkazowska13}, or even the perturbations from an existing planet \citep{shibaike20}. \citet{drkazowska18} showed that evolution of the snow line boundary can cause planetesimal formation over a significant area of the disk, producing mass concentrations at least as large as the ones we use here. We argue that this is a particularly attractive mechanism for widespread planetesimal formation around low-mass stars, as their extreme pre-main sequence evolution is particularly conducive to significant movement of the condensation fronts \citep{baraffe15}.} 
 
 Additionally, we vary the power law index (fdHiShallow, fdHiSteep) and overall normalization (fdLo) of $\Sigma(r)$. \textbf{Although there is no way to reliably measure the uncertainty on the MMSN power law slope, \citet{chiang13} applied a similar analysis to a sample of Kepler multiplanet systems and found a variation of $\sim 0.2$. Sub-millimeter observations of the outer regions of cold protoplanetary disks find that $\delta$ can be as low as 0.5 \citep{mundy00, andrews09, andrews10}. Therefore, we vary $\delta$ by a value of $1.0$ relative to the MMSN value for the fdHiShallow and fdHiSteep simulations.}
@@ -525,7 +518,14 @@ first place.}
 
 \subsection{Gas Drag Force}
 
-In addition to the mutual gravitational forces, a Stokes drag force due to the the gas disk is applied to each particle, following the prescription described in section 2.2.1 of \citet{morishima10}. For the initial mass planetesimals, the \textbf{Stokes number ($\textrm{St} = t_{s} \Omega$) at the inner and outer disk edge is roughly $2 \times 10^{5}$ and $10^{7}$, respectively. For $\tau_{s} \gg 1$, bodies are decoupled from the gas and are only weakly affected by it. Because $\tau_{s} \sim m^{1/3}$, the Stokes number grows as planetesimal accretion proceeds, and the drag force plays an increasingly minor role.} Although the aerodynamic gas drag is not expected to significantly alter the final protoplanet distribution, we include its effects here to be self-consistent with the initial conditions, which were constructed by balancing the effects of viscous stirring with gas drag.
+In addition to the mutual gravitational forces, a Stokes drag force
+due to the the gas disk is applied to each particle, following the
+prescription described in section 2.2.1 of \citet{morishima10}. For
+the initial mass planetesimals, the \textbf{Stokes number
+  ($\textrm{St} = t_{s} \Omega$) at the inner and outer disk edge is
+  roughly $2 \times 10^{5}$ and $10^{7}$, respectively. For $t_{s} \gg
+  1$, bodies are decoupled from the gas and are only weakly affected
+  by it. Because $t_{s} \sim m^{1/3}$, the Stokes number grows as planetesimal accretion proceeds, and the drag force plays an increasingly minor role.} Although the aerodynamic gas drag is not expected to significantly alter the final protoplanet distribution, we include its effects here to be self-consistent with the initial conditions, which were constructed by balancing the effects of viscous stirring with gas drag.
 
 \subsection{Timestepping Criterion}
 
@@ -714,7 +714,10 @@ conclusion that planetesimal accretion is largely complete everywhere in the dis
 
 Further insight regarding the difference between the short vs long period accretion modes can be gained by looking at the 
 growth history of the planetary embryos. Because all collisions are directly resolved by the N-body code, a lineage can be 
-traced between each planetary embryo and the initial planetesimals. \textbf{For the fdHi, fdHiSteep and fdHiShallow simulations, protoplanets gain a factor of $\sim 10^6$ in mass relative to the intial planetesimals. For the fdLo simulation, this growth factor is nearly a thousand times smaller, which produces rather shallow and noisy collision histories. For this reason, we choose to exclude the fdLo simulation from our analysis in this section.}
+traced between each planetary embryo and the initial
+planetesimals. \textbf{For the fdHi, fdHiSteep and fdHiShallow
+  simulations, protoplanets gain a factor of $\sim 10^6$ in mass
+  relative to the initial planetesimals. For the fdLo simulation, this growth factor is nearly a thousand times smaller, which produces rather shallow and noisy collision histories. For this reason, we choose to exclude the fdLo simulation from our analysis in this section.}
 
 We begin by investigating the ``smoothness'' of the accretion events
 that give rise to each embryo. Drawing from a common technique used
@@ -737,7 +740,8 @@ points indicates the final orbital period of the body. Beyond $\sim$ 20 to 30 da
 \begin{figure}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/acc_zones.png}
-    \caption{\textbf{The relative separation between a body the mean orbital periods of its accretion zone at the end of the fdHi, fdHiSteep and fdHiShallow simulations. The marker type and color denotes the simulation used, while the marker sizes indicate the relative masses of bodies. In each case, all five iterations of the simulations are plotted simultaneously.}\label{fig:acc_zones}}
+    \caption{\textbf{The relative separation between the final period
+        of a body and the mean orbital periods of its accretion zone at the end of the fdHi, fdHiSteep and fdHiShallow simulations. The marker type and color denotes the simulation used, while the marker sizes indicate the relative masses of bodies. In each case, all five iterations of the simulations are plotted simultaneously.}\label{fig:acc_zones}}
 \end{center}
 \end{figure}
 
@@ -914,7 +918,7 @@ disk, partial accretion events should allow growth to happen more quickly than w
 mode should certainly still occur. We also showed that the collision cross section enhancement moves the accretion boundary 
 outward. We verified this by deriving a scaling relation between the boundary location and the bulk density of the planetesimals, 
 and showing that the boundary moves to the predicted location when running a simulation with a slightly smaller inflation factor. 
-For rocky planetesimals with a realistic bulk density \textbf{3 g cm$^{-3}$}, \textbf{our results suggest that} this boundary should lie around 5 days in orbital period.
+For rocky planetesimals with a realistic bulk density, \textbf{3 g cm$^{-3}$}, \textbf{our results suggest that} this boundary should lie around 5 days in orbital period.
 
 \subsection{Connections to Satellitesimal Accretion}
 
@@ -960,7 +964,12 @@ The data presented in this article are available on our GitHub repository, at \u
 \appendix
 \section{Robustness of Timestepping Scheme}\label{sec:rung_ecc}
 
-\textbf{As described in section \ref{sec:methods}, {\sc ChaNGa} evolves the motions of the particles in the planetesimal disk using a multi-tiered timestepping scheme. Due to the extremely short dynamical timescale at the inner edge of the disk, the outer disk would require a prohibitive number of timesteps to reach the protoplanet phase using a fixed timestep scheme.To circumvent this, particles are evolved in discrete power-of-two timestep groups. In the event that a collision occurs between two particles on different timesteps, a slight error is introduced to the energy and angular momentum of the merged particle. Due to the nonlinear nature of the runaway growth phase, this slight error tends to trigger more subsequent collisions at the timestep boundary in the disk, and causes protoplanets to preferentially form at the boundaries.}
+\textbf{As described in section \ref{sec:methods}, {\sc ChaNGa}
+  evolves the motions of the particles in the planetesimal disk using
+  a multi-tiered timestepping scheme. Due to the extremely short
+  dynamical timescale at the inner edge of the disk, the outer disk
+  would require a prohibitive number of timesteps to reach the
+  protoplanet phase using a fixed timestep scheme.  To circumvent this, particles are evolved in discrete power-of-two timestep groups. In the event that a collision occurs between two particles on different timesteps, a slight error is introduced to the energy and angular momentum of the merged particle. Due to the nonlinear nature of the runaway growth phase, this slight error tends to trigger more subsequent collisions at the timestep boundary in the disk, and causes protoplanets to preferentially form at the boundaries.}
 
 \textbf{To circumvent this issue, we prohibit particles on different timesteps from merging until the runaway growth phase is well underway. For the fdHi simulation, multi-tiered mergers are not allowed during the first thousand steps. To verify that this technique does not alter the resulting protoplanet distribution in any meaningful way, we ran two test simulations of the inner part (1 to 4 days in orbital period) of the disk from the fdHi simulation. In the first case, the aforementioned timestepping scheme is used. In the second case, all particles are evolved on the timestep appropriate for the inner edge of the disk.}
 
