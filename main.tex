@@ -299,7 +299,15 @@ We also introduce a second dimensionless quantity, which relates the physical si
 \end{equation}
 where $r_{g} = G m_{pl} / v^{2}$ is the gravitational radius of a body (see eq 4.1 of \citet{ida90}). Encounters between bodies inside of a distance of $r_{g}$ result in significant deflections of their trajectories. It should be noted that the gravitational focusing enhancement factor $v^{2}/v_{esc}^{2}$ is equal to 1 for $\beta = 1$. In the case where $r_{g}$ is smaller than the size of a planetesimal, the gravitational focusing enhancement factor will be between 0 and 1 and the collision cross section is mostly set by the geometric value. \textbf{For very large values of $r_{g}$ ($\beta \ll 1$), the effective collision cross section is almost entirely set by gravitational scattering.}
 
-These scaling considerations motivate the range of parameters we choose for the numerical experiments presented in the next section, where we aim to understand where and when runaway and oligarchic growth can operate.
+These scaling considerations motivate the range of parameters we choose for the numerical experiments presented in the next section, where we aim to understand where and when runaway and oligarchic growth can operate. \textbf{In figure \ref{fig:alpha_beta_diagram}, we show a schematic which relates $\alpha$ and $\beta$ to the geometry of a two-body encounter. For large values of $\alpha$, the Hill radius of a body (dashed circle) becomes comparable to its physical radius (solid circle). As $\beta$ increases, the trajectory of a body undergoing a flyby becomes more straight.}
+
+\begin{figure}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{figures/diagram.png}
+    \caption{\textbf{A diagram detailing how varying the values of $\alpha$ and $\beta$ affect the geometry of a two-body encounter. The solid circles represent the physical radius of a body and the dashed circles represent the Hill radius. As $\alpha$ is increased, the Hill radius and the physical radius become comparable in size. As $\beta$ is increased, the trajectory of a passing body for a fixed impact parameter is bent less and less.}
+      \label{fig:alpha_beta_diagram}}
+\end{center}
+\end{figure}
 
 \begin{figure*}
 \begin{center}

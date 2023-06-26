@@ -691,7 +691,7 @@ def plot_surfden_iso():
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
 def plot_surfden_b():
-	file_str = 'figures/surfden_b.' + fmt
+	file_str = 'figures/surfden_b_log.' + fmt
 	if not clobber and os.path.exists(file_str):
 		return
 
@@ -800,8 +800,8 @@ def plot_surfden_b():
 	axes.set_title('fdLo')
 
 	axes.set_xlim(-5, 100)
-	#axes.set_yscale('log')
-	axes.set_ylim(0, 20)
+	axes.set_yscale('log')
+	axes.set_ylim(1e-2, 1e2)
 	axes.set_xlabel('Orbital Period [d]')
 	#axes.legend()
 
@@ -1473,7 +1473,7 @@ def plot_rung_ecc():
 
 	plt.savefig(file_str, format=fmt, bbox_inches='tight')
 
-plot_timescales()
+#plot_timescales()
 #plot_alpha_beta()
 #plot_alpha_beta_evo()
 #plot_alpha_beta_mass()
@@ -1482,7 +1482,7 @@ plot_timescales()
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-#plot_surfden_b()
+plot_surfden_b()
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
