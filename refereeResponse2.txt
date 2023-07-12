@@ -1,0 +1,23 @@
+We again appreciate the referee's thorough and careful comments. We will address comments on the second version of the manuscript one by one, with the original comment listed first, followed by our response (indented). Note that the removal of the boldface text from the previous version of the manuscript has altered the line numbers. We will provide the new line number in the updated version of the manuscript alongside each response.
+
+General comment: I very much recommend the use of perceptually uniform color maps for accessibility and readability.
+	Figures 7 and 10 now use a perceptually uniform colormap
+
+78: Sentence sounds vague. Maybe combine with subsequent sentence
+	These sentences have been combined (78)
+257: change "will eventually accrete" to "is expected to eventually accrete"
+	Changed (252)
+343: This sentence seems incomplete.
+	Changed to "a_roche is equivalent to 0.6 a_{alpha = 1}" (333)
+345: Do you mean planetary rings?
+	Yes, changed to "planetary ring systems" (336)
+384 and Caption figure 2: change "is bent less and less" to "is less affected"
+	"Bent less and less" has been changed to "less affected". "More straight" has been changed to "less affected by the encounter". (373)
+559: change "the Hill sphere of a body is mostly empty space" to "the planetesimal only fills a small portion of its Hill sphere"
+	Changed (544)
+608: Streaming instability is one pathway of forming planetesimals but not the only one, so I would soften that statement. Also, instead of "triggered" I would write something along the lines of "streaming instability requires sufficiently large concentrations of solid material".
+	Agreed that the streaming instability is not the only viable way of creating planetesimals. This sentence has been changed to "Many recent planetesimal formation models invoke streaming instabilities, which first require sufficiently large amounts of solid material concentrating at preferential locations in the disk." (592)
+1163: I'm not sure why one would (or would not) include the initial planetesimals. Maybe clarify? Also a KS p-value of 0.1 is typically not low enough to reject the null hypothesis, so I would also soften the statement in 1166.
+	The idea here is that the populations *are* statistically similar if you ignore the handful of residual planetesimals. Had the remaining planetesimals been accreted by the larger bodies, the masses of the larger bodies would hardly change, but the p-value of the KS test would be quite different (the remaining planetesimals only make up ~0.1% of the total mass). I think this highlights a limitation of using a KS test to compare the mass distributions, in that the larger bodies should be given more importance. The last two sentences of this paragraph have been modified to clarify. (1121)
+1368: Delete "safely"
+	Done (1323)

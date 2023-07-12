@@ -585,7 +585,7 @@ def plot_pl_frac_time():
 		prof_arr[:,idx] = (p_vhi_m1['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)/(p_vhi_m2['density']*u.M_sun/u.AU**2).to(u.g/u.cm**2)
 
 	fig, axes = plt.subplots(figsize=(8,4))
-	col = cm.jet(np.linspace(0, 1, len(pbins)))
+	col = cm.viridis(np.linspace(0, 1, len(pbins)))
 	for idx in range(len(bins1[:-1])):
 		tdyn_loc = pbins[idx]/(2*np.pi)
 
@@ -612,7 +612,7 @@ def plot_pl_frac_time():
 	axes.set_xlim(4e-2, 40)
 
 	norm = colors.Normalize(vmin=0, vmax=100)
-	sm = cm.ScalarMappable(cmap=cm.jet, norm=norm)
+	sm = cm.ScalarMappable(cmap=cm.viridis, norm=norm)
 	cb = plt.colorbar(sm)
 	cb.set_label('Orbital Period [d]')
 
@@ -900,7 +900,7 @@ def plot_smooth_acc():
 
 		import matplotlib.cm as cm
 		cbs = ax.scatter(xvals, yvals, edgecolor='black', \
-			linewidth=0.4, c=porb, cmap=cm.jet, vmin=0.0, vmax=100.0, marker='o')
+			linewidth=0.4, c=porb, cmap=cm.viridis, vmin=0.0, vmax=100.0, marker='o')
 
 		axes.set_ylabel('Smooth Accretion Mass Fraction')
 
@@ -1314,6 +1314,7 @@ def plot_frag_ecc():
 	mask2 = q2 > 1e-5
 	stat, pval = stats.kstest(q1[mask1], q2[mask2])
 	print('Frag ecc KS pval after cut: '+ str(pval))
+	print('Fractional mass difference: ' + str(np.sum(q1[mask1])/np.sum(q1)))
 
 	fig.tight_layout()
 
@@ -1482,12 +1483,12 @@ def plot_rung_ecc():
 #plot_pl_frac_time()
 #plot_surfden_profiles()
 #plot_surfden_iso()
-plot_surfden_b()
+#plot_surfden_b()
 #plot_smooth_acc()
 #plot_acc_zones()
 #plot_f6f4()
 #plot_f6f4_b()
-#plot_frag_ecc()
+plot_frag_ecc()
 #plot_frag_evo()
 #plot_frag_acc_zones()
 #plot_rung_ecc()
